@@ -32,7 +32,11 @@
 		</td>
 	</tr>
 	<tr>
-		<th>나머지주소</th><td><input type="text" name="address"></td>
+		<th>나머지주소</th>
+		<td>
+			<input type="text" name="detail" id ="detail">
+			<input type="button" id="searchrcode" value="조회">
+		</td>
 	</tr>
 	<tr>
 		<th>가게 상호명</th><td><input type="text" name="store_name"></td>
@@ -93,6 +97,14 @@ $(document).ready(function() { */
 		}
 	    
 	}
+
+/* 	$('#searchrcode').click(function(){
+		var rcode1= document.getElementById("rcode1").value;
+		var rcode2 = document.getElementById("rcode2").value;
+		var detail = document.getElementById("detail").value;
+		sendRedirect( "map.jsp?address="+rcode1+" "+rcode2+" "+detail); 
+		
+	}) */
 
 </script>
 

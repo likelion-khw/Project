@@ -44,6 +44,7 @@ public class WhameController {
 	StoreVO enrollStore;
 	
 	String filepath = "";
+	String address="";
 	
 	@RequestMapping(value = "index.whame")
 	public String mainpage() {
@@ -99,6 +100,8 @@ public class WhameController {
 	public ModelAndView enrollconnect(@ModelAttribute(value = "storevo") StoreVO storevo, HttpServletRequest request) throws Exception{
 		String rcode1 = (String) request.getParameter("rcode1");
 		String rcode2 = (String) request.getParameter("rcode2");
+		String detail = (String) request.getParameter("detail");
+		address = rcode1 +" " + rcode2 + " " + detail;
 		System.out.println("rcode는 : " + rcode1 + " " + rcode2);
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
@@ -121,17 +124,12 @@ public class WhameController {
 
 	@RequestMapping(value = "enrollsuccess.whame")
 	public ModelAndView enrollsuccess() {
-		System.out.println("비지니스코드 : " + enrollStore.getBusiness_code());
-		System.out.println(enrollStore.getRcode());
-		System.out.println(enrollStore.getUserid());
-		System.out.println(enrollStore.getOperating_time());
-		System.out.println(enrollStore.getStore_name());
-
 		int store_code = service.enroll(enrollStore, filepath);
 		List<TypeVO> typelist = service.getType();
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("store_code", store_code);
 		mav.addObject("typelist", typelist);
+		mav.addObject("address", address);
 		mav.setViewName("enrollsuccess");
 		System.out.println("enrollsuccess로 이동");
 		return mav;
@@ -140,6 +138,9 @@ public class WhameController {
 	@RequestMapping(value = "menuUpload.whame", method = RequestMethod.POST)
 	public ModelAndView menuUpload(HttpServletRequest request) {
 		String[] menulist = request.getParameterValues("menulist");
+		String lat =  (String) request.getParameter("latitude");
+		String longi =  (String) request.getParameter("longitude");
+		System.out.println("위도경도"+lat+":"+longi);
 		int store_code = Integer.parseInt(request.getParameter("store_code"));
 
 		System.out.println(menulist.length);
@@ -151,8 +152,6 @@ public class WhameController {
 			String menuval[] = menulist[i].split(":");
 			menuListInt[i] = Integer.parseInt(menuval[1]);
 
-			// MenuVO menu = new MenuVO(store_code, menuval[0], menuListInt[i],
-			// menuval[2] );
 			MenuVO menu = new MenuVO();
 			menu.setStore_code(store_code);
 			menu.setMenu_name(menuval[0]);
