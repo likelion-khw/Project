@@ -89,8 +89,7 @@ public class TextApp {
      // System.out.println("ÀÎµ¦½º°ª :" + index);
       TextApp app = new TextApp(TextApp.getVisionService(), index);
      // System.out.println("TextApp :" + app);
-      File file = new File(path.split("warping/|[?]")[1]);
-      Path inputPath = Paths.get(file.getAbsolutePath());
+      Path inputPath = Paths.get(path);
       app.indexDirectory(inputPath);
     } finally {
       if (pool != null) {

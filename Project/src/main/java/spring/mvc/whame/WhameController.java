@@ -186,8 +186,6 @@ public class WhameController {
 		// 파일 업로드
 		filepath = s3.fileUpload(bucketName, convFile);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
-		System.out.println("----------filename-----------"+filepath);
-		System.out.println("----------imgurl-----------"+imgurl);
 		mav.addObject("imgurl", imgurl);
 		mav.setViewName("image");
 		return mav;

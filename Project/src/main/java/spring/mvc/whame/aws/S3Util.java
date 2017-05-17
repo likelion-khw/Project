@@ -25,8 +25,8 @@ public class S3Util {
    //Å° Á¤º¸
 	@Autowired
 	CommonUtils cu;
-	private String accessKey = "AKIAIAIMSUFMKWLG73CQ";
-    private String secretKey = "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";
+	private String accessKey = "AKIAJ4QUJIXZROBELTTA";
+    private String secretKey = "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";
      
     private AmazonS3 conn;
      

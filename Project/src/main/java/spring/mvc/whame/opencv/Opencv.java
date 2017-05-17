@@ -56,10 +56,10 @@ public class Opencv {
 		opencv_imgproc.warpPerspective(img, warpImg, trans, new opencv_core.Size((int) maxWidth, (int) maxHeiht));
 
 		String filename = imgurlString.split("StoreTitle/|[?]")[1];
-		String exten = filename.split("\\.")[1];
-		BufferedImage warpB = Buffered2(warpImg);
-		
 //		aws 클라우드사용시 사용될 파일 변환 방식
+//		String exten = filename.split("\\.")[1];
+//		BufferedImage warpB = Buffered2(warpImg);
+		
 //		File f = new File(filename);
 //		ImageIO.write(warpB, exten, f);
 //		S3Util s3 = new S3Util();
