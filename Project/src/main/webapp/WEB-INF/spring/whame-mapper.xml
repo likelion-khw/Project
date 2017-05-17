@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http:mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="whame">
+	<select id='login' resultType="membervo" parameterType="membervo">
+ 		select * from vm_user where userid = #{userid} and pw = #{pw} 
+ 	</select> 
+ 	
+ 	<select id='rcodelist' resultType="regionvo" >
+ 		select * from region
+ 	</select> 
+ 	
+ 	<select id='getgu' resultType="regionvo" >
+ 		select * from region where length(rcode)=2
+ 	</select>
+ 	
+ 	<select id='getrcode' resultType="regionvo" parameterType="string">
+ 		select * from region where rname like #{gu}||'%'
+ 	</select>
+ 	
+ 	<select id='getrcodeNum' resultType="int" parameterType="string">
+ 		select rcode from region where rname = #{rname}
+ 	</select>
+ 	
+ 	<select id='getstore_code' resultType="int" parameterType="String" >
+ 		select store_code from store where business_code= #{business_code}
+ 	</select> 
+ 	
+ 	<select id='getType' resultType="typevo"  >
+ 		select type_name, type_code from type
+ 	</select> 
+ 	
+ 	<insert id='enroll' parameterType="storevo">
+ 		insert into store(store_code, business_code, rcode, userid, operating_time, store_name, view_count)
+ 		values(store_seq.nextval, #{business_code}, #{rcode}, #{userid}, #{operating_time}, #{store_name}, 0)
+ 	</insert>
+ 	
+ 	<insert id='setColor' parameterType="colorvo">
+ 		insert into store_color
+ 		values(#{store_code}, #{red}, #{blue}, #{green})
+ 	</insert>
+ 	
+ 	<insert id='setText' parameterType="textvo">
+ 		insert into store_text
+ 		values(#{store_code}, #{text})
+ 	</insert>
+ 	
+ 	<insert id='setMenu' parameterType="menuvo">
+ 		insert into menu
+ 		values(#{store_code}, #{menu_name}, #{menu_price}, #{menu_type})
+ 	</insert>
+ 	
+ 	 <sql id="color_rate">
+		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 1
+			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 1
+			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 1 <!-- between 0 and 0.45 -->
+	</sql>
+	
+ 	<sql id="color_max">
+		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.1
+			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.1 
+			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.1 <!-- between 0 and 0.45 -->
+	</sql>
+	
+	
+ 	<sql id="color_maxmin">
+		where #{color.red} between (select max(red) from store_color where store_code = m.store_code) and (select min(red)-40 from store_color where store_code = m.store_code)
+		and #{color.blue} between (select max(blue)+40 from store_color where store_code = m.store_code) and (select min(blue)-40 from store_color where store_code = m.store_code)
+		and #{color.green} between (select max(green)+40 from store_color where store_code = m.store_code) and (select min(green)-40 from store_color where store_code = m.store_code) 	
+	</sql>
+	
+ 	<select id="searchText" resultType="int" parameterType="whamevo">
+		select distinct(m.store_code), red, blue, green
+		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
+				from store s, store_text st, store_color sc
+				where s.store_code = st.store_code and sc.store_code = s.store_code
+				and 
+					<foreach collection="text" item="text" open="(" close=")" separator="or">
+						<if test="text.text != null and text.text.length() > 2">
+						upper(st.text) like upper('%'||#{text.text}||'%')
+						</if>
+					</foreach>				
+				) m
+	 	 <include refid="color_rate" />
+	</select> 
+	
+	<select id="searchTextName" resultType="int" parameterType="whamevo">
+		select distinct(m.store_code), red, blue, green
+		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
+				from store s, store_text st, store_color sc
+				where s.store_code = st.store_code and sc.store_code = s.store_code
+				and 
+					<foreach collection="text" item="text" open="(" close=")" separator="or">
+						<if test="text.text != null and text.text.length() >= 2 ">
+							upper(s.store_name) like upper('%'||#{text.text}||'%')
+						</if>
+					</foreach>				
+				) m
+	  	<include refid="color_rate" />  
+	</select> 
+	
+	<select id="searchColor" resultType="int" parameterType="whamevo">
+		select distinct(m.store_code), red, blue, green
+		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
+				from store s, store_text st, store_color sc
+				where s.store_code = st.store_code and sc.store_code = s.store_code
+				) m
+	  	<include refid="color_max" />  
+	</select> 
+
+
+	<select id="getMenu" resultType="menuvo" parameterType="int">
+		select * from menu where store_code = #{store_code}
+	</select>
+</mapper>

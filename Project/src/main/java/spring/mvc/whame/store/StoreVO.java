@@ -1,0 +1,103 @@
+package spring.mvc.whame.store;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+
+@Component
+public class StoreVO {
+	
+		private int store_code;
+		private String business_code;//
+		private int rcode;//
+		private String address;//
+		private String userid;
+		private String operating_time;//
+		private String store_name;//
+		private int view_count;
+		private MultipartFile imagefile;//	//업로드파일 서버저장
+		private String image;
+		int store_text;
+		int store_color;
+		
+		public int getStore_code() {
+			return store_code;
+		}
+		public void setStore_code(int store_code) {
+			this.store_code = store_code;
+		}
+		public String getBusiness_code() {
+			return business_code;
+		}
+		public void setBusiness_code(String business_code) {
+			this.business_code = business_code;
+		}
+		public int getRcode() {
+			return rcode;
+		}
+		public void setRcode(int rcode) {
+			this.rcode = rcode;
+		}
+		public String getUserid() {
+			return userid;
+		}
+		public void setUserid(String userid) {
+			this.userid = userid;
+		}
+		public String getOperating_time() {
+			return operating_time;
+		}
+		public void setOperating_time(String operating_time) {
+			this.operating_time = operating_time;
+		}
+		public String getStore_name() {
+			return store_name;
+		}
+		public void setStore_name(String store_name) {
+			this.store_name = store_name;
+		}
+		public int getView_count() {
+			return view_count;
+		}
+		public void setView_count(int view_count) {
+			this.view_count = view_count;
+		}
+		
+		
+		public MultipartFile getImagefile() {
+			return imagefile;
+		}
+		public void setImagefile(MultipartFile imagefile) {
+			this.imagefile = imagefile;
+			setImage(imagefile.getOriginalFilename());
+		}
+		public String getImage() {
+			return image;
+		}
+		public void setImage(String image) {
+			this.image = image;
+		}
+		public int getStore_text() {
+			return store_text;
+		}
+		public void setStore_text(int store_text) {
+			this.store_text = store_text;
+		}
+		public int getStore_color() {
+			return store_color;
+		}
+		public void setStore_color(int store_color) {
+			this.store_color = store_color;
+		}
+		public String getAddress() {
+			return address;
+		}
+		public void setAddress(String address) {
+			this.address = address;
+		}
+		
+		
+		
+		
+	
+}

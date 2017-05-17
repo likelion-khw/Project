@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- 1.spring datasource 설정 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@192.168.1.17:1521:xe" />
+		<property name="username" value="vm" />
+		<property name="password" value="vm" />
+	</bean>
+
+	<!-- 2.SqlSessionFactory생성 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="/WEB-INF/spring/configuration.xml" />
+		<property name="mapperLocations" value="/WEB-INF/spring/*-mapper.xml" />	<!-- 복수개의 mapper파일 지정 -->
+	</bean>
+
+	<!-- 3.MyBatis SqlSession 생성==>spring SqlSessiontemplate -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 4.service, dao, vo생성 -->
+	<context:component-scan base-package="spring.mvc.whame"></context:component-scan>
+	<context:component-scan base-package="spring.mvc.whame.aws"></context:component-scan>
+	<context:component-scan base-package="spring.mvc.whame.store"></context:component-scan>
+	<context:component-scan base-package="spring.mvc.whame.color"></context:component-scan>
+	<context:component-scan base-package="spring.mvc.whame.vision"></context:component-scan>
+	<context:component-scan base-package="spring.mvc.whame.opencv"></context:component-scan>
+	<context:component-scan base-package="spring.mvc.whame.region"></context:component-scan>
+	<context:component-scan base-package="spring.mvc.whame.login"></context:component-scan>
+
+
+</beans>
