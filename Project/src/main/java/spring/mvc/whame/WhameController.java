@@ -46,7 +46,12 @@ public class WhameController {
 	String filepath = "";
 	String address="";
 	
-	@RequestMapping(value = "index.whame")
+	@RequestMapping(value = "start.whame")
+	public String startpage() {
+		return "main/main";
+	}
+	
+	@RequestMapping(value = "main.whame")
 	public String mainpage() {
 		return "main/main";
 	}
@@ -56,7 +61,7 @@ public class WhameController {
 		return "fileupload";
 	}
 
-	//ÀÌ¹ÌÁö¿¡ ´ëÇÑ OCR ¹× »ö±ò ÃßÃâ
+	//ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ OCR ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "showinfo.whame")
 	public ModelAndView getimage() throws Exception{/*@ModelAttribute(value = "storevo") StoreVO storevo*/
 		WhameVO whame = new WhameVO();
@@ -73,8 +78,8 @@ public class WhameController {
 
 		int store_code = service.searchInfo(whame);
 		if (store_code == 0) {
-			System.out.println("Ã£Àº°ª ¾øÀ½");
-			mav.addObject("error", "ÇØ´ç µ¥ÀÌÅÍÁ¤º¸°¡ ¾ø½À´Ï´Ù.");
+			System.out.println("Ã£ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
+			mav.addObject("error", "ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			return mav;
 		} else {
 			List<MenuVO> menuList = service.getMenu(store_code);
@@ -102,7 +107,7 @@ public class WhameController {
 		String rcode2 = (String) request.getParameter("rcode2");
 		String detail = (String) request.getParameter("detail");
 		address = rcode1 +" " + rcode2 + " " + detail;
-		System.out.println("rcode´Â : " + rcode1 + " " + rcode2);
+		System.out.println("rcodeï¿½ï¿½ : " + rcode1 + " " + rcode2);
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
 		
@@ -111,7 +116,7 @@ public class WhameController {
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// ÆÄÀÏ ¾÷·Îµå
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
 		filepath = s3.fileUpload(bucketName, convFile);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		System.out.println("=========enrollconnect imgurl======="+imgurl);
@@ -131,7 +136,7 @@ public class WhameController {
 		mav.addObject("typelist", typelist);
 		mav.addObject("address", address);
 		mav.setViewName("enrollsuccess");
-		System.out.println("enrollsuccess·Î ÀÌµ¿");
+		System.out.println("enrollsuccessï¿½ï¿½ ï¿½Ìµï¿½");
 		return mav;
 	}
 
@@ -140,7 +145,7 @@ public class WhameController {
 		String[] menulist = request.getParameterValues("menulist");
 		String lat =  (String) request.getParameter("latitude");
 		String longi =  (String) request.getParameter("longitude");
-		System.out.println("À§µµ°æµµ"+lat+":"+longi);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½æµµ"+lat+":"+longi);
 		int store_code = Integer.parseInt(request.getParameter("store_code"));
 
 		System.out.println(menulist.length);
@@ -168,7 +173,7 @@ public class WhameController {
 		return mav;
 	}
 
-	// °£ÆÇ »çÁø ¾÷·Îµå½Ã¿¡ ½ÇÇàµÇ´Â ¸Þ¼Òµå ( AWS Å¬¶ó¿ìµå »ç¿ë )
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½Ã¿ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½Þ¼Òµï¿½ ( AWS Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
 	public ModelAndView test(MultipartFile imagefile) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -177,12 +182,12 @@ public class WhameController {
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// Bucket »ý¼º(´ë¹®ÀÚ´Â Æ÷ÇÔµÇ¸é ¾ÈµÊ.)
+		// Bucket ï¿½ï¿½ï¿½ï¿½(ï¿½ë¹®ï¿½Ú´ï¿½ ï¿½ï¿½ï¿½ÔµÇ¸ï¿½ ï¿½Èµï¿½.)
 		// s3.createBucket("whame00");
 
 		// s3.createFolder(bucketName, "testfol1");
 
-		// ÆÄÀÏ ¾÷·Îµå
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
 		filepath = s3.fileUpload(bucketName, convFile);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		mav.addObject("imgurl", imgurl);
@@ -190,11 +195,11 @@ public class WhameController {
 		return mav;
 	}
 
-	// ¾÷·Îµå ÀÌ¹ÌÁö¸¦ ¹Þ¾Æ¼­ Opencv ½ÇÇà ÈÄ ÀÌ¹ÌÁö °æ·Î ¹ÝÈ¯ ( filename )
+	// ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¼ï¿½ Opencv ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ( filename )
 	@RequestMapping(value = "result.whame", method = RequestMethod.POST)
 	public void test1(ImageVO imagevo, String imgurl) throws Exception {
 		Opencv ivo = new Opencv();
-		System.out.println("run¿¡µé¾î°¥---------"+imgurl);
+		System.out.println("runï¿½ï¿½ï¿½ï¿½î°¥---------"+imgurl);
 		BufferedImage img = ImageIO.read(new URL(imgurl));
 		filepath = ivo.runOpencv(img,imagevo,imgurl);
 	}

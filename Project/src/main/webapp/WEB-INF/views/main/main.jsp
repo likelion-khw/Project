@@ -1,40 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR" import="spring.mvc.whame.login.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%
-	MemberVO membervo = null;
-	if ((MemberVO) session.getAttribute("memberVO") != null) {
-		membervo = (MemberVO) session.getAttribute("memberVO");
-		if (membervo.getUserid() == null) {
-			response.sendRedirect("start.whame");
-		}
-	}
-%>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<script src="resources/jquery-3.1.1.min.js"></script>
-<title>Insert title here</title>
-</head>
-<body>
-	<%=membervo.getUserid()%>´Ô È¯¿µÇÕ´Ï´Ù.
-
-	<table border="1">
-		<tr>
-			<td><a href="fileupload.whame">¸Þ´ºÃ£±â(°£ÆÇÀÌ¹ÌÁö ¾÷·Îµå)</a></td>
-			<td><a href="enroll.whame">°£ÆÇµî·ÏÇÏ±â</a></td>
-			<td><a href="history.whame">È÷½ºÅä¸®</a></td>
-	</table>
-
-	<input type="button" value="·Î±×¾Æ¿ô" id="logout">
-
-</body>
+<style type="text/css">
+.mainform{
+	margin-top: 20px;
+}
+</style>
+<div class="container mainform">
+	<div class="center-align">
+		<input type="button" class="btn" value="ë©”ë‰´ì°¾ê¸°(ê°„íŒì´ë¯¸ì§€ ì—…ë¡œë“œ)" id="fileupload">
+		<input type="button" class="btn" value="ê°„íŒë“±ë¡í•˜ê¸°" id="enroll"><br>
+	</div>
+</div>
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#logout').on('click', function() {
-			$(location).attr('href', 'logout.whame');
+		$("#fileupload").on('click',function(){
+			alert("test");
+				$(location).attr('href','fileupload.whame');
 		});
+
+		$("#enroll").on('click',function(){
+			$(location).attr('href','enroll.whame');
+	});
 	})
 </script>
-</html>
