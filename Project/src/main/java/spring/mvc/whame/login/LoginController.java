@@ -18,22 +18,22 @@ public class LoginController {
 	LoginService service;
 	ModelAndView mav = new ModelAndView();
 	
-	// ¾ÆÀÌµð ·Î±×ÀÎ ¼º°ø½Ã¿¡ »ç¿ëµÉ ¸Þ¼Òµå( ¼¼¼Ç¿¡ ÀúÀåÇÏ±â À§ÇÔ )
+	// ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½( ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ )
 	@ModelAttribute("memberVO")
 	public MemberVO setSession(MemberVO vo){
 		return vo;
 	}
 	
-	// ÃÊ±â ·Î±×ÀÎ È­¸é
-	@RequestMapping(value = "start.whame", method = RequestMethod.GET)
+	// ï¿½Ê±ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ È­ï¿½ï¿½
+	@RequestMapping(value = "login.whame", method = RequestMethod.GET)
 	public ModelAndView loginform() {
 		mav.setViewName("login/loginform");
 		return mav;
 	}
 
-	// Ajax ¹æ½ÄÀ¸·Î ·Î±×ÀÎ °á°ú Àü¼Û( 2 °ª ³ª¿Ã °æ¿ì ·Î±×ÀÎ ¼º°øÀ¸·Î setSession ¸Þ¼Òµå ½ÇÇà )
+	// Ajax ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½( 2 ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ setSession ï¿½Þ¼Òµï¿½ ï¿½ï¿½ï¿½ï¿½ )
 	@ResponseBody
-	@RequestMapping(value = "start.whame", method = RequestMethod.POST)
+	@RequestMapping(value = "login.whame", method = RequestMethod.POST)
 	public int loginsuccess(MemberVO vo){
 		int result = service.login(vo);
 		if(result == 2)
@@ -43,11 +43,11 @@ public class LoginController {
 		return result;
 	}
 	
-	// ·Î±×¾Æ¿ô ¸Þ¼Òµå
+	// ï¿½Î±×¾Æ¿ï¿½ ï¿½Þ¼Òµï¿½
 	@RequestMapping(value = "logout.whame")
 	public String logout(SessionStatus session){
 		session.setComplete();
-		return "redirect:start.whame";
+		return "redirect:main.whame";
 	}
 	
 }

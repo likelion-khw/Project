@@ -1,73 +1,49 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link
-	href="https://fonts.googleapis.com/css?family=Amaranth|Bad+Script|Farsan"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-<script src="resources/jquery-3.1.1.min.js"></script>
 
-<title>·Î±×ÀÎ Æû</title>
 <style>
-body {
-	text-align: center;
+.loginform{
+	width: 350px;
+	padding-top: 7%;
 }
-
-h1 {
-	font-family: 'Bad Script', cursive;
+.loginbtn{
+	margin-bottom:20px;
 }
-
-h3 {
-	font-family: 'Barrio', cursive;
-}
-
-table {
-	width: 400px;
-	margin: auto;
-	margin-top: 100px;
-	text-align: center;
-	background-color: rgba(255, 255, 255, 0.5);
-	font-family: 'Farsan', cursive;
-}
-
-th, td {
-	font-size: 20px;
-	text-align: center;
-}
-
-td {
-	font-size: 20px
+.snslogin{
+	margin-top:20px;
 }
 </style>
-</head>
+<div class="container loginform">
+	<div class="center-align">
+			<div name="header">
+				<i class="large material-icons">account_circle</i>
+			</div>
+			<div name="input">
+				<div class="input-field">
+			      <input value="" id="userid" type="text" class="validate" name="userid">
+			      <label class="active" for="userid">ì•„ì´ë””</label>
+			    </div>
+				<div class="input-field">
+			      <input id="pw" type="password" class="validate" name="pw">
+			      <label class="active" for="pw">íŒ¨ìŠ¤ì›Œë“œ</label>
+			    </div>
+			</div>
+			<div name="log">
+				<input type="checkbox" id="log" />
+				<label for="log">ë¡œê·¸ì¸ìœ ì§€</label> 
+			</div><br>
+			<div class="loginbtn">
+				<input type="button" value="ë¡œê·¸ì¸" class="btn black" id="login" style="width:300px"><br>
+			</div>
+			<a href="">ì•„ì´ë””&íŒ¨ìŠ¤ì›Œë“œ ì°¾ê¸°</a> / <a href="">íšŒì›ê°€ì…</a>
+			<div class="snslogin">
+				<input type="button" value="ì¹´ì¹´ì˜¤í†¡ ë¡œê·¸ì¸" class="btn orange" id="login">
+				<input type="button" value="í˜ì´ìŠ¤ë¶ ë¡œê·¸ì¸" class="btn blue" id="login">
+			</div>
+	</div>
+</div>
 
-<body style="background-color:;">
-
-	<table class="centered">
-		<tr>
-			<td colspan="2"><h1
-					class="card-panel #546e7a blue-grey darken-3">Login Form</h1></td>
-		</tr>
-		<tr>
-			<th>ID :</th>
-			<td><input type="text" name="userid" value="" id="userid"></td>
-		</tr>
-		<tr>
-			<th>PASSWORD</th>
-			<td><input type="password" name="pw" id="pw"></td>
-		</tr>
-		<tr>
-			<td colspan="2"><input type="button" value="login"
-				class="waves-effect waves-teal btn-flat" id="login"></td>
-		</tr>
-	</table>
-</body>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#login').on('click', function() {
@@ -76,18 +52,15 @@ td {
 			var msg;
 
 			if (userid == "" || pw == "") {
-				if(userid == "")
-					{
-						msg = "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.";
-					}
-				else
-					{
-						msg = "ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇÏ¼¼¿ä";
-					}
+				if (userid == "") {
+					msg = "ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”.";
+				} else {
+					msg = "íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì„¸ìš”";
+				}
 				alert(msg);
 			} else {
 				$.ajax({
-					url : 'start.whame',
+					url : 'login.whame',
 					type : 'post',
 					data : {
 						'userid' : userid,
@@ -95,15 +68,15 @@ td {
 					},
 					success : function(result) {
 						if (result == 0) {
-							alert("ÇØ´ç ¾ÆÀÌµğ´Â ¾ø½À´Ï´Ù.")
+							alert("í•´ë‹¹ ì•„ì´ë””ëŠ” ì—†ìŠµë‹ˆë‹¤.")
 							$('#userid').val("");
 							$('#pw').val("");
 						} else if (result == 1) {
-							alert("ÆĞ½º¿öµå°¡ ´Ù¸¨´Ï´Ù.")
+							alert("íŒ¨ìŠ¤ì›Œë“œê°€ ë‹¤ë¦…ë‹ˆë‹¤.")
 							$('#userid').val(userid);
 							$('#pw').val("");
 						} else if (result == 2) {
-							$(location).attr('href','index.whame');
+							$(location).attr('href', 'main.whame');
 						}
 					}
 				});
@@ -111,5 +84,3 @@ td {
 		});
 	})
 </script>
-
-</html>

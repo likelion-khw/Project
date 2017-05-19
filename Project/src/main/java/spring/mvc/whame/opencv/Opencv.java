@@ -1,9 +1,6 @@
 package spring.mvc.whame.opencv;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-
-import javax.imageio.ImageIO;
 
 import org.bytedeco.javacpp.FloatPointer;
 import org.bytedeco.javacpp.opencv_core;
@@ -14,24 +11,23 @@ import org.bytedeco.javacv.Java2DFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.springframework.stereotype.Component;
 
-import spring.mvc.whame.aws.S3Util;
-
 @Component
 public class Opencv {
 
 	public String runOpencv(BufferedImage imgurl, ImageVO tvo, String imgurlString) throws Exception {
+		String filename = imgurlString.split("StoreTitle/|[?]")[1];
 		opencv_core.Mat img = Mat2(imgurl);
 
-		// ¿ÞÂÊ »ó´Ü
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		opencv_core.Point p0 = new opencv_core.Point(Integer.parseInt(tvo.getOne_xy()[0]),
 				Integer.parseInt(tvo.getOne_xy()[1]));
-		// ¿À¸¥ÂÊ »ó´Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		opencv_core.Point p1 = new opencv_core.Point(Integer.parseInt(tvo.getFour_xy()[0]),
 				Integer.parseInt(tvo.getFour_xy()[1]));
-		// ¿ÞÂÊ ÇÏ´Ü
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½
 		opencv_core.Point p2 = new opencv_core.Point(Integer.parseInt(tvo.getTwo_xy()[0]),
 				Integer.parseInt(tvo.getTwo_xy()[1]));
-		// ¿À¸¥ÂÊ ÇÏ´Ü
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï´ï¿½
 		opencv_core.Point p3 = new opencv_core.Point(Integer.parseInt(tvo.getThree_xy()[0]),
 				Integer.parseInt(tvo.getThree_xy()[1]));
 
@@ -55,8 +51,7 @@ public class Opencv {
 
 		opencv_imgproc.warpPerspective(img, warpImg, trans, new opencv_core.Size((int) maxWidth, (int) maxHeiht));
 
-		String filename = imgurlString.split("StoreTitle/|[?]")[1];
-//		aws Å¬¶ó¿ìµå»ç¿ë½Ã »ç¿ëµÉ ÆÄÀÏ º¯È¯ ¹æ½Ä
+//		aws Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ï¿½
 //		String exten = filename.split("\\.")[1];
 //		BufferedImage warpB = Buffered2(warpImg);
 		
@@ -66,8 +61,8 @@ public class Opencv {
 //		filename = s3.fileUpload("whame01/warping", f);
 		
 		
-		// ¿ÍÇÎÇÑ ÀÌ¹ÌÁö¸¦ ÀúÀåÇÒ °æ·Î.
-		String target = "C:/image/warping/" + filename;
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½.
+		String target = "/Users/woong/Desktop/" + filename;
 		opencv_imgcodecs.imwrite(target, warpImg);
 		
 		return target;
@@ -75,7 +70,6 @@ public class Opencv {
 
 	public opencv_core.Mat Mat2(BufferedImage imgurl) {
 		OpenCVFrameConverter.ToIplImage cv = new OpenCVFrameConverter.ToIplImage();
-		// OpenCVFrameConverter.ToMat cv = new OpenCVFrameConverter.ToMat();
 		Java2DFrameConverter jcv = new Java2DFrameConverter();
 		return cv.convertToMat(jcv.convert(imgurl));
 	}

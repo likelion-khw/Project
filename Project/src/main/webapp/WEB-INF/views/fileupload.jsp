@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR" import="spring.mvc.whame.login.*"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" import="spring.mvc.whame.login.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,11 +8,11 @@
 </head>
 <body>
 <% MemberVO membervo = (MemberVO)session.getAttribute("memberVO"); %>
-<%= membervo.getUserid() %>´Ô °£ÆÇÀÌ¹ÌÁö¸¦ ¾÷·ÎµåÇÏ¼¼¿ä.
+<%= membervo.getUserid() %>ë‹˜ ê°„íŒì´ë¯¸ì§€ë¥¼ ì—…ë¡œë“œí•˜ì„¸ìš”.
 <!-- showinfo.whame -->
 <form action="image.whame" method="post" enctype="multipart/form-data">
-	ÀÌ¹ÌÁöÆÄÀÏ : <input type="file" name="imagefile"><br>
-	<input type="submit" value="Àü¼ÛÇÏ±â">
+	ì´ë¯¸ì§€íŒŒì¼ : <input type="file" name="imagefile"><br>
+	<input type="submit" value="ì „ì†¡í•˜ê¸°">
 </form>
 </body>
 </html>
