@@ -16,16 +16,7 @@
 
 package spring.mvc.whame.vision;
 
-import com.google.common.collect.ImmutableSet;
-
-import opennlp.tools.stemmer.Stemmer;
-import opennlp.tools.tokenize.Tokenizer;
-import opennlp.tools.tokenize.TokenizerModel;
-
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,12 +24,22 @@ import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.stream.Stream;
 
+import com.google.common.collect.ImmutableSet;
+
+import opennlp.tools.stemmer.Stemmer;
+import opennlp.tools.tokenize.Tokenizer;
+import opennlp.tools.tokenize.TokenizerModel;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
 public class Index {
 	private static final int TOKEN_DB = 0;
 	private static final int DOCS_DB = 1;
 
 	public static TokenizerModel getEnglishTokenizerMeModel() throws IOException {
-		try (InputStream modelIn = new FileInputStream("/Users/woong/git/WhameProject/Project/en-token.bin")) {
+		try (InputStream modelIn = new FileInputStream("C:/Users/myeongeun/git/WhameProject2/Project/en-token.bin")) {
+			
 			return new TokenizerModel(modelIn);
 		}
 	}

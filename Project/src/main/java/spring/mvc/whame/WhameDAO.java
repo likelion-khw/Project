@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import spring.mvc.whame.color.ColorClass;
 import spring.mvc.whame.color.ColorVO;
-import spring.mvc.whame.login.MemberVO;
+import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -78,6 +78,10 @@ public class WhameDAO {
 		return store_code;
 	}
 	
+	public void setLocation(LocationVO lvo){
+		session.insert("whame.setLocation", lvo);
+	}
+	
 	public List<TypeVO> getType(){
 		List<TypeVO> test = session.selectList("whame.getType");
 		System.out.println(test.size());
@@ -97,40 +101,10 @@ public class WhameDAO {
 		List<Integer> count = new ArrayList<Integer>();
 		System.out.println("whameText: " +whamevo.getText().get(0).getText());
 		
-/*		for(int listnum=0; listnum<whamevo.getText().size(); listnum++){
-			for(int i=0; i < whamevo.getText().get(listnum).getText().length()-2 ; i++){
-				String twotext = whamevo.getText().get(listnum).getText().substring(i, i+2);
-				codeList = session.selectList("whame.searchInfoText", twotext);
-				for(Integer ii : codeList){
-					System.out.println(ii);
-					count.add(ii);				
-				}
-			}
-			
+		List<Integer> l_code = session.selectList("whame.searchLoc", whamevo);
+		for(Integer vo : l_code){
+			System.out.println("dao 위도경도 결과 " + vo);
 		}
-		
-		for(TextVO text : whamevo.getText()){
-			String textString = text.getText();
-			codeList = session.selectList("whame.searchInfoText", textString);
-			if(codeList != null){
-				for(Integer i : codeList){
-					count.add(i);				
-				}
-			}
-		}
-		SearchVO searchvo = new SearchVO();
-		searchvo.setColor(whamevo.getColor());
-		searchvo.setRcode(whamevo.getRcode());
-		for(TextVO text : whamevo.getText()){
-			searchvo.setText(text.getText());
-			codeList = session.selectList("whame.searchInfoColor", searchvo);
-			System.out.println(codeList);
-			if(codeList != null){
-				for(Integer i : codeList){
-					count.add(i);				
-				}
-			}
-		}*/
 		if(whamevo.getText().get(0).getText().equals("")){
 			codeList = session.selectList("whame.searchColor", whamevo);
 			if(codeList.size() != 0){

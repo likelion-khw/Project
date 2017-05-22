@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -55,6 +56,12 @@ public class WhameServiceImpl implements WhameService{
 		return result;
 	}
 
+	@Override
+	public void setLocation(LocationVO lvo) {
+		dao.setLocation(lvo);
+	}
+
+	
 	@Override
 	public List<TypeVO> getType() {
 		return dao.getType();

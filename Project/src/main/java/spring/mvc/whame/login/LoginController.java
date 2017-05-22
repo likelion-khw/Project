@@ -19,7 +19,7 @@ public class LoginController {
 	LoginService service;
 	ModelAndView mav = new ModelAndView();
 	
-	// ���̵� �α��� �����ÿ� ���� �޼ҵ�( ���ǿ� �����ϱ� ���� )
+	// 占쏙옙占싱듸옙 占싸깍옙占쏙옙 占쏙옙占쏙옙占시울옙 占쏙옙占쏙옙 占쌨소듸옙( 占쏙옙占실울옙 占쏙옙占쏙옙占싹깍옙 占쏙옙占쏙옙 )
 	@ModelAttribute("memberVO")
 	public MemberVO setSession(MemberVO vo){
 		return vo;
@@ -27,6 +27,7 @@ public class LoginController {
 	
 	@RequestMapping(value="/")
 	public String main() {
+		System.out.println("test");
 		return "main/main";
 	}
 	
@@ -35,14 +36,15 @@ public class LoginController {
 		return "main/main";
 	}
 	
-	// �ʱ� �α��� ȭ��
+	// 占십깍옙 占싸깍옙占쏙옙 화占쏙옙
 	@RequestMapping(value = "login.whame", method = RequestMethod.GET)
 	public ModelAndView loginform() {
 		mav.setViewName("login/loginform");
+		System.out.println("test23242");
 		return mav;
 	}
 
-	// Ajax ������� �α��� ��� ����( 2 �� ���� ��� �α��� �������� setSession �޼ҵ� ���� )
+	// Ajax 占쏙옙占쏙옙占쏙옙占� 占싸깍옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙( 2 占쏙옙 占쏙옙占쏙옙 占쏙옙占� 占싸깍옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 setSession 占쌨소듸옙 占쏙옙占쏙옙 )
 	@ResponseBody
 	@RequestMapping(value = "login.whame", method = RequestMethod.POST)
 	public int loginsuccess(MemberVO vo){
@@ -54,7 +56,7 @@ public class LoginController {
 		return result;
 	}
 	
-	// �α׾ƿ� �޼ҵ�
+	// 占싸그아울옙 占쌨소듸옙
 	@RequestMapping(value = "logout.whame")
 	public String logout(SessionStatus session){
 		session.setComplete();

@@ -19,9 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import spring.mvc.whame.aws.S3Util;
 import spring.mvc.whame.color.ColorVO;
-import spring.mvc.whame.opencv.ImageTester;
 import spring.mvc.whame.opencv.ImageVO;
 import spring.mvc.whame.opencv.Opencv;
+import spring.mvc.whame.region.LocationVO;
+import spring.mvc.whame.region.MapTest;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -37,22 +38,22 @@ public class WhameController {
 	WhameService service;
 	
 	@Autowired
-	ImageTester imgtest;
-	
-	@Autowired
 	StoreVO enrollStore;
 	
 	String filepath = "";
-	String address="";
+	String address=""; 
+	double lat,lon;
 	
+	List<Double> difflal = new ArrayList<Double>(); 
+	
+
 	@RequestMapping(value = "fileupload.whame")
 	public String list() {
 		return "fileupload";
 	}
 
-	//�̹����� ���� OCR �� ���� ����
 	@RequestMapping(value = "showinfo.whame")
-	public ModelAndView getimage() throws Exception{/*@ModelAttribute(value = "storevo") StoreVO storevo*/
+	public ModelAndView getimage() throws Exception{
 		WhameVO whame = new WhameVO();
 		ModelAndView mav = new ModelAndView();
 		List<TextVO> result = service.ocr(filepath);
@@ -60,11 +61,16 @@ public class WhameController {
 
 		whame.setColor(color);
 		whame.setText(result);
-		mav.setViewName("body/showinfo");
+		whame.setLat(lat);
+		whame.setLon(lon);
+		whame.setDifflat(difflal.get(0));
+		whame.setDifflon(difflal.get(1));
+		mav.setViewName("signinfo");
 
 		int store_code = service.searchInfo(whame);
 		if (store_code == 0) {
-			mav.addObject("error", "등록된 가게 정보가 없습니다.");
+			System.out.println("李얠?媛??놁쓬");
+			mav.addObject("error", "?대떦 ?곗씠?곗젙蹂닿? ?놁뒿?덈떎.");
 			return mav;
 		} else {
 			List<MenuVO> menuList = service.getMenu(store_code);
@@ -92,7 +98,7 @@ public class WhameController {
 		String rcode2 = (String) request.getParameter("rcode2");
 		String detail = (String) request.getParameter("detail");
 		address = rcode1 +" " + rcode2 + " " + detail;
-		System.out.println("rcode�� : " + rcode1 + " " + rcode2);
+		System.out.println("rcode??: " + rcode1 + " " + rcode2);
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
 		
@@ -101,8 +107,9 @@ public class WhameController {
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// ���� ���ε�
+		// ?뚯씪 ?낅줈??
 		filepath = s3.fileUpload(bucketName, convFile);
+		System.out.println("enrollconnect==>"+filepath);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		System.out.println("=========enrollconnect imgurl======="+imgurl);
 		ModelAndView mav = new ModelAndView();
@@ -121,18 +128,20 @@ public class WhameController {
 		mav.addObject("typelist", typelist);
 		mav.addObject("address", address);
 		mav.setViewName("enrollsuccess");
-		System.out.println("enrollsuccess�� �̵�");
+		System.out.println("enrollsuccess濡??대룞");
 		return mav;
 	}
 
 	@RequestMapping(value = "menuUpload.whame", method = RequestMethod.POST)
-	public ModelAndView menuUpload(HttpServletRequest request) {
+	public ModelAndView menuUpload(HttpServletRequest request, @ModelAttribute("locationVO") LocationVO lvo) {
 		String[] menulist = request.getParameterValues("menulist");
-		String lat =  (String) request.getParameter("latitude");
-		String longi =  (String) request.getParameter("longitude");
-		System.out.println("�����浵"+lat+":"+longi);
 		int store_code = Integer.parseInt(request.getParameter("store_code"));
-
+		
+		lvo.setRcode(enrollStore.getRcode());
+		lvo.setStore_code(store_code);
+		System.out.println("menuupload==>"+lvo.getAddress());
+		System.out.println("lal ???=>"+lvo.getLat()+":::"+lvo.getLon());
+		service.setLocation(lvo);
 		System.out.println(menulist.length);
 
 		int[] menuListInt = new int[menulist.length];
@@ -158,42 +167,41 @@ public class WhameController {
 		return mav;
 	}
 
-	// ���� ���� ���ε�ÿ� ����Ǵ� �޼ҵ� ( AWS Ŭ���� ��� )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
-	public ModelAndView test(MultipartFile imagefile) throws Exception {
+	public ModelAndView test(MultipartFile imagefile, HttpServletRequest request) throws Exception {
+		lat = Double.parseDouble(request.getParameter("lat"));
+		lon = Double.parseDouble(request.getParameter("lon"));
+		System.out.println("lal"+lat+":"+lon);
+		
+		MapTest mt =  new MapTest();
+		difflal = mt.run(lat, 2000);
+		System.out.println("?꾨룄 諛섍꼍 500m====>"+ (lat-difflal.get(0)) + " ~ " + (lat+difflal.get(0)));
+		System.out.println("寃쎈룄 諛섍꼍 500m====>"+ (lon-difflal.get(0)) + " ~ " + (lon+difflal.get(0)));
+		
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame01/StoreTitle";
-		
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
-		
-//		File imgfile = new File("test.jpg");
-//		imgtest.resizeImageAsJPEG(convFile, imgfile, 700);
 
-		// Bucket ����(�빮�ڴ� ���ԵǸ� �ȵ�.)
-		// s3.createBucket("whame00");
-
-		// s3.createFolder(bucketName, "testfol1");
-
-		// ���� ���ε�
+		// ?뚯씪 ?낅줈??
 		filepath = s3.fileUpload(bucketName, convFile);
+		System.out.println("image-filepath==========>"+filepath);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		mav.addObject("imgurl", imgurl);
 		mav.setViewName("body/image");
 		return mav;
 	}
 
-	// ���ε� �̹����� �޾Ƽ� Opencv ���� �� �̹��� ��� ��ȯ ( filename )
 	@RequestMapping(value = "result.whame", method = RequestMethod.POST)
 	public void test1(ImageVO imagevo, String imgurl) throws Exception {
 		Opencv ivo = new Opencv();
-		System.out.println("run����---------"+imgurl);
+		System.out.println("run?먮뱾?닿컝---------"+imgurl);
 		BufferedImage img = ImageIO.read(new URL(imgurl));
 		filepath = ivo.runOpencv(img,imagevo,imgurl);
 	}
 
 	
-	@RequestMapping(value="map.whame", method=RequestMethod.GET) 
+/*	@RequestMapping(value="map.whame", method=RequestMethod.GET) 
 	public  ModelAndView mapform(String userid){ 
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("map"); 
@@ -212,6 +220,6 @@ public class WhameController {
 		mav.setViewName("map2"); 
 		return mav; 
 	  }
-	 
+	 */
 
 }

@@ -1,10 +1,9 @@
 package spring.mvc.whame;
 
-import java.awt.Menu;
 import java.util.List;
 
 import spring.mvc.whame.color.ColorVO;
-import spring.mvc.whame.login.MemberVO;
+import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -19,6 +18,8 @@ public interface WhameService {
 	public int getrcodeNum(String rname);
 
 	public int enroll(StoreVO storevo, String filename);
+	public void setLocation(LocationVO lvo);
+	
 	public List<TypeVO> getType();
 	public int insertmenu(List<MenuVO> menuList);
 	public int searchInfo(WhameVO whamevo);
