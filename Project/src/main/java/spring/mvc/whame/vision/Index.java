@@ -38,7 +38,7 @@ public class Index {
 	private static final int DOCS_DB = 1;
 
 	public static TokenizerModel getEnglishTokenizerMeModel() throws IOException {
-		try (InputStream modelIn = new FileInputStream("C:/Users/khw_com/workspace/whame1/en-token.bin")) {
+		try (InputStream modelIn = new FileInputStream("./en-token.bin")) {
 			return new TokenizerModel(modelIn);
 		}
 	}
