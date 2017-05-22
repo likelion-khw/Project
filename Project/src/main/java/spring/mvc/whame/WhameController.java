@@ -55,6 +55,23 @@ public class WhameController {
 		return "fileupload";
 	}
 
+	//카카오 화면
+	@RequestMapping(value = "kakao.whame")
+	public ModelAndView sendPosition(){
+		ModelAndView modelView = new ModelAndView();
+			modelView.setViewName("kakao/sendPosition");
+				return modelView;
+	}
+	
+	//카카오 기능작동
+	@RequestMapping(value = "kakaoDo.whame")
+	public ModelAndView sendPosition1(){
+		ModelAndView modelView = new ModelAndView();
+			modelView.setViewName("kakao/sendPosition1");
+				return modelView;
+	}
+	
+	
 	//이미지에 대한 OCR 및 색깔 추출
 	@RequestMapping(value = "showinfo.whame")
 	public ModelAndView getimage() throws Exception{/*@ModelAttribute(value = "storevo") StoreVO storevo*/
