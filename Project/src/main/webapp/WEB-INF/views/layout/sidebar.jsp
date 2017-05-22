@@ -59,6 +59,7 @@
       </li>
  </ul>
  
+
 <script type="text/javascript">
 	$('.button-collapse').sideNav();
 	function logout(){

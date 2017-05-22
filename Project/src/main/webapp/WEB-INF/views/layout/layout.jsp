@@ -14,7 +14,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-	
+
 <style type="text/css">
 header, main, footer {
 	padding-left: 240px;
@@ -32,18 +32,14 @@ header, main, footer {
 <body>
 	<header> <tiles:insertAttribute name="header" /> </header>
 	<div class="row">
-		<div class="col s12 m4 l3">
-			<tiles:insertAttribute name="sidebar" />
-		</div>
-		<main>
-			<tiles:insertAttribute name="body" />
-		</main>
+		<tiles:insertAttribute name="sidebar" />
+		<main> <tiles:insertAttribute name="body" /> </main>
 	</div>
-
 </body>
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('.modal').modal();
 	})
 </script>
 </html>

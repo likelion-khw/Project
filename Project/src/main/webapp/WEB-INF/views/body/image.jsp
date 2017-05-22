@@ -1,16 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<title>Insert title here</title>
-<style type="text/css">
+<style>
+.imageform{
+	margin-top : 20px;
+}
+
+#loading{
+	margin-top : 30%;
+}
 </style>
 <script type="text/javascript">
+	var img = new Image();
    function draw() {
-      var img = new Image();
       var canvas = document.getElementById('sample');
       var ctx = canvas.getContext("2d");
 
@@ -18,22 +19,27 @@
          canvas.width = img.width;
          canvas.height = img.height;
          ctx.drawImage(img, 0, 0);
+         $('#loading').hide();
+         $('#images').show();
       };
-	
+
       img.src = "${imgurl}";
    }
 </script>
-</head>
 <body onload="draw();">
-
-   <canvas id="sample" width=100 height=100></canvas>
-   <br>
-   <input type="button" value="재표시" id="del">
-   <input type="button" value="전송" id="send">
-
+	<div class="container imageform center-align">
+		<div class="images" id="images">
+		   <canvas id="sample" style="max-width:1024px; max-height:800px; width:100%; height:100%; padding-bottom:20px;"></canvas>
+		   <br>
+		   <input type="button" class="btn" value="재표시" id="del">
+		   <input type="button" class="btn" value="전송" id="send">
+		</div>
+		<jsp:include page="../layout/loading.jsp"/>
+	</div>
+	   
    <script type="text/javascript">
       $(document).ready(function() {
-
+         $('#images').hide();
          var one;
          var two;
          var three;
@@ -43,26 +49,30 @@
          var canvas = document.getElementById('sample');
          var ctx = canvas.getContext('2d');
 
-         $('#sample').on('click', function() {
+         $('#sample').on('click', function(event) {
+        	var rX = img.width / $('#sample').width();
+     		var rY = img.height / $('#sample').height();
+    		 
             ctx.fillStyle = "#FF0000";
             if (number == 1) {
-               one = event.offsetX +":"+ event.offsetY;
-               ctx.fillRect(event.offsetX, event.offsetY, 7, 7);
+               one = parseInt(event.offsetX * rX) +":"+ parseInt(event.offsetY * rY);
+               ctx.fillRect(parseInt(event.offsetX * rX), parseInt(event.offsetY * rY), 50, 50);
                number++
             } else if (number == 2) {
-               two = event.offsetX +":"+ event.offsetY;
-               ctx.fillRect(event.offsetX, event.offsetY, 7, 7);
+               two = parseInt(event.offsetX * rX) +":"+ parseInt(event.offsetY * rY);
+               ctx.fillRect(parseInt(event.offsetX * rX), parseInt(event.offsetY * rY), 50, 50);
                number++;
             } else if (number == 3) {
-               three = event.offsetX +":"+ event.offsetY;
-               ctx.fillRect(event.offsetX, event.offsetY, 7, 7);
+               three = parseInt(event.offsetX * rX) +":"+ parseInt(event.offsetY * rY);
+               ctx.fillRect(parseInt(event.offsetX * rX), parseInt(event.offsetY * rY), 50, 50);
                number++;
             } else if (number == 4) {
-               four = event.offsetX +":"+ event.offsetY;
-               ctx.fillRect(event.offsetX, event.offsetY, 7, 7);
+               four = parseInt(event.offsetX * rX) +":"+ parseInt(event.offsetY * rY);
+               ctx.fillRect(parseInt(event.offsetX * rX), parseInt(event.offsetY * rY), 50, 50);
                number++;
             } else if (number == 5) {
                alert("4개의 모서리를 전부 클릭하셨습니다.\n 전송 버튼을 눌러주세요");
+               alert(one +"/"+ two+"/"+ three+"/"+ four);
             }
          });
 
@@ -82,19 +92,15 @@
                   'four' : four,
                   'imgurl' : "${imgurl}"
                },
-                success:function(){ 
+                success:function(result){ 
             	   alert("Success");  
-            	   location.href="enrollsuccess.whame"; 
-               },
-               error : function(request,status,error){alert("code:"+request.status+"\n\n"+"message:"+request.responseText+"\n\n"+"error:"+error);}, 
-               complete : function(){alert("실행완료!")}
+            	   location.href="showinfo.whame";
+               }              
             })
 
-			
             
          });
       })
    </script>
 
 </body>
-</html>
