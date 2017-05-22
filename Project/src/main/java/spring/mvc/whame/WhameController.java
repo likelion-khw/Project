@@ -121,11 +121,6 @@ public class WhameController {
 
 	@RequestMapping(value = "enrollsuccess.whame")
 	public ModelAndView enrollsuccess() {
-		System.out.println("비지니스코드 : " + enrollStore.getBusiness_code());
-		System.out.println(enrollStore.getRcode());
-		System.out.println(enrollStore.getUserid());
-		System.out.println(enrollStore.getOperating_time());
-		System.out.println(enrollStore.getStore_name());
 
 		int store_code = service.enroll(enrollStore, filepath);
 		List<TypeVO> typelist = service.getType();
