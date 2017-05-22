@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -22,6 +23,16 @@ public class LoginController {
 	@ModelAttribute("memberVO")
 	public MemberVO setSession(MemberVO vo){
 		return vo;
+	}
+	
+	@RequestMapping(value="/")
+	public String main() {
+		return "main/main";
+	}
+	
+	@RequestMapping(value="main.whame")
+	public String mainform() {
+		return "main/main";
 	}
 	
 	// �ʱ� �α��� ȭ��
@@ -48,6 +59,12 @@ public class LoginController {
 	public String logout(SessionStatus session){
 		session.setComplete();
 		return "redirect:main.whame";
+	}
+	
+	@RequestMapping(value="sign.whame", method=RequestMethod.POST)
+	public void signnew(MemberVO vo, MultipartFile image){
+		System.out.println(vo.getUserid() + " /" + vo.getPw());
+		System.out.println(image.getOriginalFilename());
 	}
 	
 }

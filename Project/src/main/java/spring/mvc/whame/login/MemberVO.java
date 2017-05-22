@@ -7,6 +7,7 @@ public class MemberVO {
 	
 	private String userid;
 	private String pw;
+	private String userimage;
 	
 	public MemberVO() {	}
 
@@ -30,6 +31,14 @@ public class MemberVO {
 
 	public void setPw(String pw) {
 		this.pw = pw;
+	}
+
+	public String getUserimage() {
+		return userimage;
+	}
+
+	public void setUserimage(String userimage) {
+		this.userimage = userimage;
 	}
 	
 	
