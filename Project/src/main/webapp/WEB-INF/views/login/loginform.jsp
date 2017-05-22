@@ -103,6 +103,24 @@ td {
 							$('#userid').val(userid);
 							$('#pw').val("");
 						} else if (result == 2) {
+							
+							if(typeof(localStorage)=='undefined'){	// 브라우저 지원 안될 시 출력							
+								alert("not support 'localStorage'");
+
+							} else {
+								alert("success 'localStorage'");
+								
+								try{
+									localStorage.setItem('userid', userid);
+									alert(localStorage.getItem('userid'));
+
+								} catch(e){
+									if(e==QUOTA_EXCEEDED_ERR){
+										alert("over stack");//할당량 초과 데이터저장 불가
+									}
+									alert("try execution fail");
+								}//try
+							}//if
 							$(location).attr('href','index.whame');
 						}
 					}

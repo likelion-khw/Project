@@ -18,12 +18,12 @@
 </head>
 <body>
 	<%=membervo.getUserid()%>님 환영합니다.
-
 	<table border="1">
 		<tr>
 			<td><a href="fileupload.whame">메뉴찾기(간판이미지 업로드)</a></td>
 			<td><a href="enroll.whame">간판등록하기</a></td>
 			<td><a href="history.whame">히스토리</a></td>
+			<td><a href="kakao.whame">카카오톡으로 위치전송</a></td>
 	</table>
 
 	<input type="button" value="로그아웃" id="logout">
@@ -32,7 +32,9 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+
 		$('#logout').on('click', function() {
+			localStorage.removeItem('userid'); //로컬 저장데이터 삭제
 			$(location).attr('href', 'logout.whame');
 		});
 	})
