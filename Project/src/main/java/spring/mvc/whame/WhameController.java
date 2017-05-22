@@ -115,7 +115,7 @@ public class WhameController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("imgurl", imgurl);
 		enrollStore = storevo;
-		mav.setViewName("image_e");
+		mav.setViewName("body/image_e");
 		return mav;
 	}
 
@@ -175,8 +175,8 @@ public class WhameController {
 		
 		MapTest mt =  new MapTest();
 		difflal = mt.run(lat, 2000);
-		System.out.println("?꾨룄 諛섍꼍 500m====>"+ (lat-difflal.get(0)) + " ~ " + (lat+difflal.get(0)));
-		System.out.println("寃쎈룄 諛섍꼍 500m====>"+ (lon-difflal.get(0)) + " ~ " + (lon+difflal.get(0)));
+		System.out.println("위도 반경 500m====>"+ (lat-difflal.get(0)) + " ~ " + (lat+difflal.get(0)));
+		System.out.println("경도 반경 500m====>"+ (lon-difflal.get(0)) + " ~ " + (lon+difflal.get(0)));
 		
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame01/StoreTitle";

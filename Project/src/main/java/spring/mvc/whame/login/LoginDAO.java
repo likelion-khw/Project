@@ -15,6 +15,7 @@ public class LoginDAO {
 	
 	public int login(MemberVO membervo)
 	{
+		System.out.println("login");
 		mvo = null;
 		mvo = session.selectOne("login.login", membervo);
 		if(mvo == null)

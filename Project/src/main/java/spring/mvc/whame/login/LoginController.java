@@ -40,7 +40,6 @@ public class LoginController {
 	@RequestMapping(value = "login.whame", method = RequestMethod.GET)
 	public ModelAndView loginform() {
 		mav.setViewName("login/loginform");
-		System.out.println("test23242");
 		return mav;
 	}
 
