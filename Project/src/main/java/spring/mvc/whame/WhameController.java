@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import spring.mvc.whame.aws.S3Util;
 import spring.mvc.whame.color.ColorVO;
-import spring.mvc.whame.opencv.ImageTester;
 import spring.mvc.whame.opencv.ImageVO;
 import spring.mvc.whame.opencv.Opencv;
 import spring.mvc.whame.region.RegionVO;
@@ -35,9 +34,6 @@ public class WhameController {
 	
 	@Autowired
 	WhameService service;
-	
-	@Autowired
-	ImageTester imgtest;
 	
 	@Autowired
 	StoreVO enrollStore;
