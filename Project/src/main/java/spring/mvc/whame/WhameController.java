@@ -8,17 +8,22 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import spring.mvc.whame.aws.S3Util;
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.history.HistoryVO;
+import spring.mvc.whame.login.MemberVO;
 import spring.mvc.whame.opencv.ImageVO;
 import spring.mvc.whame.opencv.Opencv;
 import spring.mvc.whame.region.LocationVO;
@@ -201,25 +206,15 @@ public class WhameController {
 	}
 
 	
-/*	@RequestMapping(value="map.whame", method=RequestMethod.GET) 
-	public  ModelAndView mapform(String userid){ 
+	@RequestMapping(value="history.whame", method=RequestMethod.GET) 
+	public  ModelAndView history(HttpSession session){ 
+		MemberVO membervo = (MemberVO)session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("map"); 
+		List<HistoryVO> list = service.getHistoryList(membervo.getUserid());
+		mav.addObject("historylist",list);
+		mav.setViewName("body/history"); 
 		return mav; 
 	  }
 	
-	@RequestMapping(value="map.whame", method=RequestMethod.POST) 
-	public  ModelAndView mapsuccess(HttpServletRequest request){ 
-		String lal = (String) request.getParameter("lal");
-		System.out.println(lal);
-		String[] lalSplit = lal.split("[(]|, |[)]");
-		System.out.println("split-----" + lalSplit[1] +":"+lalSplit[2]);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("lal", lal);
-		mav.setViewName("map2"); 
-		return mav; 
-	  }
-	 */
 
 }
