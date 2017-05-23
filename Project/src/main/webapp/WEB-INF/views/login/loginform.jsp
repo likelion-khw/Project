@@ -68,16 +68,28 @@
 						'pw' : pw,
 					},
 					success : function(result) {
-						if (result == 0) {
+						if (result[1] == 0) {
 							alert("해당 아이디는 없습니다.")
 							$('#userid').val("");
 							$('#pw').val("");
-						} else if (result == 1) {
+						} else if (result[1] == 1) {
 							alert("패스워드가 다릅니다.")
 							$('#userid').val(userid);
 							$('#pw').val("");
-						} else if (result == 2) {
-							$(location).attr('href', 'main.whame');
+						} else if (result[1] == 2) {
+							$.ajax({
+								url : 'success.whame',
+								type : 'post',
+								data : {
+									'userid' : result[0].userid,
+									'pw' : result[0].pw,
+									'userimage' : result[0].userimage
+								},
+								success : function() {
+										$(location).attr('href','/whame');
+									}
+								
+							})
 						}
 					}
 				});

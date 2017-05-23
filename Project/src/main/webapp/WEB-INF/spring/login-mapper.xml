@@ -5,4 +5,8 @@
 	<select id='login' resultType="membervo" parameterType="membervo">
  		select * from vm_user where userid = #{userid}
  	</select> 
+ 	
+ 	<insert id="signnew" parameterType="membervo">
+ 		insert into vm_user values(#{userid},#{pw},#{userimage})
+ 	</insert>
 </mapper>

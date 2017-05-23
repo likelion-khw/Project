@@ -122,7 +122,7 @@ $(document).ready(
 					},
 					success : function(result) {
 						alert("Success");
-						location.href = "showinfo.whame";
+						location.href = "enrollsuccess.whame";
 					}
 				})
 

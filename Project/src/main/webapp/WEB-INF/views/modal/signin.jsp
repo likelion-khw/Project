@@ -23,12 +23,12 @@
 		      <div class="row">
 		        <div class="input-field col s12">
 		          <i class="material-icons prefix">account_circle</i>
-		          <input id="userid" type="email" class="validate" name="userid">
+		          <input id="sign_id" type="email" class="validate" name="userid">
          		  <label for="email" data-error="이메일형식!" data-success="확인완료">사용자 아이디</label>
 		        </div>
 		        <div class="input-field col s12">
 		          <i class="material-icons prefix">https</i>
-		          <input id="pw" type="password" class="validate" name="pw">
+		          <input id="sign_pw" type="password" class="validate" name="pw">
 		          <label for="pw" id="passwordl">패스워드</label>
 		        </div>
 		        <div class="input-field col s12">
@@ -49,46 +49,4 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-      $(document).ready(function() {
-          var oripw;
-          var checkpw;
-          
-          $('#pw').on('change',function(){
-			oripwd = $('#pw').val();
-			if(oripwd.length < 6)
-				{
-					alert('패스워드는 6자리 이상 입력하세요.');
-				}	
-          });
-
-          $('#pwcheck').on('change',function(){
-  			checkpwd = $('#pwcheck').val();
-
-  			if(oripwd != checkpwd)
-  	  			{
-					alert('패스워드가 다릅니다.');
-  	  			}
-	  			
-            });
-
-          $('#img').on('click',function(){
-				$('#image').trigger('click');
-            });
-
-          $('#image').on('change',function(){
-        	  if (this.files && this.files[0]) {
-                  var reader = new FileReader(); 
-                  reader.onload = function (e) { 
-                      $('#userimg').attr('src', e.target.result);
-                  }                    
-                  reader.readAsDataURL(this.files[0]);
-              }
-        		
-            });
-
-          $('#success').on('click',function(){
-				$('#signnew').submit();
-             });
-      });
-</script>
+<script type="text/javascript" src="resources/js/signin_js.js"></script>

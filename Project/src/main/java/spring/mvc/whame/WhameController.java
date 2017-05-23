@@ -8,7 +8,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.apache.tiles.request.collection.MapEntryArrayValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import spring.mvc.whame.aws.S3Util;
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.login.MemberVO;
 import spring.mvc.whame.opencv.ImageVO;
 import spring.mvc.whame.opencv.Opencv;
 import spring.mvc.whame.region.RegionVO;
@@ -41,11 +44,6 @@ public class WhameController {
 	String filepath = "";
 	String address="";
 	
-	@RequestMapping(value = "fileupload.whame")
-	public String list() {
-		return "fileupload";
-	}
-
 	//�̹����� ���� OCR �� ���� ����
 	@RequestMapping(value = "showinfo.whame")
 	public ModelAndView getimage() throws Exception{/*@ModelAttribute(value = "storevo") StoreVO storevo*/
@@ -74,11 +72,18 @@ public class WhameController {
 	}
 
 	@RequestMapping(value = "enroll.whame", method = RequestMethod.GET)
-	public ModelAndView enrollform() {
+	public ModelAndView enrollform(HttpSession session) {
+		MemberVO vo = (MemberVO) session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
-		List<RegionVO> gu = service.getrcode();
-		mav.addObject("region", gu);
-		mav.setViewName("enrollform");
+		if(vo.getUserid() == null)
+		{
+			mav.setViewName("login/loginform");
+		}else{
+			
+			List<RegionVO> gu = service.getrcode();
+			mav.addObject("region", gu);
+			mav.setViewName("body/enrollform");
+		}
 		return mav;
 	}
 
@@ -92,7 +97,7 @@ public class WhameController {
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
 		
-		String bucketName = "whame01/StoreTitle";
+		String bucketName = "whame01/StoreMain";
 		MultipartFile imagefile = storevo.getImagefile();
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
@@ -104,7 +109,7 @@ public class WhameController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("imgurl", imgurl);
 		enrollStore = storevo;
-		mav.setViewName("image_e");
+		mav.setViewName("body/image_e");
 		return mav;
 	}
 
