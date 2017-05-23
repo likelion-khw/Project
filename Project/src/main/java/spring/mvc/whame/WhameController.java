@@ -15,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,6 +43,9 @@ public class WhameController {
 	@Autowired
 	StoreVO enrollStore;
 	
+	@Autowired
+	HistoryVO history;
+	
 	String filepath = "";
 	String address=""; 
 	double lat,lon;
@@ -58,7 +59,7 @@ public class WhameController {
 	}
 
 	@RequestMapping(value = "showinfo.whame")
-	public ModelAndView getimage() throws Exception{
+	public ModelAndView getimage(HttpSession session) throws Exception{
 		WhameVO whame = new WhameVO();
 		ModelAndView mav = new ModelAndView();
 		List<TextVO> result = service.ocr(filepath);
@@ -73,9 +74,17 @@ public class WhameController {
 		mav.setViewName("signinfo");
 
 		int store_code = service.searchInfo(whame);
+		
+		//history insert
+		MemberVO membervo = (MemberVO)session.getAttribute("memberVO");
+		history.setStore_code(store_code);
+		history.setSignimage(filepath);
+		history.setUserid(membervo.getUserid());
+		service.setHistory(history);
+		
 		if (store_code == 0) {
-			System.out.println("李얠?媛??놁쓬");
-			mav.addObject("error", "?대떦 ?곗씠?곗젙蹂닿? ?놁뒿?덈떎.");
+			System.out.println("찾은값 없음");
+			mav.addObject("error", "해당 데이터정보가 없습니다.");
 			return mav;
 		} else {
 			List<MenuVO> menuList = service.getMenu(store_code);
@@ -180,8 +189,6 @@ public class WhameController {
 		
 		MapTest mt =  new MapTest();
 		difflal = mt.run(lat, 2000);
-		System.out.println("위도 반경 500m====>"+ (lat-difflal.get(0)) + " ~ " + (lat+difflal.get(0)));
-		System.out.println("경도 반경 500m====>"+ (lon-difflal.get(0)) + " ~ " + (lon+difflal.get(0)));
 		
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame01/StoreTitle";
@@ -192,6 +199,7 @@ public class WhameController {
 		filepath = s3.fileUpload(bucketName, convFile);
 		System.out.println("image-filepath==========>"+filepath);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
+		
 		mav.addObject("imgurl", imgurl);
 		mav.setViewName("body/image");
 		return mav;

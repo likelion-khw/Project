@@ -27,5 +27,6 @@ public interface WhameService {
 	public List<MenuVO> getMenu(int store_code);
 	
 	public List<HistoryVO> getHistoryList(String userid);
+	public void setHistory(HistoryVO historyvo);
 	
 }
