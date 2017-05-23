@@ -23,5 +23,8 @@
 	<definition name="body/*" extends="layout">
 		<put-attribute name="body" value="/WEB-INF/views/body/{1}.jsp" />
 	</definition>
+	<definition name="history/*" extends="layout">
+		<put-attribute name="body" value="/WEB-INF/views/history/{1}.jsp" />
+	</definition>
 
 </tiles-definitions>

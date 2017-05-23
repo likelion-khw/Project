@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -75,7 +76,10 @@ public class WhameServiceImpl implements WhameService{
 		return dao.getMenu(store_code);
 	}
 	
-	
+	@Override
+	public List<HistoryVO> getHistoty(String userid){
+		return dao.getHistory(userid);
+	}	
 	
 	
 }

@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import spring.mvc.whame.aws.S3Util;
 import spring.mvc.whame.color.ColorVO;
-import spring.mvc.whame.opencv.ImageTester;
+import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.opencv.ImageVO;
 import spring.mvc.whame.opencv.Opencv;
 import spring.mvc.whame.region.RegionVO;
@@ -36,8 +36,7 @@ public class WhameController {
 	@Autowired
 	WhameService service;
 	
-	@Autowired
-	ImageTester imgtest;
+
 	
 	@Autowired
 	StoreVO enrollStore;
@@ -50,7 +49,7 @@ public class WhameController {
 		return "fileupload";
 	}
 
-	//�̹����� ���� OCR �� ���� ����
+	//占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙 OCR 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	@RequestMapping(value = "showinfo.whame")
 	public ModelAndView getimage() throws Exception{/*@ModelAttribute(value = "storevo") StoreVO storevo*/
 		WhameVO whame = new WhameVO();
@@ -64,7 +63,7 @@ public class WhameController {
 
 		int store_code = service.searchInfo(whame);
 		if (store_code == 0) {
-			mav.addObject("error", "등록된 가게 정보가 없습니다.");
+			mav.addObject("error", "�벑濡앸맂 媛�寃� �젙蹂닿� �뾾�뒿�땲�떎.");
 			return mav;
 		} else {
 			List<MenuVO> menuList = service.getMenu(store_code);
@@ -92,7 +91,7 @@ public class WhameController {
 		String rcode2 = (String) request.getParameter("rcode2");
 		String detail = (String) request.getParameter("detail");
 		address = rcode1 +" " + rcode2 + " " + detail;
-		System.out.println("rcode�� : " + rcode1 + " " + rcode2);
+		System.out.println("rcode占쏙옙 : " + rcode1 + " " + rcode2);
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
 		
@@ -101,7 +100,7 @@ public class WhameController {
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// ���� ���ε�
+		// 占쏙옙占쏙옙 占쏙옙占싸듸옙
 		filepath = s3.fileUpload(bucketName, convFile);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		System.out.println("=========enrollconnect imgurl======="+imgurl);
@@ -121,7 +120,7 @@ public class WhameController {
 		mav.addObject("typelist", typelist);
 		mav.addObject("address", address);
 		mav.setViewName("enrollsuccess");
-		System.out.println("enrollsuccess�� �̵�");
+		System.out.println("enrollsuccess占쏙옙 占싱듸옙");
 		return mav;
 	}
 
@@ -130,7 +129,7 @@ public class WhameController {
 		String[] menulist = request.getParameterValues("menulist");
 		String lat =  (String) request.getParameter("latitude");
 		String longi =  (String) request.getParameter("longitude");
-		System.out.println("�����浵"+lat+":"+longi);
+		System.out.println("占쏙옙占쏙옙占썸도"+lat+":"+longi);
 		int store_code = Integer.parseInt(request.getParameter("store_code"));
 
 		System.out.println(menulist.length);
@@ -158,7 +157,7 @@ public class WhameController {
 		return mav;
 	}
 
-	// ���� ���� ���ε�ÿ� ����Ǵ� �޼ҵ� ( AWS Ŭ���� ��� )
+	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占싸듸옙첼占� 占쏙옙占쏙옙풔占� 占쌨소듸옙 ( AWS 클占쏙옙占쏙옙 占쏙옙占� )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
 	public ModelAndView test(MultipartFile imagefile) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -170,12 +169,12 @@ public class WhameController {
 //		File imgfile = new File("test.jpg");
 //		imgtest.resizeImageAsJPEG(convFile, imgfile, 700);
 
-		// Bucket ����(�빮�ڴ� ���ԵǸ� �ȵ�.)
+		// Bucket 占쏙옙占쏙옙(占쎈문占쌘댐옙 占쏙옙占쌉되몌옙 占싫듸옙.)
 		// s3.createBucket("whame00");
 
 		// s3.createFolder(bucketName, "testfol1");
 
-		// ���� ���ε�
+		// 占쏙옙占쏙옙 占쏙옙占싸듸옙
 		filepath = s3.fileUpload(bucketName, convFile);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		mav.addObject("imgurl", imgurl);
@@ -183,11 +182,11 @@ public class WhameController {
 		return mav;
 	}
 
-	// ���ε� �̹����� �޾Ƽ� Opencv ���� �� �̹��� ��� ��ȯ ( filename )
+	// 占쏙옙占싸듸옙 占싱뱄옙占쏙옙占쏙옙 占쌨아쇽옙 Opencv 占쏙옙占쏙옙 占쏙옙 占싱뱄옙占쏙옙 占쏙옙占� 占쏙옙환 ( filename )
 	@RequestMapping(value = "result.whame", method = RequestMethod.POST)
 	public void test1(ImageVO imagevo, String imgurl) throws Exception {
 		Opencv ivo = new Opencv();
-		System.out.println("run����---------"+imgurl);
+		System.out.println("run占쏙옙占쏙옙載�---------"+imgurl);
 		BufferedImage img = ImageIO.read(new URL(imgurl));
 		filepath = ivo.runOpencv(img,imagevo,imgurl);
 	}
@@ -211,6 +210,21 @@ public class WhameController {
 		mav.addObject("lal", lal);
 		mav.setViewName("map2"); 
 		return mav; 
+	  }
+	@RequestMapping(value="history.whame", method=RequestMethod.GET) 
+	public  ModelAndView history(HttpServletRequest request){ 
+		String userid = (String) request.getParameter("userid");
+		System.out.println(userid);
+		
+		List<HistoryVO> history = service.getHistoty(userid);
+		System.out.println(history.size());
+		System.out.println(history.toString());
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("data", history.toString());
+		mav.addObject("length",history.size());
+		mav.setViewName("history/result"); 
+		return mav;
 	  }
 	 
 

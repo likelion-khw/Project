@@ -51,7 +51,7 @@
             <a class="collapsible-header">히스토리<i class="material-icons">arrow_drop_down</i></a>
             <div class="collapsible-body">
               <ul>
-                <li><a href="#!">뭘 넣지</a></li>
+                <li><a href="javascript:history()">지도보기</a></li>
               </ul>
             </div>
           </li>
@@ -70,5 +70,8 @@
 	}
 	function sign(){
 		$(location).attr('href', 'sign.whame');
+	}
+	function history(){
+		$(location).attr('href', 'history.whame?userid=test');
 	}
 </script>

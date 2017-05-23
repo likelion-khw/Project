@@ -105,11 +105,16 @@
 				from store s, store_text st, store_color sc
 				where s.store_code = st.store_code and sc.store_code = s.store_code
 				) m
-	  	<include refid="color_max" />  
+	  	<include refid="color_max" />
 	</select> 
 
 
 	<select id="getMenu" resultType="menuvo" parameterType="int">
 		select * from menu where store_code = #{store_code}
+	</select>
+		<select id="getHistory" resultType="historyvo" parameterType="list">
+		select d.store_code,lat, lon
+		from store_location e, store d, vm_user 
+		where e.store_code = d.store_code and upper(d.userid) like upper('%'||#{uerid}||'%')
 	</select>
 </mapper>

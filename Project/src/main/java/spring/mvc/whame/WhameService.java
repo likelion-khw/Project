@@ -4,6 +4,7 @@ import java.awt.Menu;
 import java.util.List;
 
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.login.MemberVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
@@ -23,5 +24,6 @@ public interface WhameService {
 	public int insertmenu(List<MenuVO> menuList);
 	public int searchInfo(WhameVO whamevo);
 	public List<MenuVO> getMenu(int store_code);
+	public List<HistoryVO> getHistoty(String userid);
 	
 }

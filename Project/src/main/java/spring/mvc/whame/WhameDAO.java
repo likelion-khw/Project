@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import spring.mvc.whame.color.ColorClass;
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.login.MemberVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
@@ -169,5 +170,8 @@ public class WhameDAO {
 		
 		List<MenuVO> result = session.selectList("whame.getMenu", store_code);
 		return result;
+	}
+	public List<HistoryVO> getHistory(String userid){
+		return session.selectList("whame.getHistory",userid);
 	}
 }
