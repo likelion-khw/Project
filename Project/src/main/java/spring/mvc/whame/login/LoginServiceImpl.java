@@ -1,5 +1,7 @@
 package spring.mvc.whame.login;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +11,13 @@ public class LoginServiceImpl implements LoginService {
 	@Autowired
 	LoginDAO dao;
 	
-	public int login(MemberVO membervo)
+	public ArrayList login(LoginVO loginvo)
 	{
-		return dao.login(membervo);
+		return dao.login(loginvo);
+	}
+	
+	public void signnew(MemberVO membervo){
+		System.out.println("test");
+		dao.signnew(membervo);
 	}
 }

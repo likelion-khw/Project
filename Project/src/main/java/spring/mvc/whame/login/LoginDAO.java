@@ -1,5 +1,7 @@
 package spring.mvc.whame.login;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,22 +15,31 @@ public class LoginDAO {
 	@Autowired
 	MemberVO mvo;
 	
-	public int login(MemberVO membervo)
+	public ArrayList login(LoginVO loginvo)
 	{
+		ArrayList result = new ArrayList();
+		
 		mvo = null;
-		mvo = session.selectOne("login.login", membervo);
+		mvo = session.selectOne("login.login", loginvo);
+		result.add(mvo);
 		if(mvo == null)
 		{
-			return 0; // ÇØ´ç ¾ÆÀÌµð ¾øÀ½
+			result.add(0);
 		}else{
-			if(mvo.getPw().equals(membervo.getPw()))
+			if(mvo.getPw().equals(loginvo.getPw()))
 			{
-				return 2; // ·Î±×ÀÎ ¼º°ø
+				result.add(2); // ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			}else
 			{
-				return 1; // ÆÐ½º¿öµå Æ²¸²
+				result.add(1); // ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ²ï¿½ï¿½
 			}
 		}
+		
+		return result;
+	}
+	
+	public void signnew(MemberVO membervo){
+		session.selectOne("login.signnew", membervo);
 	}
 
 }
