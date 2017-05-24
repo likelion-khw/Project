@@ -8,6 +8,14 @@
  	
  	<insert id='sethistory' parameterType="historyvo">
  		insert into history
-		values(histor_seq.nextval, #{store_code}, #{userid} ,#{signimage})
+		values(history_seq.nextval, #{store_code}, #{userid} ,#{signimage} ,sysdate)
  	</insert>
+
+	
+	<select id="getLoc" resultType="locationvo" parameterType="string">
+		select *
+		from store_location
+		where store_code in (select store_code from history where userid = #{uerid})
+	</select>
+	
 </mapper>

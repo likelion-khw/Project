@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import spring.mvc.whame.region.LocationVO;
+
 @Component
 public class HistoryDAO {
 
@@ -20,5 +22,9 @@ public class HistoryDAO {
 	
 	public void setHistory(HistoryVO historyvo){
 		session.insert("history.sethistory", historyvo);
+	}
+	
+	public List<LocationVO> getHistoryLoc(String userid){
+		return session.selectList("history.getLoc",userid);
 	}
 }

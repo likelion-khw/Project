@@ -9,9 +9,7 @@
 }
 }
 </style>
-
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <div id="modal1" class="modal modal-fixed-footer fileuploadform">
 	<div class="modal-content">
 		<h4>사용법</h4>
@@ -21,6 +19,8 @@
 				<div class="btn">
 					<span>File</span> <input type="file" name="imagefile" id="imagefile">
 				</div>
+				<div id="startLat"></div>
+				<div id="startLon"></div>
 				<div id="lal"></div>
 			</div>
 		</form>
@@ -38,11 +38,11 @@
 			$('#upload').submit();
 		});
 	})
-	function success(position){
+/* 	function success(position){
 	var lat = (position.coords.latitude).toFixed(6);
 	var lon = (position.coords.longitude).toFixed(6);
-	document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat + ">"
-							+"<input type=hidden name=lon value=" + lon + ">";
+	document.getElementById("lal").innerHTML += "<input type=text name=lat value=" + lat + ">"
+							+"<input type=text name=lon value=" + lon + ">";
 	}
 	
 	function error(err){
@@ -57,7 +57,22 @@
 			window.navigator.geolocation.getCurrentPosition(success, error);//()를 붙여 자동호출하는것 x
 		}
 			
-	})
+	}) 
+ */
+	
+	window.onload = function() {
+	  var startPos;
+	  var geoSuccess = function(position) {
+	    startPos = position;
+	    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+	    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+	    document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + startPos.coords.latitude + ">"
+		+"<input type=hidden name=lon value=" + startPos.coords.longitude + ">";
+	  };
+	  navigator.geolocation.getCurrentPosition(geoSuccess);
+	};
 </script>
+
+ 
 
 

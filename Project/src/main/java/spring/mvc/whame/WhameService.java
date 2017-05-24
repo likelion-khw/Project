@@ -28,5 +28,6 @@ public interface WhameService {
 	
 	public List<HistoryVO> getHistoryList(String userid);
 	public void setHistory(HistoryVO historyvo);
+	public List<LocationVO> getHistotyLoc(String userid);
 	
 }

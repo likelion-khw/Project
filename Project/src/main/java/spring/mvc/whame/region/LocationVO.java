@@ -38,5 +38,10 @@ public class LocationVO {
 		this.address = address;
 	}
 	
+	@Override
+	public String toString() {
+		return lat+","+lon;
+	}
+	
 	
 }

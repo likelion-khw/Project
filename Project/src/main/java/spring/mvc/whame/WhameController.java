@@ -77,16 +77,16 @@ public class WhameController {
 		
 		//history insert
 		MemberVO membervo = (MemberVO)session.getAttribute("memberVO");
-		history.setStore_code(store_code);
-		history.setSignimage(filepath);
-		history.setUserid(membervo.getUserid());
-		service.setHistory(history);
+		
 		
 		if (store_code == 0) {
 			System.out.println("찾은값 없음");
 			mav.addObject("error", "해당 데이터정보가 없습니다.");
 			return mav;
 		} else {
+			history.setStore_code(store_code);
+			history.setUserid(membervo.getUserid());
+			service.setHistory(history);
 			List<MenuVO> menuList = service.getMenu(store_code);
 			System.out.println(menuList.size());
 			mav.addObject("result", result);
@@ -197,6 +197,9 @@ public class WhameController {
 
 		// ?뚯씪 ?낅줈??
 		filepath = s3.fileUpload(bucketName, convFile);
+		
+		//history 간판이미지 파일명
+		history.setSignimage(filepath);
 		System.out.println("image-filepath==========>"+filepath);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		
@@ -219,7 +222,15 @@ public class WhameController {
 		MemberVO membervo = (MemberVO)session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
 		List<HistoryVO> list = service.getHistoryList(membervo.getUserid());
-		mav.addObject("historylist",list);
+		
+		List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
+		
+		for(LocationVO vo : historyLoc){
+			System.out.println("location정보가져오기=====> " + vo);
+		}
+		mav.addObject("historylist", list);
+		mav.addObject("latalon", historyLoc.toString());
+		mav.addObject("length",historyLoc.size());
 		mav.setViewName("body/history"); 
 		return mav; 
 	  }
