@@ -17,7 +17,21 @@ public class LoginServiceImpl implements LoginService {
 	}
 	
 	public void signnew(MemberVO membervo){
-		System.out.println("test");
 		dao.signnew(membervo);
+	}
+	
+	public int idcheck(String userid){
+		return dao.idcheck(userid);
+	}
+	public int nncheck(String nickname){
+		return dao.nncheck(nickname);
+	}
+	
+	public int renickname(MemberVO membervo){
+		return dao.renickname(membervo);
+	}
+	
+	public int repw(MemberVO membervo){
+		return dao.repw(membervo);
 	}
 }

@@ -24,7 +24,7 @@
 }
 </style>
 <div class="container center-align enrollform">
-<h4>${memberVO.userid}님<br> 상점을 등록하는 페이지입니다.</h4>
+<h4>${memberVO.nickname}님<br> 상점을 등록하는 페이지입니다.</h4>
 	<form action="enrollconnect.whame" method="post"  enctype="multipart/form-data" id="enroll_submit">
 	 <input type="hidden" name="userid" value="${memberVO.userid}"> 
 	<table class="centered">

@@ -30,4 +30,8 @@ public interface WhameService {
 	public void setHistory(HistoryVO historyvo);
 	public List<LocationVO> getHistotyLoc(String userid);
 	
+	public List<StoreVO> getStoreList(String userid);
+	
+	public int getStoreCount();
+	
 }

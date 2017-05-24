@@ -3,31 +3,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=37398369e1a52d60bd562e99b1d140aa&libraries=services"></script>
-<div id="map" style="width:100%;height:350px;"></div>
-<div class="row" style="width:50%;height:400px">
-          <div class="col s12 m6" >
-          <c:forEach items="${historylist}" var="vo" >
-            <div class="card">
-            <h4 class="light" style="text-align: center;">${vo.store_code }</h4>
-              <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator" src="http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${vo.signimage }" style="width:100; height:100;">
-              </div>
-              <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">${vo.h_date }<i class="material-icons right">more_vert</i></span>
 
-              </div>
-              <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">${vo.store_code }<i class="material-icons right">close</i></i></span>
-                <p>오늘 하루 여기 놀러가서 어쩌구 저쩌구 이러쿵 저러궁 ~~~~~~~~~~</p>
-              </div>
-              <div class="card-action">
-                <a href="#">This is a link</a>
-                <a href="#">This is a link</a>
-              </div>
-            </div>
-			</c:forEach> 
-          </div>
-          
+<style>
+.historyform{
+	margin-top:20px;
+	
+}
+</style>
+<div class="container historyform">
+<div id="map" style="width:100%;height:350px;"></div>
+	<div class="row" style="width:50%;height:400px">
+	          <div class="col s6" style="width:150%; margin-left:28%;" >
+	          <c:forEach items="${historylist}" var="vo" >
+	            <div class="card">
+	            <h4 class="light" style="text-align: center;">${vo.store_code }</h4>
+	              <div class="card-image waves-effect waves-block waves-light">
+	                <img class="activator" src="http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${vo.signimage }" style="width:100; height:100;">
+	              </div>
+	              <div class="card-content">
+	                <span class="card-title activator grey-text text-darken-4">${vo.h_date }<i class="material-icons right">more_vert</i></span>
+	
+	              </div>
+	              <div class="card-reveal">
+	                <span class="card-title grey-text text-darken-4">${vo.store_code }<i class="material-icons right">close</i></i></span>
+	                <p>오늘 하루 여기 놀러가서 어쩌구 저쩌구 이러쿵 저러궁 ~~~~~~~~~~</p>
+	              </div>
+	              <div class="card-action">
+	                <a href="#">This is a link</a>
+	                <a href="#">This is a link</a>
+	              </div>
+	            </div>
+				</c:forEach> 
+	          </div>
+	          
+	</div>
 </div>
 
 

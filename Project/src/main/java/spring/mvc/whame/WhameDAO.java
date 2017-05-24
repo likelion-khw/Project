@@ -146,5 +146,17 @@ public class WhameDAO {
 		return result;
 	}
 	
+	public List<StoreVO> getStoreList(String userid){
+		List<StoreVO> result = session.selectList("whame.getStore", userid);
+		if(result.isEmpty())
+		{
+			result = null;
+		}
+		return result;
+	}
+	
+	public int getStoreCount(){
+		return session.selectOne("whame.getStoreCount");
+	}
 	
 }

@@ -134,4 +134,13 @@
  	<select id='getrcodeNum' resultType="int" parameterType="string">
  		select rcode from region where rname = #{rname}
  	</select>
+ 	
+ 	<select id="getStore" resultType="storevo" parameterType="string">
+ 		select * from store where userid = #{userid}
+ 	</select>
+ 	
+ 	<select id="getStoreCount" resultType="int">
+ 		select count(*) from store
+ 	</select>
+ 	
 </mapper>
