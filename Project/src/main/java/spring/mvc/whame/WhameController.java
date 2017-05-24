@@ -226,14 +226,23 @@ public class WhameController {
 		
 		List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
 		
-		for(LocationVO vo : historyLoc){
-			System.out.println("location�젙蹂닿��졇�삤湲�=====> " + vo);
-		}
-		System.out.println("history 컨트롤러 수정확인");
 		mav.addObject("historylist", list);
 		mav.addObject("latalon", historyLoc.toString());
 		mav.addObject("length",historyLoc.size());
 		mav.setViewName("body/history"); 
 		return mav; 
 	  }
+	
+	@RequestMapping(value="historyInfo.whame", method=RequestMethod.GET)
+	public ModelAndView historyInfo(int store_code){
+		StoreVO storevo = service.getStore_info(store_code);
+		List<MenuVO> menulist = service.getMenu(store_code);
+		LocationVO locationvo = service.getLocation_info(store_code);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("storevo", storevo);
+		mav.addObject("locationvo", locationvo);
+		mav.addObject("menulist", menulist);
+		mav.setViewName("body/historyInfo");
+		return mav;
+	}
 }

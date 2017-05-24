@@ -103,13 +103,13 @@ public class WhameDAO {
 		
 		List<Integer> l_code = session.selectList("whame.searchLoc", whamevo);
 		for(Integer vo : l_code){
-			System.out.println("dao 위도경도 결과 " + vo);
+			System.out.println("dao �쐞�룄寃쎈룄 寃곌낵 " + vo);
 		}
 			
 		if(whamevo.getText().get(0).getText().equals("")){
 			codeList = session.selectList("whame.searchColor", whamevo);
 			if(codeList.size() != 0){
-				System.out.println("color����");
+				System.out.println("color占쏙옙占쏙옙");
 				for(Integer i : codeList){
 					System.out.println(i);
 					count.add(i);				
@@ -120,14 +120,14 @@ public class WhameDAO {
 			codeList = session.selectList("whame.searchText", whamevo);
 			System.out.println(codeList);
 			if(codeList.size() != 0){
-				System.out.println("text����");
+				System.out.println("text占쏙옙占쏙옙");
 				for(Integer i : codeList){
 					System.out.println();
 					count.add(i);				
 				}
 			}
 			else{
-				System.out.println("name����");
+				System.out.println("name占쏙옙占쏙옙");
 				codeList = session.selectList("whame.searchTextName", whamevo);
 				for(Integer i : codeList){
 					count.add(i);				
@@ -147,4 +147,13 @@ public class WhameDAO {
 	}
 	
 	
+	public StoreVO getStore_info(int store_code){
+		StoreVO result = session.selectOne("whame.getstore_info", store_code);
+		return result;
+	}
+	
+	public LocationVO getLocation_info(int store_code){
+		LocationVO result = session.selectOne("whame.getlocation_info", store_code);
+		return result;
+	}
 }

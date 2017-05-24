@@ -23,6 +23,8 @@ public interface WhameService {
 	public int insertmenu(List<MenuVO> menuList);
 	public int searchInfo(WhameVO whamevo);
 	public List<MenuVO> getMenu(int store_code);
+	public StoreVO getStore_info(int store_code);
+	public LocationVO getLocation_info(int store_code);
 	
 	public void setLocation(LocationVO lvo);
 	

@@ -81,6 +81,16 @@ public class WhameServiceImpl implements WhameService{
 		return dao.getMenu(store_code);
 	}
 	
+	@Override
+	public StoreVO getStore_info(int store_code) {
+		return dao.getStore_info(store_code);
+	}
+
+	@Override
+	public LocationVO getLocation_info(int store_code) {
+		return dao.getLocation_info(store_code);
+	}
+
 	public void setLocation(LocationVO lvo) {
 		dao.setLocation(lvo);
 	}
