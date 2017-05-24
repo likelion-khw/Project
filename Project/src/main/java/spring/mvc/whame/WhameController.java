@@ -10,7 +10,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.tiles.request.collection.MapEntryArrayValues;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,9 +20,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import spring.mvc.whame.aws.S3Util;
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.login.MemberVO;
 import spring.mvc.whame.opencv.ImageVO;
 import spring.mvc.whame.opencv.Opencv;
+import spring.mvc.whame.region.LocationVO;
+import spring.mvc.whame.region.MapTest;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -44,9 +46,13 @@ public class WhameController {
 	String filepath = "";
 	String address="";
 	
+	double lat,lon;
+	
+	List<Double> difflal = new ArrayList<Double>(); 
+	
 	//�̹����� ���� OCR �� ���� ����
 	@RequestMapping(value = "showinfo.whame")
-	public ModelAndView getimage() throws Exception{/*@ModelAttribute(value = "storevo") StoreVO storevo*/
+	public ModelAndView getimage() throws Exception{
 		WhameVO whame = new WhameVO();
 		ModelAndView mav = new ModelAndView();
 		List<TextVO> result = service.ocr(filepath);
@@ -54,7 +60,11 @@ public class WhameController {
 
 		whame.setColor(color);
 		whame.setText(result);
-		mav.setViewName("body/showinfo");
+		whame.setLat(lat);
+		whame.setLon(lon);
+		whame.setDifflat(difflal.get(0));
+		whame.setDifflon(difflal.get(1));
+		mav.setViewName("body/signinfo");
 
 		int store_code = service.searchInfo(whame);
 		if (store_code == 0) {
@@ -97,7 +107,7 @@ public class WhameController {
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
 		
-		String bucketName = "whame01/StoreMain";
+		String bucketName = "whame01/StoreTitle";
 		MultipartFile imagefile = storevo.getImagefile();
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
@@ -121,19 +131,21 @@ public class WhameController {
 		mav.addObject("store_code", store_code);
 		mav.addObject("typelist", typelist);
 		mav.addObject("address", address);
-		mav.setViewName("enrollsuccess");
+		mav.setViewName("body/enrollsuccess");
 		System.out.println("enrollsuccess�� �̵�");
 		return mav;
 	}
 
 	@RequestMapping(value = "menuUpload.whame", method = RequestMethod.POST)
-	public ModelAndView menuUpload(HttpServletRequest request) {
+	public ModelAndView menuUpload(HttpServletRequest request, @ModelAttribute("locationVO") LocationVO lvo) {
 		String[] menulist = request.getParameterValues("menulist");
-		String lat =  (String) request.getParameter("latitude");
-		String longi =  (String) request.getParameter("longitude");
-		System.out.println("�����浵"+lat+":"+longi);
 		int store_code = Integer.parseInt(request.getParameter("store_code"));
-
+		
+		lvo.setRcode(enrollStore.getRcode());
+		lvo.setStore_code(store_code);
+		System.out.println("menuupload==>"+lvo.getAddress());
+		System.out.println("lal ???=>"+lvo.getLat()+":::"+lvo.getLon());
+		service.setLocation(lvo);
 		System.out.println(menulist.length);
 
 		int[] menuListInt = new int[menulist.length];
@@ -155,26 +167,27 @@ public class WhameController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("menuNum", menuNum);
-		mav.setViewName("enrollcomplete");
+		mav.setViewName("body/enrollcomplete");
 		return mav;
 	}
 
 	// ���� ���� ���ε�ÿ� ����Ǵ� �޼ҵ� ( AWS Ŭ���� ��� )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
-	public ModelAndView test(MultipartFile imagefile) throws Exception {
+	public ModelAndView test(MultipartFile imagefile, HttpServletRequest request) throws Exception {
+		lat = Double.parseDouble(request.getParameter("lat"));
+		lon = Double.parseDouble(request.getParameter("lon"));
+		System.out.println("lal"+lat+":"+lon);
+		
+		MapTest mt =  new MapTest();
+		difflal = mt.run(lat, 2000);
+		System.out.println("위도 반경 500m====>"+ (lat-difflal.get(0)) + " ~ " + (lat+difflal.get(0)));
+		System.out.println("경도 반경 500m====>"+ (lon-difflal.get(0)) + " ~ " + (lon+difflal.get(0)));
+		
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame01/StoreTitle";
-		
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 		
-//		File imgfile = new File("test.jpg");
-//		imgtest.resizeImageAsJPEG(convFile, imgfile, 700);
-
-		// Bucket ����(�빮�ڴ� ���ԵǸ� �ȵ�.)
-		// s3.createBucket("whame00");
-
-		// s3.createFolder(bucketName, "testfol1");
 
 		// ���� ���ε�
 		filepath = s3.fileUpload(bucketName, convFile);
@@ -193,26 +206,13 @@ public class WhameController {
 		filepath = ivo.runOpencv(img,imagevo,imgurl);
 	}
 
-	
-	@RequestMapping(value="map.whame", method=RequestMethod.GET) 
-	public  ModelAndView mapform(String userid){ 
+	@RequestMapping(value="history.whame", method=RequestMethod.GET) 
+	public  ModelAndView history(HttpSession session){ 
+		MemberVO membervo = (MemberVO)session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("map"); 
+		List<HistoryVO> list = service.getHistoryList(membervo.getUserid());
+		mav.addObject("historylist",list);
+		mav.setViewName("body/history"); 
 		return mav; 
 	  }
-	
-	@RequestMapping(value="map.whame", method=RequestMethod.POST) 
-	public  ModelAndView mapsuccess(HttpServletRequest request){ 
-		String lal = (String) request.getParameter("lal");
-		System.out.println(lal);
-		String[] lalSplit = lal.split("[(]|, |[)]");
-		System.out.println("split-----" + lalSplit[1] +":"+lalSplit[2]);
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("lal", lal);
-		mav.setViewName("map2"); 
-		return mav; 
-	  }
-	 
-
 }
