@@ -89,6 +89,16 @@ public class WhameServiceImpl implements WhameService{
 	public List<HistoryVO> getHistoryList(String userid) {
 		return hdao.getHistoryList(userid);
 	}
+
+	@Override
+	public void setHistory(HistoryVO historyvo) {
+		hdao.setHistory(historyvo);		
+	}
+	
+	@Override
+	public List<LocationVO> getHistotyLoc(String userid){
+		return hdao.getHistoryLoc(userid);
+	}
 	
 	
 	

@@ -36,23 +36,26 @@ public class WhameController {
 
 	@Autowired
 	S3Util s3;
-	
+
 	@Autowired
 	WhameService service;
-	
+
 	@Autowired
 	StoreVO enrollStore;
-	
+
+	@Autowired
+	HistoryVO history;
+
 	String filepath = "";
-	String address="";
-	
-	double lat,lon;
-	
-	List<Double> difflal = new ArrayList<Double>(); 
-	
-	//�̹����� ���� OCR �� ���� ����
+	String address = "";
+
+	double lat, lon;
+
+	List<Double> difflal = new ArrayList<Double>();
+
+	// �̹����� ���� OCR �� ���� ����
 	@RequestMapping(value = "showinfo.whame")
-	public ModelAndView getimage() throws Exception{
+	public ModelAndView getimage(HttpSession session) throws Exception {
 		WhameVO whame = new WhameVO();
 		ModelAndView mav = new ModelAndView();
 		List<TextVO> result = service.ocr(filepath);
@@ -67,10 +70,18 @@ public class WhameController {
 		mav.setViewName("body/signinfo");
 
 		int store_code = service.searchInfo(whame);
+
+		// history insert
+		MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
+
 		if (store_code == 0) {
 			mav.addObject("error", "등록된 가게 정보가 없습니다.");
 			return mav;
 		} else {
+			history.setStore_code(store_code);
+			history.setUserid(membervo.getUserid());
+			service.setHistory(history);
+
 			List<MenuVO> menuList = service.getMenu(store_code);
 			System.out.println(menuList.size());
 			mav.addObject("result", result);
@@ -85,11 +96,10 @@ public class WhameController {
 	public ModelAndView enrollform(HttpSession session) {
 		MemberVO vo = (MemberVO) session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
-		if(vo.getUserid() == null)
-		{
+		if (vo.getUserid() == null) {
 			mav.setViewName("login/loginform");
-		}else{
-			
+		} else {
+
 			List<RegionVO> gu = service.getrcode();
 			mav.addObject("region", gu);
 			mav.setViewName("body/enrollform");
@@ -98,15 +108,16 @@ public class WhameController {
 	}
 
 	@RequestMapping(value = "enrollconnect.whame", method = RequestMethod.POST)
-	public ModelAndView enrollconnect(@ModelAttribute(value = "storevo") StoreVO storevo, HttpServletRequest request) throws Exception{
+	public ModelAndView enrollconnect(@ModelAttribute(value = "storevo") StoreVO storevo, HttpServletRequest request)
+			throws Exception {
 		String rcode1 = (String) request.getParameter("rcode1");
 		String rcode2 = (String) request.getParameter("rcode2");
 		String detail = (String) request.getParameter("detail");
-		address = rcode1 +" " + rcode2 + " " + detail;
+		address = rcode1 + " " + rcode2 + " " + detail;
 		System.out.println("rcode�� : " + rcode1 + " " + rcode2);
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
-		
+
 		String bucketName = "whame01/StoreTitle";
 		MultipartFile imagefile = storevo.getImagefile();
 		File convFile = new File(imagefile.getOriginalFilename());
@@ -115,7 +126,7 @@ public class WhameController {
 		// ���� ���ε�
 		filepath = s3.fileUpload(bucketName, convFile);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
-		System.out.println("=========enrollconnect imgurl======="+imgurl);
+		System.out.println("=========enrollconnect imgurl=======" + imgurl);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("imgurl", imgurl);
 		enrollStore = storevo;
@@ -140,11 +151,11 @@ public class WhameController {
 	public ModelAndView menuUpload(HttpServletRequest request, @ModelAttribute("locationVO") LocationVO lvo) {
 		String[] menulist = request.getParameterValues("menulist");
 		int store_code = Integer.parseInt(request.getParameter("store_code"));
-		
+
 		lvo.setRcode(enrollStore.getRcode());
 		lvo.setStore_code(store_code);
-		System.out.println("menuupload==>"+lvo.getAddress());
-		System.out.println("lal ???=>"+lvo.getLat()+":::"+lvo.getLon());
+		System.out.println("menuupload==>" + lvo.getAddress());
+		System.out.println("lal ???=>" + lvo.getLat() + ":::" + lvo.getLon());
 		service.setLocation(lvo);
 		System.out.println(menulist.length);
 
@@ -176,21 +187,22 @@ public class WhameController {
 	public ModelAndView test(MultipartFile imagefile, HttpServletRequest request) throws Exception {
 		lat = Double.parseDouble(request.getParameter("lat"));
 		lon = Double.parseDouble(request.getParameter("lon"));
-		System.out.println("lal"+lat+":"+lon);
-		
-		MapTest mt =  new MapTest();
+		System.out.println("lal" + lat + ":" + lon);
+
+		MapTest mt = new MapTest();
 		difflal = mt.run(lat, 2000);
-		System.out.println("위도 반경 500m====>"+ (lat-difflal.get(0)) + " ~ " + (lat+difflal.get(0)));
-		System.out.println("경도 반경 500m====>"+ (lon-difflal.get(0)) + " ~ " + (lon+difflal.get(0)));
-		
+		System.out.println("위도 반경 500m====>" + (lat - difflal.get(0)) + " ~ " + (lat + difflal.get(0)));
+		System.out.println("경도 반경 500m====>" + (lon - difflal.get(0)) + " ~ " + (lon + difflal.get(0)));
+
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame01/StoreTitle";
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
-		
 
 		// ���� ���ε�
 		filepath = s3.fileUpload(bucketName, convFile);
+		// history 간판이미지 파일명
+		history.setSignimage(filepath);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		mav.addObject("imgurl", imgurl);
 		mav.setViewName("body/image");
@@ -201,17 +213,25 @@ public class WhameController {
 	@RequestMapping(value = "result.whame", method = RequestMethod.POST)
 	public void test1(ImageVO imagevo, String imgurl) throws Exception {
 		Opencv ivo = new Opencv();
-		System.out.println("run����---------"+imgurl);
+		System.out.println("run����---------" + imgurl);
 		BufferedImage img = ImageIO.read(new URL(imgurl));
-		filepath = ivo.runOpencv(img,imagevo,imgurl);
+		filepath = ivo.runOpencv(img, imagevo, imgurl);
 	}
 
-	@RequestMapping(value="history.whame", method=RequestMethod.GET) 
-	public  ModelAndView history(HttpSession session){ 
+	@RequestMapping(value = "history.whame", method = RequestMethod.GET)
+	public ModelAndView history(HttpSession session) {
 		MemberVO membervo = (MemberVO)session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
 		List<HistoryVO> list = service.getHistoryList(membervo.getUserid());
-		mav.addObject("historylist",list);
+		
+		List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
+		
+		for(LocationVO vo : historyLoc){
+			System.out.println("location정보가져오기=====> " + vo);
+		}
+		mav.addObject("historylist", list);
+		mav.addObject("latalon", historyLoc.toString());
+		mav.addObject("length",historyLoc.size());
 		mav.setViewName("body/history"); 
 		return mav; 
 	  }
