@@ -25,6 +25,10 @@ header, main, footer {
 		padding-left: 0;
 	}
 }
+
+main{
+	min-height: 520px;
+}
 </style>
 
 <title><tiles:getAsString name="title"></tiles:getAsString></title>

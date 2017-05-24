@@ -52,6 +52,7 @@
 	<context:component-scan base-package="spring.mvc.whame.opencv"></context:component-scan>
 	<context:component-scan base-package="spring.mvc.whame.region"></context:component-scan>
 	<context:component-scan base-package="spring.mvc.whame.login"></context:component-scan>
+	<context:component-scan base-package="spring.mvc.whame.history"></context:component-scan>
 
 
 

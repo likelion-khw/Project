@@ -232,7 +232,6 @@
 			<artifactId>tiles-jsp</artifactId>
 			<version>${org.apache.tiles.version}</version>
 		</dependency>
-
 	</dependencies>
 	<build>
 		<plugins>

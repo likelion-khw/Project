@@ -21,6 +21,7 @@
 				<div class="btn">
 					<span>File</span> <input type="file" name="imagefile" id="imagefile">
 				</div>
+				<div id="lal"></div>
 			</div>
 		</form>
 	</div>
@@ -36,6 +37,26 @@
 		$('#imagefile').on('change',function(e){
 			$('#upload').submit();
 		});
+
+		var options = {
+				  enableHighAccuracy: true,
+				  timeout: 5000,
+				  maximumAge: 0
+				};
+
+		function success(position){
+			var lat = (position.coords.latitude).toFixed(6);
+			var lon = (position.coords.longitude).toFixed(6);
+			document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat + ">"
+									+"<input type=hidden name=lon value=" + lon + ">";
+			}
+			
+		function error(err){
+			$('#lal').text("조회 실패 ==>" + err.code);
+		}
+		
+		
+		navigator.geolocation.getCurrentPosition(success, error, options);//()를 붙여 자동호출하는것 x
 	})
 </script>
 

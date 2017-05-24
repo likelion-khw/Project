@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.history.HistoryDAO;
+import spring.mvc.whame.history.HistoryVO;
+import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -17,6 +20,9 @@ public class WhameServiceImpl implements WhameService{
 	
 	@Autowired
 	WhameDAO dao;
+	
+	@Autowired
+	HistoryDAO hdao;
 	
 	@Override
 	public List<TextVO> ocr(String filename) {
@@ -75,6 +81,14 @@ public class WhameServiceImpl implements WhameService{
 		return dao.getMenu(store_code);
 	}
 	
+	public void setLocation(LocationVO lvo) {
+		dao.setLocation(lvo);
+	}
+	
+	@Override
+	public List<HistoryVO> getHistoryList(String userid) {
+		return hdao.getHistoryList(userid);
+	}
 	
 	
 	
