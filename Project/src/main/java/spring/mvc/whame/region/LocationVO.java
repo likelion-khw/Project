@@ -40,6 +40,6 @@ public class LocationVO {
 	
 	@Override
 	public String toString() {
-		return lat+","+lon;
+		return store_code + "," +lat+","+lon;
 	}
 }

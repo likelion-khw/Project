@@ -191,8 +191,6 @@ public class WhameController {
 
 		MapTest mt = new MapTest();
 		difflal = mt.run(lat, 2000);
-		System.out.println("�쐞�룄 諛섍꼍 500m====>" + (lat - difflal.get(0)) + " ~ " + (lat + difflal.get(0)));
-		System.out.println("寃쎈룄 諛섍꼍 500m====>" + (lon - difflal.get(0)) + " ~ " + (lon + difflal.get(0)));
 
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame01/StoreTitle";
