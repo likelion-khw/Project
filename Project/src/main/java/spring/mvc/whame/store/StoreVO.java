@@ -7,14 +7,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class StoreVO {
 	
-		private int store_code;
-		private String business_code;//
-		private int rcode;//
-		private String address;//
+		//store
+		private int store_code;	
+		private String business_code;
 		private String userid;
-		private String operating_time;//
-		private String store_name;//
+		private String operating_time;
+		private String store_name;
 		private int view_count;
+		
+		private int rcode;//r
+		private String address;//l
 		private MultipartFile imagefile;//	//업로드파일 서버저장
 		private String image;
 		int store_text;

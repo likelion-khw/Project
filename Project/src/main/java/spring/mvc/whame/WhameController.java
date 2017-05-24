@@ -53,7 +53,7 @@ public class WhameController {
 
 	List<Double> difflal = new ArrayList<Double>();
 
-	// �̹����� ���� OCR �� ���� ����
+	// 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙 OCR 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	@RequestMapping(value = "showinfo.whame")
 	public ModelAndView getimage(HttpSession session) throws Exception {
 		WhameVO whame = new WhameVO();
@@ -75,7 +75,7 @@ public class WhameController {
 		MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 
 		if (store_code == 0) {
-			mav.addObject("error", "등록된 가게 정보가 없습니다.");
+			mav.addObject("error", "�벑濡앸맂 媛�寃� �젙蹂닿� �뾾�뒿�땲�떎.");
 			return mav;
 		} else {
 			history.setStore_code(store_code);
@@ -114,7 +114,7 @@ public class WhameController {
 		String rcode2 = (String) request.getParameter("rcode2");
 		String detail = (String) request.getParameter("detail");
 		address = rcode1 + " " + rcode2 + " " + detail;
-		System.out.println("rcode�� : " + rcode1 + " " + rcode2);
+		System.out.println("rcode占쏙옙 : " + rcode1 + " " + rcode2);
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
 
@@ -123,7 +123,7 @@ public class WhameController {
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// ���� ���ε�
+		// 占쏙옙占쏙옙 占쏙옙占싸듸옙
 		filepath = s3.fileUpload(bucketName, convFile);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		System.out.println("=========enrollconnect imgurl=======" + imgurl);
@@ -143,7 +143,7 @@ public class WhameController {
 		mav.addObject("typelist", typelist);
 		mav.addObject("address", address);
 		mav.setViewName("body/enrollsuccess");
-		System.out.println("enrollsuccess�� �̵�");
+		System.out.println("enrollsuccess占쏙옙 占싱듸옙");
 		return mav;
 	}
 
@@ -155,7 +155,7 @@ public class WhameController {
 		lvo.setRcode(enrollStore.getRcode());
 		lvo.setStore_code(store_code);
 		System.out.println("menuupload==>" + lvo.getAddress());
-		System.out.println("lal ???=>" + lvo.getLat() + ":::" + lvo.getLon());
+		System.out.println("lal ?�??=>" + lvo.getLat() + ":::" + lvo.getLon());
 		service.setLocation(lvo);
 		System.out.println(menulist.length);
 
@@ -182,7 +182,7 @@ public class WhameController {
 		return mav;
 	}
 
-	// ���� ���� ���ε�ÿ� ����Ǵ� �޼ҵ� ( AWS Ŭ���� ��� )
+	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占싸듸옙첼占� 占쏙옙占쏙옙풔占� 占쌨소듸옙 ( AWS 클占쏙옙占쏙옙 占쏙옙占� )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
 	public ModelAndView test(MultipartFile imagefile, HttpServletRequest request) throws Exception {
 		lat = Double.parseDouble(request.getParameter("lat"));
@@ -191,17 +191,15 @@ public class WhameController {
 
 		MapTest mt = new MapTest();
 		difflal = mt.run(lat, 2000);
-		System.out.println("위도 반경 500m====>" + (lat - difflal.get(0)) + " ~ " + (lat + difflal.get(0)));
-		System.out.println("경도 반경 500m====>" + (lon - difflal.get(0)) + " ~ " + (lon + difflal.get(0)));
 
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame01/StoreTitle";
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// ���� ���ε�
+		// 占쏙옙占쏙옙 占쏙옙占싸듸옙
 		filepath = s3.fileUpload(bucketName, convFile);
-		// history 간판이미지 파일명
+		// history 媛꾪뙋�씠誘몄� �뙆�씪紐�
 		history.setSignimage(filepath);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		mav.addObject("imgurl", imgurl);
@@ -209,11 +207,11 @@ public class WhameController {
 		return mav;
 	}
 
-	// ���ε� �̹����� �޾Ƽ� Opencv ���� �� �̹��� ��� ��ȯ ( filename )
+	// 占쏙옙占싸듸옙 占싱뱄옙占쏙옙占쏙옙 占쌨아쇽옙 Opencv 占쏙옙占쏙옙 占쏙옙 占싱뱄옙占쏙옙 占쏙옙占� 占쏙옙환 ( filename )
 	@RequestMapping(value = "result.whame", method = RequestMethod.POST)
 	public void test1(ImageVO imagevo, String imgurl) throws Exception {
 		Opencv ivo = new Opencv();
-		System.out.println("run����---------" + imgurl);
+		System.out.println("run占쏙옙占쏙옙載�---------" + imgurl);
 		BufferedImage img = ImageIO.read(new URL(imgurl));
 		filepath = ivo.runOpencv(img, imagevo, imgurl);
 	}
@@ -226,13 +224,23 @@ public class WhameController {
 		
 		List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
 		
-		for(LocationVO vo : historyLoc){
-			System.out.println("location정보가져오기=====> " + vo);
-		}
 		mav.addObject("historylist", list);
 		mav.addObject("latalon", historyLoc.toString());
 		mav.addObject("length",historyLoc.size());
 		mav.setViewName("body/history"); 
 		return mav; 
 	  }
+	
+	@RequestMapping(value="historyInfo.whame", method=RequestMethod.GET)
+	public ModelAndView historyInfo(int store_code){
+		StoreVO storevo = service.getStore_info(store_code);
+		List<MenuVO> menulist = service.getMenu(store_code);
+		LocationVO locationvo = service.getLocation_info(store_code);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("storevo", storevo);
+		mav.addObject("locationvo", locationvo);
+		mav.addObject("menulist", menulist);
+		mav.setViewName("body/historyInfo");
+		return mav;
+	}
 }
