@@ -41,20 +41,5 @@ public class LoginDAO {
 	public void signnew(MemberVO membervo){
 		session.selectOne("login.signnew", membervo);
 	}
-	
-	public int idcheck(String userid){
-		return session.selectOne("login.idcheck", userid);
-	}
-	public int nncheck(String nickname){
-		return session.selectOne("login.nncheck", nickname);
-	}
-	
-	public int renickname(MemberVO membervo){
-		return session.update("login.re_nickname", membervo);
-	}
-	
-	public int repw(MemberVO membervo){
-		return session.update("login.re_pw",membervo);
-	}
 
 }

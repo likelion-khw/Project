@@ -28,9 +28,6 @@ public class LoginController {
 	@Autowired
 	S3Util s3;
 	
-	@Autowired
-	MemberVO mvo;
-	
 	ArrayList result;
 	
 	ModelAndView mav = new ModelAndView();
@@ -96,36 +93,6 @@ public class LoginController {
 	@RequestMapping(value="remember.whame", method=RequestMethod.GET)
 	public String re_member(){
 		return "login/re_member";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="idcheck.whame", method=RequestMethod.POST)
-	public int idcheck(String userid){
-		return service.idcheck(userid);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="nncheck.whame", method=RequestMethod.POST)
-	public int nncheck(String nickname){
-		return service.nncheck(nickname);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="re_nickname.whame", method=RequestMethod.POST)
-	public int renickname(String nickname, HttpSession session){
-		mvo = (MemberVO)session.getAttribute("memberVO");
-		mvo.setNickname(nickname);
-		
-		return service.renickname(mvo);
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="re_pw.whame", method=RequestMethod.POST)
-	public int repw(String pw, HttpSession session){
-		mvo = (MemberVO)session.getAttribute("memberVO");
-		mvo.setPw(pw);
-		
-		return service.repw(mvo);
 	}
 
 }

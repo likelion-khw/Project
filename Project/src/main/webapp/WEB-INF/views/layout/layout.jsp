@@ -7,9 +7,6 @@
 <meta name="viewport"
 	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height">
 <script type="text/javascript" src="resources/js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery-rollingCounter.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery-easing.js"></script>
-<link rel="stylesheet" href="resources/css/countstyle.css" type="text/css">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 <!-- Compiled and minified JavaScript -->
