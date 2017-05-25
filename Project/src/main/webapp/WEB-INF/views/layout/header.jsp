@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="spring.mvc.whame.login.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../modal/signin.jsp" %>
+<%@include file="../modal/signin_modal.jsp" %>
 <script type="text/javascript">
 		function logout(){
 			$(location).attr('href', 'logout.whame');

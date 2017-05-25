@@ -110,6 +110,14 @@ public class WhameServiceImpl implements WhameService{
 		return hdao.getHistoryLoc(userid);
 	}
 	
+	public List<StoreVO> getStoreList(String userid){
+		return dao.getStoreList(userid);
+	}
+	
+	public int getStoreCount(){
+		return dao.getStoreCount();
+	}
+	
 	
 	
 }

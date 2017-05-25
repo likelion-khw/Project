@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -242,5 +244,32 @@ public class WhameController {
 		mav.addObject("menulist", menulist);
 		mav.setViewName("body/historyInfo");
 		return mav;
+	}
+	
+	@RequestMapping(value = "store.whame", method = RequestMethod.GET)
+	public ModelAndView storeinfo(HttpSession session) {
+		MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
+		ModelAndView mav = new ModelAndView();
+		List<StoreVO> ls = service.getStoreList(membervo.getUserid());
+		HashMap<Integer, List<MenuVO>> menulist = new HashMap<Integer, List<MenuVO>>();
+
+		if (ls != null) {
+			for (int i = 0; i < ls.size(); i++) {
+				List<MenuVO> list = service.getMenu(ls.get(i).getStore_code());
+				menulist.put(ls.get(i).getStore_code(), list);
+			}
+		}
+
+		mav.addObject("menulist", menulist);
+		mav.addObject("storelist", ls);
+		mav.setViewName("body/storeform");
+
+		return mav;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="storeCount.whame", method=RequestMethod.POST)
+	public int storeCount(){
+		return service.getStoreCount();
 	}
 }
