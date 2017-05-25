@@ -15,37 +15,41 @@
 	<div class="modal-content">
 		<form action="sign.whame" method="post" enctype="multipart/form-data" id="signnew">
 		<h4>회원가입</h4>
-		이미지 변경하기<br>
+		이미지 변경<br>
 		<a href="javascript:;" id="img">
-		<img class="circle"
-						src="resources/img/user.png" style="width: 30%; height:30%" id="userimg"></a>
+		<img class="circle" src="resources/img/user.png" style="width: 150px; height:150px" id="userimg"></a>
 		<div class="row">
 		      <div class="row">
 		        <div class="input-field col s12">
 		          <i class="material-icons prefix">account_circle</i>
-		          <input id="sign_id" type="email" class="validate" name="userid">
-         		  <label for="email" data-error="이메일형식!" data-success="확인완료">사용자 아이디</label>
+		          <input id="sign_id" type="text" class="validate" name="userid">
+         		  <label for="email">사용자 아이디</label>
+		        </div>
+		        <div class="input-field col s12">
+		          <i class="material-icons prefix">grade</i>
+		          <input type="text" class="validate" name="nickname" id="sign_nickname">
+         		  <label for="nickname">닉네임</label>
 		        </div>
 		        <div class="input-field col s12">
 		          <i class="material-icons prefix">https</i>
 		          <input id="sign_pw" type="password" class="validate" name="pw">
-		          <label for="pw" id="passwordl">패스워드</label>
+		          <label for="pw">패스워드</label>
 		        </div>
 		        <div class="input-field col s12">
 		          <i class="material-icons prefix">lock_outline</i>
 		          <input id="pwcheck" type="password" class="validate">
-		          <label for="pwcheck" id="pwdl">패스워드확인</label>
+		          <label for="pwcheck">패스워드확인</label>
 		        </div>
 		      </div>
 		  </div>
-		<input type="file" name="image" id="image" style="display: none;">
+		<input type="file" name="image" id="sign_image" style="display: none;">
 		</form>
 	</div>
 
 	<div class="modal-footer">
 		<a href="#!"
 			class="modal-action modal-close btn">취소</a>
-		<a href="#!" class="modal-action modal-close btn" id="success">확인</a> 
+		<a href="#!" class="btn" id="success">확인</a> 
 	</div>
 </div>
 

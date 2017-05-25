@@ -9,4 +9,20 @@
  	<insert id="signnew" parameterType="membervo">
  		insert into vm_user values(#{userid},#{pw},#{userimage})
  	</insert>
+ 	
+ 	<select id="idcheck" resultType="int" parameterType="string">
+ 		select count(*) from vm_user where userid= #{userid}
+ 	</select>
+ 	
+ 	<select id="nncheck" resultType="int" parameterType="string">
+ 		select count(*) from vm_user where nickname= #{nickname}
+ 	</select>
+ 	
+ 	<update id="re_nickname" parameterType="membervo">
+ 		update vm_user set nickname = #{nickname} where userid = #{userid}
+ 	</update>
+ 	
+ 	<update id="re_pw" parameterType="membervo">
+ 		update vm_user set pw = #{pw} where userid = #{userid}
+ 	</update>
 </mapper>

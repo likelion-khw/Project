@@ -1,22 +1,15 @@
 package spring.mvc.whame.login;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
-
-import spring.mvc.whame.aws.S3Util;
 
 @Component
 public class MemberVO {
 
-	@Autowired
-	S3Util s3;
-
 	private String userid;
 	private String pw;
 	private String userimage;
-	int first = 0;
-
+	private String nickname;
+	
 	public MemberVO() {
 	}
 
@@ -48,6 +41,14 @@ public class MemberVO {
 
 	public void setUserimage(String userimage) {
 		this.userimage = userimage;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 

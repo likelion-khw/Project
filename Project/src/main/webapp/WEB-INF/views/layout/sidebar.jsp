@@ -13,13 +13,14 @@
 					<c:when test="${memberVO.userid != null }">
 						<%if(membervo.getUserimage() == ""){ %>
 						<a href="#!user">
-						<img class="circle" src="resources/img/user.png" style="width: 80px;"></a> 
+						<img class="circle" src="resources/img/user.png" style="width: 80px; height: 80px;"></a> 
 						<%}else{ %>
 						<a href="#!user">
-						<img class="circle" src="<%=membervo.getUserimage()%>" style="width: 80px;"></a> 
+						<img class="circle" src="<%=membervo.getUserimage()%>" style="width: 80px; height: 80px;"></a> 
 						<%} %>
+						<a href="#!name"> <span class="white-text name"> ${memberVO.nickname} 회원님
+						</span></a>
 						<a href="#!name"> <span class="white-text name"> ${memberVO.userid}
-								회원님<br>환영합니다!!
 						</span></a>
 					</c:when>
 					<c:when test="${memberVO.userid == null }">
@@ -56,7 +57,7 @@
 		            <a class="collapsible-header">History<i class="material-icons">arrow_drop_down</i></a>
 		            <div class="collapsible-body">
 		              <ul>
-		                <li><a href="#!">뭘 넣지</a></li>
+		                <li><a href="javascript:history();">나의 히스토리</a></li>
 		              </ul>
 		            </div>
 		          </li>
@@ -69,7 +70,7 @@
 		            <a class="collapsible-header">Shop<i class="material-icons">arrow_drop_down</i></a>
 		            <div class="collapsible-body">
 		              <ul>
-		                <li><a href="#!">뭘 넣지</a></li>
+		                <li><a href="javascript:storeform();">상가정보</a></li>
 		              </ul>
 		            </div>
 		          </li>
@@ -100,5 +101,11 @@
 	}
 	function re_member(){
 		$(location).attr('href', 'remember.whame');
+	}
+	function history(){
+		$(location).attr('href', 'history.whame');
+	}
+	function storeform(){
+		$(location).attr('href', 'store.whame');
 	}
 </script>
