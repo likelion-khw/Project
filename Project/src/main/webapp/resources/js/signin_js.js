@@ -19,10 +19,10 @@ $(document).ready(function() {
 	});
 
 	$('#img').on('click', function() {
-		$('#sign_image').trigger('click');
+		$('#image').trigger('click');
 	});
 
-	$('#sign_image').on('change', function() {
+	$('#image').on('change', function() {
 		if (this.files && this.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
@@ -32,47 +32,10 @@ $(document).ready(function() {
 		}
 
 	});
-	
-	$('#sign_id').on('change',function(){
-		var userid = $('#sign_id').val();
-		
-		$.ajax({
-			url : "idcheck.whame",
-			type : 'post',
-			data : {
-				'userid' : userid,
-			},
-			success : function(result) {
-				if(result == 1)
-					{
-						alert('중복된 아이디입니다.');
-						$('#sign_id').val("");
-					}
-			}
-		})
-	});
-	
-	$('#sign_nickname').on('change',function(){
-		var nickname = $('#sign_nickname').val();
-		$.ajax({
-			url : "nncheck.whame",
-			type : 'post',
-			data : {
-				'nickname' : nickname,
-			},
-			success : function(result) {
-				if(result == 1)
-					{
-						alert('중복된 닉네임입니다.');
-						$('#sign_nickname').val("");
-					}
-			}
-		})
-	});
 
-	$('#success').on('click', function(e) {
-		if ($('#sign_id').val() == "" || $('#sign_pw').val() == "" || $("#sign_nickname").val()) {
-			alert('정보입력을 전부 작성해주세요.!');
+	$('#success').on('click', function() {
+		if ($('#sign_id').val() == "" || $('#sing_pw').val() == "") {
+			alert('정보를 입력하세요');
 		} else {
 			$('#signnew').submit();
 		}
