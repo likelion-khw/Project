@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.amazonaws.services.directconnect.model.Location;
+
 import spring.mvc.whame.aws.S3Util;
 import spring.mvc.whame.color.ColorVO;
 import spring.mvc.whame.history.HistoryVO;
@@ -55,7 +57,7 @@ public class WhameController {
 
 	List<Double> difflal = new ArrayList<Double>();
 
-	// 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙 OCR 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
+	// �뜝�떛諭꾩삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 OCR �뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
 	@RequestMapping(value = "showinfo.whame")
 	public ModelAndView getimage(HttpSession session) throws Exception {
 		WhameVO whame = new WhameVO();
@@ -77,7 +79,7 @@ public class WhameController {
 		MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 
 		if (store_code == 0) {
-			mav.addObject("error", "�벑濡앸맂 媛�寃� �젙蹂닿� �뾾�뒿�땲�떎.");
+			mav.addObject("error", "占쎈쾻嚥≪빖留� 揶쏉옙野껓옙 占쎌젟癰귣떯占� 占쎈씨占쎈뮸占쎈빍占쎈뼄.");
 			return mav;
 		} else {
 			history.setStore_code(store_code);
@@ -116,7 +118,7 @@ public class WhameController {
 		String rcode2 = (String) request.getParameter("rcode2");
 		String detail = (String) request.getParameter("detail");
 		address = rcode1 + " " + rcode2 + " " + detail;
-		System.out.println("rcode占쏙옙 : " + rcode1 + " " + rcode2);
+		System.out.println("rcode�뜝�룞�삕 : " + rcode1 + " " + rcode2);
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
 
@@ -125,7 +127,7 @@ public class WhameController {
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// 占쏙옙占쏙옙 占쏙옙占싸듸옙
+		// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떥�벝�삕
 		filepath = s3.fileUpload(bucketName, convFile);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		System.out.println("=========enrollconnect imgurl=======" + imgurl);
@@ -145,7 +147,7 @@ public class WhameController {
 		mav.addObject("typelist", typelist);
 		mav.addObject("address", address);
 		mav.setViewName("body/enrollsuccess");
-		System.out.println("enrollsuccess占쏙옙 占싱듸옙");
+		System.out.println("enrollsuccess�뜝�룞�삕 �뜝�떛�벝�삕");
 		return mav;
 	}
 
@@ -157,7 +159,7 @@ public class WhameController {
 		lvo.setRcode(enrollStore.getRcode());
 		lvo.setStore_code(store_code);
 		System.out.println("menuupload==>" + lvo.getAddress());
-		System.out.println("lal ?�??=>" + lvo.getLat() + ":::" + lvo.getLon());
+		System.out.println("lal ?占�??=>" + lvo.getLat() + ":::" + lvo.getLon());
 		service.setLocation(lvo);
 		System.out.println(menulist.length);
 
@@ -184,7 +186,7 @@ public class WhameController {
 		return mav;
 	}
 
-	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占싸듸옙첼占� 占쏙옙占쏙옙풔占� 占쌨소듸옙 ( AWS 클占쏙옙占쏙옙 占쏙옙占� )
+	// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떥�벝�삕泥쇔뜝占� �뜝�룞�삕�뜝�룞�삕�뮅�뜝占� �뜝�뙣�냼�벝�삕 ( AWS �겢�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝占� )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
 	public ModelAndView test(MultipartFile imagefile, HttpServletRequest request) throws Exception {
 		lat = Double.parseDouble(request.getParameter("lat"));
@@ -199,9 +201,9 @@ public class WhameController {
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// 占쏙옙占쏙옙 占쏙옙占싸듸옙
+		// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떥�벝�삕
 		filepath = s3.fileUpload(bucketName, convFile);
-		// history 媛꾪뙋�씠誘몄� �뙆�씪紐�
+		// history 揶쏄쑵�솇占쎌뵠沃섎챷占� 占쎈솁占쎌뵬筌륅옙
 		history.setSignimage(filepath);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		mav.addObject("imgurl", imgurl);
@@ -209,11 +211,11 @@ public class WhameController {
 		return mav;
 	}
 
-	// 占쏙옙占싸듸옙 占싱뱄옙占쏙옙占쏙옙 占쌨아쇽옙 Opencv 占쏙옙占쏙옙 占쏙옙 占싱뱄옙占쏙옙 占쏙옙占� 占쏙옙환 ( filename )
+	// �뜝�룞�삕�뜝�떥�벝�삕 �뜝�떛諭꾩삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙣�븘�눦�삕 Opencv �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕 �뜝�떛諭꾩삕�뜝�룞�삕 �뜝�룞�삕�뜝占� �뜝�룞�삕�솚 ( filename )
 	@RequestMapping(value = "result.whame", method = RequestMethod.POST)
 	public void test1(ImageVO imagevo, String imgurl) throws Exception {
 		Opencv ivo = new Opencv();
-		System.out.println("run占쏙옙占쏙옙載�---------" + imgurl);
+		System.out.println("run�뜝�룞�삕�뜝�룞�삕雍됵옙---------" + imgurl);
 		BufferedImage img = ImageIO.read(new URL(imgurl));
 		filepath = ivo.runOpencv(img, imagevo, imgurl);
 	}
@@ -223,29 +225,37 @@ public class WhameController {
 		MemberVO membervo = (MemberVO)session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
 		List<HistoryVO> list = service.getHistoryList(membervo.getUserid());
-		
 		List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
 		
 		mav.addObject("historylist", list);
 		mav.addObject("latalon", historyLoc.toString());
 		mav.addObject("length",historyLoc.size());
+		
+		HashMap<Integer, List<MenuVO>> mList = new HashMap<Integer, List<MenuVO>>();
+		List<StoreVO> sList = new ArrayList<StoreVO>();
+		HashMap<Integer, LocationVO> lList = new HashMap<Integer, LocationVO>();
+		
+		if (list != null) {
+			for (int i = 0; i < list.size(); i++) {
+				StoreVO storevo = service.getStore_info(list.get(i).getStore_code());
+				LocationVO locationvo = service.getLocation_info(list.get(i).getStore_code());
+				List<MenuVO> menu = service.getMenu(list.get(i).getStore_code());
+				
+				sList.add(storevo);
+				lList.put(locationvo.getStore_code(), locationvo);
+				mList.put(list.get(i).getStore_code(), menu);
+			}
+		}
+		
+		mav.addObject("storelist", sList);
+		mav.addObject("locationlist", lList);
+		mav.addObject("menulist", mList);
+		
 		mav.setViewName("body/history"); 
 		return mav; 
 	  }
 	
-	@RequestMapping(value="historyInfo.whame", method=RequestMethod.GET)
-	public ModelAndView historyInfo(int store_code){
-		StoreVO storevo = service.getStore_info(store_code);
-		List<MenuVO> menulist = service.getMenu(store_code);
-		LocationVO locationvo = service.getLocation_info(store_code);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("storevo", storevo);
-		mav.addObject("locationvo", locationvo);
-		mav.addObject("menulist", menulist);
-		mav.setViewName("body/historyInfo");
-		return mav;
-	}
-	
+
 	@RequestMapping(value = "store.whame", method = RequestMethod.GET)
 	public ModelAndView storeinfo(HttpSession session) {
 		MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
