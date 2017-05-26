@@ -69,5 +69,4 @@ $(document).ready(function() {
 			alert(JSON.stringify(err));
 		}
 	});
-
 })// jquery
