@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <style>
 .loginform{
 	width: 350px;
@@ -38,10 +38,12 @@
 				<input type="button" value="로그인" class="btn black" id="login" style="width:300px"><br>
 			</div>
 			<a href="">아이디&패스워드 찾기</a> / <a href="#signin_modal">회원가입</a>
+			
 			<div class="snslogin">
-				<input type="button" value="카카오톡 로그인" class="btn orange" id="login">
-				<input type="button" value="페이스북 로그인" class="btn blue" id="login">
+				<div id="kakao-login-btn"></div>
+				<a href="http://developers.kakao.com/logout"></a><br>
 			</div>
+		<div id="kakao-token"></div>
 	</div>
 </div>
 

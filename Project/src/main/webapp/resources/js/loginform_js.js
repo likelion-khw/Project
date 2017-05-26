@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	$('#login').on('click', function() {
 		var userid = $('#userid').val();
 		var pw = $('#pw').val();
@@ -48,4 +49,25 @@ $(document).ready(function() {
 			});
 		}
 	});
-})
+
+	Kakao.init('676bc5e5aca1030f2c233ff8f3655485');
+	localStorage.removeItem('userid');
+	
+	Kakao.Auth.createLoginButton({
+		container : '#kakao-login-btn',
+		success : function(authObj) {
+			
+				if (typeof (localStorage) == 'undefined') { // 브라우저 지원 안될 시
+					alert("not support 'localStorage'");
+				}
+			
+			localStorage.setItem('sessionTimeout', authObj.expires_in);
+			localStorage.setItem('userid', authObj.access_token);
+			$(location).attr('href', '/whame');
+		},
+		fail : function(err) {
+			alert(JSON.stringify(err));
+		}
+	});
+
+})// jquery
