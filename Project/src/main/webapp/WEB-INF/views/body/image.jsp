@@ -110,6 +110,8 @@ $(document).ready(
 			})
 
 			$('#send').on('click', function() {
+				$('#images').hide();
+				$('#loading').show();
 				$.ajax({
 					url : 'result.whame',
 					type : 'post',
@@ -121,7 +123,6 @@ $(document).ready(
 						'imgurl' : "${imgurl}"
 					},
 					success : function(result) {
-						alert("Success");
 						location.href = "showinfo.whame";
 					}
 				})

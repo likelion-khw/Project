@@ -18,6 +18,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 
+
 <style type="text/css">
 header, main, footer {
 	padding-left: 240px;
@@ -46,7 +47,15 @@ main{
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.modal').modal();
+		 $('.modal').modal({
+		      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+		      opacity: .10, // Opacity of modal background
+		      inDuration: 320, // Transition in duration
+		      outDuration: 220, // Transition out duration
+		      startingTop: '4%', // Starting top style attribute
+		      endingTop: '20%' // Ending top style attribute
+		    }
+		  );
 	})
 </script>
 </html>

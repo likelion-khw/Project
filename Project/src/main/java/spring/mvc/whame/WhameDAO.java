@@ -14,6 +14,7 @@ import spring.mvc.whame.color.ColorVO;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
+import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 import spring.mvc.whame.vision.TextApp;
@@ -168,5 +169,25 @@ public class WhameDAO {
 	
 	public int getStoreCount(){
 		return session.selectOne("whame.getStoreCount");
+	}
+	
+	public int remenu(ReMenuVO rmvo){
+		return session.update("whame.reMenu", rmvo);
+	}
+	public int delmenu(ReMenuVO rmvo){
+		return session.delete("whame.delMenu",rmvo);
+	}
+	
+	public int addmenu(MenuVO mvo){
+		return session.delete("whame.setMenu",mvo);
+	}
+	
+	public int deleteStore(int store_code){
+		session.delete("whame.delstore0",store_code);
+		session.delete("whame.delstore1",store_code);
+		session.delete("whame.delstore2",store_code);
+		session.delete("whame.delstore3",store_code);
+		
+		return session.delete("whame.delstore4",store_code);
 	}
 }
