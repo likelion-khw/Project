@@ -39,19 +39,19 @@
 		$('#imagefile').on('change',function(e){
 			$('#upload').submit();
 		});
-
-		window.onload = function() {
-			  var startPos;
-			  var geoSuccess = function(position) {
-			    startPos = position;
-			    document.getElementById('startLat').innerHTML = startPos.coords.latitude;
-			    document.getElementById('startLon').innerHTML = startPos.coords.longitude;
-			    document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + startPos.coords.latitude + ">"
-				+"<input type=hidden name=lon value=" + startPos.coords.longitude + ">";
-			  };
-			  navigator.geolocation.getCurrentPosition(geoSuccess);
-			};
 	})
+	window.onload = function() {
+		var startPos;
+		var geoSuccess = function(position) {
+			startPos = position;
+			document.getElementById('startLat').innerHTML = startPos.coords.latitude;
+			document.getElementById('startLon').innerHTML = startPos.coords.longitude;
+			 document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + startPos.coords.latitude + ">"
+				+"<input type=hidden name=lon value=" + startPos.coords.longitude + ">"; 
+			 
+		};
+		navigator.geolocation.getCurrentPosition(geoSuccess);
+	};
 </script>
 
 

@@ -120,10 +120,11 @@ $(document).ready(
 						'four' : four,
 						'imgurl' : "${imgurl}"
 					},
-					success : function(result) {
+					success : function() {
 						alert("Success");
 						location.href = "showinfo.whame";
-					}
+					},
+					error : function(request,status,error){alert("code:"+request.status+"\n\n"+"message:"+request.responseText+"\n\n"+"error:"+error);}
 				})
 
 			});

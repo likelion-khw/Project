@@ -31,6 +31,8 @@ public interface WhameService {
 	public List<HistoryVO> getHistoryList(String userid);
 	public void setHistory(HistoryVO historyvo);
 	public List<LocationVO> getHistotyLoc(String userid);
+	public List<HistoryVO> getHistoryListGroup(int store_code, String userid);
+	public List<Integer> gethstore_code(String userid);	//
 	
 	public List<StoreVO> getStoreList(String userid);
 	public int getStoreCount();

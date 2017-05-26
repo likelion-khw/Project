@@ -2,55 +2,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../modal/history_modal.jsp" %>  
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=37398369e1a52d60bd562e99b1d140aa&libraries=services"></script>
-<% 
-	List<HistoryVO> hlist = (List<HistoryVO>)request.getAttribute("historylist");
-	HashMap<Integer, Integer> iscode = new HashMap<Integer,Integer>();
- 	for(HistoryVO vo : hlist){
-		iscode.put(vo.getStore_code(), 0);
-	} 
-	int i = 0;
-	int j = 0;
-	String[] move = {"one!", "two!", "three!", "four!"};
-%>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=bf657f021b380e68b1a07c1e4fd92c88&libraries=services"></script>
+
+
 <div id="map" style="width:100%;height:350px;"></div>
 <div style="width:50;height:50">
-<div id="main">
-	<c:forEach items="${historylist}" var="vo" >
-<% 
-	int hcode = hlist.get(i).getStore_code();
-	 if(iscode.get(hlist.get(i).getStore_code())==0 ) {
-		 System.out.println("들어옴");
-		iscode.put(hlist.get(i++).getStore_code(),1); 
-%>
-		<div class="carousel carousel-slider center" data-indicators="true">
-		    <div class="carousel-fixed-item center">
-		    </div>
-		    <div class="carousel-item red white-text" href="#one! %>">
-		      	<div id='${vo.store_code }'>
-					<img class="image" src="http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${vo.signimage }" style="width:60%; height:60%;">
-		       		<div class = 'code'> ${vo.store_code }</div>
-		      		 ${vo.h_date }<br>
-		       		<div class='show'></div>
-    			</div> 
-	    	</div>
-		     <div id ='${vo.store_code }row'></div>
-		 </div>
-<%
-	 }else{
-%>		
-		<%-- <input type="text" id="${vo.store_code }_tos"  onclick ="loadImage(${vo.store_code })" name="${vo.signimage }"> --%>
-<%	}
-%>
-
+	<c:forEach items="${hMap}" var="vo" >
+	<div class="slider">
+    <ul class="slides">
+		<c:forEach items="${vo.value }" var="his">
+			<li>
+		        <img src="http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
+		        <div class="caption center-align">
+		          <h3>${his.store_code}</h3>
+		          <h5 class="light grey-text text-lighten-3">${his.h_date}</h5>
+		        </div>
+	      	</li>
+		</c:forEach>
+	</ul>
+  	</div>
 	</c:forEach> 
-</div>
 </div>  
       
-<!-- <script src="resources/js/jquery-3.1.1.min.js"></script> -->
+      
 <script type="text/javascript">
 $(document).ready( function() {
+	      $('.slider').slider();
+	      
 var x = ${latalon};
 var length = ${length};
 var positions=[];
@@ -81,11 +61,11 @@ var positions=[];
 	    daum.maps.event.addListener(marker, 'click', movecard(code)); 
 		
 	}
-
 	// 마커에 클릭이벤트를 등록합니다
 	function movecard(code){
 		return function() {
-	    location.href = "#"+code;
+		    var offset = $("#"+code).offset();
+		      $('html,body').animate({scrollTop : offset.top}, 800);
 	    console.log("#"+code);
 		};
 	}
@@ -93,22 +73,16 @@ var positions=[];
 	$("#fileupload").on('click',function(){
 		$('#modal1').modal('open');
 	});
-
 	$("#enroll").on('click',function(){
 		$(location).attr('href','enroll.whame');
 	});
 	
-	$('.image').on('click',function(){ 
-		var store_code = $(this).parent().attr('id');
+	$('.imagemodal').on('click',function(){ 
+		var store_code = $(this).attr('id');
 		console.log(store_code);
 		$('#'+store_code+"modal").modal('open');
 	}); 
 	
-	$('.carousel.carousel-slider').carousel({fullWidth: true});
 	
 }) 
-
-
-
-
 </script>

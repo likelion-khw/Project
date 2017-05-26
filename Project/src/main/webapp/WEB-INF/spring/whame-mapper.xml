@@ -53,9 +53,10 @@
 	</select>
 	
 	<sql id="loc">
-		select store_code
-		from store_location
-		where lat between #{lat}-#{difflat} and #{lat}+#{difflat}
+		select ssl.store_code, ss.store_name
+		from store_location ssl, store ss
+		where ssl.store_code = ss.store_code 
+		and lat between #{lat}-#{difflat} and #{lat}+#{difflat}
 		and lon between #{lon}-#{difflon} and #{lon}+#{difflon} 
 	</sql>
 	
@@ -63,7 +64,7 @@
  	<select id="searchText" resultType="int" parameterType="whamevo">
 		select distinct(m.store_code), red, blue, green
 		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
+				from (<include refid="loc" />) s, store_text st, store_color sc
 				where s.store_code = st.store_code and sc.store_code = s.store_code
 				and 
 					<foreach collection="text" item="text" open="(" close=")" separator="or">
@@ -72,15 +73,15 @@
 						</if>
 					</foreach>				
 				) m
-	 	 <include refid="color_rate" />
-	 	 and m.store_code in (<include refid="loc" />)
+	 	 <include refid="color_rate" /><!-- 
+	 	 and m.store_code in (<include refid="loc" />) -->
 	</select> 
 	
 	<!-- name search -->
 	<select id="searchTextName" resultType="int" parameterType="whamevo">
 		select distinct(m.store_code), red, blue, green
 		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
+				from (<include refid="loc" />) s, store_text st, store_color sc
 				where s.store_code = st.store_code and sc.store_code = s.store_code
 				and 
 					<foreach collection="text" item="text" open="(" close=")" separator="or">
@@ -90,14 +91,14 @@
 					</foreach>				
 				) m
 	  	<include refid="color_rate" />  
-	  	and m.store_code in (<include refid="loc" />)
+	  	<!-- and m.store_code in (<include refid="loc" />) -->
 	</select> 
 	
 	<!-- color search -->
 	<select id="searchColor" resultType="int" parameterType="whamevo">
 		select distinct(m.store_code), red, blue, green
 		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
+				from (<include refid="loc" />) s, store_text st, store_color sc
 				where s.store_code = st.store_code and sc.store_code = s.store_code
 				) m
 	  	<include refid="color_max" />  

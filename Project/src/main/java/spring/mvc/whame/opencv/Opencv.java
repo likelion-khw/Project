@@ -18,16 +18,16 @@ public class Opencv {
 		String filename = imgurlString.split("StoreTitle/|[?]")[1];
 		opencv_core.Mat img = Mat2(imgurl);
 
-		// ���� ���
+		// 占쏙옙占쏙옙 占쏙옙占�
 		opencv_core.Point p0 = new opencv_core.Point(Integer.parseInt(tvo.getOne_xy()[0]),
 				Integer.parseInt(tvo.getOne_xy()[1]));
-		// ������ ���
+		// 占쏙옙占쏙옙占쏙옙 占쏙옙占�
 		opencv_core.Point p1 = new opencv_core.Point(Integer.parseInt(tvo.getFour_xy()[0]),
 				Integer.parseInt(tvo.getFour_xy()[1]));
-		// ���� �ϴ�
+		// 占쏙옙占쏙옙 占싹댐옙
 		opencv_core.Point p2 = new opencv_core.Point(Integer.parseInt(tvo.getTwo_xy()[0]),
 				Integer.parseInt(tvo.getTwo_xy()[1]));
-		// ������ �ϴ�
+		// 占쏙옙占쏙옙占쏙옙 占싹댐옙
 		opencv_core.Point p3 = new opencv_core.Point(Integer.parseInt(tvo.getThree_xy()[0]),
 				Integer.parseInt(tvo.getThree_xy()[1]));
 
@@ -51,7 +51,7 @@ public class Opencv {
 
 		opencv_imgproc.warpPerspective(img, warpImg, trans, new opencv_core.Size((int) maxWidth, (int) maxHeiht));
 
-//		aws Ŭ������� ���� ���� ��ȯ ���
+//		aws 클占쏙옙占쏙옙占쏙옙占� 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙환 占쏙옙占�
 //		String exten = filename.split("\\.")[1];
 //		BufferedImage warpB = Buffered2(warpImg);
 		
@@ -61,8 +61,8 @@ public class Opencv {
 //		filename = s3.fileUpload("whame01/warping", f);
 		
 		
-		// ������ �̹����� ������ ���.
-		String target = "/Users/woong/Desktop/" + filename;
+		// 占쏙옙占쏙옙占쏙옙 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占�.
+		String target = "C:/Users/myeongeun/Desktop/warping/" + filename;
 		opencv_imgcodecs.imwrite(target, warpImg);
 		
 		return target;
