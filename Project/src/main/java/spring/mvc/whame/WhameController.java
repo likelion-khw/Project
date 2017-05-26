@@ -30,6 +30,7 @@ import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.MapTest;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
+import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 
@@ -75,21 +76,25 @@ public class WhameController {
 
 		// history insert
 		MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
-
 		if (store_code == 0) {
-			mav.addObject("error", "�벑濡앸맂 媛�寃� �젙蹂닿� �뾾�뒿�땲�떎.");
+			mav.addObject("error", "등록된 상가가 아직 없네요 ㅠㅠ");
 			return mav;
 		} else {
-			history.setStore_code(store_code);
-			history.setUserid(membervo.getUserid());
-			service.setHistory(history);
-
+			if(membervo.getUserid() != null){
+				history.setStore_code(store_code);
+				history.setUserid(membervo.getUserid());
+				service.setHistory(history);
+			}
 			List<MenuVO> menuList = service.getMenu(store_code);
-			System.out.println(menuList.size());
+			LocationVO location = service.getLocation_info(store_code);
+			StoreVO store = service.getStore_info(store_code);
+			
+			
 			mav.addObject("result", result);
 			mav.addObject("color", color);
-			mav.addObject("whame", whame);
 			mav.addObject("menuList", menuList);
+			mav.addObject("location", location);
+			mav.addObject("store", store);
 		}
 		return mav;
 	}
@@ -120,7 +125,7 @@ public class WhameController {
 		int rcode = service.getrcodeNum(rcode1 + " " + rcode2);
 		storevo.setRcode(rcode);
 
-		String bucketName = "whame01/StoreTitle";
+		String bucketName = "whame01/StoreMain";
 		MultipartFile imagefile = storevo.getImagefile();
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
@@ -190,9 +195,8 @@ public class WhameController {
 		lat = Double.parseDouble(request.getParameter("lat"));
 		lon = Double.parseDouble(request.getParameter("lon"));
 		System.out.println("lal" + lat + ":" + lon);
-
 		MapTest mt = new MapTest();
-		difflal = mt.run(lat, 2000);
+		difflal = mt.run(lat, 550);
 
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame01/StoreTitle";
@@ -210,9 +214,11 @@ public class WhameController {
 	}
 
 	// 占쏙옙占싸듸옙 占싱뱄옙占쏙옙占쏙옙 占쌨아쇽옙 Opencv 占쏙옙占쏙옙 占쏙옙 占싱뱄옙占쏙옙 占쏙옙占� 占쏙옙환 ( filename )
+	@ResponseBody
 	@RequestMapping(value = "result.whame", method = RequestMethod.POST)
-	public void test1(ImageVO imagevo, String imgurl) throws Exception {
+	public void openCV(ImageVO imagevo, String imgurl) throws Exception {
 		Opencv ivo = new Opencv();
+		imagevo.sortXY();
 		System.out.println("run占쏙옙占쏙옙載�---------" + imgurl);
 		BufferedImage img = ImageIO.read(new URL(imgurl));
 		filepath = ivo.runOpencv(img, imagevo, imgurl);
@@ -250,18 +256,24 @@ public class WhameController {
 	public ModelAndView storeinfo(HttpSession session) {
 		MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
-		List<StoreVO> ls = service.getStoreList(membervo.getUserid());
+		List<StoreVO> storelist = service.getStoreList(membervo.getUserid());
 		HashMap<Integer, List<MenuVO>> menulist = new HashMap<Integer, List<MenuVO>>();
+		HashMap<Integer, LocationVO> loclist = new HashMap<Integer, LocationVO>();
+		List<TypeVO> typelist = service.getType();
 
-		if (ls != null) {
-			for (int i = 0; i < ls.size(); i++) {
-				List<MenuVO> list = service.getMenu(ls.get(i).getStore_code());
-				menulist.put(ls.get(i).getStore_code(), list);
+		if (storelist != null) {
+			for (int i = 0; i < storelist.size(); i++) {
+				List<MenuVO> mlist = service.getMenu(storelist.get(i).getStore_code());
+				LocationVO locaion = service.getLocation_info(storelist.get(i).getStore_code());
+				menulist.put(storelist.get(i).getStore_code(), mlist);
+				loclist.put(storelist.get(i).getStore_code(), locaion);
 			}
 		}
 
 		mav.addObject("menulist", menulist);
-		mav.addObject("storelist", ls);
+		mav.addObject("storelist", storelist);
+		mav.addObject("typelist", typelist);
+		mav.addObject("loclist",loclist);
 		mav.setViewName("body/storeform");
 
 		return mav;
@@ -272,4 +284,29 @@ public class WhameController {
 	public int storeCount(){
 		return service.getStoreCount();
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="remenu.whame", method=RequestMethod.POST)
+	public int re_menu(ReMenuVO rmvo){
+		return service.remenu(rmvo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="delmenu.whame", method=RequestMethod.POST)
+	public int del_menu(ReMenuVO rmvo){
+		return service.delmenu(rmvo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="addmenu.whame", method=RequestMethod.POST)
+	public int add_menu(MenuVO mvo){
+		return service.addmenu(mvo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteStore.whame", method=RequestMethod.POST)
+	public int deleteStore(int store_code){
+		return service.deleteStore(store_code);
+	}
+	
 }

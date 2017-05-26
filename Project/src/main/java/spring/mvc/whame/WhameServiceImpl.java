@@ -11,6 +11,7 @@ import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
+import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 
@@ -118,6 +119,20 @@ public class WhameServiceImpl implements WhameService{
 		return dao.getStoreCount();
 	}
 	
+	public int remenu(ReMenuVO rmvo){
+		return dao.remenu(rmvo);
+	}
+	public int delmenu(ReMenuVO rmvo){
+		return dao.delmenu(rmvo);
+	}
+	
+	public int addmenu(MenuVO mvo){
+		return dao.addmenu(mvo);
+	}
+	
+	public int deleteStore(int store_code){
+		return dao.deleteStore(store_code);
+	}
 	
 	
 }

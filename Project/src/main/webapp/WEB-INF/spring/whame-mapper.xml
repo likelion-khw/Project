@@ -53,55 +53,56 @@
 	</select>
 	
 	<sql id="loc">
-		select store_code
-		from store_location
-		where lat between #{lat}-#{difflat} and #{lat}+#{difflat}
-		and lon between #{lon}-#{difflon} and #{lon}+#{difflon} 
-	</sql>
-	
-	<!-- ocr search -->
- 	<select id="searchText" resultType="int" parameterType="whamevo">
-		select distinct(m.store_code), red, blue, green
-		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
-				where s.store_code = st.store_code and sc.store_code = s.store_code
-				and 
-					<foreach collection="text" item="text" open="(" close=")" separator="or">
-						<if test="text.text != null and text.text.length() >= 2">
-						upper(st.text) like upper('%'||#{text.text}||'%')
-						</if>
-					</foreach>				
-				) m
-	 	 <include refid="color_rate" />
-	 	 and m.store_code in (<include refid="loc" />)
-	</select> 
-	
-	<!-- name search -->
-	<select id="searchTextName" resultType="int" parameterType="whamevo">
-		select distinct(m.store_code), red, blue, green
-		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
-				where s.store_code = st.store_code and sc.store_code = s.store_code
-				and 
-					<foreach collection="text" item="text" open="(" close=")" separator="or">
-						<if test="text.text != null and text.text.length() >= 2 ">
-							upper(s.store_name) like upper('%'||#{text.text}||'%')
-						</if>
-					</foreach>				
-				) m
-	  	<include refid="color_rate" />  
-	  	and m.store_code in (<include refid="loc" />)
-	</select> 
-	
-	<!-- color search -->
-	<select id="searchColor" resultType="int" parameterType="whamevo">
-		select distinct(m.store_code), red, blue, green
-		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
-				where s.store_code = st.store_code and sc.store_code = s.store_code
-				) m
-	  	<include refid="color_max" />  
-	</select> 
+      select ssl.store_code, ss.store_name
+      from store_location ssl, store ss
+      where ssl.store_code = ss.store_code 
+      and lat between #{lat}-#{difflat} and #{lat}+#{difflat}
+      and lon between #{lon}-#{difflon} and #{lon}+#{difflon} 
+   </sql>
+   
+   <!-- ocr search -->
+    <select id="searchText" resultType="int" parameterType="whamevo">
+      select distinct(m.store_code), red, blue, green
+      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+            from (<include refid="loc" />) s, store_text st, store_color sc
+            where s.store_code = st.store_code and sc.store_code = s.store_code
+            and 
+               <foreach collection="text" item="text" open="(" close=")" separator="or">
+                  <if test="text.text != null and text.text.length() >= 2">
+                  upper(st.text) like upper('%'||#{text.text}||'%')
+                  </if>
+               </foreach>            
+            ) m
+        <include refid="color_rate" /><!-- 
+        and m.store_code in (<include refid="loc" />) -->
+   </select> 
+   
+   <!-- name search -->
+   <select id="searchTextName" resultType="int" parameterType="whamevo">
+      select distinct(m.store_code), red, blue, green
+      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+            from (<include refid="loc" />) s, store_text st, store_color sc
+            where s.store_code = st.store_code and sc.store_code = s.store_code
+            and 
+               <foreach collection="text" item="text" open="(" close=")" separator="or">
+                  <if test="text.text != null and text.text.length() >= 2 ">
+                     upper(s.store_name) like upper('%'||#{text.text}||'%')
+                  </if>
+               </foreach>            
+            ) m
+        <include refid="color_rate" />  
+        <!-- and m.store_code in (<include refid="loc" />) -->
+   </select> 
+   
+   <!-- color search -->
+   <select id="searchColor" resultType="int" parameterType="whamevo">
+      select distinct(m.store_code), red, blue, green
+      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+            from (<include refid="loc" />) s, store_text st, store_color sc
+            where s.store_code = st.store_code and sc.store_code = s.store_code
+            ) m
+        <include refid="color_max" />  
+   </select> 
 
 	
 	
@@ -150,4 +151,33 @@
  	<select id="getStoreCount" resultType="int">
  		select count(*) from store
  	</select>
+ 	
+ 	<update id="reMenu" parameterType="remenuvo">
+ 		update menu set menu_name = #{new_name}, menu_price = #{new_price}, menu_type = #{new_type} where store_code = #{store_code} and menu_name = #{ori_name}
+ 	</update>
+ 	
+ 	<delete id="delMenu" parameterType="remenuvo">
+ 		delete menu where store_code = #{store_code} and menu_name = #{ori_name}
+ 	</delete>
+ 	<!-- 스토어 삭제 시작 ( 상속된 테이블 포함 ) -->
+ 	<delete id="delstore0" parameterType="int">
+ 		delete menu where store_code = #{store_code}
+ 	</delete>
+ 	<delete id="delstore1" parameterType="int">
+ 		delete store_location where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<delete id="delstore2" parameterType="int">
+ 		delete store_color where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<delete id="delstore3" parameterType="int">
+ 		delete store_text where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<delete id="delstore4" parameterType="int">
+ 		delete store where store_code = #{store_code}
+ 	</delete>
+ 	<!-- 스토어 삭제 끝   -->
+ 	
 </mapper>

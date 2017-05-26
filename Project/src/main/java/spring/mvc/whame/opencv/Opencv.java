@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class Opencv {
 
 	public String runOpencv(BufferedImage imgurl, ImageVO tvo, String imgurlString) throws Exception {
-		String filename = imgurlString.split("StoreTitle/|[?]")[1];
+		String filename = imgurlString.split("whame01/")[1].split("/|[?]")[1];
 		opencv_core.Mat img = Mat2(imgurl);
 
 		// ���� ���
@@ -62,7 +62,7 @@ public class Opencv {
 		
 		
 		// ������ �̹����� ������ ���.
-		String target = "/Users/woong/Desktop/" + filename;
+		String target = "/Users/woong/Desktop/warping/" + filename;
 		opencv_imgcodecs.imwrite(target, warpImg);
 		
 		return target;

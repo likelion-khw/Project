@@ -7,6 +7,7 @@ import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
+import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 
@@ -34,5 +35,11 @@ public interface WhameService {
 	
 	public List<StoreVO> getStoreList(String userid);
 	public int getStoreCount();
+	
+	public int remenu(ReMenuVO rmvo);
+	public int delmenu(ReMenuVO rmvo);
+	public int addmenu(MenuVO mvo);
+	
+	public int deleteStore(int store_code);
 	
 }

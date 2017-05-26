@@ -38,21 +38,6 @@ $(document).ready(function() {
 				return true; // OK!
 			return false;
 		}
-	})
+	});
 	
-	$('#submit').on('click',function(){
-		var a = $('#business_code');
-		var b = $('#rcode1');
-		var c = $('#rcode2');
-		var d = $('#detail');
-		var e = $("#store_name");
-		var f = $('#operating_time');
-		var g = $('#imagefile');
-		
-		if(a.val() == "" || b.val() == "" || c.val() == "" || d.val() == "" || e.val() == "" || f.val() == "" || g.val() == ""){
-			alert("정보입력을 하세요.");
-		}else{
-			$('#enroll_submit').submit();
-		}
-	})
 })

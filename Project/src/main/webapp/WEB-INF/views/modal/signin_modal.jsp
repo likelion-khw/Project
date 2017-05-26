@@ -48,8 +48,8 @@
 
 	<div class="modal-footer">
 		<a href="#!"
-			class="modal-action modal-close btn">취소</a>
-		<a href="#!" class="btn" id="success">확인</a> 
+			class="modal-action modal-close btn" style="float:none;">취소</a>
+		<a href="#!" class="btn" id="success" style="float:none;">확인</a> 
 	</div>
 </div>
 

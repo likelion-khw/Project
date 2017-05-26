@@ -23,9 +23,11 @@
 	}
 }
 </style>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <div class="container center-align enrollform">
 <h4>${memberVO.userid}님<br> 상점을 등록하는 페이지입니다.</h4>
-	<form action="enrollconnect.whame" method="post"  enctype="multipart/form-data" id="enroll_submit">
+	<form action="enrollconnect.whame" method="post"  enctype="multipart/form-data">
 	 <input type="hidden" name="userid" value="${memberVO.userid}"> 
 	<table class="centered">
 		<tr>
@@ -73,12 +75,27 @@
 		<tr>
 			<th>간판이미지</th><td><input type="file" name="imagefile"></td>
 		
-		<tr><td colspan="2"><input type="button" class="btn" value="등록하기" id="submit"></td></tr>
+		<tr><td colspan="2"><input type="submit" class="btn" value="등록하기"></td></tr>
 	</table>
 	</form>
 </div>
    
 <script type="text/javascript" src="resources/js/enrollform_js.js"></script>
 <script type="text/javascript" src="resources/js/busi_check.js"></script>
-</body>
-</html>
+<script type="text/javascript">
+$('#submit').on('click',function(){
+		var a = $('#business_code');
+		var b = $('#rcode1');
+		var c = $('#rcode2');
+		var d = $('#detail');
+		var e = $("#store_name");
+		var f = $('#operating_time');
+		var g = $('#imagefile');
+		
+		if(a.val() == "" || b.val() == "" || c.val() == "" || d.val() == "" || e.val() == "" || f.val() == "" || g.val() == ""){
+			alert("정보입력을 하세요.");
+		}else{
+			$('form[id=enroll_form]').submit();
+		}
+	});
+</script>

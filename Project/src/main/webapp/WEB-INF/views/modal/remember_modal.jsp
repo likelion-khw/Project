@@ -8,23 +8,23 @@
 </style>
 
 <!-- 닉네임 변경 모달 -->
-<div id="remember_nickname" class="modal remember_modalform">
-	<div class="modal-content center-align">
+<div id="remember_nickname" class="modal remember_modalform center-align">
+	<div class="modal-content">
 		<h4>닉네임 변경</h4>
 		닉네임<br>
 		<input type="text" value="${memberVO.nickname}" style="width:150px;" id="re_nickname">
 	</div>
 	<div class="modal-footer">
 		<a href="#!"
-			class="modal-action modal-close btn">취소</a>
+			class="modal-action btn" id="reload_nick" style="float:none;">변경</a>
 		<a href="#!"
-			class="modal-action btn" id="reload_nick">변경</a>
+			class="modal-action modal-close btn" style="float:none;">취소</a>
 	</div>
 </div>
 
 <!-- 패스워드 변경 모달 -->
-<div id="remember_pw" class="modal remember_modalform">
-	<div class="modal-content center-align">
+<div id="remember_pw" class="modal remember_modalform center-align">
+	<div class="modal-content">
 		<h4>패스워드 변경</h4>
 		변경 패스워드<br>
 		<input type="password" style="width:150px;" id="re_pw"><br>
@@ -33,9 +33,9 @@
 	</div>
 	<div class="modal-footer">
 		<a href="#!"
-			class="modal-action modal-close btn">취소</a>
+			class="modal-action btn" id="reload_pw" style="float:none;">변경</a>
 		<a href="#!"
-			class="modal-action btn" id="reload_pw">변경</a>
+			class="modal-action modal-close btn" style="float:none;">취소</a>
 	</div>
 </div>
 
