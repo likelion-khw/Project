@@ -134,5 +134,15 @@ public class WhameServiceImpl implements WhameService{
 		return dao.deleteStore(store_code);
 	}
 	
+	@Override
+	public List<HistoryVO> getHistoryListGroup(int store_code, String userid) {
+		return hdao.getHistoryListGroup(store_code, userid);
+	}
+
+	@Override
+	public List<Integer> gethstore_code(String userid) {
+		return hdao.gethstore_code(userid);
+	}
+	
 	
 }

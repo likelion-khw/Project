@@ -1,5 +1,6 @@
 package spring.mvc.whame.history;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,8 +16,15 @@ public class HistoryDAO {
 	SqlSession session;
 	
 	public List<HistoryVO> getHistoryList(String userid){
-		System.out.println(userid);
 		List<HistoryVO> result = session.selectList("history.getlist", userid);
+		return result;
+	}
+	
+	public List<HistoryVO> getHistoryListGroup(int store_code, String userid){
+		HistoryVO vo = new HistoryVO();
+		vo.setUserid(userid);
+		vo.setStore_code(store_code);
+		List<HistoryVO> result = session.selectList("history.getlistGroup", vo);
 		return result;
 	}
 	
@@ -26,5 +34,9 @@ public class HistoryDAO {
 	
 	public List<LocationVO> getHistoryLoc(String userid){
 		return session.selectList("history.getLoc",userid);
+	}
+	
+	public List<Integer> gethstore_code(String userid) {
+		return session.selectList("history.gethstore_code", userid);
 	}
 }

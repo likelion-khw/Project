@@ -42,4 +42,6 @@ public interface WhameService {
 	
 	public int deleteStore(int store_code);
 	
+	public List<HistoryVO> getHistoryListGroup(int store_code, String userid);
+	public List<Integer> gethstore_code(String userid);
 }

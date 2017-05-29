@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=bf657f021b380e68b1a07c1e4fd92c88&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 <style>
 .storeform{
 	margin-top:5%;
@@ -23,7 +23,11 @@
 	padding-bottom:5%;
 }
 </style>
-
+<div id="store_h">
+	<c:forEach items="${storelist}" var="store">
+		<input type="hidden" value="${store.store_code}">
+	</c:forEach>
+</div>
 <div class="container storeform center-align">
 	<c:choose>
 		<c:when test="${storelist != null}">
@@ -56,7 +60,7 @@
 				      		</tr>
 				      	</table>
 				      	<center>
-				     	 	<div id="map${store.store_code}" style="width: 80%; height: 250px; margin-bottom:20px;"></div>
+				     	 	<div id="map${store.store_code}" name="maps" style="width:60%; height:250px; margin-bottom:20px"></div>
 				      	</center>
 				      	<input type="button" value="메뉴관리" class="btn">
 				      	<input type="button" value="상가수정" class="btn">
@@ -78,6 +82,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
+
 	$("#fileupload").on('click',function(){
 		$('#modal1').modal('open');
 	});
@@ -96,10 +101,11 @@ $(document).ready(function() {
 		$('#'+store_code+"modal_store").modal('open');
 	});
 
+	var test = 0;
 	$('li[class=on]').on('click',function(){
 		var store_code = $(this).attr('id');
-		var store_name = $(this).children().children('h5').html();
-		var address = $(this).children().children().children().children().children().next().next().next().next().children('td').html();
+		var store_name = $('li[id='+store_code+']').children().children('h5').html();
+		var address = $('li[id='+store_code+']').children().children().children().children().children().next().next().next().next().children('td').html();
 
 		var mapContainer = document.getElementById('map'+store_code), // 지도를 표시할 div 
 		mapOption = {

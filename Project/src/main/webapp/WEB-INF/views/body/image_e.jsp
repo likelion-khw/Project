@@ -121,7 +121,6 @@ $(document).ready(
 						'imgurl' : "${imgurl}"
 					},
 					success : function(result) {
-						alert(result);
 						location.href = "enrollsuccess.whame";
 					}
 				})

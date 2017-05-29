@@ -36,5 +36,6 @@ function rcodeSelect() {
 				+ rcodelist[count] + "</option>");
 		$('#rcode2').append(option);
 	}
+	
 
 }
