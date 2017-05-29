@@ -58,9 +58,6 @@
 
 <script type="text/javascript">
 	/* window.onload = function(){ */
-	var count = 0;
-	var menulist = new Array();
-
 	$('.insBtn')
 			.click(
 					function() {
@@ -68,7 +65,6 @@
 						menu.menu_name = $('#menu_name').val();
 						menu.menu_price = $('#menu_price').val();
 						menu.menu_type = $('#menu_type').val();
-						menulist.push(menu);
 						$('#menu_t').append(
 								"<tr><td>"
 										+ menu.menu_type + "</td><td>"

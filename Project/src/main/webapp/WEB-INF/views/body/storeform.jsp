@@ -62,8 +62,8 @@
 				      	<center>
 				     	 	<div id="map${store.store_code}" name="maps" style="width:60%; height:250px; margin-bottom:20px"></div>
 				      	</center>
-				      	<input type="button" value="메뉴관리" class="btn">
-				      	<input type="button" value="상가수정" class="btn">
+				      	<input type="button" value="메뉴관리" class="btn red">
+				      	<input type="button" value="상가수정" class="btn blue">
 			      	</div>
 			      </div>
 			    </li>
@@ -110,6 +110,7 @@ $(document).ready(function() {
 		var mapContainer = document.getElementById('map'+store_code), // 지도를 표시할 div 
 		mapOption = {
 			center : new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			draggable :false,
 			level : 3
 		// 지도의 확대 레벨
 		};

@@ -172,6 +172,7 @@ public class WhameController {
 		List<MenuVO> menuList = new ArrayList<MenuVO>();
 
 		for (int i = 0; i < menulist.length; i++) {
+			System.out.println(menulist[i]);
 			String menuval[] = menulist[i].split(":");
 			menuListInt[i] = Integer.parseInt(menuval[1]);
 
@@ -230,41 +231,52 @@ public class WhameController {
 	public ModelAndView history(HttpSession session) {
 		MemberVO membervo = (MemberVO)session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
-		List<HistoryVO> list = service.getHistoryList(membervo.getUserid());
-		System.out.println(list.size());
-		List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
-		List<Integer> hstore_code = service.gethstore_code(membervo.getUserid());
-		HashMap<Integer, List<HistoryVO>> hList = new HashMap<Integer, List<HistoryVO>>();
-		
-		mav.addObject("historylist", list);
-		mav.addObject("latalon", historyLoc.toString());
-		mav.addObject("length",historyLoc.size());
-		
-		HashMap<Integer, List<MenuVO>> mList = new HashMap<Integer, List<MenuVO>>();
-		List<StoreVO> sList = new ArrayList<StoreVO>();
-		HashMap<Integer, LocationVO> lList = new HashMap<Integer, LocationVO>();
-		
-		if (list != null) {
-			for (int i = 0; i < hstore_code.size(); i++) {
+		if(membervo != null)
+		{
+			if(membervo.getUserid() != null)
+			{
+				List<HistoryVO> list = service.getHistoryList(membervo.getUserid());
+				System.out.println(list.size());
+				List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
+				List<Integer> hstore_code = service.gethstore_code(membervo.getUserid());
+				HashMap<Integer, List<HistoryVO>> hList = new HashMap<Integer, List<HistoryVO>>();
 				
-				StoreVO storevo = service.getStore_info(hstore_code.get(i));
-				LocationVO locationvo = service.getLocation_info(hstore_code.get(i));
-				List<MenuVO> menu = service.getMenu(hstore_code.get(i));
-				List<HistoryVO> history = service.getHistoryListGroup(hstore_code.get(i), membervo.getUserid());
+				mav.addObject("historylist", list);
+				mav.addObject("latalon", historyLoc.toString());
+				mav.addObject("length",historyLoc.size());
 				
-				hList.put(list.get(i).getStore_code(), history);
-				sList.add(storevo);
-				lList.put(hstore_code.get(i), locationvo);
-				mList.put(hstore_code.get(i), menu);
+				HashMap<Integer, List<MenuVO>> mList = new HashMap<Integer, List<MenuVO>>();
+				List<StoreVO> sList = new ArrayList<StoreVO>();
+				HashMap<Integer, LocationVO> lList = new HashMap<Integer, LocationVO>();
+				
+				if (list != null) {
+					for (int i = 0; i < hstore_code.size(); i++) {
+						
+						StoreVO storevo = service.getStore_info(hstore_code.get(i));
+						LocationVO locationvo = service.getLocation_info(hstore_code.get(i));
+						List<MenuVO> menu = service.getMenu(hstore_code.get(i));
+						List<HistoryVO> history = service.getHistoryListGroup(hstore_code.get(i), membervo.getUserid());
+						
+						hList.put(list.get(i).getStore_code(), history);
+						sList.add(storevo);
+						lList.put(hstore_code.get(i), locationvo);
+						mList.put(hstore_code.get(i), menu);
+					}
+				}
+				
+				mav.addObject("hMap", hList);
+				mav.addObject("storelist", sList);
+				mav.addObject("locationlist", lList);
+				mav.addObject("menulist", mList);
+				
+				mav.setViewName("body/history"); 
+			}else
+			{
+				mav.setViewName("redirect:/login.whame");
 			}
+		}else{
+			mav.setViewName("redirect:/login.whame");
 		}
-		
-		mav.addObject("hMap", hList);
-		mav.addObject("storelist", sList);
-		mav.addObject("locationlist", lList);
-		mav.addObject("menulist", mList);
-		
-		mav.setViewName("body/history"); 
 		return mav; 
 	  }
 	
