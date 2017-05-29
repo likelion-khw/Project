@@ -4,31 +4,57 @@
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
-
-
-<div id="map" style="width:100%;height:350px;"></div>
-<div style="width:50;height:50">
-	<c:forEach items="${hMap}" var="vo" >
-	<div class="slider">
-    <ul class="slides">
-		<c:forEach items="${vo.value }" var="his">
-			<li>
-		        <img src="http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
-		        <div class="caption center-align">
-		          <h3>${his.store_code}</h3>
-		          <h5 class="light grey-text text-lighten-3">${his.h_date}</h5>
-		        </div>
-	      	</li>
-		</c:forEach>
-	</ul>
-  	</div>
-	</c:forEach> 
-</div>  
-      
+<style>
+	.history_form{
+		margin-top:20px;
+	}
+	.history_form .h_map{
+		margin-bottom:20px;
+	}
+	.indicators{
+		visibility:hidden;
+	}
+	.history_form .sli{
+		margin-left:auto;
+		margin-right: auto;
+	}
+</style>
+<div class="container history_form">
+	<div id="map" style="width:100%;height:350px;" class="h_map"></div>
+	<div style="width:80%;" class="sli">
+		<c:forEach items="${hMap}" var="vo" >
+		<div class="slider z-depth-3" style="margin-bottom:30px;">
+	    <ul class="slides">
+			<c:forEach items="${vo.value }" var="his">
+				<li>
+			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
+			        <div class="caption center-align">
+			          <h3>${his.store_code}</h3>
+			          <h5 class="light grey-text text-lighten-3">${his.h_date}</h5>
+			        </div>
+		      	</li>
+			</c:forEach>
+		</ul>
+		<div class="center-align" style="margin-top:4px;">
+			<a href="javascript:"><i class="material-icons small" style="margin-right:70%;" id="left">keyboard_arrow_left</i></a>
+			<a href="javascript:"><i class="material-icons small" id="right">keyboard_arrow_right</i></a>
+		</div>
+	  	</div>
+		</c:forEach> 
+	</div>  
+</div>
       
 <script type="text/javascript">
 $(document).ready( function() {
-	      $('.slider').slider();
+	$('.slider').slider();
+
+	$('i#left').on('click',function(){
+		$(this).parent().parent().slider('prev');
+	});
+
+	$('i#right').on('click',function(){
+		$(this).parent().parent().slider('next');
+	});
 	      
 var x = ${latalon};
 var length = ${length};

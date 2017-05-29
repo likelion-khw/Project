@@ -16,10 +16,54 @@
       List<MenuVO> menu = menulist.get(store_code);
       LocationVO location = lvo.get(store_code);
 %>
+
+<style>
+	.h_m_storeinfo{
+		width:70%;
+		float:left;
+	}
+	.tog{
+		display: none;
+	}
+	.h_m_map{
+		width:20%;
+		float:right;
+		margin-top:20%;
+		margin-right:60px;
+		margin-bottom:30px;
+	}
+	.h_m_m{
+		margin-bottom:30px;
+		padding:20px;
+	}
+	
+	@media only screen and (min-width : 321px) and (max-width : 600px) {
+			.history_modal_form{
+			width:90%;
+		}
+		.h_m_storeinfo{
+		width:100%;
+		float:none;
+		}
+		.h_m_map{
+			width:100%;
+			float:none;
+			margin-bottom:30px;
+			margin-top:0px;
+			margin-right:0px;
+	}
+		}
+		.h_m_m{
+			margin-bottom:30px;
+		}
+	}
+
+</style>
 <div class="container center-align">
-   <div id="<%=store_code%>modal" class="modal">
+   <div id="<%=store_code%>modal" class="modal modal-fixed-footer history_modal_form">
       <div class="modal-content">
-         <h4><%=svo.get(i).getStore_name()%></h4>
+      <div class="h_m_m z-depth-2">
+         <h4><%=svo.get(i).getStore_name()%><br>메뉴</h4>
          <table class="centered highlight">
             <thead>
                <tr>
@@ -42,23 +86,27 @@
             %>
             </tbody>
          </table>
-         <h4>가게정보</h4>
-         <table>
-            <tr><th>가게이름</th><td><%=svo.get(i).getStore_name() %></td></tr>
-            <tr><th>사업자등록번호</th><td><%=svo.get(i).getStore_name() %></td></tr>
-            <tr><th>점주아이디</th><td><%=svo.get(i).getUserid() %></td></tr>
-            <tr><th>영업시간</th><td><%=svo.get(i).getOperating_time() %></td></tr>
-            <tr><th>조회수</th><td><%=svo.get(i).getView_count() %></td></tr>
-            <tr><th>주소</th><td><%=location.getAddress() %></td></tr>
-         </table>
       </div>
-      <div id="<%=store_code%>,<%=location.getLat() %>,<%=location.getLon() %>">
-         <input type="button" value="지도보기" >
-         <div id="<%=store_code%>map_modal" class="mapP">
+	         <h4>가게정보</h4>
+         <div class="h_m_storeinfo">
+	         <table>
+	            <tr><th>가게이름</th><td><%=svo.get(i).getStore_name() %></td></tr>
+	            <tr><th>사업자등록번호</th><td><%=svo.get(i).getStore_name() %></td></tr>
+	            <tr><th>점주아이디</th><td><%=svo.get(i).getUserid() %></td></tr>
+	            <tr><th>영업시간</th><td><%=svo.get(i).getOperating_time() %></td></tr>
+	            <tr><th>조회수</th><td><%=svo.get(i).getView_count() %></td></tr>
+	            <tr><th>주소</th><td><%=location.getAddress() %></td></tr>
+	         </table>
          </div>
+	      <div id="<%=store_code%>,<%=location.getLat() %>,<%=location.getLon() %>" class="h_m_map">
+	         <input type="button" value="지도보기" class="btn green">
+	         <input type="button" value="감추기" class="btn tog red">
+	      </div>
+        <div id="<%=store_code%>map_modal" class="mapP">
+        </div>
       </div>
       <div class="modal-footer">
-         <a href="#!" class="modal-action modal-close btn" id="his_su">확인</a>
+         <a href="#!" class="modal-action modal-close btn blue" id="his_su">확인</a>
       </div>
    </div>
 </div>
@@ -69,14 +117,18 @@
 <script type="text/javascript">
    $(document).ready( function() {
       $('input[value=지도보기]').on('click',function(){
+          
+         $(this).addClass('tog');
+         $(this).next().removeClass('tog');
          var store_code = $(this).parent().attr('id');
          var linfo = store_code.split(",");
          console.log("map부분 store_code " + linfo[2]);
-         $('#'+linfo[0]+'map_modal').css({'width':'100%','height':'350px',
+         $('#'+linfo[0]+'map_modal').css({'width':'100%','height':'300px',
             'visibility':'visible'});
          var container = document.getElementById(linfo[0]+'map_modal');
          var options = {
             center: new daum.maps.LatLng(linfo[1],linfo[2]),
+            draggable:false,
             level: 4
          };
          var map = new daum.maps.Map(container, options);
@@ -85,10 +137,22 @@
                 position: options.center
             });
       });
+
+      $('input[value=감추기]').on('click',function(){
+    	  $(this).addClass('tog');
+          $(this).prev().removeClass('tog');
+          var store_code = $(this).parent().attr('id');
+          var linfo = store_code.split(",");
+
+          $('#'+linfo[0]+'map_modal').css({'width':'0px','height':'0px',
+              'visibility':'hidden'});
+      });
       
       $('#his_su').on('click',function(){
          $('div[class=mapP]').css({'width':'0px','height':'0px',
             'visibility':'hidden'});
+         $('input[value=감추기]').addClass('tog');
+         $('input[value=지도보기]').removeClass('tog');
       })
    })
 </script>

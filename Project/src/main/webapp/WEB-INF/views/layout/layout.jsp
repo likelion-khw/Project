@@ -28,11 +28,19 @@ header, main, footer {
 	header, main, footer {
 		padding-left: 0;
 	}
+	
+	 @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+	 *{
+		font-family: 'Nanum Pen Script';
+		font-size:25px;
+	 }
+	
 }
 
 main{
 	min-height: 520px;
 }
+
 </style>
 
 <title><tiles:getAsString name="title"></tiles:getAsString></title>
