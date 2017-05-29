@@ -15,9 +15,11 @@ public class LoginDAO {
 	@Autowired
 	MemberVO mvo;
 	
+	ArrayList result;
+	
 	public ArrayList login(LoginVO loginvo)
 	{
-		ArrayList result = new ArrayList();
+		result = new ArrayList();
 		
 		mvo = null;
 		mvo = session.selectOne("login.login", loginvo);
@@ -57,4 +59,27 @@ public class LoginDAO {
 		return session.update("login.re_pw",membervo);
 	}
 
+	public int kakaoLogin(KakaoVO kakaovo) {
+
+		int resultNumber=9;
+		
+		KakaoVO outputId = session.selectOne("login.kakaologin", kakaovo);
+		
+		if(outputId.getUserid()==null)
+		{
+			resultNumber=0;
+		} else {
+			resultNumber=2;
+		}
+		return resultNumber;
+	}
+	
+	public int kakaoEnroll(KakaoVO kakaovo){
+		KakaoVO outputId = session.selectOne("login.kakaoenroll", kakaovo);
+		if(outputId.getUserid()==null){
+			System.out.println("아이디가 잘못되었습니다");
+		}
+		int result = 2;
+		return result;
+	}
 }

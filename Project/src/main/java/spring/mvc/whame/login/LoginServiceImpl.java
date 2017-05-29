@@ -34,4 +34,13 @@ public class LoginServiceImpl implements LoginService {
 	public int repw(MemberVO membervo){
 		return dao.repw(membervo);
 	}
+
+	public int kakaoLogin(KakaoVO kakaovo) {
+		return dao.kakaoLogin(kakaovo);
+	}
+
+	@Override
+	public int kakaoEnroll(KakaoVO kakaovo) {
+		return dao.kakaoEnroll(kakaovo);
+	}
 }

@@ -42,7 +42,6 @@ $(document).ready(function() {
 							success : function() {
 								$(location).attr('href', '/whame');
 							}
-
 						})
 					}
 				}
@@ -54,19 +53,52 @@ $(document).ready(function() {
 	localStorage.removeItem('userid');
 	
 	Kakao.Auth.createLoginButton({
+		
 		container : '#kakao-login-btn',
 		success : function(authObj) {
-			
 				if (typeof (localStorage) == 'undefined') { // 브라우저 지원 안될 시
-					alert("not support 'localStorage'");
+					alert("not support 'localStorage");
+					$(location).attr('href', '/login.whame');
 				}
-			
+				
 			localStorage.setItem('sessionTimeout', authObj.expires_in);
 			localStorage.setItem('userid', authObj.access_token);
-			$(location).attr('href', '/whame');
-		},
+	
+			Kakao.API.request({
+				url: '/v1/user/me',
+				success: function(res){
+					alert(res.properties.nickname+"님 환영합니다");
+					var kakaoLoginId = res.id;
+				
+						$.ajax({
+							url: 'kakao.whame',
+							type: 'POST',
+							data: {"userid" : kakaoLoginId},
+							success: function(result){
+								if(result==2){
+								$(location).attr('href', '/whame');
+								} else {
+									alert("실패");
+									$(location).attr('href', '/login.whame');
+								}
+							}
+						});
+				},
+				
+				fail: function(error){
+					alert("실패");
+					alert(JSON.stringify(error));
+					$(location).attr('href', '/login.whame');
+				}
+			});
+		}, //Auth
+	
 		fail : function(err) {
+			alert("실패")
 			alert(JSON.stringify(err));
+			$(location).attr('href', '/login.whame');
 		}
 	});
+		
+	
 })// jquery

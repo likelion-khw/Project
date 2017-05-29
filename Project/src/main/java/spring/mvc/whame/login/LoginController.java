@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
@@ -37,13 +39,11 @@ public class LoginController {
 	
 	String filepath="";
 
-	//초기 세션 memberVO 설정을 위한 메소드 초기값 null
 	@ModelAttribute("memberVO")
 	public MemberVO setSession(MemberVO vo) {
 		return vo;
 	}
 	
-	// 로그인 완료시에 실행되는 세션 저장 메소드
 	@RequestMapping(value="success.whame", method=RequestMethod.POST)
 	public String setSession2(MemberVO vo) {
 		return "main/main";
@@ -53,16 +53,13 @@ public class LoginController {
 	public String main() {
 		return "main/main";
 	}
-
-	// �ʱ� �α��� ȭ��
+	
 	@RequestMapping(value = "login.whame", method = RequestMethod.GET)
 	public ModelAndView loginform() {
 		mav.setViewName("login/loginform");
 		return mav;
 	}
 
-	// Ajax ������� �α��� ��� ����( 2 �� ���� ��� �α��� �������� setSession �޼ҵ�
-	// ���� )
 	@ResponseBody
 	@RequestMapping(value = "login.whame", method = RequestMethod.POST)
 	public ArrayList loginsuccess(LoginVO vo, HttpSession session) {
@@ -70,7 +67,21 @@ public class LoginController {
 		return result;
 	}
 
-	// �α׾ƿ� �޼ҵ�
+	//진행 중단
+	@ResponseBody
+	@RequestMapping(value = "kakao.whame", method = RequestMethod.POST)
+	public int kakaoLoginsuccess(KakaoVO kakaovo){
+		int result = service.kakaoLogin(kakaovo);
+
+		if(result==0)
+		{
+			result = service.kakaoEnroll(kakaovo);
+		}
+		return result;
+	}
+	
+	
+	// 占싸그아울옙 占쌨소듸옙
 	@RequestMapping(value = "logout.whame")
 	public String logout(SessionStatus session) {
 		session.setComplete();

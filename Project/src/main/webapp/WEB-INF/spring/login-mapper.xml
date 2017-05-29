@@ -25,4 +25,12 @@
  	<update id="re_pw" parameterType="membervo">
  		update vm_user set pw = #{pw} where userid = #{userid}
  	</update>
+
+	<select id="kakaologin" resultType="kakaovo" parameterType="kakaovo">
+		select * from kakao_user where userid = #{userid}
+	</select>
+	
+	<insert id="kakaoenroll" parameterType="kakaovo">
+		insert into kakao_user values(#{userid})
+	</insert>
 </mapper>
