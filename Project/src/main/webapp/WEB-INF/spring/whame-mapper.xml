@@ -3,8 +3,7 @@
 
 <mapper namespace="whame">
 	<insert id='enroll' parameterType="storevo">
- 		insert into store(store_code, business_code, userid, operating_time, store_name, view_count)
- 		values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0)
+ 		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0)
  	</insert>
  	
  	<insert id='setColor' parameterType="colorvo">

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import spring.mvc.whame.color.ColorClass;
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.MenuVO;
@@ -189,5 +190,17 @@ public class WhameDAO {
 		session.delete("whame.delstore3",store_code);
 		
 		return session.delete("whame.delstore4",store_code);
+	}
+	
+	public List<HistoryVO> getHistoryListGroup(int store_code, String userid){
+		HistoryVO vo = new HistoryVO();
+		vo.setUserid(userid);
+		vo.setStore_code(store_code);
+		List<HistoryVO> result = session.selectList("history.getlistGroup", vo);
+		return result;
+	}
+	
+	public List<Integer> gethstore_code(String userid) {
+		return session.selectList("history.gethstore_code", userid);
 	}
 }

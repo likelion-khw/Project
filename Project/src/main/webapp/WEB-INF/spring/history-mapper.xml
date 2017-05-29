@@ -6,6 +6,14 @@
  		select * from history where userid = #{userid}
  	</select> 
  	
+ 	<select id='gethstore_code' resultType="int" parameterType="string">
+ 		select store_code from history where userid = #{userid} group by store_code
+ 	</select>
+ 	
+ 	<select id='getlistGroup' resultType="historyvo" parameterType="historyvo">
+ 		select * from history where userid = #{userid} and store_code = #{store_code}
+ 	</select> 
+ 	
  	<insert id='sethistory' parameterType="historyvo">
  		insert into history
 		values(history_seq.nextval, #{store_code}, #{userid} ,#{signimage} ,sysdate)

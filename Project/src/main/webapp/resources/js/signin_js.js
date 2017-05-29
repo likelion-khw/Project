@@ -71,7 +71,7 @@ $(document).ready(function() {
 	});
 
 	$('#success').on('click', function(e) {
-		if ($('#sign_id').val() == "" || $('#sign_pw').val() == "" || $("#sign_nickname").val()) {
+		if ($('#sign_id').val() == "" || $('#sign_pw').val() == "" || $("#sign_nickname").val() == "") {
 			alert('정보입력을 전부 작성해주세요.!');
 		} else {
 			$('#signnew').submit();
