@@ -127,5 +127,12 @@ public class LoginController {
 		
 		return service.repw(mvo);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="kakao.whame", method=RequestMethod.POST)
+	public MemberVO kakao(KakaoVO kvo){
+		mvo = service.kakao(kvo);
+		return mvo;
+	}
 
 }

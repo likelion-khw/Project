@@ -126,6 +126,9 @@
 					<input type="button" value="히스토리" class="btn brown" id="history_load"><br><br>
 				</c:if>
 				<input type="button" value="메인이동" class="btn red" id="main_load"><br><br>
+				<a id="kakao-link-btn" href="javascript:sendLink()">
+					<img width="50px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+				</a>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -143,6 +146,7 @@ $(document).ready(function() {
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			draggable:false,
 			level : 3
 		// 지도의 확대 레벨
 		};
@@ -189,4 +193,36 @@ $(document).ready(function() {
 			$(location).attr('href','/whame');
 		});
 })
+</script>
+
+<script type="text/javascript">
+Kakao.init('f83177e46350e0d7ba18232a50b978ed');
+// // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+   	function sendLink(){
+   		Kakao.Link.createDefaultButton({
+   	      container: '#kakao-link-btn',
+   	      objectType: 'feed',
+   	      content: {
+   	    	title: '${store.store_name}',
+   	    	description: '${location.address}',
+   	    	imageUrl: 'http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${imgurl}',
+   	    	link: {
+   	    	  mobileWebUrl: 'http://192.168.1.38:8080/whame',
+   	    	  webUrl: 'http://192.168.1.38:8080/whame'
+   	    	}
+   	      },
+   	      social: {
+   	    	likeCount: 9999,
+   	    	commentCount: 999,
+   	    	sharedCount: 999
+   	      },
+   	      buttons: [{
+   	    	title: '상세보기',
+   	    	link: {
+   	    	  mobileWebUrl: 'http://192.168.1.38:8080/whame',
+   	    	  webUrl: 'http://192.168.1.38:8080/whame'
+   	        }
+   	      }]
+   	    });
+	    }
 </script>

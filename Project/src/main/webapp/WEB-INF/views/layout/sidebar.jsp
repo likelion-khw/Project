@@ -33,7 +33,7 @@
     </li>
     <c:choose>
     	<c:when test="${memberVO.userid != null}">
-    		<li class="center-align"><a href="javascript:home();">Home</a></li>
+    		<li class="center-align"><a href="javascript:main();">Home</a></li>
 		  	<li><div class="divider"></div></li>
 		    <li class="center-align">사 용 자 메 뉴</li>
 		    <li><div class="divider"></div></li>
@@ -86,17 +86,25 @@
  
 
 <script type="text/javascript">
+Kakao.init('f83177e46350e0d7ba18232a50b978ed');
+
 	$('.button-collapse').sideNav();
+	
 	function logout(){
-		$(location).attr('href', 'logout.whame');
+		Kakao.Auth.logout(function(){
+			setTimeout(function(){
+					$(location).attr('href', 'logout.whame');
+				},1000);
+		});
 	}
+
 	function login(){
 		$(location).attr('href', 'login.whame');
 	}
 	function sign(){
 		$(location).attr('href', 'sign.whame');
 	}
-	function home(){
+	function main(){
 		$(location).attr('href', '/whame');
 	}
 	function re_member(){

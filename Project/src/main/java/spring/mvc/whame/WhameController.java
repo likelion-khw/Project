@@ -89,7 +89,7 @@ public class WhameController {
 			LocationVO location = service.getLocation_info(store_code);
 			StoreVO store = service.getStore_info(store_code);
 			
-			
+			mav.addObject("imgurl", history.getSignimage());
 			mav.addObject("result", result);
 			mav.addObject("color", color);
 			mav.addObject("menuList", menuList);
@@ -257,7 +257,7 @@ public class WhameController {
 						List<MenuVO> menu = service.getMenu(hstore_code.get(i));
 						List<HistoryVO> history = service.getHistoryListGroup(hstore_code.get(i), membervo.getUserid());
 						
-						hList.put(list.get(i).getStore_code(), history);
+						hList.put(hstore_code.get(i), history);
 						sList.add(storevo);
 						lList.put(hstore_code.get(i), locationvo);
 						mList.put(hstore_code.get(i), menu);

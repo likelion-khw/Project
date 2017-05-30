@@ -9,6 +9,7 @@ public class MemberVO {
 	private String pw;
 	private String userimage;
 	private String nickname;
+	private String kakaoauth;
 	
 	public MemberVO() {
 	}
@@ -50,6 +51,16 @@ public class MemberVO {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
+	public String getKakaoauth() {
+		return kakaoauth;
+	}
+
+	public void setKakaoauth(String kakaoauth) {
+		this.kakaoauth = kakaoauth;
+	}
+	
+	
 
 
 }
