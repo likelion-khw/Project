@@ -16,7 +16,8 @@
 	<typeAlias alias="searchvo" type="spring.mvc.whame.SearchVO"/>
 	<typeAlias alias="locationvo" type="spring.mvc.whame.region.LocationVO"/>
 	<typeAlias alias="historyvo" type="spring.mvc.whame.history.HistoryVO"/>
-	<typeAlias alias="membervo" type="spring.mvc.whame.login.MemberVO"/>		
+	<typeAlias alias="membervo" type="spring.mvc.whame.login.MemberVO"/>	
+	<typeAlias alias="kakaovo" type="spring.mvc.whame.login.KakaoVO"/>	
 </typeAliases> 
 
 <mappers>

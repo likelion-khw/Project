@@ -33,6 +33,7 @@
 	}
 }
 </style>
+
 <div class="container mainform z-depth-3">
 	<div class="center-align" style="padding:10px">
 		<input type="button" class="btn green" value="메뉴찾기(간판이미지 업로드)" id="fileupload">
@@ -74,7 +75,7 @@
 			 		    });
 			 		    
 				 	}
-			 })
+			 });
 
 	})
 </script>

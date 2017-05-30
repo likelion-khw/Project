@@ -34,4 +34,8 @@ public class LoginServiceImpl implements LoginService {
 	public int repw(MemberVO membervo){
 		return dao.repw(membervo);
 	}
+	
+	public MemberVO kakao(KakaoVO kvo){
+		return dao.kakao(kvo);
+	}
 }

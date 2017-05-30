@@ -8,19 +8,8 @@
 	font-family:  'Nanum Pen Script';
  }
 </style>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
-		function logout(){
-			$(location).attr('href', 'logout.whame');
-		}
-	
-		function login(){
-			$(location).attr('href', 'login.whame');
-		}
-	
-		function main(){
-			$(location).attr('href', '/whame');
-		}
-
 </script>
 	<nav class="navbar-fixed">
 	    <div class="nav-wrapper purple darken-2">

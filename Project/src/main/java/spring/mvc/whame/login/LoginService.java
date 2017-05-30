@@ -11,4 +11,6 @@ public interface LoginService {
 	
 	public int renickname(MemberVO membervo);
 	public int repw(MemberVO membervo);
+	
+	public MemberVO kakao(KakaoVO kvo);
 }

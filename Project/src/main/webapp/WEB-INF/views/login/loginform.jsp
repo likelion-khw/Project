@@ -39,10 +39,67 @@
 			</div>
 			<a href="">아이디&패스워드 찾기</a> / <a href="#signin_modal">회원가입</a>
 			<div class="snslogin">
-				<input type="button" value="카카오톡 로그인" class="btn orange" id="login">
+				<a id="login-btn" href="javascript:loginWithKakao()">
+					<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
+				</a>
 				<input type="button" value="페이스북 로그인" class="btn blue" id="login">
 			</div>
 	</div>
 </div>
 
 <script type="text/javascript" src="resources/js/loginform_js.js"></script>
+<script type="text/javascript">
+Kakao.init('f83177e46350e0d7ba18232a50b978ed');
+
+function loginWithKakao(){
+	Kakao.Auth.login({
+		success : function(authObj) {
+			Kakao.API.request({
+				url: '/v1/user/me',
+				success: function(res){
+					var kakaoAuth = res.id;
+					var userid = res.kaccount_email;
+					var nickname = res.properties.nickname;
+					var userimage = res.properties.profile_image;
+						$.ajax({
+							url: 'kakao.whame',
+							type: 'POST',
+							data: {"userid" : userid,
+									"kakaoauth" : kakaoAuth,
+									"nickname" : nickname,
+									"userimage": userimage
+									},
+							success: function(result){
+								$.ajax({
+									url : 'success.whame',
+									type : 'post',
+									data : {
+										'userid' : result.userid,
+										'kakaoauth' : result.kakaoauth,
+										'userimage' : result.userimage,
+										'nickname' : result.nickname
+									},
+									success : function() {
+										$(location).attr('href', '/whame');
+									}
+								});
+							}
+						});
+				},
+				
+				fail: function(error){
+					alert("실패");
+					alert(JSON.stringify(error));
+					$(location).attr('href', 'login.whame');
+				}
+			});
+		}, //Auth
+	
+		fail : function(err) {
+			alert("실패")
+			alert(JSON.stringify(err));
+			$(location).attr('href', '/login.whame');
+		}
+	});
+}
+</script>
