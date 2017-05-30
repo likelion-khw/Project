@@ -38,7 +38,7 @@
 				<input type="button" value="로그인" class="btn black" id="login" style="width:300px"><br>
 			</div>
 			<a href="">아이디&패스워드 찾기</a> / <a href="#signin_modal">회원가입</a>
-			
+			 
 			<div class="snslogin">
 				<div id="kakao-login-btn"></div>
 				<a href="http://developers.kakao.com/logout"></a><br>
@@ -46,5 +46,5 @@
 		<div id="kakao-token"></div>
 	</div>
 </div>
-
+ 
 <script type="text/javascript" src="resources/js/loginform_js.js"></script>

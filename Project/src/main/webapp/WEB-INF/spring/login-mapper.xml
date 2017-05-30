@@ -33,4 +33,4 @@
 	<insert id="kakaoenroll" parameterType="kakaovo">
 		insert into kakao_user values(#{userid})
 	</insert>
-</mapper>
+</mapper> 

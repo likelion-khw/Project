@@ -14,5 +14,4 @@ public class KakaoVO {
 		this.userid = userid;
 	}
 
-	
 }

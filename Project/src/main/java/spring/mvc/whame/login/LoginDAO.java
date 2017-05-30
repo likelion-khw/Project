@@ -20,7 +20,7 @@ public class LoginDAO {
 	public ArrayList login(LoginVO loginvo)
 	{
 		result = new ArrayList();
-		
+		 
 		mvo = null;
 		mvo = session.selectOne("login.login", loginvo);
 		result.add(mvo);
@@ -77,7 +77,7 @@ public class LoginDAO {
 	public int kakaoEnroll(KakaoVO kakaovo){
 		KakaoVO outputId = session.selectOne("login.kakaoenroll", kakaovo);
 		if(outputId.getUserid()==null){
-			System.out.println("¾ÆÀÌµð°¡ Àß¸øµÇ¾ú½À´Ï´Ù");
+			System.out.println("ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ß¸ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 		}
 		int result = 2;
 		return result;

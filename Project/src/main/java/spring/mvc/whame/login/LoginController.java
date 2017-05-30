@@ -67,7 +67,6 @@ public class LoginController {
 		return result;
 	}
 
-	//진행 중단
 	@ResponseBody
 	@RequestMapping(value = "kakao.whame", method = RequestMethod.POST)
 	public int kakaoLoginsuccess(KakaoVO kakaovo){

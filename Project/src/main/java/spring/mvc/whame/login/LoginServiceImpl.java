@@ -44,3 +44,4 @@ public class LoginServiceImpl implements LoginService {
 		return dao.kakaoEnroll(kakaovo);
 	}
 }
+ 

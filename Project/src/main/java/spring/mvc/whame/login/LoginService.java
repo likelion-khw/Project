@@ -15,3 +15,4 @@ public interface LoginService {
 	public int kakaoLogin(KakaoVO kakaovo);
 	public int kakaoEnroll(KakaoVO kakaovo);
 }
+ 
