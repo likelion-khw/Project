@@ -79,14 +79,15 @@ public class LoginController {
 
 	@RequestMapping(value = "sign.whame", method = RequestMethod.POST)
 	public String signnew(MemberVO vo, MultipartFile image) throws Exception{
-		String bucketName = "whame01/Userimage";
-		
-		File convFile = new File(image.getOriginalFilename());
-		image.transferTo(convFile);
-		String filepath = s3.fileUpload(bucketName, convFile);
-		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
-		vo.setUserimage(imgurl);
-		
+		System.out.println(image.getSize());
+		if(image.getSize() != 0){
+			String bucketName = "whame01/Userimage";
+			File convFile = new File(image.getOriginalFilename());
+			image.transferTo(convFile);
+			String filepath = s3.fileUpload(bucketName, convFile);
+			String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
+			vo.setUserimage(imgurl);
+		}
 		service.signnew(vo);
 		
 		return "redirect:/";

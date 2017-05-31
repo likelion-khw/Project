@@ -2,15 +2,36 @@
    pageEncoding="UTF-8"%>
 <style>
 .imageform{
-	margin-top : 20px;
+	margin-top : 20px;;
+	padding-top: 20px;
+	padding-left:20px;
+	padding-right:20px;
+	padding-bottom:50px;
+	width:80%;
+	height: 300%;
 }
 
 #loading{
 	margin-top : 30%;
+	margin-bottom: 30%;
 }
 
 .forms{
-	margin-left : 40%;
+	margin-left : 42%;
+}
+
+@media only screen and (min-width : 321px) and (max-width : 600px) {
+	.imageform{
+		margin-top : 20px;	
+		padding-top: 10px;
+		padding-left:10px;
+		padding-right:10px;
+		padding-bottom:50px;
+		width:90%;
+	}
+	.forms{
+		margin-left : 33%;
+	}
 }
 </style>
 <script type="text/javascript">

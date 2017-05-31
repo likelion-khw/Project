@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	
 	$('#busi_check').on('click', function() {
 		var busi_code1 = $('#busi_code1').val();
 		var busi_code2 = $('#busi_code2').val();

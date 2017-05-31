@@ -7,7 +7,14 @@
  	</select> 
  	
  	<insert id="signnew" parameterType="membervo">
- 		insert into vm_user values(#{userid},#{pw},#{userimage},#{nickname})
+ 	<choose>
+ 		<when test="userimage != null">
+ 			insert into vm_user values(#{userid},#{pw},#{userimage},#{nickname})
+ 		</when>
+ 		<when test="userimage == null">
+ 			insert into vm_user(userid,pw,nickname) values(#{userid},#{pw},#{nickname})
+ 		</when>
+ 	</choose>
  	</insert>
  	
  	<select id="idcheck" resultType="int" parameterType="string">

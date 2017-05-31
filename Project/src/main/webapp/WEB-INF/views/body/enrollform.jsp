@@ -10,84 +10,95 @@
 	width:20%;
 }
 
+.mb_enform{
+	display: none;
+}
+
 @media only screen and (min-width : 321px) and (max-width : 600px) {
 	.enrollform{
-	width:95%;
+	width:90%;
 	}
 
-	.enrollform th{
-	width:0;
-	}
 	.enrollform td{
 	width:100%;
 	}
+	.web_form{
+		display:none;
+	}
+	.mb_enform{
+		display: inherit;
+	}
+	
+	.mb_enform th{
+		width:600px;
+		text-align: center;
+		font-size:20px;
+		background-color: #eceff1;
+		border-style: groove;
+	}
 }
 </style>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<!-- jQuery와 Postcodify를 로딩한다 -->
+<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <div class="container center-align enrollform">
-<h4>${memberVO.userid}님<br> 상점을 등록하는 페이지입니다.</h4>
+<h4>${memberVO.nickname} 님<br> 상점을 등록 페이지</h4>
 	<form action="enrollconnect.whame" method="post"  enctype="multipart/form-data" id="enroll_form">
 	 <input type="hidden" name="userid" value="${memberVO.userid}"> 
 	<table class="centered">
-		<tr>
+		<tr class="mb_enform">
 			<th>사업자등록번호</th>
+		</tr>
+		<tr>
+			<th class="web_form">사업자등록번호</th>
 			<td><input type="text" id="busi_code1" class="col s2" maxlength="3">
 			<input disabled value="-" id="disabled" type="text" class="col s1">
 			<input type="text" id="busi_code2" class="col s2" maxlength="2">
 			<input disabled value="-" id="disabled" type="text" class="col s1">
 			<input type="text" id="busi_code3" class="col s3" maxlength="5">
 			<input type="hidden" name="business_code" id="business_code" value="">
-			<input type="button" id="busi_check" value="조회" class="btn">
+			<input type="button" id="busi_check" value="조회" class="btn blue">
 			</td>
 		</tr>
+		<tr class="mb_enform">
+			<th>상가주소</th>
+		</tr>
+		<tr>
+			<th class="web_form">상가주소</th>
+			<td id="postcodify_search_button">
+				<input type="button" value="검색" class="btn blue">
+				<input type="text" class="postcodify_extra_info col s6" value="" />
+				<input type="text" name="en_address" id="en_address" class="postcodify_address col s12" value="" />
+			</td>
+		</tr>
+		<tr class="mb_enform">
+			<th>가게 상호명</th>
+		</tr>
+		<tr>
+			<th class="web_form">가게 상호명</th><td><input type="text" name="store_name"></td>
+		</tr>
+		<tr class="mb_enform">
+			<th>영업시간</th>
+		</tr>
+		<tr>
+			<th class="web_form">영업시간</th><td><input type="text" name="operating_time"></td>
+		</tr>
+		<tr class="mb_enform">
+			<th>간판이미지</th>
+		</tr>
+		<tr>
+			<th class="web_form">간판이미지</th><td><input type="file" name="imagefile"></td>
 		
-		<tr>
-			<th>지역코드</th>
-			<td>
-				<label>시분류</label>
-				  <select class="browser-default" name="rcode1" id="rcode1" onchange="rcodeSelect()">
-				    <option >지역선택</option>
-					<c:forEach items="${region}" var="vo">
-						<option value="${vo.rname }">${vo.rname}</option>
-					</c:forEach>
-				  </select>
-				  
-				  <label>구분류</label>
-				  <select class="browser-default" name="rcode2" id="rcode2">
-				    <option >구 선택</option>
-				  </select>
-			</td>
-		</tr>
-		<tr>
-			<th>나머지주소</th>
-			<td>
-				<input type="text" name="detail" id ="detail" class="col s6">
-				<input type="button" class="btn" id="searchrcode" value="조회">
-			</td>
-		</tr>
-		<tr>
-			<th>가게 상호명</th><td><input type="text" name="store_name"></td>
-		</tr>
-		<tr>
-			<th>영업시간</th><td><input type="text" name="operating_time"></td>
-		</tr>
-		<tr>
-			<th>간판이미지</th><td><input type="file" name="imagefile"></td>
-		
-		<tr><td colspan="2"><input type="button" class="btn" value="등록하기" id="e_submit"></td></tr>
+		<tr><td colspan="2"><input type="button" class="btn green" value="등록하기" id="e_submit"></td></tr>
 	</table>
 	</form>
 </div>
    
-<script type="text/javascript" src="resources/js/enrollform_js.js"></script>
-<script type="text/javascript" src="resources/js/busi_check.js"></script>
+<script type="text/javascript" src="resources/js/busi_check2.js"></script>
 <script type="text/javascript">
+$(function() { $("#postcodify_search_button").postcodifyPopUp(); }); 
 $('#e_submit').on('click',function(){
 		var a = $('#business_code');
-		var b = $('#rcode1');
-		var c = $('#rcode2');
-		var d = $('#detail');
+		var b = $('#en_address');
 		var e = $("#store_name");
 		var f = $('#operating_time');
 		var g = $('#imagefile');
@@ -95,11 +106,7 @@ $('#e_submit').on('click',function(){
 		if(a.val() == ""){
 			alert("사업자 번호를 인증하세요.");
 		}else if(b.val() == ""){
-			alert("지역을 선택해주세요");
-		}else if(c.val() == ""){
-			alert("구 선택해주세요");
-		}else if(d.val() == ""){
-			alert("나머지 주소를 입력하세요.");
+			alert("주소를 입력해주세요.");
 		}else if(e.val() == ""){
 			alert("상호명을 입력하세요.");
 		}else if(f.val() == ""){
