@@ -70,7 +70,7 @@ var positions=[];
 	var container = document.getElementById('map');
 	var options = {
 		center: new daum.maps.LatLng(37.49655,127.02964),
-		level: 4
+		level: 8
 	};
 	var map = new daum.maps.Map(container, options);
 	

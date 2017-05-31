@@ -30,11 +30,11 @@ header, main, footer {
 		padding-left: 0;
 	}
 	
-	 @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+	/*  @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
 	 *{
 		font-family: 'Nanum Pen Script';
 		font-size:25px;
-	 }
+	 } */
 	
 }
 

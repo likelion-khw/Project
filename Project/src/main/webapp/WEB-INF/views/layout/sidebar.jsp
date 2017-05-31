@@ -11,7 +11,7 @@
 			<div class="center-align" style="padding-top:10px;">
 				<c:choose>
 					<c:when test="${memberVO.userid != null }">
-						<%if(membervo.getUserimage() == ""){ %>
+						<%if(membervo.getUserimage() == null){ %>
 						<a href="#!user">
 						<img class="circle" src="resources/img/user.png" style="width: 80px; height: 80px;"></a> 
 						<%}else{ %>

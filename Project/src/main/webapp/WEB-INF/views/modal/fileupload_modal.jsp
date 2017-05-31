@@ -69,8 +69,8 @@
 		function showError(error)
 		{
 			var no_text;
-			lat = 37.497831;
-			lng = 127.027771;
+			lat = 37.520498;
+			lng = 127.022959;
 			document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat+ ">"
 			+"<input type=hidden name=lon value=" + lng + ">";
 			switch (error.code)

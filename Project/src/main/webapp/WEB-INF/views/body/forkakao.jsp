@@ -45,28 +45,6 @@
 }
 </style>
 <div class="container center-align z-depth-3 showinfoform">
-	<c:choose>
-		<c:when test="${error != null}">
-			<h3>${error}</h3>
-		</c:when>
-		<c:otherwise>
-			<%-- <h5>사용자의 검색 정보</h5>
-			<table class="centered bordered">
-				<tbody>
-					<tr>
-						<td>ocr</td>
-						<td><c:forEach items="${result }" var="vo">
-					${vo.text }<br>
-							</c:forEach></td>
-					</tr>
-					<tr>
-						<td>color:</td>
-						<td>R: ${color.red }<br> G: ${color.green }<br> B:
-							${color.blue }<br>
-						</td>
-					</tr>
-				</tbody>
-			</table> --%>
 			<h4>${store.store_name}의 메뉴정보</h4>
 			<div class="showinfo_menu">
 				<table class="centered bordered highlight">
@@ -121,26 +99,13 @@
 				  </div>
 			</div>
 			<div class="showinfo_btn center-align">
-				<input type="button" value="재 검색" class="btn green" id="re_search"><br><br>
-				<c:if test="${memberVO.userid != null}">
-					<input type="button" value="히스토리" class="btn brown" id="history_load"><br><br>
-				</c:if>
+				<input type="button" value="다른검색" class="btn green" id="re_search"><br><br>
 				<input type="button" value="메인이동" class="btn red" id="main_load"><br><br>
-				<a id="kakao-link-btn" href="javascript:sendLink()">
-					<img width="50px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
-				</a>
 			</div>
-		</c:otherwise>
-	</c:choose>
 </div>
 
 <script type="text/javascript">
 $(document).ready(function() {
-		var user = '${memberVO.userid}';
-		if(user != '')
-			{
-			 Materialize.toast('검색 정보가 히스토리에 저장됩니다.', 4000, 'rounded')
-			}
 		var address = '${location.address}';
 
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -193,34 +158,4 @@ $(document).ready(function() {
 			$(location).attr('href','/whame');
 		});
 })
-</script>
-
-<script type="text/javascript">
-Kakao.init('f83177e46350e0d7ba18232a50b978ed');
-// // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
-   	function sendLink(){
-   		Kakao.Link.createDefaultButton({
-   	      container: '#kakao-link-btn',
-   	      objectType: 'feed',
-   	      content: {
-   	    	title: '${store.store_name}',
-   	    	description: '${location.address}',
-   	    	imageUrl: 'http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${imgurl}',
-   	    	link: {
-   	    	  mobileWebUrl: 'http://192.168.1.38:8080/whame/forkakao.whame?store_code=${store.store_code}',
-   	    	  webUrl: 'http://192.168.1.38:8080/whame/forkakao.whame?store_code=${store.store_code}'
-   	    	}
-   	      },
-   	      social: {
-   	    	likeCount: ${store.view_count},
-   	      },
-   	      buttons: [{
-   	    	title: '상세보기',
-   	    	link: {
-   	    	  mobileWebUrl: 'http://192.168.1.38:8080/whame/forkakao.whame?store_code=${store.store_code}',
-   	    	  webUrl: 'http://192.168.1.38:8080/whame/forkakao.whame?store_code=${store.store_code}'
-   	        }
-   	      }]
-   	    });
-	    }
 </script>

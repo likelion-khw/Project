@@ -26,10 +26,13 @@
 	width:50%;
 	}
 	.main_text p{
-		font-size:20px;
+		font-size:16px;
 	}
 	.mainform input{
 		margin-bottom:10px;
+	}
+	.main_text{
+		width:90%;
 	}
 }
 </style>
@@ -49,6 +52,8 @@
 		</div>
 	</div>
 </div>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#fileupload").on('click',function(){
