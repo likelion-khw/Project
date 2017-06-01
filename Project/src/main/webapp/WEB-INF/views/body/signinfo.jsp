@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../modal/fileupload_modal.jsp" %>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=bf657f021b380e68b1a07c1e4fd92c88&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
 .showinfoform{
 	margin-top:20px;
@@ -21,6 +21,10 @@
 .showinfo_btn{
 	padding-top:15%;
 	height: 350px;
+}
+
+.hidemenu{
+	display: none;
 }
 
 @media only screen and (min-width : 300px) and (max-width : 600px) {
@@ -50,7 +54,7 @@
 			<h3>${error}</h3>
 		</c:when>
 		<c:otherwise>
-			<%-- <h5>사용자의 검색 정보</h5>
+			<h5>사용자의 검색 정보</h5>
 			<table class="centered bordered">
 				<tbody>
 					<tr>
@@ -66,8 +70,16 @@
 						</td>
 					</tr>
 				</tbody>
-			</table> --%>
-			<h4>${store.store_name}의 메뉴정보</h4>
+			</table>
+			<h4>${store.store_name} 메뉴</h4>
+		 	<label>메뉴종류</label>
+		 	<center>
+				<select class="browser-default" id="menu_type" style="width:40%">
+				<c:forEach items="${menutype}" var="type">
+	   					<option value="${type}">${type}</option>
+				</c:forEach>
+	 			</select>
+			</center>
 			<div class="showinfo_menu">
 				<table class="centered bordered highlight">
 					<thead>
@@ -82,7 +94,7 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${menuList}" var="menu">
-						<tr>
+						<tr class="menu_list hidemenu" id="${menu.menu_type}">
 							<td>${menu.menu_type}</td>
 							<td>${menu.menu_name}</td>
 							<td>${menu.menu_price}</td>
@@ -192,6 +204,23 @@ $(document).ready(function() {
 		$("#main_load").on('click',function(){
 			$(location).attr('href','/whame');
 		});
+		
+		$('#menu_type:first-child').attr('selected');
+		var selecttype = $('#menu_type').val();
+		$('tr#'+selecttype).removeClass('hidemenu');
+
+		$('#menu_type').on('change',function(){
+			selecttype = $(this).val();
+			$('tr[class=menu_list]').addClass('hidemenu');
+			var check = /[&]/gi;
+			if(check.test(selecttype) == true){
+				$('tr#커피\\&라떼').removeClass('hidemenu');
+			}else{
+			$('tr#'+selecttype).removeClass('hidemenu');
+			}
+		})
+
+		
 })
 </script>
 

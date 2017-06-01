@@ -211,4 +211,8 @@ public class WhameDAO {
 	public List<String> getCategoryDetail(int category){	
 		return session.selectList("whame.getCategory", category);
 	}
+	
+	public List<String> getMenuDistinct(int store_code){
+		return session.selectList("whame.getMenuTypeDistinct",store_code);
+	}
 }

@@ -48,4 +48,6 @@ public interface WhameService {
 	public List<String> getCategoryDetail(int category);
 	
 	public List<LocationVO> getlocation_list();
+	
+	public List<String> getMenuDistinct(int store_code);
 }

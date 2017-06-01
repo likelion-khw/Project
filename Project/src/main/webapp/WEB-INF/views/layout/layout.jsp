@@ -59,10 +59,10 @@ main{
 		 $('.modal').modal({
 		      dismissible: true, // Modal can be dismissed by clicking outside of the modal
 		      opacity: .10, // Opacity of modal background
-		      inDuration: 320, // Transition in duration
-		      outDuration: 220, // Transition out duration
+		      inDuration: 100, // Transition in duration
+		      outDuration: 100, // Transition out duration
 		      startingTop: '4%', // Starting top style attribute
-		      endingTop: '20%' // Ending top style attribute
+		      endingTop: '5%' // Ending top style attribute
 		    }
 		  );
 	})
