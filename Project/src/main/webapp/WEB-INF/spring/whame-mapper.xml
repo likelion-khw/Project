@@ -186,4 +186,8 @@
  	<select id="getCategory" resultType="String" parameterType="int">
  		select category_name from category where category_no = #{category}
   	</select>
+  	
+  	<select id="getMenuTypeDistinct" resultType="String" parameterType="int">
+  		select distinct(menu_type) from menu where store_code = #{store_code}
+  	</select>
 </mapper>

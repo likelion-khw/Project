@@ -22,6 +22,9 @@
 	padding-top:15%;
 	height: 350px;
 }
+.hidemenu{
+	display: none;
+}
 
 @media only screen and (min-width : 300px) and (max-width : 600px) {
 
@@ -46,6 +49,14 @@
 </style>
 <div class="container center-align z-depth-3 showinfoform">
 			<h4>${store.store_name}의 메뉴정보</h4>
+			<label>메뉴종류</label>
+			 	<center>
+					<select class="browser-default" id="menu_type" style="width:40%">
+					<c:forEach items="${menutype}" var="type">
+		   					<option value="${type}">${type}</option>
+					</c:forEach>
+		 			</select>
+				</center>
 			<div class="showinfo_menu">
 				<table class="centered bordered highlight">
 					<thead>
@@ -60,7 +71,7 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${menuList}" var="menu">
-						<tr>
+						<tr class="menu_list hidemenu" id="${menu.menu_type}">
 							<td>${menu.menu_type}</td>
 							<td>${menu.menu_name}</td>
 							<td>${menu.menu_price}</td>
@@ -157,5 +168,21 @@ $(document).ready(function() {
 		$("#main_load").on('click',function(){
 			$(location).attr('href','/whame');
 		});
+
+		var selecttype;
+		$('#menu_type:first-child').attr('selected');
+		selecttype = $('#menu_type').val();
+		$('tr#'+selecttype).removeClass('hidemenu');
+
+		$('#menu_type').on('change',function(){
+			selecttype = $(this).val();
+			$('tr[class=menu_list]').addClass('hidemenu');
+			var check = /[&]/gi;
+			if(check.test(selecttype) == true){
+				$('tr#커피\\&라떼').removeClass('hidemenu');
+			}else{
+			$('tr#'+selecttype).removeClass('hidemenu');
+			}
+		})
 })
 </script>

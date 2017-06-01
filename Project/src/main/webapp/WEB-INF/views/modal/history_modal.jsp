@@ -7,6 +7,7 @@
    HashMap<Integer, LocationVO> lvo = (HashMap<Integer, LocationVO>) request.getAttribute("locationlist");
    List<StoreVO> svo = (List<StoreVO>) request.getAttribute("storelist");
    HashMap<Integer, List<MenuVO>> menulist = (HashMap<Integer, List<MenuVO>>) request.getAttribute("menulist");
+   HashMap<Integer, List<String>> menutype = (HashMap<Integer, List<String>>) request.getAttribute("menutype");
 
 %>
 
@@ -15,9 +16,14 @@
       int store_code = svo.get(i).getStore_code();
       List<MenuVO> menu = menulist.get(store_code);
       LocationVO location = lvo.get(store_code);
+      List<String> menutypel = menutype.get(store_code);
 %>
 
 <style>
+	.modal.modal-fixed-footer{
+		max-height: 200%;
+		height: 90%;
+	}
 	.h_m_storeinfo{
 		width:70%;
 		float:left;
@@ -36,7 +42,9 @@
 		margin-bottom:30px;
 		padding:20px;
 	}
-	
+	.hidemenu{
+		display: none;
+	}
 	@media only screen and (min-width : 321px) and (max-width : 600px) {
 			.history_modal_form{
 			width:90%;
@@ -64,6 +72,14 @@
       <div class="modal-content">
       <div class="h_m_m z-depth-2">
          <h4><%=svo.get(i).getStore_name()%><br>메뉴</h4>
+         <label>메뉴종류</label>
+		 	<center>
+				<select class="browser-default" id="menu_type" style="width:40%" name="<%=store_code%>">
+						<%for(int m=0; m<menutypel.size(); m++){ %>
+	   						<option value="<%=store_code%><%=menutypel.get(m)%>"><%=menutypel.get(m)%></option>
+	   					<%} %>
+	 			</select>
+			</center>
          <table class="centered highlight">
             <thead>
                <tr>
@@ -76,7 +92,7 @@
             <%
                for (int j = 0; j < menu.size(); j++) {
             %>
-            <tr>
+            <tr class="<%=store_code%>menu_list hidemenu" name="<%=store_code%><%=menu.get(j).getMenu_type()%>">
                <td><%=menu.get(j).getMenu_type()%></td>
                <td><%=menu.get(j).getMenu_name()%></td>
                <td><%=menu.get(j).getMenu_price()%></td>
@@ -153,6 +169,34 @@
             'visibility':'hidden'});
          $('input[value=감추기]').addClass('tog');
          $('input[value=지도보기]').removeClass('tog');
-      })
+      });
+
+      var selecttype;
+
+      $('select#menu_type').each(function(){
+  		var store_code = $(this).attr('name');
+  		selecttype = $(this).val();
+  		$('tr[class='+store_code+'menu_list]').addClass('hidemenu');
+  		var check = /[&]/gi;
+  		if(check.test(selecttype) == true){
+  			$('tr[name='+store_code+'커피\\&라떼]').removeClass('hidemenu');
+  		}else{
+  			$('tr[name='+selecttype+']').removeClass('hidemenu');
+  		}
+  	});
+  	
+  	$('select#menu_type').on('change',function(){
+  		var store_code = $(this).attr('name');
+  		selecttype = $(this).val();
+  		$('tr[class='+store_code+'menu_list]').addClass('hidemenu');
+  		var check = /[&]/gi;
+  		if(check.test(selecttype) == true){
+  			$('tr[name='+store_code+'커피\\&라떼]').removeClass('hidemenu');
+  		}else{
+  			$('tr[name='+selecttype+']').removeClass('hidemenu');
+  		}
+  	});
+
+      
    })
 </script>

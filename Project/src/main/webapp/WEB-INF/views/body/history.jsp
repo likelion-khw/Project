@@ -3,7 +3,7 @@
 <%@ include file="../modal/history_modal.jsp" %>  
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
 	.history_form{
 		margin-top:20px;
@@ -18,6 +18,20 @@
 		margin-left:auto;
 		margin-right: auto;
 	}
+	
+	@media only screen and (min-width : 321px) and (max-width : 600px) {
+	
+		.slider{
+			width:125%;
+		}
+		
+		.history_form .sli{
+		margin-left: 0;
+		margin-right: 0;
+		}
+		
+	}
+	
 </style>
 <div class="container history_form">
 	<div id="map" style="width:100%;height:350px;" class="h_map"></div>

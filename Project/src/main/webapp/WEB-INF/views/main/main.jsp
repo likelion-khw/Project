@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../modal/fileupload_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style type="text/css">
 .mainform{
 	margin-top: 20px;
@@ -109,6 +109,8 @@
 						        position: new daum.maps.LatLng(locationlist[num+1],locationlist[num+2]), // 마커를 표시할 위치
 						        title : locationlist[num] // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 						  });
+
+						marker.setMap(map);
 						num += 3;
 					}
 				else{

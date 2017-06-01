@@ -151,4 +151,7 @@ public class WhameServiceImpl implements WhameService{
 		return dao.getCategoryDetail(category);
 	}
 	
+	public List<String> getMenuDistinct(int store_code){
+		return dao.getMenuDistinct(store_code);
+	}
 }

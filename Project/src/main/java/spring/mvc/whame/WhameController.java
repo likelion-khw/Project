@@ -79,6 +79,9 @@ public class WhameController {
 		List<MenuVO> menuList = service.getMenu(store_code);
 		LocationVO location = service.getLocation_info(store_code);
 		StoreVO store = service.getStore_info(store_code);
+		List<String> menutype = service.getMenuDistinct(store_code);
+		
+		mav.addObject("menutype",menutype);
 		mav.addObject("menuList", menuList);
 		mav.addObject("location", location);
 		mav.addObject("store", store);
@@ -108,17 +111,21 @@ public class WhameController {
 			mav.addObject("error", "등록된 상가가 아직 없네요 ㅠㅠ");
 			return mav;
 		} else {
-			if (membervo.getUserid() != null) {
-				history.setStore_code(store_code);
-				history.setUserid(membervo.getUserid());
-				service.setHistory(history);
+			if(membervo != null){
+				if (membervo.getUserid() != null) {
+					history.setStore_code(store_code);
+					history.setUserid(membervo.getUserid());
+					service.setHistory(history);
+				}
 			}
 			List<MenuVO> menuList = service.getMenu(store_code);
 			LocationVO location = service.getLocation_info(store_code);
 			StoreVO store = service.getStore_info(store_code);
+			List<String> menutype = service.getMenuDistinct(store_code);
 
 			mav.addObject("imgurl", history.getSignimage());
 			mav.addObject("result", result);
+			mav.addObject("menutype", menutype);
 			mav.addObject("color", color);
 			mav.addObject("menuList", menuList);
 			mav.addObject("location", location);
@@ -288,7 +295,8 @@ public class WhameController {
 				List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
 				List<Integer> hstore_code = service.gethstore_code(membervo.getUserid());
 				HashMap<Integer, List<HistoryVO>> hList = new HashMap<Integer, List<HistoryVO>>();
-
+				HashMap<Integer, List<String>> menutype = new HashMap<Integer, List<String>>();
+				
 				mav.addObject("historylist", list);
 				mav.addObject("latalon", historyLoc.toString());
 				mav.addObject("length", historyLoc.size());
@@ -309,6 +317,7 @@ public class WhameController {
 						sList.add(storevo);
 						lList.put(hstore_code.get(i), locationvo);
 						mList.put(hstore_code.get(i), menu);
+						menutype.put(hstore_code.get(i), service.getMenuDistinct(hstore_code.get(i)));
 					}
 				}
 
@@ -316,6 +325,7 @@ public class WhameController {
 				mav.addObject("storelist", sList);
 				mav.addObject("locationlist", lList);
 				mav.addObject("menulist", mList);
+				mav.addObject("menutype",menutype);
 
 				mav.setViewName("body/history");
 			} else {
@@ -350,16 +360,19 @@ public class WhameController {
 				HashMap<Integer, List<MenuVO>> menulist = new HashMap<Integer, List<MenuVO>>();
 				HashMap<Integer, LocationVO> loclist = new HashMap<Integer, LocationVO>();
 				List<TypeVO> typelist = service.getType();
-
+				HashMap<Integer, List<String>> menutype = new HashMap<Integer, List<String>>();
+				
 				if (storelist != null) {
 					for (int i = 0; i < storelist.size(); i++) {
 						List<MenuVO> mlist = service.getMenu(storelist.get(i).getStore_code());
 						LocationVO locaion = service.getLocation_info(storelist.get(i).getStore_code());
 						menulist.put(storelist.get(i).getStore_code(), mlist);
 						loclist.put(storelist.get(i).getStore_code(), locaion);
+						menutype.put(storelist.get(i).getStore_code(), service.getMenuDistinct(storelist.get(i).getStore_code()));
 					}
 				}
-
+				
+				mav.addObject("menutype", menutype);
 				mav.addObject("menulist", menulist);
 				mav.addObject("storelist", storelist);
 				mav.addObject("typelist", typelist);

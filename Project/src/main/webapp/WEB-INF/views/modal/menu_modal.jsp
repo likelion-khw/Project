@@ -7,18 +7,21 @@
 		List<StoreVO> svo = (List<StoreVO>) request.getAttribute("storelist");
 		HashMap<Integer, List<MenuVO>> menulist = (HashMap<Integer, List<MenuVO>>) request.getAttribute("menulist");
 		List<TypeVO> tvo = (List<TypeVO>) request.getAttribute("typelist");
-%>
-
-<%
-	for (int i = 0; i < svo.size(); i++) {
-			int store_code = svo.get(i).getStore_code();
-			List<MenuVO> menu = menulist.get(store_code);
+		HashMap<Integer, List<String>> menutype = (HashMap<Integer, List<String>>) request.getAttribute("menutype");
 %>
 <style>
 .modal {
 		width:90%;
-		height: 100%;
+		max-height: 200%;
+		height: 90%;
 	}
+.modal.modal-fixed-footer{
+	max-height: 200%;
+	height: 90%;
+}
+.hidemenu{
+	display: none;
+}
 @media only screen and (min-width : 321px) and (max-width : 500px) {
 	.modal {
 		width:100%;
@@ -33,10 +36,25 @@
 	}
 }
 </style>
+
+<%
+	for (int i = 0; i < svo.size(); i++) {
+			int store_code = svo.get(i).getStore_code();
+			List<MenuVO> menu = menulist.get(store_code);
+			List<String> menutypel = menutype.get(store_code);
+%>
 <div class="container center-align">
 	<div id="<%=store_code%>modal_menu" class="modal">
 		<div class="modal-content">
 			<h4><%=svo.get(i).getStore_name()%></h4>
+			<label>메뉴종류</label>
+		 	<center>
+				<select class="browser-default" id="menu_type" style="width:30%" name="<%=store_code%>">
+						<%for(int m=0; m<menutypel.size(); m++){ %>
+	   						<option value="<%=store_code%><%=menutypel.get(m)%>"><%=menutypel.get(m)%></option>
+	   					<%} %>
+	 			</select>
+			</center>
 			<table class="centered highlight">
 				<thead>
 					<tr>
@@ -49,7 +67,7 @@
 					<%
 						for (int j = 0; j < menu.size(); j++) {
 					%>
-					<tr>
+					<tr class="<%=store_code%>menu_list hidemenu" name="<%=store_code%><%=menu.get(j).getMenu_type()%>">
 						<td><%=menu.get(j).getMenu_type()%></td>
 						<td><%=menu.get(j).getMenu_name()%></td>
 						<td><%=menu.get(j).getMenu_price()%></td>
@@ -70,6 +88,7 @@
 		<div class="modal-content">
 			<table class="centered highlight">
 				<thead>
+					<label>메뉴 추가하기</label>
 					<tr id="<%=svo.get(i).getStore_code()%>">
 						<td>
 							<select class="browser-default" name="menu_type">
@@ -84,6 +103,18 @@
 						<td colspan="2"><input type="button" class="btn blue" value="메뉴추가" id="add_menu"></td>
 					<tr>
 					<tr>
+						<td colspan="5">
+								<center>
+								<label>메뉴분류</label>
+									<select class="browser-default" id="menu_type2" style="width:30%" name="<%=store_code%>">
+											<%for(int m=0; m<menutypel.size(); m++){ %>
+						   						<option value="<%=store_code%><%=menutypel.get(m)%>2"><%=menutypel.get(m)%></option>
+						   					<%} %>
+						 			</select>
+					 			</center>
+						</td>
+					</tr>
+					<tr>
 						<th class="type">메뉴타입</th>
 						<th>메뉴이름</th>
 						<th class="price">가격(원)</th>
@@ -95,7 +126,7 @@
 					<%
 						for (int j = 0; j < menu.size(); j++) {
 					%>
-						<tr id="<%=svo.get(i).getStore_code()%>">
+						<tr id="<%=svo.get(i).getStore_code()%>" class="<%=store_code%>menu_list2 hidemenu" name="<%=store_code%><%=menu.get(j).getMenu_type()%>2">
 							<td>
 								<select class="browser-default" name="new_type">
 									<% for(int t=0; t<tvo.size(); t++){ %>
@@ -225,6 +256,58 @@ $(document).ready(function() {
 				alert("정보를 기재 후 추가해주세요");
 			}
 		
-	})
+	});
+
+	// 메뉴정보창에 사용되는 메뉴타입 카테고리
+	var selecttype;
+	$('select#menu_type').each(function(){
+		var store_code = $(this).attr('name');
+		selecttype = $(this).val();
+		$('tr[class='+store_code+'menu_list]').addClass('hidemenu');
+		var check = /[&]/gi;
+		if(check.test(selecttype) == true){
+			$('tr[name='+store_code+'커피\\&라떼]').removeClass('hidemenu');
+		}else{
+			$('tr[name='+selecttype+']').removeClass('hidemenu');
+		}
+	});
+	
+	$('select#menu_type').on('change',function(){
+		var store_code = $(this).attr('name');
+		selecttype = $(this).val();
+		$('tr[class='+store_code+'menu_list]').addClass('hidemenu');
+		var check = /[&]/gi;
+		if(check.test(selecttype) == true){
+			$('tr[name='+store_code+'커피\\&라떼]').removeClass('hidemenu');
+		}else{
+			$('tr[name='+selecttype+']').removeClass('hidemenu');
+		}
+	});
+
+	// 메뉴변경에 사용되는 메뉴타입 카테고리
+	var selecttype2;
+	$('select#menu_type2').each(function(){
+		var store_code = $(this).attr('name');
+		selecttype2 = $(this).val();
+		$('tr[class='+store_code+'menu_list2]').addClass('hidemenu');
+		var check = /[&]/gi;
+		if(check.test(selecttype2) == true){
+			$('tr[name='+store_code+'커피\\&라떼2]').removeClass('hidemenu');
+		}else{
+			$('tr[name='+selecttype2+']').removeClass('hidemenu');
+		}
+	});
+	
+	$('select#menu_type2').on('change',function(){
+		var store_code = $(this).attr('name');
+		selecttype2 = $(this).val();
+		$('tr[class='+store_code+'menu_list2]').addClass('hidemenu');
+		var check = /[&]/gi;
+		if(check.test(selecttype2) == true){
+			$('tr[name='+store_code+'커피\\&라떼2]').removeClass('hidemenu');
+		}else{
+			$('tr[name='+selecttype2+']').removeClass('hidemenu');
+		}
+	});
 })
 </script>

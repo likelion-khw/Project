@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
 .storeform{
 	margin-top:5%;
@@ -21,6 +21,18 @@
 .storeform .collapsible-body{
 	padding-top:5%;
 	padding-bottom:5%;
+}
+
+.maps{
+	width:60%; 
+	height:250px; 
+	margin-bottom:20px;
+}
+
+@media only screen and (min-width : 321px) and (max-width : 600px) {
+	.maps{
+		width:100%;
+	}
 }
 </style>
 <div id="store_h">
@@ -60,7 +72,7 @@
 				      		</tr>
 				      	</table>
 				      	<center>
-				     	 	<div id="map${store.store_code}" name="maps" style="width:60%; height:250px; margin-bottom:20px"></div>
+				     	 	<div class="maps" id="map${store.store_code}"></div>
 				      	</center>
 				      	<input type="button" value="메뉴관리" class="btn red">
 				      	<input type="button" value="상가수정" class="btn blue">
