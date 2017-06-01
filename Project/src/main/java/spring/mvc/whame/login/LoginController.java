@@ -49,11 +49,6 @@ public class LoginController {
 		return "main/main";
 	}
 	
-	@RequestMapping(value = "/")
-	public String main() {
-		return "main/main";
-	}
-
 	// �ʱ� �α��� ȭ��
 	@RequestMapping(value = "login.whame", method = RequestMethod.GET)
 	public ModelAndView loginform() {

@@ -144,5 +144,11 @@ public class WhameServiceImpl implements WhameService{
 		return hdao.gethstore_code(userid);
 	}
 	
+	public List<LocationVO> getlocation_list(){
+		return dao.getlocation_list();
+	}
+	public List<String> getCategoryDetail(int category){
+		return dao.getCategoryDetail(category);
+	}
 	
 }
