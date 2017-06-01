@@ -44,4 +44,8 @@ public interface WhameService {
 	
 	public List<HistoryVO> getHistoryListGroup(int store_code, String userid);
 	public List<Integer> gethstore_code(String userid);
+	
+	public List<String> getCategoryDetail(int category);
+	
+	public List<LocationVO> getlocation_list();
 }

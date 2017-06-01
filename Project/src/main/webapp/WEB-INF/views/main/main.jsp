@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../modal/fileupload_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
-
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 <style type="text/css">
 .mainform{
 	margin-top: 20px;
@@ -10,15 +10,23 @@
 	padding-bottom: 20px;
 	width: 90%;
 	}
-.counter{
-	margin-bottom:20px;
-}
+	
 .mainimg{
 	width:30%;
 }
 .main_text{
 	padding:20px; width:70%; margin-left:auto; margin-right: auto;
 	background-color: #f5f5f5;
+}
+.main_mapform{
+	margin-top:10px;
+	margin-bottom:10px;
+	width:50%;
+	padding:10px;
+}
+#main_map{
+	margin-bottom: 20px;
+	height: 300px;
 }
 
 @media only screen and (min-width : 321px) and (max-width : 600px) {
@@ -34,6 +42,10 @@
 	.main_text{
 		width:90%;
 	}
+	
+	.main_mapform{
+	width:90%;
+	}
 }
 </style>
 
@@ -41,9 +53,12 @@
 	<div class="center-align" style="padding:10px">
 		<input type="button" class="btn green" value="메뉴찾기(간판이미지 업로드)" id="fileupload">
 		<input type="button" class="btn pink darken-2" value="간판등록하기" id="enroll"><br>
-		<h4>Store Count</h4>
-		<h2 id="counter"></h2>
-		<div class="counter" data-count="" id="test"></div>
+		<center>
+			<div class="main_mapform z-depth-1">
+				<div class="counter" data-count="00000${count}" id="test"></div>
+				<div id="main_map"></div>
+			</div>
+		</center>
 		<div class="main_text z-depth-1">
 			<img src="resources/img/main.png" class="mainimg">
 			<h3>Whame란?</h3>
@@ -56,6 +71,17 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
+		var counter = function(){
+ 			 $(".counter").rollingCounter({
+ 		        animate : true,
+ 		        attrCount : 'data-count',
+ 		        delayTime : 30 ,
+ 		        waitTime : 1 ,
+ 		        easing : 'easeOutBounce',
+ 		        duration : 1000
+ 		    });
+	 	}();
+	 	
 		$("#fileupload").on('click',function(){
 			$('#modal1').modal('open');
 		});
@@ -64,24 +90,31 @@
 			$(location).attr('href','enroll.whame');
 		});
 
-		    
-		 $.ajax({
-			 	url : 'storeCount.whame',
-			 	type : 'post',
-			 	success : function(result){
-			 			$('#test').attr('data-count',"000000"+result);
-			 			 $(".counter").rollingCounter({
-			 		        animate : true,
-			 		        attrCount : 'data-count',
-			 		        delayTime : 30 ,
-			 		        waitTime : 1 ,
-			 		        easing : 'easeOutBounce',
-			 		        duration : 1000
-			 		    });
-			 		    
-				 	}
-			 });
+		var container = document.getElementById('main_map');
+		var options = {
+			center: new daum.maps.LatLng(37.50655,127.04964),
+			level: 9
+		};
+		var map = new daum.maps.Map(container, options);
 
+		var locationlist = ${locationlist};
+		var max = locationlist.length / 3;
+		var num = 0;
+		for(var i =0; i<max; i++)
+			{
+				if(num <= locationlist.length)
+					{
+						 var marker = new daum.maps.Marker({
+						        map: map, // 마커를 표시할 지도
+						        position: new daum.maps.LatLng(locationlist[num+1],locationlist[num+2]), // 마커를 표시할 위치
+						        title : locationlist[num] // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+						  });
+						num += 3;
+					}
+				else{
+						break;
+					}
+			}
 	})
 </script>
 

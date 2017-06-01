@@ -203,4 +203,12 @@ public class WhameDAO {
 	public List<Integer> gethstore_code(String userid) {
 		return session.selectList("history.gethstore_code", userid);
 	}
+	
+	public List<LocationVO> getlocation_list(){
+		return session.selectList("whame.getlocationList");
+	}
+	
+	public List<String> getCategoryDetail(int category){	
+		return session.selectList("whame.getCategory", category);
+	}
 }

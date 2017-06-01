@@ -57,6 +57,18 @@ public class WhameController {
 
 	List<Double> difflal = new ArrayList<Double>();
 
+	@RequestMapping(value = "/")
+	public ModelAndView main() {
+		ModelAndView mav = new ModelAndView();
+		int count = service.getStoreCount();
+		List<LocationVO> locationlist = service.getlocation_list();
+		
+		mav.setViewName("main/main");
+		mav.addObject("count", count);
+		mav.addObject("locationlist", locationlist);
+		return mav;
+	}
+
 	// 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙 OCR 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	@RequestMapping(value = "forkakao.whame")
 	public ModelAndView getshow(int store_code) throws Exception {
@@ -263,6 +275,7 @@ public class WhameController {
 		BufferedImage img = ImageIO.read(new URL(imgurl));
 		filepath = ivo.runOpencv(img, imagevo, imgurl);
 	}
+	
 
 	@RequestMapping(value = "history.whame", method = RequestMethod.GET)
 	public ModelAndView history(HttpSession session) {
@@ -362,12 +375,6 @@ public class WhameController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "storeCount.whame", method = RequestMethod.POST)
-	public int storeCount() {
-		return service.getStoreCount();
-	}
-
-	@ResponseBody
 	@RequestMapping(value = "remenu.whame", method = RequestMethod.POST)
 	public int re_menu(ReMenuVO rmvo) {
 		return service.remenu(rmvo);
@@ -389,5 +396,19 @@ public class WhameController {
 	@RequestMapping(value = "deleteStore.whame", method = RequestMethod.POST)
 	public int deleteStore(int store_code) {
 		return service.deleteStore(store_code);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="categoryDetail.whame", method=RequestMethod.POST)
+	public List<String> getCategoryDetail(int categoryDetail){
+		List<String> result = service.getCategoryDetail(categoryDetail);
+		return result;
+	}
+	
+	@RequestMapping(value = "category.whame")
+	public ModelAndView getCategory() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("body/categoryview");
+		return mav;
 	}
 }

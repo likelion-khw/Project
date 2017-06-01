@@ -177,6 +177,13 @@
  	<delete id="delstore4" parameterType="int">
  		delete store where store_code = #{store_code}
  	</delete>
- 	<!-- 스토어 삭제 끝   -->
  	
+ 	<!-- 스토어 삭제 끝   -->
+ 	<select id="getlocationList" resultType="locationvo">
+ 		select * from Store_location
+ 	</select>
+ 	
+ 	<select id="getCategory" resultType="String" parameterType="int">
+ 		select category_name from category where category_no = #{category}
+  	</select>
 </mapper>
