@@ -71,6 +71,7 @@
 		            <div class="collapsible-body">
 		              <ul>
 		                <li><a href="javascript:storeform();">상가정보</a></li>
+		                <li><a href="javascript:categoryview();">음식점 찾기</a></li>
 		              </ul>
 		            </div>
 		          </li>
@@ -115,5 +116,8 @@ Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 	}
 	function storeform(){
 		$(location).attr('href', 'store.whame');
+	}
+	function categoryview(){
+		$(location).attr('href', 'category.whame');
 	}
 </script>

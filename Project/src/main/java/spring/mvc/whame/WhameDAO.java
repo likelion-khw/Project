@@ -3,6 +3,7 @@ package spring.mvc.whame;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -53,6 +54,18 @@ public class WhameDAO {
 		List<RegionVO> result = session.selectList("whame.getrcode", gu);
 		return result;
 	}
+	
+	public List<String> getRegionDetail(String region){
+		List<String> result = session.selectList("whame.getRegion", region);
+		return result;
+	}
+
+	public List<String> getCategoryDetail(String category){	
+		List<String> result = session.selectList("whame.getCategory", category);
+		return result;
+	}
+	
+	
 	
 	public int getrcodeNum(String rname){
 		int result =  session.selectOne("whame.getrcodeNum", rname);

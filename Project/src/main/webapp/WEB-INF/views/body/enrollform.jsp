@@ -23,8 +23,7 @@
 	}
 }
 </style>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <div class="container center-align enrollform">
 <h4>${memberVO.userid}님<br> 상점을 등록하는 페이지입니다.</h4>
 	<form action="enrollconnect.whame" method="post"  enctype="multipart/form-data" id="enroll_form">
@@ -45,30 +44,56 @@
 		<tr>
 			<th>지역코드</th>
 			<td>
-				<label>시분류</label>
-				  <select class="browser-default" name="rcode1" id="rcode1" onchange="rcodeSelect()">
-				    <option >지역선택</option>
-					<c:forEach items="${region}" var="vo">
-						<option value="${vo.rname }">${vo.rname}</option>
-					</c:forEach>
+				<label>음식점 지역 카테고리</label>
+				  <select class="browser-default" name="regionSelect" id="regionSelect" onchange="changeRegion()">
+				    <option>지역 선택</option>
+				    <option>서울특별시</option>
+				    <option>부산</option>
+				    <option>대구</option>
+				    <option>대전</option>
+				    <option>울산</option>
+				    <option>인천</option>
+				    <option>광주</option>
+				    <option>제주</option>
 				  </select>
-				  
-				  <label>구분류</label>
-				  <select class="browser-default" name="rcode2" id="rcode2">
-				    <option >구 선택</option>
+				  <label>음식점 위치 카테고리</label>
+				  <select class="browser-default" name="regionDetail" id="regionDetail">
+				    <option >위치 선택</option>
 				  </select>
 			</td>
 		</tr>
 		<tr>
 			<th>나머지주소</th>
 			<td>
-				<input type="text" name="detail" id ="detail" class="col s6">
+				<input type="text" name="regionAdd" id ="regionAdd" class="col s6">
 				<input type="button" class="btn" id="searchrcode" value="조회">
 			</td>
 		</tr>
+
 		<tr>
 			<th>가게 상호명</th><td><input type="text" name="store_name"></td>
 		</tr>
+		
+		<tr>
+			<th>가게 분류</th>
+			<td>
+				<label>음식점 카테고리</label>
+				<select class="browser-default" name="categorySelect" id="categorySelect" onchange="changeCategory()" >
+					<option>음식점 카테고리 선택</option>
+					<option>한식</option>
+					<option>양식</option>
+					<option>중식</option>
+					<option>일식</option>
+					<option>카페</option>
+				</select>
+			<br>				
+				<label>메뉴 카테고리 선택</label>
+				<select class="browser-default" name="categoryDetail" id="categoryDetail">
+				<option>메뉴 선택</option>
+				</select>
+			</td>
+		</tr>
+		
 		<tr>
 			<th>영업시간</th><td><input type="text" name="operating_time"></td>
 		</tr>
@@ -84,27 +109,33 @@
 <script type="text/javascript" src="resources/js/busi_check.js"></script>
 <script type="text/javascript">
 $('#e_submit').on('click',function(){
-		var a = $('#business_code');
-		var b = $('#rcode1');
-		var c = $('#rcode2');
-		var d = $('#detail');
-		var e = $("#store_name");
-		var f = $('#operating_time');
-		var g = $('#imagefile');
+		var chk1 = $('#business_code');
+		var chk2 = $('#regionSelect');
+		var chk3 = $('#regionDetail');
+		var chk4 = $('#regionAdd')
+		var chk5 = $('#categorySelect');
+		var chk6 = $('#categoryDetail');
+		var chk7 = $("#store_name");
+		var chk8 = $('#operating_time');
+		var chk9 = $('#imagefile');
 		
-		if(a.val() == ""){
+		if(chk1.val() == ""){
 			alert("사업자 번호를 인증하세요.");
-		}else if(b.val() == ""){
+		}else if(chk2.val() == ""){
 			alert("지역을 선택해주세요");
-		}else if(c.val() == ""){
+		}else if(chk3.val() == ""){
 			alert("구 선택해주세요");
-		}else if(d.val() == ""){
+		}else if(chk4.val() == ""){
 			alert("나머지 주소를 입력하세요.");
-		}else if(e.val() == ""){
+		}else if(chk5.val() == ""){
+			alert("음식점 종류를 입력하세요.");
+		}else if(chk6.val() == ""){
+			alert("음식점 메뉴를 입력하세요.");
+		}else if(chk7.val() == ""){
 			alert("상호명을 입력하세요.");
-		}else if(f.val() == ""){
+		}else if(chk8.val() == ""){
 			alert("영업시간을 입력하세요");
-		}else if(g.val() == ""){
+		}else if(chk9.val() == ""){
 			alert("간판 이미지를 올려주세요.");
 		}else{
 			$('form[id=enroll_form]').submit();

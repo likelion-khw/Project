@@ -1,5 +1,6 @@
 package spring.mvc.whame;
 
+import java.util.HashMap;
 import java.util.List;
 
 import spring.mvc.whame.color.ColorVO;
@@ -18,6 +19,9 @@ public interface WhameService {
 	public List<RegionVO> getrcode();
 	public List<RegionVO> getrcode2(String gu);
 	public int getrcodeNum(String rname);
+
+	public List<String> getRegionDetail(String region);
+	public List<String> getCategoryDetail(String category);
 
 	public int enroll(StoreVO storevo, String filename);
 	public List<TypeVO> getType();

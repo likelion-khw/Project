@@ -179,4 +179,15 @@
  	</delete>
  	<!-- 스토어 삭제 끝   -->
  	
+ 	<!-- enroll -->
+ 	<select id="getRegion" parameterType="String" resultType="String">
+		select rname from region where rcity like #{region} 
+ 	</select>
+ 	
+ 	<select id="getCategory" parameterType="String" resultType="String">
+ 		select category_name from category where category_no like #{category}
+ 	</select>
+ 	
+ 	
+ 	
 </mapper>

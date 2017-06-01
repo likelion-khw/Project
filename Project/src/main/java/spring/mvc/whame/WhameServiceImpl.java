@@ -1,5 +1,6 @@
 package spring.mvc.whame;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,19 @@ public class WhameServiceImpl implements WhameService{
 		List<RegionVO> result = dao.getrcode2(gu);
 		return result;
 	}
+	
+	@Override
+	public List<String> getCategoryDetail(String category){
+		List<String> result = dao.getCategoryDetail(category);
+		return result;
+	}
 
+	@Override
+	public List<String> getRegionDetail(String region){
+		List<String> result = dao.getRegionDetail(region);
+		return result;
+	}
+	
 	@Override
 	public int getrcodeNum(String rname) {
 		int result = dao.getrcodeNum(rname);
