@@ -97,6 +97,10 @@ public class StoreVO {
 		public void setAddress(String address) {
 			this.address = address;
 		}
+		@Override
+		public String toString() {
+			return store_code+"";
+		}
 		
 		
 		

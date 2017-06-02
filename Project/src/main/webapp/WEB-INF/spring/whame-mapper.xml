@@ -26,6 +26,10 @@
  		values(#{store_code}, #{rcode}, #{lat}, #{lon}, #{address})
  	</insert>
  	
+ 	<insert id="setCoupon" parameterType="couponvo">
+ 		insert into coupon
+ 		values(#{store_code}, coupon_seq.nextval, #{contents}, #{s_time}, #{e_time})
+ 	</insert>
  	
  	
  	<!-- search -->
@@ -103,6 +107,14 @@
         <include refid="color_max" />  
    </select> 
 
+
+	<!-- viewcount -->
+	<update id="viewcount" parameterType="int" >
+		update store 
+		set view_count = view_count+1   
+		where store_code = #{store_code}
+	</update>
+	
 	
 	
 	<!-- get -->
@@ -151,12 +163,39 @@
  		select count(*) from store
  	</select>
  	
+ 	<select id="getCoupon" resultType="couponvo" parameterType="int">
+ 		select * from coupon where store_code = #{store_code}
+ 	</select>
+ 	
+ 	
+ 	<update id="storeUpdate_store" parameterType="storevo">
+ 		update store 
+ 		set business_code = #{business_code}, userid = #{userid}, store_name = #{store_name}, operating_time = #{operating_time}
+ 		where store_code = #{store_code}
+ 	</update>
+ 	
+ 	<update id="storeUpdate_loc" parameterType="storevo">
+ 		update store_location
+ 		set rcode = #{rcode}, lat = #{lat}, lon = #{lon}, address = #{address}
+ 		where store_code = #{store_code}
+ 	</update>
+ 	
  	<update id="reMenu" parameterType="remenuvo">
  		update menu set menu_name = #{new_name}, menu_price = #{new_price}, menu_type = #{new_type} where store_code = #{store_code} and menu_name = #{ori_name}
  	</update>
  	
+ 	<update id="reCoupon" parameterType="couponvo">
+ 		update coupon 
+ 		set contents = #{contents}, s_time = #{s_time} ,e_time = #{e_time} 
+ 		where store_code = #{store_code} and coupon_code = #{coupon_code}
+ 	</update>
+ 	
  	<delete id="delMenu" parameterType="remenuvo">
  		delete menu where store_code = #{store_code} and menu_name = #{ori_name}
+ 	</delete>
+ 	
+ 	<delete id="delCoupon" parameterType="couponvo">
+ 		delete coupon where store_code = #{store_code} and coupon_code = #{coupon_code}
  	</delete>
  	<!-- 스토어 삭제 시작 ( 상속된 테이블 포함 ) -->
  	<delete id="delstore0" parameterType="int">
@@ -175,6 +214,10 @@
  	</delete>
  	
  	<delete id="delstore4" parameterType="int">
+ 		delete coupon where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<delete id="delstore5" parameterType="int">
  		delete store where store_code = #{store_code}
  	</delete>
  	<!-- 스토어 삭제 끝   -->

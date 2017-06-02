@@ -34,39 +34,7 @@
 }
 </style>
 <div class="container center-align">
-	<div id="<%=store_code%>modal_menu" class="modal">
-		<div class="modal-content">
-			<h4><%=svo.get(i).getStore_name()%></h4>
-			<table class="centered highlight">
-				<thead>
-					<tr>
-						<th>메뉴타입</th>
-						<th>메뉴이름</th>
-						<th>가격(원)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						for (int j = 0; j < menu.size(); j++) {
-					%>
-					<tr>
-						<td><%=menu.get(j).getMenu_type()%></td>
-						<td><%=menu.get(j).getMenu_name()%></td>
-						<td><%=menu.get(j).getMenu_price()%></td>
-					</tr>
-					<%
-						}
-					%>
-				</tbody>
-			</table>
-		</div>
-		<div class="modal-footer">
-			<a href="#!" class="modal-action modal-close btn green floting" style="float:none;">확인</a>
-			<a href="#<%=store_code%>modal_menu_re" class="modal-action modal-close btn red floting" style="float:none;">변경</a>
-		</div>
-	</div>
-	
-	<div id="<%=store_code%>modal_menu_re" class="modal modal-fixed-footer">
+	<div id="<%=store_code%>modal_menu" class="modal modal-fixed-footer">
 		<div class="modal-content">
 			<table class="centered highlight">
 				<thead>
@@ -132,6 +100,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('i[id=re_menu]').on('click',function(){
+		alert("gkgk");
 		var icon = $(this);
 		var parent = $(this).parents('tr');
 		var store_code = parent.attr('id');

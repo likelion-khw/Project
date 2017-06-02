@@ -1,36 +1,126 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="spring.mvc.whame.store.*,java.util.*"%>
-<%
-	if (request.getAttribute("storelist") != null) {
-		List<StoreVO> svo = (List<StoreVO>) request.getAttribute("storelist");
-		HashMap<Integer, List<MenuVO>> menulist = (HashMap<Integer, List<MenuVO>>) request.getAttribute("menulist");
-		List<TypeVO> tvo = (List<TypeVO>) request.getAttribute("typelist");
-%>
+    pageEncoding="UTF-8" import="spring.mvc.whame.store.*, spring.mvc.whame.region.*, java.util.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
+<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 
-<%
-	for (int i = 0; i < svo.size(); i++) {
-			int store_code = svo.get(i).getStore_code();
-%>
- <div class="container center-align">
- 	<div id="<%=store_code%>modal_store" class="modal">
-		<div class="modal-content" id='<%=store_code %>'>
-			<h4><%=svo.get(i).getStore_name()%></h4>
-			<input type="button" value="상가삭제" class="btn">
-		</div>
-		<div class="modal-footer">
-			<a href="#!" class="modal-action modal-close btn green floting" style="float:none;">확인</a>
-			<a href="#<%=store_code%>modal_store_re" class="modal-action modal-close btn red floting" style="float:none;">변경</a>
-		</div>
-	</div>
- </div>
- <%}}%>
- 
- <script type="text/javascript">
+<div class="container center-align">
+ 	<div id='locCode'>${storeMap }</div> 
+ 	<c:forEach items="${storeMap }" var="slist">
+ 		<c:forEach items="${slist.value }" var="svo">
+		 	<div id="${svo.store_code }modal_store" class="modal">
+		 	<div class="modal-content" id='${svo.store_code }'> 
+				<h4>${svo.store_name }</h4>
+				<table class="centered" style="margin-bottom:20px;" id='uptable'>
+					<tr>
+						<th>사업자번호</th>
+						<td><input type="text" id="${svo.store_code }bus" name="business_code" value="${svo.business_code }"></td>
+					</tr>
+					<tr>
+						<th>사업자id</th>
+						<td><input type="text"  id="${svo.store_code }user" name="userid" value="${svo.userid}"></td>
+					</tr>
+					<tr>
+						<th>상호명</th>
+						<td><input type="text"  id="${svo.store_code }name" name="store_name" value="${svo.store_name }"></td>
+					</tr>
+					<tr>
+						<th>영업시간</th>
+						<td><input type="text"  id="${svo.store_code }time" name="operating_time" value="${svo.operating_time }"></td>
+					</tr>
+					<tr>
+					<c:forEach var="lvo" items="${loclist }">
+						<c:if test="${lvo.key == svo.store_code}">
+							<c:set var="lval" value="${lvo.value }"/>
+							<th>상가 위치</th>
+							<td><div id='${svo.store_code }1'>
+								<input type="text" class="postcodify_extra_info col s6"  placeholder="동"/>
+								<input type="text" id="${svo.store_code }loc" name="address" class="postcodify_address col s12" value="${lval.address }" placeholder="시/군/구"/>
+								<input type="button" value="검색" class="btn blue floting postcodify_search_button" style="float:none;">
+							</div></td>
+						</c:if>
+					</c:forEach>
+					</tr>
+				</table>
+				<input type="hidden" value="${svo.store_code }" name="store_code">
+				<input type="hidden" value="${svo.view_count }" name="view_count">
+				
+				<div class="modal-footer" >
+					<input type="button" value="변경" id='storeupdate' class="modal-action modal-close btn blue floting" onclick='submit(${svo.store_code })' style="float:none;">
+					<input type="button"  value="상가삭제" class="modal-action modal-close btn red floting" style="float:none;">
+					<a href="#!" class="modal-action modal-close btn green floting" style="float:none;">닫기</a>
+	 			</div>
+			</div>
+	 		</div>
+ 		</c:forEach>
+ 	</c:forEach>
+</div>
+
+
+<script type="text/javascript">
+
+
+$(function() {
+	var storeArray = $()
+	$("#postcodify_search_button").postcodifyPopUp({  
+	 container: $("#1121") 
+	});
+	
+})
+
+
+function submit(store_code){
+ 	var s = store_code;	//code:business;userid;name;operating
+ 	var sm_address =$('#'+s+"loc").val();
+ 	var lat,lon;
+ 			
+ 	// 주소-좌표 변환 객체를 생성합니다
+ 	var geocoder = new daum.maps.services.Geocoder();
+
+ 	// 주소로 좌표를 검색합니다
+ 	geocoder.addr2coord(sm_address, function(status, result) {
+
+ 	// 정상적으로 검색이 완료됐으면 
+ 	if (status === daum.maps.services.Status.OK) {
+ 		lat = (result.addr[0].lat).toFixed(6);
+ 		lon = (result.addr[0].lng).toFixed(6);
+ 					
+		var sm_business_code = $('#'+s+"bus").val();
+		var sm_userid = $('#'+s+"user").val();
+		var sm_store_name =$('#'+s+"name").val();
+		var sm_operating_time =$('#'+s+"time").val();
+		 			
+ 	    alert(lat+","+ lon);
+		$.ajax({
+		 	url : 'storeUpdate.whame',
+		 	type: 'post',
+		 	data : {
+		 		'store_code' : s,
+		 		'business_code' : sm_business_code,
+		 		'userid' : sm_userid,
+		 		'store_name' : sm_store_name,
+		 		'operating_time' : sm_operating_time,
+		 		'address' : sm_address,
+		 		'lat' : lat,
+		 		'lon' : lon
+		 	},
+		 	success : function(){
+		 		alert('수정완료!');
+		 		location.href = "store.whame";
+		 	}
+		});  
+ 	  }
+ 	            
+ 	 });
+ 	                
+	} 
+ 		
  	$(document).ready(function(){
+ 		
+ 		
 		$('input[value=상가삭제]').on('click',function(){
 			var is = confirm('상가를 정말 삭제하시겠습니까? \n ** 주의 ** \n 한번 삭제시 돌릴 수 없음');
-			var store_code = $(this).parent().attr('id');
-
+			var store_code = $(this).parent().parent().attr('id');
 			if(is == true)
 				{			
 					$.ajax({
@@ -48,5 +138,45 @@
 					});
 				}
 		});
+ 		
  	 });
+ 	
+ 		function c(code){
+ 			console.log(code);
+ 			var coupon_contents = $('#'+code+'con').val();
+ 			var coupon_s_time = $('#'+code+"s_time").val();
+ 			var coupon_e_time = $('#'+code+"e_time").val();
+ 			console.log(coupon_contents);
+			console.log(coupon_s_time);
+			
+			$.ajax({
+					url : 'couponInsert.whame',
+					type: 'post',
+					data : {
+							'store_code' : code,
+							'contents' : coupon_contents,
+							's_time' : coupon_s_time,
+							'e_time' : coupon_e_time
+						},
+					success : function(){
+							alert('등록완료!');
+						}
+				}); 
+ 		}
+ 		
+ 		function startdate(t){
+ 			var startdate = t.val();
+ 			var perstart = startdate.split('-');
+ 			var now = new Date();
+ 			var instart = new Date(perstart[0],perstart[1]-1,perstart[2]);
+ 			
+ 			if( now.getTime() > instart.getTime()){
+ 				alert("현재날짜 이후로 입력해 주세요.");
+ 				
+ 			}
+ 		}
+ 		
+ 		
+ 		
+ 	
  </script>

@@ -14,8 +14,9 @@ function rcodeSelect() {
 	var gwangju = [ '북구', '동구', '서구', '남구', '광산구' ];
 
 	var rcodelist;
-
-	if (gu == "서울") {
+	
+	
+	if (gu == "서울특별시") {
 		rcodelist = seoul;
 	} else if (gu == "부산") {
 		rcodelist = busan;

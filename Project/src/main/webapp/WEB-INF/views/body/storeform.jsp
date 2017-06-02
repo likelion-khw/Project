@@ -2,10 +2,11 @@
     pageEncoding="UTF-8" import="spring.mvc.whame.store.*,java.util.*"%>
 <%@include file="../modal/menu_modal.jsp" %>
 <%@include file="../modal/store_modal.jsp" %>
+<%@include file="../modal/coupon_modal.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=de8ef5ba97a6ddfb7081ba88f3c350e9&libraries=services"></script> <!-- de8ef5ba97a6ddfb7081ba88f3c350e9 -->
 <style>
 .storeform{
 	margin-top:5%;
@@ -37,7 +38,15 @@
 			      <div class="collapsible-header"><i class="material-icons">filter_drama</i><h5>${store.store_name}</h5></div>
 			      <div class="collapsible-body">
 			      	<div class="container" id="${store.store_code}">
-				      	<table class="centered" style="margin-bottom:20px;">
+			      	  <div class="row">
+				      	<ul id="tabs-swipe-demo" class="tabs">
+						    <li class="tab col s3"><a class="active" href="#${store.store_code}store_info">상가정보</a></li>
+						    <li class="tab col s3"><a  href="#${store.store_code}menu_info">메뉴정보</a></li>
+						    <li class="tab col s3"><a  href="#${store.store_code}event_info">행사정보</a></li>
+						   
+						 </ul>
+					 <div id="${store.store_code}store_info" class="col s12">
+				      	<table class="centered " style="margin-bottom:20px;" >
 				      		<tr>
 					      		<th>상점코드</th>
 					      		<td>${store.store_code }</td>
@@ -56,16 +65,76 @@
 				      		</tr>
 				      		<tr>
 					      		<th>상가 위치</th>
-					      		<td id="loc">${loclist.get(store.store_code).address}</td>
+					      		<td id="${store.store_code }loc">${loclist.get(store.store_code).address}</td>
 				      		</tr>
 				      	</table>
 				      	<center>
 				     	 	<div id="map${store.store_code}" name="maps" style="width:60%; height:250px; margin-bottom:20px"></div>
 				      	</center>
-				      	<input type="button" value="메뉴관리" class="btn red">
-				      	<input type="button" value="상가수정" class="btn blue">
+				      	<input type="button" value="상가관리" class="btn blue" onclick="store_modal(${store.store_code})">
+				      </div>
+				      	
+				      <div id="${store.store_code}menu_info" class="col s12 ">
+				      	<table class="centered highlight" >
+							<thead>
+								<tr>
+									<th>메뉴타입</th>
+									<th>메뉴이름</th>
+									<th>가격(원)</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:forEach items="${menulist }" var="mlist">
+								<c:set value="${mlist.key }" var="key"/>
+								<c:set value="${store.store_code}" var="storee"/>
+								<c:if test="${key eq storee}">
+									<c:forEach items="${mlist.value }" var="mvo">
+										<tr>
+											<td>${mvo.menu_type }</td>
+											<td>${mvo.menu_name }</td>
+											<td>${mvo.menu_price }</td>
+										</tr>
+									</c:forEach>
+								</c:if>
+							</c:forEach>
+							</tbody>
+						</table>
+						
+				      	<input type="button" value="메뉴관리" class="btn blue" onclick="menu_modal(${store.store_code})">
+						</div>
+						
+						<div id="${store.store_code}event_info" class="col s12 ">
+				      	<table class="centered highlight" >
+							<thead>
+								<tr>
+									<th>진행상태</th>
+									<th>행사내용</th>
+									<th>기간</th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:forEach items="${couponlist }" var="clist">
+								<c:set value="${clist.key }" var="key"/>
+								<c:set value="${store.store_code}" var="storee"/>
+								<c:if test="${key eq storee}">
+									<c:forEach items="${clist.value }" var="cvo">
+										<tr>
+											<td>${cvo.state }</td>
+											<td>${cvo.contents }</td>
+											<td>${cvo.s_time }  ~  ${cvo.e_time }</td>
+										</tr>
+									</c:forEach>
+								</c:if>
+							</c:forEach>
+							</tbody>
+						</table>
+						
+				      	<input type="button" value="행사관리" class="btn blue" onclick="coupon_modal(${store.store_code})">
+						</div>
+						
+					</div>
+				</div>
 			      	</div>
-			      </div>
 			    </li>
 				</c:forEach>
 			  </ul>
@@ -81,6 +150,20 @@
 	
 </div>
 <script type="text/javascript">
+
+function menu_modal(store_code){
+	$('#'+store_code+"modal_menu").modal('open');
+}
+	
+function store_modal(store_code){
+	$('#'+store_code+"modal_store").modal('open');
+}
+
+function coupon_modal(store_code){
+	console.log(store_code);
+	$('#'+store_code+"modal_coupon").modal('open');
+}
+	
 $(document).ready(function() {
 
 	$("#fileupload").on('click',function(){
@@ -91,21 +174,11 @@ $(document).ready(function() {
 		$(location).attr('href','enroll.whame');
 	});
 
-	$('input[value=메뉴관리]').on('click',function(){
-		var store_code = $(this).parent().attr('id');
-		$('#'+store_code+"modal_menu").modal('open');
-	});
-
-	$('input[value=상가수정]').on('click',function(){
-		var store_code = $(this).parent().attr('id');
-		$('#'+store_code+"modal_store").modal('open');
-	});
-
 	var test = 0;
 	$('li[class=on]').on('click',function(){
 		var store_code = $(this).attr('id');
 		var store_name = $('li[id='+store_code+']').children().children('h5').html();
-		var address = $('li[id='+store_code+']').children().children().children().children().children().next().next().next().next().children('td').html();
+		var address = $('#'+store_code+'loc').val();
 
 		var mapContainer = document.getElementById('map'+store_code), // 지도를 표시할 div 
 		mapOption = {

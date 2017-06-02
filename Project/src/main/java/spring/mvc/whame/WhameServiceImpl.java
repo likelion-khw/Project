@@ -10,6 +10,7 @@ import spring.mvc.whame.history.HistoryDAO;
 import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
+import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -105,7 +106,7 @@ public class WhameServiceImpl implements WhameService{
 	public void setHistory(HistoryVO historyvo) {
 		hdao.setHistory(historyvo);		
 	}
-	
+	 
 	@Override
 	public List<LocationVO> getHistotyLoc(String userid){
 		return hdao.getHistoryLoc(userid);
@@ -117,6 +118,19 @@ public class WhameServiceImpl implements WhameService{
 	
 	public int getStoreCount(){
 		return dao.getStoreCount();
+	}
+	
+	public List<CouponVO> getCoupon(int store_code){
+		return dao.getCoupon(store_code);
+	}
+	
+	
+	public void storeUpdate(StoreVO svo, LocationVO lvo) {
+		dao.storeUpdate(svo, lvo);
+	}
+
+	public void couponInsert(CouponVO cvo){
+		dao.couponInsert(cvo);
 	}
 	
 	public int remenu(ReMenuVO rmvo){
@@ -134,6 +148,14 @@ public class WhameServiceImpl implements WhameService{
 		return dao.deleteStore(store_code);
 	}
 	
+	public void recoupon(CouponVO cvo){
+		dao.recoupon(cvo);
+	}
+	
+	public void delcoupon(CouponVO cvo){
+		dao.delcoupon(cvo);
+	}
+	
 	@Override
 	public List<HistoryVO> getHistoryListGroup(int store_code, String userid) {
 		return hdao.getHistoryListGroup(store_code, userid);
@@ -143,6 +165,12 @@ public class WhameServiceImpl implements WhameService{
 	public List<Integer> gethstore_code(String userid) {
 		return hdao.gethstore_code(userid);
 	}
+
+	@Override
+	public void viewcount(int store_code) {
+		dao.viewcount(store_code);
+	}
+	
 	
 	
 }
