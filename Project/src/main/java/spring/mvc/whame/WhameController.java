@@ -4,12 +4,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,7 @@ import spring.mvc.whame.opencv.Opencv;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.MapTest;
 import spring.mvc.whame.region.RegionVO;
+import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -113,6 +114,7 @@ public class WhameController {
 		} else {
 			if(membervo != null){
 				if (membervo.getUserid() != null) {
+					service.viewcount(store_code);
 					history.setStore_code(store_code);
 					history.setUserid(membervo.getUserid());
 					service.setHistory(history);
@@ -337,18 +339,6 @@ public class WhameController {
 		return mav;
 	}
 
-	@RequestMapping(value = "historyInfo.whame", method = RequestMethod.GET)
-	public ModelAndView historyInfo(int store_code) {
-		StoreVO storevo = service.getStore_info(store_code);
-		List<MenuVO> menulist = service.getMenu(store_code);
-		LocationVO locationvo = service.getLocation_info(store_code);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("storevo", storevo);
-		mav.addObject("locationvo", locationvo);
-		mav.addObject("menulist", menulist);
-		mav.setViewName("body/historyInfo");
-		return mav;
-	}
 
 	@RequestMapping(value = "store.whame", method = RequestMethod.GET)
 	public ModelAndView storeinfo(HttpSession session) {
@@ -357,21 +347,29 @@ public class WhameController {
 		if (membervo != null) {
 			if (membervo.getUserid() != null) {
 				List<StoreVO> storelist = service.getStoreList(membervo.getUserid());
+				HashMap<Integer, StoreVO> storemap = new HashMap<Integer, StoreVO>();
 				HashMap<Integer, List<MenuVO>> menulist = new HashMap<Integer, List<MenuVO>>();
 				HashMap<Integer, LocationVO> loclist = new HashMap<Integer, LocationVO>();
 				List<TypeVO> typelist = service.getType();
 				HashMap<Integer, List<String>> menutype = new HashMap<Integer, List<String>>();
+				HashMap<Integer, List<CouponVO>> couponlist = new HashMap<Integer, List<CouponVO>>();
 				
 				if (storelist != null) {
 					for (int i = 0; i < storelist.size(); i++) {
 						List<MenuVO> mlist = service.getMenu(storelist.get(i).getStore_code());
+						List<CouponVO> clist = service.getCoupon(storelist.get(i).getStore_code());
 						LocationVO locaion = service.getLocation_info(storelist.get(i).getStore_code());
+						StoreVO svo = service.getStore_info(storelist.get(i).getStore_code());
+						storemap.put(storelist.get(i).getStore_code(), svo);
 						menulist.put(storelist.get(i).getStore_code(), mlist);
 						loclist.put(storelist.get(i).getStore_code(), locaion);
+						couponlist.put(storelist.get(i).getStore_code(), clist);
 						menutype.put(storelist.get(i).getStore_code(), service.getMenuDistinct(storelist.get(i).getStore_code()));
 					}
 				}
 				
+				mav.addObject("storeMap", storemap);
+				mav.addObject("couponlist", couponlist);
 				mav.addObject("menutype", menutype);
 				mav.addObject("menulist", menulist);
 				mav.addObject("storelist", storelist);
@@ -423,5 +421,52 @@ public class WhameController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("body/categoryview");
 		return mav;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="storeUpdate.whame", method=RequestMethod.POST)
+	public void storeUpdate(@ModelAttribute("storevo") StoreVO svo , @ModelAttribute("locationvo") LocationVO lvo){
+		System.out.println(lvo.getStore_code()+"LLLLLL"+lvo.getLat());
+		String region[] = lvo.getAddress().split(" ");
+		System.out.println("rcode수정 : " + region[0] + " " + region[1]);
+		int rcode = service.getrcodeNum(region[0] + " " + region[1]);
+		lvo.setRcode(rcode);
+		service.storeUpdate(svo, lvo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="addcoupon.whame", method=RequestMethod.POST)
+	public int storeUpdate(@ModelAttribute("couponvo") CouponVO cvo){
+		Date date = new Date();
+		if(date.before(cvo.getS_time())){
+			cvo.setState("예정");
+		}
+		else if(date.after(cvo.getE_time())){
+			cvo.setState("종료");
+		}
+		else{
+			cvo.setState("진행중");
+		}
+		service.couponInsert(cvo);
+		
+		List<CouponVO> acvo = service.getCoupon(cvo.getStore_code());
+		for(CouponVO vo: acvo){
+			if(vo.getContents().equals(cvo.getContents())){
+				return vo.getCoupon_code();
+			}
+		};
+		return 0;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="recoupon.whame", method=RequestMethod.POST)
+	public void re_coupon(CouponVO cvo){
+		service.recoupon(cvo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="delcoupon.whame", method=RequestMethod.POST)
+	public void del_coupon(CouponVO cvo){
+		service.delcoupon(cvo);
 	}
 }

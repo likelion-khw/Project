@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <style>
 .loginform{
 	width: 350px;
-	padding-top: 7%;
+	padding: 20px;
+	margin-top:6%;
 }
 .loginbtn{
 	margin-bottom:20px;
@@ -15,7 +15,7 @@
 	margin-top:20px;
 }
 </style>
-<div class="container loginform">
+<div class="container loginform z-depth-2">
 	<div class="center-align">
 			<div name="header">
 				<i class="large material-icons">account_circle</i>
@@ -37,12 +37,11 @@
 			<div class="loginbtn">
 				<input type="button" value="로그인" class="btn black" id="login" style="width:300px"><br>
 			</div>
-			<a href="">아이디&패스워드 찾기</a> / <a href="#signin_modal">회원가입</a>
+			<a href="">아이디&패스워드 찾기</a> / <a href="#signin">회원가입</a>
 			<div class="snslogin">
 				<a id="login-btn" href="javascript:loginWithKakao()">
-					<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
+					<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="250"/>
 				</a>
-				<input type="button" value="페이스북 로그인" class="btn blue" id="login">
 			</div>
 	</div>
 </div>

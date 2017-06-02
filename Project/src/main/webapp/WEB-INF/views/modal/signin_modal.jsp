@@ -4,6 +4,10 @@
 .signinform{
 	width:40%;
 }
+.modal.modal-fixed-footer{
+	max-height: 200%;
+	height: 90%;
+}
 
 @media only screen and (min-width : 321px) and (max-width : 992px) {
 	.signinform {
@@ -17,7 +21,7 @@
 		<h4>회원가입</h4>
 		이미지 변경<br>
 		<a href="javascript:;" id="img">
-		<img class="circle" src="resources/img/user.png" style="width: 150px; height:150px" id="userimg"></a>
+		<img class="circle" src="resources/img/user.png" style="width: 120px; height:120px" id="userimg"></a>
 		<div class="row">
 		      <div class="row">
 		        <div class="input-field col s12">

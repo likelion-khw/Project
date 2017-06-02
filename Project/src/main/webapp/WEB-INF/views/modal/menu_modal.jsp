@@ -19,9 +19,6 @@
 	max-height: 200%;
 	height: 90%;
 }
-.hidemenu{
-	display: none;
-}
 @media only screen and (min-width : 321px) and (max-width : 500px) {
 	.modal {
 		width:100%;
@@ -44,47 +41,7 @@
 			List<String> menutypel = menutype.get(store_code);
 %>
 <div class="container center-align">
-	<div id="<%=store_code%>modal_menu" class="modal">
-		<div class="modal-content">
-			<h4><%=svo.get(i).getStore_name()%></h4>
-			<label>메뉴종류</label>
-		 	<center>
-				<select class="browser-default" id="menu_type" style="width:30%" name="<%=store_code%>">
-						<%for(int m=0; m<menutypel.size(); m++){ %>
-	   						<option value="<%=store_code%><%=menutypel.get(m)%>"><%=menutypel.get(m)%></option>
-	   					<%} %>
-	 			</select>
-			</center>
-			<table class="centered highlight">
-				<thead>
-					<tr>
-						<th>메뉴타입</th>
-						<th>메뉴이름</th>
-						<th>가격(원)</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-						for (int j = 0; j < menu.size(); j++) {
-					%>
-					<tr class="<%=store_code%>menu_list hidemenu" name="<%=store_code%><%=menu.get(j).getMenu_type()%>">
-						<td><%=menu.get(j).getMenu_type()%></td>
-						<td><%=menu.get(j).getMenu_name()%></td>
-						<td><%=menu.get(j).getMenu_price()%></td>
-					</tr>
-					<%
-						}
-					%>
-				</tbody>
-			</table>
-		</div>
-		<div class="modal-footer">
-			<a href="#!" class="modal-action modal-close btn green floting" style="float:none;">확인</a>
-			<a href="#<%=store_code%>modal_menu_re" class="modal-action modal-close btn red floting" style="float:none;">변경</a>
-		</div>
-	</div>
-	
-	<div id="<%=store_code%>modal_menu_re" class="modal modal-fixed-footer">
+	<div id="<%=store_code%>modal_menu" class="modal modal-fixed-footer">
 		<div class="modal-content">
 			<table class="centered highlight">
 				<thead>
@@ -256,32 +213,6 @@ $(document).ready(function() {
 				alert("정보를 기재 후 추가해주세요");
 			}
 		
-	});
-
-	// 메뉴정보창에 사용되는 메뉴타입 카테고리
-	var selecttype;
-	$('select#menu_type').each(function(){
-		var store_code = $(this).attr('name');
-		selecttype = $(this).val();
-		$('tr[class='+store_code+'menu_list]').addClass('hidemenu');
-		var check = /[&]/gi;
-		if(check.test(selecttype) == true){
-			$('tr[name='+store_code+'커피\\&라떼]').removeClass('hidemenu');
-		}else{
-			$('tr[name='+selecttype+']').removeClass('hidemenu');
-		}
-	});
-	
-	$('select#menu_type').on('change',function(){
-		var store_code = $(this).attr('name');
-		selecttype = $(this).val();
-		$('tr[class='+store_code+'menu_list]').addClass('hidemenu');
-		var check = /[&]/gi;
-		if(check.test(selecttype) == true){
-			$('tr[name='+store_code+'커피\\&라떼]').removeClass('hidemenu');
-		}else{
-			$('tr[name='+selecttype+']').removeClass('hidemenu');
-		}
 	});
 
 	// 메뉴변경에 사용되는 메뉴타입 카테고리

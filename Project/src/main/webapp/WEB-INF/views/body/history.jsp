@@ -3,7 +3,8 @@
 <%@ include file="../modal/history_modal.jsp" %>  
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
+f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 <style>
 	.history_form{
 		margin-top:20px;

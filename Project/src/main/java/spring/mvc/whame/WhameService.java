@@ -6,6 +6,7 @@ import spring.mvc.whame.color.ColorVO;
 import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
+import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -50,4 +51,12 @@ public interface WhameService {
 	public List<LocationVO> getlocation_list();
 	
 	public List<String> getMenuDistinct(int store_code);
+	
+	public List<CouponVO> getCoupon(int store_code);
+	public void storeUpdate(StoreVO svo, LocationVO lvo);
+	public void couponInsert(CouponVO cvo);
+	
+	public void recoupon(CouponVO cvo);
+	public void delcoupon(CouponVO cvo);
+	public void viewcount(int store_code);
 }

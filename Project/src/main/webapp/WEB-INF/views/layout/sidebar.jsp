@@ -6,7 +6,7 @@
 %>
 
 <ul id="mobile-demo" class="side-nav fixed">
-    <li style="background-color:#8e24aa; height:200px;">
+    <li style="background-color:#673ab7; height:200px;">
     <div class="userView">
 			<div class="center-align" style="padding-top:10px;">
 				<c:choose>

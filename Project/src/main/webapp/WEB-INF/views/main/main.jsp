@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../modal/fileupload_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
+f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 <style type="text/css">
 .mainform{
 	margin-top: 20px;
@@ -12,14 +13,13 @@
 	}
 	
 .mainimg{
-	width:30%;
+	width:50%;
 }
 .main_text{
-	padding:20px; width:70%; margin-left:auto; margin-right: auto;
+	padding:20px; width:80%; margin-top:20px;
 	background-color: #f5f5f5;
 }
 .main_mapform{
-	margin-top:10px;
 	margin-bottom:10px;
 	width:50%;
 	padding:10px;
@@ -28,13 +28,21 @@
 	margin-bottom: 20px;
 	height: 300px;
 }
+.mainrun{
+		width:100%;
+		height: 270px;
+}
 
 @media only screen and (min-width : 321px) and (max-width : 600px) {
 	.mainimg{
-	width:50%;
+	width:100%;
 	}
 	.main_text p{
-		font-size:16px;
+		font-size:13px;
+	}
+	.main_text h3{
+		font-size:15px;
+		font-weight: bolder;
 	}
 	.mainform input{
 		margin-bottom:10px;
@@ -46,24 +54,35 @@
 	.main_mapform{
 	width:90%;
 	}
+	.counter .digit{
+		width:23px;
+	}
 }
 </style>
 
 <div class="container mainform z-depth-3">
-	<div class="center-align" style="padding:10px">
+	<div class="center-align row" style="padding:10px">
 		<input type="button" class="btn green" value="메뉴찾기(간판이미지 업로드)" id="fileupload">
 		<input type="button" class="btn pink darken-2" value="간판등록하기" id="enroll"><br>
-		<center>
-			<div class="main_mapform z-depth-1">
-				<div class="counter" data-count="00000${count}" id="test"></div>
-				<div id="main_map"></div>
-			</div>
-		</center>
-		<div class="main_text z-depth-1">
+		<div class="main_text z-depth-1 row" style="margin-left:auto; margin-right: auto;">
+			<div class="col s6">
 			<img src="resources/img/main.png" class="mainimg">
 			<h3>Whame란?</h3>
 			<p>Whame는 'What Menu'에서 비롯된 타이틀입니다. </p>
 			<p>상가의 메뉴를 직접 들어가지 않고 밖에서 간판 사진을 이용하여 메뉴정보를 얻을 수 있습니다.</p>
+			</div>
+			<div class="col s6">
+				<img src="resources/img/main_run.gif" class="mainrun">
+			</div>
+		</div>
+		<div style="width:90%; margin-left: auto; margin-right: auto;" class="z-depth-1 row">
+			<div class="main_mapform col s8">
+				<div class="counter" data-count="00000${count}" id="test"></div>
+				<div id="main_map"></div>
+			</div>
+			<div class="col s4">
+				<h5>Top View</h5>
+			</div>
 		</div>
 	</div>
 </div>

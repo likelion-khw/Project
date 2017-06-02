@@ -3,6 +3,7 @@ package spring.mvc.whame;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -14,6 +15,7 @@ import spring.mvc.whame.color.ColorVO;
 import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
+import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -188,8 +190,9 @@ public class WhameDAO {
 		session.delete("whame.delstore1",store_code);
 		session.delete("whame.delstore2",store_code);
 		session.delete("whame.delstore3",store_code);
+		session.delete("whame.delstore4",store_code);
 		
-		return session.delete("whame.delstore4",store_code);
+		return session.delete("whame.delstore5",store_code);
 	}
 	
 	public List<HistoryVO> getHistoryListGroup(int store_code, String userid){
@@ -215,4 +218,44 @@ public class WhameDAO {
 	public List<String> getMenuDistinct(int store_code){
 		return session.selectList("whame.getMenuTypeDistinct",store_code);
 	}
+	
+	public List<CouponVO> getCoupon(int store_code){
+		Date date = new Date();
+		 List<CouponVO> clist = session.selectList("whame.getCoupon" , store_code);
+		 for(CouponVO cvo : clist){
+				if(date.before(cvo.getS_time())){
+					cvo.setState("예정");
+				}
+				else if(date.after(cvo.getE_time())){
+					cvo.setState("종료");
+				}
+				else{
+					cvo.setState("진행중");
+				}
+		 }
+		 return clist;
+	}
+	
+	
+	public void storeUpdate(StoreVO svo, LocationVO lvo) {
+		session.update("whame.storeUpdate_store", svo);
+		session.update("whame.storeUpdate_loc", lvo);
+	}
+	
+	public void couponInsert(CouponVO cvo){
+		session.insert("whame.setCoupon", cvo);
+	}
+	
+	public void recoupon(CouponVO cvo){
+		session.update("whame.reCoupon",cvo);
+	}
+
+	public void delcoupon(CouponVO cvo){
+		session.delete("whame.delCoupon", cvo);
+	}
+	
+	public void viewcount(int store_code) {
+		session.update("whame.viewcount", store_code);
+	}
+
 }
