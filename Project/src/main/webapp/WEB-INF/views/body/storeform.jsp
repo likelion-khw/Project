@@ -65,7 +65,7 @@
 				      		</tr>
 				      		<tr>
 					      		<th>상가 위치</th>
-					      		<td id="${store.store_code }loc">${loclist.get(store.store_code).address}</td>
+					      		<td class="${store.store_code }address" >${loclist.get(store.store_code).address}</td>
 				      		</tr>
 				      	</table>
 				      	<center>
@@ -178,7 +178,8 @@ $(document).ready(function() {
 	$('li[class=on]').on('click',function(){
 		var store_code = $(this).attr('id');
 		var store_name = $('li[id='+store_code+']').children().children('h5').html();
-		var address = $('#'+store_code+'loc').val();
+		var address = $('.'+store_code+'address').html();
+
 
 		var mapContainer = document.getElementById('map'+store_code), // 지도를 표시할 div 
 		mapOption = {
@@ -192,10 +193,7 @@ $(document).ready(function() {
 		// 주소-좌표 변환 객체를 생성합니다
 		var geocoder = new daum.maps.services.Geocoder();
 		// 주소로 좌표를 검색합니다
-		geocoder
-		.addr2coord(
-				address,
-				function(status, result) {
+		geocoder.addr2coord(address,function(status, result) {
 					// 정상적으로 검색이 완료됐으면 
 					if (status === daum.maps.services.Status.OK) {
 						var lat = (result.addr[0].lat).toFixed(6);

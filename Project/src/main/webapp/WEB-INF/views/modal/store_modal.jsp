@@ -3,70 +3,67 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-
+<style>
+</style>
 <div class="container center-align">
- 	<div id='locCode'>${storeMap }</div> 
- 	<c:forEach items="${storeMap }" var="slist">
- 		<c:forEach items="${slist.value }" var="svo">
-		 	<div id="${svo.store_code }modal_store" class="modal">
-		 	<div class="modal-content" id='${svo.store_code }'> 
-				<h4>${svo.store_name }</h4>
+ 	<c:forEach items="${storeMap }" var="svo">
+	 	<div class='locCode' style="visibility: hidden;">${svo.value.store_code } </div> 
+		 	<div id="${svo.value.store_code }modal_store" class="modal">
+		 	 <div class="modal-content" id='${svo.value.store_code }'> 
+				<h4>${svo.value.store_name }</h4>
 				<table class="centered" style="margin-bottom:20px;" id='uptable'>
 					<tr>
 						<th>사업자번호</th>
-						<td><input type="text" id="${svo.store_code }bus" name="business_code" value="${svo.business_code }"></td>
+						<td><input type="text" id="${svo.value.store_code }bus" name="business_code" value="${svo.value.business_code }"></td>
 					</tr>
 					<tr>
 						<th>사업자id</th>
-						<td><input type="text"  id="${svo.store_code }user" name="userid" value="${svo.userid}"></td>
+						<td><input type="text"  id="${svo.value.store_code }user" name="userid" value="${svo.value.userid}"></td>
 					</tr>
 					<tr>
 						<th>상호명</th>
-						<td><input type="text"  id="${svo.store_code }name" name="store_name" value="${svo.store_name }"></td>
+						<td><input type="text"  id="${svo.value.store_code }name" name="store_name" value="${svo.value.store_name }"></td>
 					</tr>
 					<tr>
 						<th>영업시간</th>
-						<td><input type="text"  id="${svo.store_code }time" name="operating_time" value="${svo.operating_time }"></td>
+						<td><input type="text"  id="${svo.value.store_code }time" name="operating_time" value="${svo.value.operating_time }"></td>
 					</tr>
 					<tr>
 					<c:forEach var="lvo" items="${loclist }">
-						<c:if test="${lvo.key == svo.store_code}">
-							<c:set var="lval" value="${lvo.value }"/>
+						<c:if test="${lvo.key == svo.value.store_code}">
+						<c:set var="lval" value="${lvo.value }"/>
 							<th>상가 위치</th>
-							<td><div id='${svo.store_code }1'>
+							<td><div id='${svo.value.store_code }sa'>
 								<input type="text" class="postcodify_extra_info col s6"  placeholder="동"/>
-								<input type="text" id="${svo.store_code }loc" name="address" class="postcodify_address col s12" value="${lval.address }" placeholder="시/군/구"/>
-								<input type="button" value="검색" class="btn blue floting postcodify_search_button" style="float:none;">
+								<input type="text" id="${svo.value.store_code }loc" name="address" class="postcodify_address col s12" value="${lval.address }" placeholder="시/군/구"/>
+								<input type="button" value="검색" class="btn blue floting postcodify_search_button${svo.value.store_code }" style="float:none;">
 							</div></td>
 						</c:if>
 					</c:forEach>
 					</tr>
 				</table>
-				<input type="hidden" value="${svo.store_code }" name="store_code">
-				<input type="hidden" value="${svo.view_count }" name="view_count">
+				<input type="hidden" value="${svo.value.store_code }" name="store_code">
+				<input type="hidden" value="${svo.value.view_count }" name="view_count">
 				
 				<div class="modal-footer" >
-					<input type="button" value="변경" id='storeupdate' class="modal-action modal-close btn blue floting" onclick='submit(${svo.store_code })' style="float:none;">
+					<input type="button" value="변경" id='storeupdate' class="modal-action modal-close btn blue floting" onclick='submit(${svo.value.store_code })' style="float:none;">
 					<input type="button"  value="상가삭제" class="modal-action modal-close btn red floting" style="float:none;">
 					<a href="#!" class="modal-action modal-close btn green floting" style="float:none;">닫기</a>
 	 			</div>
-			</div>
+			</div> 
 	 		</div>
  		</c:forEach>
- 	</c:forEach>
 </div>
 
 
 <script type="text/javascript">
 
 
-$(function() {
-	var storeArray = $()
-	$("#postcodify_search_button").postcodifyPopUp({  
+/* $(function() {$(".postcodify_search_button").postcodifyPopUp({  
 	 container: $("#1121") 
 	});
 	
-})
+}) */
 
 
 function submit(store_code){
@@ -116,7 +113,14 @@ function submit(store_code){
 	} 
  		
  	$(document).ready(function(){
- 		
+ 		var locstore = $('.locCode').text();
+ 		var locstorecode = locstore.split(" ");
+ 		for(i=0; i<locstorecode.length-1; i++){
+	 		$(".postcodify_search_button"+locstorecode[i]).postcodifyPopUp({  
+	 			 container: $("#"+locstorecode[i]+"sa") 
+	 			});
+ 			
+ 		}
  		
 		$('input[value=상가삭제]').on('click',function(){
 			var is = confirm('상가를 정말 삭제하시겠습니까? \n ** 주의 ** \n 한번 삭제시 돌릴 수 없음');

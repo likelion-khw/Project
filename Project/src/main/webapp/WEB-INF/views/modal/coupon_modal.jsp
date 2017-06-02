@@ -21,25 +21,24 @@
 }
 </style>
 <div class="container center-align">
-<c:forEach items="${storeMap }" var="slist">
-	<c:forEach items="${slist.value }" var="svo">
-		<div id="${svo.store_code }modal_coupon" class="modal">
+<c:forEach items="${storeMap }" var="svo">
+		<div id="${svo.value.store_code }modal_coupon" class="modal">
 		<div class="modal-content">
 			<table class="centered highlight">
 			<thead>
-					<tr id="${svo.store_code }">
+					<tr id="${svo.value.store_code }">
 						<td>
-							<select class="browser-default" name="coupon_state" id="${svo.store_code }state">
+							<select class="browser-default" name="coupon_state" id="${svo.value.store_code }state">
 								<option value="" disabled selected>진행상태 선택</option>
 								<option value="진행중">진행중</option>
 								<option value="예정">예정</option>
 								<option value="종료">종료</option>
 							</select>
 						</td>
-						<td><input type="text" name="contents" id="${svo.store_code }contents"></td>
-						<td><input type="date" class = "datepicker" name="s_date" id="${svo.store_code }s_date"></td>
-						<td><input type="date" class = "datepicker" name="e_date" id="${svo.store_code }e_date"></td>
-						<td colspan="2"><input type="button" class="btn blue" value="행사추가" onclick="add_coupon(${svo.store_code})" ></td>
+						<td><input type="text" name="contents" id="${svo.value.store_code }contents"></td>
+						<td><input type="date" class = "datepicker" name="s_date" id="${svo.value.store_code }s_date"></td>
+						<td><input type="date" class = "datepicker" name="e_date" id="${svo.value.store_code }e_date"></td>
+						<td colspan="2"><input type="button" class="btn blue" value="행사추가" onclick="add_coupon(${svo.value.store_code})" ></td>
 					<tr>
 					<tr>
 						<th>진행상태</th>
@@ -50,31 +49,31 @@
 						<th>삭제</th>
 					</tr>
 				</thead>
-				<tbody id='${svo.store_code}coupon_body'>
+				<tbody id='${svo.value.store_code}coupon_body'>
 					<c:forEach items="${couponlist }" var="clist">
-						<c:set value="${clist.key }" var="key" />
-						<c:set value="${svo.store_code}" var="storee" />
-						<c:if test="${key eq storee}">
-							<c:forEach items="${clist.value }" var="cvo">
-								<tr id="${svo.store_code }${cvo.coupon_code }">
-									<td><input type="text" value="${cvo.state }" id="${svo.store_code}${cvo.coupon_code }state"></td>
-									<td><input type="text" value="${cvo.contents }" id="${svo.store_code}${cvo.coupon_code }contents">
+						<c:forEach items="${clist.value }" var="cvo">
+							<c:set value="${clist.key }" var="key" />
+							<c:set value="${svo.value.store_code}" var="storee" />
+ 							<c:if test="${key eq storee}">
+								<tr id="${svo.value.store_code }${cvo.coupon_code }">
+									<td><input type="text" value="${cvo.state }" id="${svo.value.store_code}${cvo.coupon_code }state"></td>
+									<td><input type="text" value="${cvo.contents }" id="${svo.value.store_code}${cvo.coupon_code }contents">
 										<input type="hidden" value="${cvo.coupon_code }"></td>
-									<td><input type="date" value="${cvo.s_time }" class = "datepicker" id="${svo.store_code}${cvo.coupon_code }s_time"></td>
-									<td><input type="date" value="${cvo.e_time }" class = "datepicker" id="${svo.store_code}${cvo.coupon_code }e_time"></td>
+									<td><input type="date" value="${cvo.s_time }" class = "datepicker" id="${svo.value.store_code}${cvo.coupon_code }s_time"></td>
+									<td><input type="date" value="${cvo.e_time }" class = "datepicker" id="${svo.value.store_code}${cvo.coupon_code }e_time"></td>
 									<td>
-										<a href="javascript:re_coupon(${svo.store_code},${cvo.coupon_code })" style="color:red">
-										<i class="material-icons" id="${svo.store_code}${cvo.coupon_code }icon" >reply</i>
+										<a href="javascript:re_coupon(${svo.value.store_code},${cvo.coupon_code })" style="color:red">
+										<i class="material-icons" id="${svo.value.store_code}${cvo.coupon_code }icon" >reply</i>
 										</a>
 									</td>
 									<td>
-										<a href="javascript:del_coupon(${svo.store_code},${cvo.coupon_code })" style="color:black">
-										<i class="material-icons" id="${svo.store_code}${cvo.coupon_code }del">delete</i>
+										<a href="javascript:del_coupon(${svo.value.store_code},${cvo.coupon_code })" style="color:black">
+										<i class="material-icons" id="${svo.value.store_code}${cvo.coupon_code }del">delete</i>
 										</a>
 									</td>
 								</tr>
+							</c:if>
 							</c:forEach>
-						</c:if> 
 					</c:forEach>
 				</tbody>
 			</table>
@@ -83,7 +82,6 @@
 			<a href="javascript:close();" class="modal-action modal-close btn green" id="close" style="float:none;">확인</a>
 		</div>
 	</div>
-</c:forEach>
 </c:forEach>
 </div>
 

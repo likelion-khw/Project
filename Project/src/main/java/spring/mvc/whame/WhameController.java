@@ -302,7 +302,7 @@ public class WhameController {
 		if(membervo != null){
 			if(membervo.getUserid() != null){
 				List<StoreVO> storelist = service.getStoreList(membervo.getUserid());
-				HashMap<Integer, List<StoreVO>> storemap = new HashMap<Integer, List<StoreVO>>();
+				HashMap<Integer, StoreVO> storemap = new HashMap<Integer, StoreVO>();
 				HashMap<Integer, List<MenuVO>> menulist = new HashMap<Integer, List<MenuVO>>();
 				HashMap<Integer, LocationVO> loclist = new HashMap<Integer, LocationVO>();
 				HashMap<Integer, List<CouponVO>> couponlist = new HashMap<Integer, List<CouponVO>>();
@@ -313,7 +313,8 @@ public class WhameController {
 						List<MenuVO> mlist = service.getMenu(storelist.get(i).getStore_code());
 						List<CouponVO> clist = service.getCoupon(storelist.get(i).getStore_code());
 						LocationVO locaion = service.getLocation_info(storelist.get(i).getStore_code());
-						storemap.put(storelist.get(i).getStore_code(), storelist);
+						StoreVO svo = service.getStore_info(storelist.get(i).getStore_code());
+						storemap.put(storelist.get(i).getStore_code(), svo);
 						menulist.put(storelist.get(i).getStore_code(), mlist);
 						couponlist.put(storelist.get(i).getStore_code(), clist);
 						loclist.put(storelist.get(i).getStore_code(), locaion);
