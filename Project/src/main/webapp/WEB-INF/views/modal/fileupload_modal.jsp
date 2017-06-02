@@ -2,20 +2,30 @@
 	pageEncoding="UTF-8"%>
 <!-- Modal Structure -->
 <style>
-
+.fileup_run{
+	width:100%;
+}
 @media only screen and (min-width : 321px) and (max-width : 992px) {
 	.fileuploadform {
 		width:90%;
 		height: 100%;
 }
+	.fileup_run{
+	margin-top: 20%;
+	height: 350px;
+	}
+	i.medium{
+		font-size: 2rem;
+	}
 }
 </style>
 
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <div id="modal1" class="modal modal-fixed-footer fileuploadform center-align">
-	<div class="modal-content">
+	<div class="modal-content row">
 		<h4>사용법</h4>
+		<div class="col s6">
 		<p>1. 핸드폰은 되도록 가로 화면으로 촬영해주세요.</p>
 			<i class="material-icons medium">stay_current_portrait</i><i class="material-icons medium" style="color:blue">forward</i><i class="material-icons medium">stay_current_landscape</i>
 		<p>2. 정확한 정보제공을 위해서 사용자의 위치정보가 필요합니다.</p>
@@ -30,6 +40,11 @@
 				<div id="company_ul"></div>
 			</div>
 		</form>
+		</div>
+		<div class="col s6">
+			<사용과정>
+			<img src="resources/img/main_run.gif" class="fileup_run">
+		</div>	
 	</div>
 	<div class="modal-footer">
 		<a href="#!"

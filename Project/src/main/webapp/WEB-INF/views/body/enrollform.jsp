@@ -119,6 +119,7 @@
 <script type="text/javascript" src="resources/js/enrollform_js.js"></script>
 <script type="text/javascript">
 $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); 
+
 $('#e_submit').on('click',function(){
 		var a = $('#business_code');
 		var b = $('#en_address');

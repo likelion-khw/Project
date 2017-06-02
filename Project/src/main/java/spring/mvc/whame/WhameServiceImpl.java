@@ -10,6 +10,7 @@ import spring.mvc.whame.history.HistoryDAO;
 import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.region.LocationVO;
 import spring.mvc.whame.region.RegionVO;
+import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
 import spring.mvc.whame.store.StoreVO;
@@ -153,5 +154,31 @@ public class WhameServiceImpl implements WhameService{
 	
 	public List<String> getMenuDistinct(int store_code){
 		return dao.getMenuDistinct(store_code);
+	}
+	
+	public List<CouponVO> getCoupon(int store_code){
+		return dao.getCoupon(store_code);
+	}
+	
+	
+	public void storeUpdate(StoreVO svo, LocationVO lvo) {
+		dao.storeUpdate(svo, lvo);
+	}
+
+	public void couponInsert(CouponVO cvo){
+		dao.couponInsert(cvo);
+	}
+	
+	public void recoupon(CouponVO cvo){
+		dao.recoupon(cvo);
+	}
+	
+	public void delcoupon(CouponVO cvo){
+		dao.delcoupon(cvo);
+	}
+	
+	@Override
+	public void viewcount(int store_code) {
+		dao.viewcount(store_code);
 	}
 }

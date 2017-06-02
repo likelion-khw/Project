@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../modal/fileupload_modal.jsp" %>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
+f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 <style>
 .showinfoform{
 	margin-top:20px;
@@ -54,7 +55,7 @@
 			<h3>${error}</h3>
 		</c:when>
 		<c:otherwise>
-			<h5>사용자의 검색 정보</h5>
+			<%-- <h5>사용자의 검색 정보</h5>
 			<table class="centered bordered">
 				<tbody>
 					<tr>
@@ -70,7 +71,7 @@
 						</td>
 					</tr>
 				</tbody>
-			</table>
+			</table> --%>
 			<h4>${store.store_name} 메뉴</h4>
 		 	<label>메뉴종류</label>
 		 	<center>
@@ -149,9 +150,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
 		var user = '${memberVO.userid}';
+		var error = '${error}';
 		if(user != '')
 			{
-			 Materialize.toast('검색 정보가 히스토리에 저장됩니다.', 4000, 'rounded')
+				if(error == ''){
+					 Materialize.toast('검색 정보가 히스토리에 저장됩니다.', 4000, 'rounded')
+				}
 			}
 		var address = '${location.address}';
 

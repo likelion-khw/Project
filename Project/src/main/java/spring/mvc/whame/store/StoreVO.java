@@ -17,7 +17,7 @@ public class StoreVO {
 		
 		private int rcode;//r
 		private String address;//l
-		private MultipartFile imagefile;//	//¾÷·ÎµåÆÄÀÏ ¼­¹öÀúÀå
+		private MultipartFile imagefile;//	//ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		private String image;
 		int store_text;
 		int store_color;
@@ -98,8 +98,10 @@ public class StoreVO {
 			this.address = address;
 		}
 		
-		
-		
+		@Override
+		public String toString() {
+			return store_code+"";
+		}		
 		
 	
 }

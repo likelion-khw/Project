@@ -73,6 +73,7 @@
 </body>
 
 <script type="text/javascript">
+
 $(document).ready(
 		function() {
 			$('#images').hide();
@@ -82,6 +83,19 @@ $(document).ready(
 			var four;
 			var number = 1;
 
+			var onel = new Array();
+			var twol = new Array();
+			var threel = new Array();
+			var four = new Array();
+
+			var sort = new Array();
+
+			var moveone = new Array();
+			var movetwo = new Array();
+			var movethree = new Array();
+			var movefour = new Array();
+
+
 			var canvas = document.getElementById('sample');
 			var ctx = canvas.getContext('2d');
 
@@ -90,40 +104,98 @@ $(document).ready(
 					function(event) {
 						var rX = img.width / $('#sample').width();
 						var rY = img.height / $('#sample').height();
-						var setRect = parseInt(10 * rX);
+						var setRect = parseInt(12 * rX);
 
 						ctx.fillStyle = "#FF0000";
 						if (number == 1) {
 							one = parseInt(event.offsetX * rX) + ":"
 									+ parseInt(event.offsetY * rY);
-							ctx.fillRect(parseInt(event.offsetX * rX),
-									parseInt(event.offsetY * rY), setRect,
+							ctx.fillRect(parseInt(event.offsetX * rX - (setRect / 2) ),
+									parseInt(event.offsetY * rY - (setRect / 2)), setRect,
 									setRect);
 							number++
+
+							onel = {'x': parseInt((event.offsetX * rX)), 'y':parseInt((event.offsetY * rY))};
+							moveone = {'x': parseInt((event.offsetX * rX- (setRect / 2) )), 'y': parseInt((event.offsetY * rY- (setRect / 2) )), 'mx':parseInt((event.offsetX * rX + (setRect / 2))), 'my':parseInt((event.offsetY * rY + (setRect / 2)))};
+
 						} else if (number == 2) {
 							two = parseInt(event.offsetX * rX) + ":"
 									+ parseInt(event.offsetY * rY);
-							ctx.fillRect(parseInt(event.offsetX * rX),
-									parseInt(event.offsetY * rY), setRect,
+							ctx.fillRect(parseInt(event.offsetX * rX - (setRect / 2)),
+									parseInt(event.offsetY * rY - (setRect / 2)), setRect,
 									setRect);
 							number++;
+
+							twol = {'x': parseInt((event.offsetX * rX)), 'y':parseInt((event.offsetY * rY))};
+							movetwo = {'x': parseInt((event.offsetX * rX- (setRect / 2) )), 'y': parseInt((event.offsetY * rY- (setRect / 2) )), 'mx':parseInt((event.offsetX * rX + (setRect / 2))), 'my':parseInt((event.offsetY * rY + (setRect / 2)))};
 						} else if (number == 3) {
 							three = parseInt(event.offsetX * rX) + ":"
 									+ parseInt(event.offsetY * rY);
-							ctx.fillRect(parseInt(event.offsetX * rX),
-									parseInt(event.offsetY * rY), setRect,
+							ctx.fillRect(parseInt(event.offsetX * rX - (setRect / 2)),
+									parseInt(event.offsetY * rY - (setRect / 2)), setRect,
 									setRect);
 							number++;
+
+							threel = {'x': parseInt((event.offsetX * rX)), 'y':parseInt((event.offsetY * rY))};
+							movethree = {'x': parseInt((event.offsetX * rX- (setRect / 2) )), 'y': parseInt((event.offsetY * rY- (setRect / 2) )), 'mx':parseInt((event.offsetX * rX + (setRect / 2))), 'my':parseInt((event.offsetY * rY + (setRect / 2)))};
 						} else if (number == 4) {
 							four = parseInt(event.offsetX * rX) + ":"
 									+ parseInt(event.offsetY * rY);
-							ctx.fillRect(parseInt(event.offsetX * rX),
-									parseInt(event.offsetY * rY), setRect,
+							ctx.fillRect(parseInt(event.offsetX * rX - (setRect / 2)),
+									parseInt(event.offsetY * rY - (setRect / 2)), setRect,
 									setRect);
 							number++;
+
+							fourl = {'x': parseInt((event.offsetX * rX)), 'y':parseInt((event.offsetY * rY))};
+							movefour = {'x': parseInt((event.offsetX * rX- (setRect / 2) )), 'y': parseInt((event.offsetY * rY- (setRect / 2) )), 'mx':parseInt((event.offsetX * rX + (setRect / 2))), 'my':parseInt((event.offsetY * rY + (setRect / 2)))};
+							
+							sortfun();
+							
+							ctx.beginPath();
+							ctx.moveTo(onel.x,onel.y);
+							ctx.lineWidth = 3;
+							ctx.lineTo(twol.x,twol.y);
+							ctx.lineTo(threel.x,threel.y);
+							ctx.lineTo(fourl.x,fourl.y);
+							ctx.closePath();
+							ctx.strokeStyle = 'red';
+							ctx.stroke();
+							
 						} else if (number == 5) {
-							alert("4개의 모서리를 전부 클릭하셨습니다.\n 전송 버튼을 눌러주세요");
-							alert(one + "/" + two + "/" + three + "/" + four);
+							var x = parseInt((event.offsetX * rX));
+							var y = parseInt((event.offsetY * rY));
+							var is = false;
+							var msg;
+
+							if(x >= moveone.x && x <= moveone.mx)
+								{
+									if(y >= moveone.y && y <= moveone.my)
+										{
+											alert('one');
+										}
+								}
+							if(x >= movetwo.x && x <= movetwo.mx)
+							{
+								if(y >= movetwo.y && y <= movetwo.my)
+									{
+										alert('two');
+									}
+							}
+							if(x >= movethree.x && x <= movethree.mx)
+							{
+								if(y >= movethree.y && y <= movethree.my)
+									{
+										alert('three');
+									}
+							}
+							if(x >= movefour.x && x <= movefour.mx)
+							{
+								if(y >= movefour.y && y <= movefour.my)
+									{
+										alert('four');
+									}
+							}								
+
 						}
 					});
 
@@ -155,6 +227,33 @@ $(document).ready(
 			$('#imagefile').on('change', function(e) {
 				$('#upload').submit();
 			});
+
+			var sortfun = function(){
+				sort = [onel, twol, threel, fourl,''];
+				var temp = [(onel.x+onel.y), (twol.x+twol.y), (threel.x+threel.y), (fourl.x+fourl.y),''];
+				
+				for(var i=0; i<3; i++)
+				{
+					for(var j=i+1; j<4; j++)
+					{
+						if(temp[i] > temp[j])
+						{
+							temp[4] = temp[i];
+							temp[i] = temp[j];
+							temp[j] = temp[4];
+							
+							sort[4] = sort[i];
+							sort[i] = sort[j];
+							sort[j] = sort[4];
+						}
+					}
+				}
+
+				onel = sort[0];
+				twol = sort[1];
+				threel = sort[3];
+				fourl = sort[2];
+			}
 		})
 
 </script>

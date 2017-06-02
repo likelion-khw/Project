@@ -81,10 +81,6 @@ public class ImageVO {
 		temp[1] = Integer.parseInt(two_xy[0]) + Integer.parseInt(two_xy[1]);
 		temp[2] = Integer.parseInt(three_xy[0]) + Integer.parseInt(three_xy[1]);
 		temp[3] = Integer.parseInt(four_xy[0]) + Integer.parseInt(four_xy[1]);
-		System.out.println(temp[0]);
-		System.out.println(temp[1]);
-		System.out.println(temp[2]);
-		System.out.println(temp[3]);
 		ArrayList<String[]> templist = new ArrayList<String[]>();
 		templist.add(this.one_xy);
 		templist.add(this.two_xy);
