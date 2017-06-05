@@ -211,10 +211,6 @@ public class WhameDAO {
 		return session.selectList("whame.getlocationList");
 	}
 	
-	public List<String> getCategoryDetail(int category){	
-		return session.selectList("whame.getCategory", category);
-	}
-	
 	public List<String> getMenuDistinct(int store_code){
 		return session.selectList("whame.getMenuTypeDistinct",store_code);
 	}
@@ -258,4 +254,13 @@ public class WhameDAO {
 		session.update("whame.viewcount", store_code);
 	}
 
+	public List<String> getCategoryDetail(int store_category){	
+		return session.selectList("whame.getCategory", store_category);
+	}
+	
+	public List<String> getTagStore(String tagClick){
+		System.out.println(tagClick);
+		return session.selectList("whame.getTagStore", tagClick);
+	}
+	
 }

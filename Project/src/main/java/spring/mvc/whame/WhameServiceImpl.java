@@ -148,8 +148,14 @@ public class WhameServiceImpl implements WhameService{
 	public List<LocationVO> getlocation_list(){
 		return dao.getlocation_list();
 	}
-	public List<String> getCategoryDetail(int category){
-		return dao.getCategoryDetail(category);
+	
+	public List<String> getCategoryDetail(int store_category){
+		return dao.getCategoryDetail(store_category);
+	}
+	
+	@Override
+	public List<String> getTagStore(String tagClick) {
+		return dao.getTagStore(tagClick);
 	}
 	
 	public List<String> getMenuDistinct(int store_code){
@@ -181,4 +187,5 @@ public class WhameServiceImpl implements WhameService{
 	public void viewcount(int store_code) {
 		dao.viewcount(store_code);
 	}
+	
 }

@@ -13,6 +13,7 @@ public class StoreVO {
 		private String userid;
 		private String operating_time;
 		private String store_name;
+		private String store_category;
 		private int view_count;
 		
 		private int rcode;//r
@@ -58,6 +59,12 @@ public class StoreVO {
 		public void setStore_name(String store_name) {
 			this.store_name = store_name;
 		}
+		public String getStore_category() {
+			return store_category;
+		}
+		public void setStore_category(String store_category) {
+			this.store_category = store_category;
+		}
 		public int getView_count() {
 			return view_count;
 		}
@@ -98,10 +105,8 @@ public class StoreVO {
 			this.address = address;
 		}
 		
-		@Override
-		public String toString() {
-			return store_code+"";
-		}		
+		
+		
 		
 	
 }
