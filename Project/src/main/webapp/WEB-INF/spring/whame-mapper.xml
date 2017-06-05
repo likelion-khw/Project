@@ -3,7 +3,7 @@
 
 <mapper namespace="whame">
 	<insert id='enroll' parameterType="storevo">
- 		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0)
+ 		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0, #{store_category})
  	</insert>
  	
  	<insert id='setColor' parameterType="colorvo">
@@ -224,8 +224,12 @@
  		select * from Store_location
  	</select>
  	
- 	<select id="getCategory" resultType="String" parameterType="int">
- 		select category_name from category where category_no = #{category}
+  	 <select id="getCategory" resultType="String" parameterType="int">
+ 		select category_name from category where category_no = #{store_category}
+  	</select>
+  	
+  	<select id="getTagStore" resultType="String" parameterType="String">
+  		select store_name, operating_time from store where store_category like #{tagClick}
   	</select>
   	
   	<select id="getMenuTypeDistinct" resultType="String" parameterType="int">

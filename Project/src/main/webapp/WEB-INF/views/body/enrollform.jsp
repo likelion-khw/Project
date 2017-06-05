@@ -80,14 +80,15 @@
  				<select class="browser-default" name="categorySelect" id="categorySelect" onchange="changeCategory()" >
  					<option>음식점 카테고리 선택</option>
  					<option>한식</option>
- 					<option>양식</option>
  					<option>중식</option>
  					<option>일식</option>
- 					<option>카페</option>
+ 					<option>양식</option>
+ 					<option>패스트푸드</option>
+ 					<option>디저트</option>
  				</select>
  				<br>				
  				<label>메뉴 카테고리 선택</label>
- 				<select class="browser-default" name="categoryDetail" id="categoryDetail">
+ 				<select class="browser-default" name="store_category" id="store_category">
  					<option>메뉴 선택</option>
  				</select>
  			</td>
@@ -117,34 +118,3 @@
    
 <script type="text/javascript" src="resources/js/busi_check2.js"></script>
 <script type="text/javascript" src="resources/js/enrollform_js.js"></script>
-<script type="text/javascript">
-$(function() { $("#postcodify_search_button").postcodifyPopUp(); }); 
-
-$('#e_submit').on('click',function(){
-		var a = $('#business_code');
-		var b = $('#en_address');
-		var c = $('#categorySelect');
-		var d = $('#categoryDetail');
-		var e = $("#store_name");
-		var f = $('#operating_time');
-		var g = $('#imagefile');
-		
-		if(a.val() == ""){
-			alert("사업자 번호를 인증하세요.");
-		}else if(b.val() == ""){
-			alert("주소를 입력해주세요.");
-		}else if(c.val() == ""){
-			alert("음식점 카테고리를 선택하세요.");
-		}else if(d.val() == ""){
-			alert("메뉴 카테고리를 선택하세요.");
-		}else if(e.val() == ""){
-			alert("상호명을 입력하세요.");
-		}else if(f.val() == ""){
-			alert("영업시간을 입력하세요");
-		}else if(g.val() == ""){
-			alert("간판 이미지를 올려주세요.");
-		}else{
-			$('form[id=enroll_form]').submit();
-		}
-	});
-</script>

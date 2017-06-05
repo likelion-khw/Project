@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -416,12 +417,26 @@ public class WhameController {
 		return result;
 	}
 	
-	@RequestMapping(value = "category.whame")
-	public ModelAndView getCategory() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("body/categoryview");
-		return mav;
+
+	@RequestMapping(value = "getCategory.whame", method=RequestMethod.GET)
+	public String getCategoryScreen1() {
+		return "body/categoryview";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value= "getTagStore.whame", method=RequestMethod.POST)
+	public List<String> getTgStore(@RequestParam("tagClick") String tagClick){
+		List<String> result = service.getTagStore(tagClick);
+		System.out.println("연결");
+		System.out.println(result);
+		return result;
+	}
+	
+	@RequestMapping(value = "getTageClear.whame", method=RequestMethod.POST)
+	public String getTageClear() {
+		return "body/categoryview";
+	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="storeUpdate.whame", method=RequestMethod.POST)

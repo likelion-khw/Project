@@ -6,7 +6,7 @@
 %>
 
 <ul id="mobile-demo" class="side-nav fixed">
-    <li style="background-color:#673ab7; height:200px;">
+    <li style="background-color:#8e24aa; height:200px;">
     <div class="userView">
 			<div class="center-align" style="padding-top:10px;">
 				<c:choose>
@@ -70,7 +70,8 @@
 		            <a class="collapsible-header">Shop<i class="material-icons">arrow_drop_down</i></a>
 		            <div class="collapsible-body">
 		              <ul>
-		                <li><a href="javascript:storeform();">상가정보</a></li>
+		                <li><a href="javascript:storeform();">음식점 정보</a></li>
+		                <li><a href="javascript:storeCategory()">음시점 메뉴</a>
 		              </ul>
 		            </div>
 		          </li>
@@ -115,5 +116,8 @@ Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 	}
 	function storeform(){
 		$(location).attr('href', 'store.whame');
+	}
+	function storeCategory(){
+		$(location).attr('href', 'getCategory.whame');
 	}
 </script>
