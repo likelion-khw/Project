@@ -225,10 +225,18 @@
  	</select>
  	
  	<select id="getCategory" resultType="String" parameterType="int">
- 		select category_name from category where category_no = #{category}
+ 		select category_name from category where category_no = #{store_category}
+  	</select>
+  	
+  	<select id="getTagStore" resultType="String" parameterType="String">
+  		select store_name, operating_time from store where store_category like #{tagClick}
   	</select>
   	
   	<select id="getMenuTypeDistinct" resultType="String" parameterType="int">
   		select distinct(menu_type) from menu where store_code = #{store_code}
+  	</select>
+  	
+  	<select id="getCountRanklist" resultType="storevo">
+  		select * from store where not view_count = 0 order by view_count desc
   	</select>
 </mapper>

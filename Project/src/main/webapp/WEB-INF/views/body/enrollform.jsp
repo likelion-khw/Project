@@ -80,14 +80,15 @@
  				<select class="browser-default" name="categorySelect" id="categorySelect" onchange="changeCategory()" >
  					<option>음식점 카테고리 선택</option>
  					<option>한식</option>
- 					<option>양식</option>
  					<option>중식</option>
  					<option>일식</option>
- 					<option>카페</option>
+ 					<option>양식</option>
+ 					<option>패스트푸드</option>
+ 					<option>디저트</option>
  				</select>
  				<br>				
  				<label>메뉴 카테고리 선택</label>
- 				<select class="browser-default" name="categoryDetail" id="categoryDetail">
+ 				<select class="browser-default" name="store_category" id="store_category">
  					<option>메뉴 선택</option>
  				</select>
  			</td>

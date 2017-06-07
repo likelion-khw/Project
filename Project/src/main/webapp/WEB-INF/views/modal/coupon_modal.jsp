@@ -2,27 +2,12 @@
 	pageEncoding="UTF-8" import="spring.mvc.whame.store.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>        
 <style>
-.modal {
-		width:90%;
-		height: 100%;
-	}
 @media only screen and (min-width : 321px) and (max-width : 500px) {
-	.modal {
-		width:100%;
-	}
-	
-	.modal .type{
-		width:80px;
-	}
-	
-	.modal .price{
-		width:60px;
-	}
 }
 </style>
 <div class="container center-align">
 <c:forEach items="${storeMap }" var="svo">
-		<div id="${svo.value.store_code }modal_coupon" class="modal">
+		<div id="${svo.value.store_code }modal_coupon" class="modal coupon_modalform">
 		<div class="modal-content">
 			<table class="centered highlight">
 			<thead>

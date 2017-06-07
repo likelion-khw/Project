@@ -6,13 +6,22 @@
 .loginform{
 	width: 350px;
 	padding: 20px;
-	margin-top:6%;
+	margin-top:5%;
 }
 .loginbtn{
 	margin-bottom:20px;
 }
 .snslogin{
 	margin-top:20px;
+}
+
+@media only screen and (min-width : 900px) and (max-width : 1920px) {
+	.loginform{
+	width: 500px;
+	height: 550px;
+	padding: 40px;
+	margin-top:8%;
+}
 }
 </style>
 <div class="container loginform z-depth-2">

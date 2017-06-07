@@ -11,6 +11,16 @@
  
 .navbar-fixed{
 }
+
+@media only screen and (min-width : 1300px) and (max-width:1920px) {
+	.navbar-fixed{
+		height: 80px;
+	}
+	.nav-wrapper{
+		padding-top:10px;
+	}
+	
+}
 </style>
 
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>

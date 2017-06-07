@@ -1,31 +1,33 @@
 function changeCategory() {
 
 	var category = $("#categorySelect").val();
-	var categoryDetail;
+	var store_category;
 	
 	if(category == "한식"){
-		categoryDetail = 100;
-	} else if(category == "양식"){
-		categoryDetail = 200;
+		store_category = 100;
 	} else if(category == "중식"){
-		categoryDetail = 300;
+		store_category = 200;
 	} else if(category == "일식"){
-		categoryDetail = 400;
+		store_category = 300;
+	} else if(category == "양식"){
+		store_category = 400;
+	} else if(category == "패스트푸드"){
+		store_category = 500;
+	} else if(category == "디저트"){
+		store_category = 600;
 	}
-	else if(category == "카페"){
-		categoryDetail = 900;
-	}
+	
 
-	$('#categoryDetail').empty();
-	console.log(categoryDetail);
+	$('#store_category').empty();
+	console.log(store_category);
 		$.ajax({
 			type : "POST",
 			url : "categoryDetail.whame",
-			data : {'categoryDetail':categoryDetail},
+			data : {'store_category':store_category},
 			success: function(data){
-				for(var index=1; index<data.length; index++){
+				for(var index=0; index<data.length; index++){
 					var option = $("<option value="+data[index]+">"+data[index]+"</option>");
-					$('#categoryDetail').append(option);
+					$('#store_category').append(option);
 				}
 			}, error: function(){
 				console.log("디테일 음식 전송 에러");

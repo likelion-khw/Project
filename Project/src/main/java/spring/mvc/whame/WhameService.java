@@ -46,8 +46,6 @@ public interface WhameService {
 	public List<HistoryVO> getHistoryListGroup(int store_code, String userid);
 	public List<Integer> gethstore_code(String userid);
 	
-	public List<String> getCategoryDetail(int category);
-	
 	public List<LocationVO> getlocation_list();
 	
 	public List<String> getMenuDistinct(int store_code);
@@ -59,4 +57,9 @@ public interface WhameService {
 	public void recoupon(CouponVO cvo);
 	public void delcoupon(CouponVO cvo);
 	public void viewcount(int store_code);
+	
+	public List<String> getCategoryDetail(int store_category);
+	public List<String> getTagStore(String tagClick);
+	
+	public List<StoreVO> getCountRanklist();
 }
