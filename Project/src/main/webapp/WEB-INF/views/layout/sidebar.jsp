@@ -4,7 +4,10 @@
 <%
 	MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 %>
-
+<style>
+@media only screen and (min-width : 1200px) {
+}
+</style>
 <ul id="mobile-demo" class="side-nav fixed">
     <li style="background-color:#673ab7; height:200px;">
     <div class="userView">
@@ -70,7 +73,8 @@
 		            <a class="collapsible-header">Shop<i class="material-icons">arrow_drop_down</i></a>
 		            <div class="collapsible-body">
 		              <ul>
-		                <li><a href="javascript:storeform();">상가정보</a></li>
+		                <li><a href="javascript:storeform();">음식점 정보</a></li>
+		                <li><a href="javascript:storeCategory()">음식점 메뉴</a></li>
 		              </ul>
 		            </div>
 		          </li>
@@ -78,7 +82,7 @@
 		      </li>
     	</c:when>
     	<c:when test="${memberVO.userid == null}">
-    		 <li class="center-align"><a href="javascript:home();">Home</a></li>
+    		 <li class="center-align"><a href="javascript:main();">Home</a></li>
 		  	 <li><div class="divider"></div></li>
     	</c:when>
     </c:choose>
@@ -115,5 +119,8 @@ Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 	}
 	function storeform(){
 		$(location).attr('href', 'store.whame');
+	}
+	function storeCategory(){
+		$(location).attr('href', 'getCategory.whame');
 	}
 </script>

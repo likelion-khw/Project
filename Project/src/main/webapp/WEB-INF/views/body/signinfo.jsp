@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../modal/fileupload_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 <style>
 .showinfoform{
 	margin-top:20px;
@@ -12,7 +12,6 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 }
 .showinfo_card{
 	width:60%;
-	float: left;
 }
 .showinfo_menu{
 	width:100%;
@@ -20,8 +19,7 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 	margin-right: auto;
 }
 .showinfo_btn{
-	padding-top:15%;
-	height: 350px;
+	margin-top:6%;
 }
 
 .hidemenu{
@@ -36,20 +34,16 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 	}
 	.showinfo_card{
 		width:60%;
-		float: left;
 	}
 	.showinfo_menu{
 		width:100%;
 		margin-left:auto;
 		margin-right: auto;
 	}
-	.showinfo_btn{
-	padding-top:40%;
-	height: 360px;
 }
-}
+
 </style>
-<div class="container center-align z-depth-3 showinfoform">
+<div class="container center-align z-depth-3 showinfoform row">
 	<c:choose>
 		<c:when test="${error != null}">
 			<h3>${error}</h3>
@@ -104,7 +98,7 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 					</tbody>
 				</table>
 			</div>
-			<div class="showinfo_card center-align">
+			<div class="showinfo_card center-align col s12 m6">
 				<div class="card">
 				    <div class="card-image waves-effect waves-block waves-light">
 				      <div id="map" style="width: 100%; height: 250px;"></div>
@@ -133,7 +127,7 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 				    </div>
 				  </div>
 			</div>
-			<div class="showinfo_btn center-align">
+			<div class="showinfo_btn center-align col s12 m6">
 				<input type="button" value="재 검색" class="btn green" id="re_search"><br><br>
 				<c:if test="${memberVO.userid != null}">
 					<input type="button" value="히스토리" class="btn brown" id="history_load"><br><br>

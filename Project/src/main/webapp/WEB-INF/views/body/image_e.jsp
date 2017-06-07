@@ -7,8 +7,8 @@
 	padding-left:20px;
 	padding-right:20px;
 	padding-bottom:50px;
-	width:80%;
-	height: 300%;
+	width:60%;
+	height: 200%;
 }
 
 #loading{
@@ -16,9 +16,10 @@
 	margin-bottom: 30%;
 }
 
-.forms{
-	margin-left : 42%;
+.file-field .btn, .file-field .btn-large{
+	float:none;
 }
+
 
 @media only screen and (min-width : 321px) and (max-width : 600px) {
 	.imageform{
@@ -28,9 +29,6 @@
 		padding-right:10px;
 		padding-bottom:50px;
 		width:90%;
-	}
-	.forms{
-		margin-left : 33%;
 	}
 }
 </style>

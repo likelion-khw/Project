@@ -63,9 +63,11 @@ public class WhameController {
 		ModelAndView mav = new ModelAndView();
 		int count = service.getStoreCount();
 		List<LocationVO> locationlist = service.getlocation_list();
+		List<StoreVO> countrank = service.getCountRanklist();
 		
 		mav.setViewName("main/main");
 		mav.addObject("count", count);
+		mav.addObject("countrank",countrank);
 		mav.addObject("locationlist", locationlist);
 		return mav;
 	}
@@ -114,12 +116,12 @@ public class WhameController {
 		} else {
 			if(membervo != null){
 				if (membervo.getUserid() != null) {
-					service.viewcount(store_code);
 					history.setStore_code(store_code);
 					history.setUserid(membervo.getUserid());
 					service.setHistory(history);
 				}
 			}
+			service.viewcount(store_code);
 			List<MenuVO> menuList = service.getMenu(store_code);
 			LocationVO location = service.getLocation_info(store_code);
 			StoreVO store = service.getStore_info(store_code);
@@ -416,11 +418,18 @@ public class WhameController {
 		return result;
 	}
 	
-	@RequestMapping(value = "category.whame")
-	public ModelAndView getCategory() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("body/categoryview");
-		return mav;
+	@RequestMapping(value = "getCategory.whame", method=RequestMethod.GET)
+	public String getCategoryScreen1() {
+		return "body/categoryview";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value= "getTagStore.whame", method=RequestMethod.POST)
+	public List<String> getTgStore(String tagClick){
+		List<String> result = service.getTagStore(tagClick);
+		System.out.println("연결");
+		System.out.println(result);
+		return result;
 	}
 	
 	@ResponseBody
