@@ -76,7 +76,7 @@ public class LoginController {
 	public String signnew(MemberVO vo, MultipartFile image) throws Exception{
 		System.out.println(image.getSize());
 		if(image.getSize() != 0){
-			String bucketName = "whame01/Userimage";
+			String bucketName = "whame/Userimage";
 			File convFile = new File(image.getOriginalFilename());
 			image.transferTo(convFile);
 			String filepath = s3.fileUpload(bucketName, convFile);
