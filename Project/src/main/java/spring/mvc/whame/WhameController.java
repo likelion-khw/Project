@@ -168,7 +168,7 @@ public class WhameController {
 				int rcode = service.getrcodeNum(s_rcode[0] + " " + s_rcode[1]);
 				storevo.setRcode(rcode);
 
-				String bucketName = "whame01/StoreMain";
+				String bucketName = "whame/StoreMain";
 				MultipartFile imagefile = storevo.getImagefile();
 				File convFile = new File(imagefile.getOriginalFilename());
 				imagefile.transferTo(convFile);
@@ -259,7 +259,7 @@ public class WhameController {
 		difflal = mt.run(lat, 550);
 
 		ModelAndView mav = new ModelAndView();
-		String bucketName = "whame01/StoreTitle";
+		String bucketName = "whame/StoreTitle";
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
