@@ -107,13 +107,13 @@ public class WhameDAO {
 		
 		List<Integer> l_code = session.selectList("whame.searchLoc", whamevo);
 		for(Integer vo : l_code){
-			System.out.println("dao ï¿½ìï¿½ë£„å¯ƒìˆë£„ å¯ƒê³Œë‚µ " + vo);
+			System.out.println("dao Áö¿ªÄÚµå " + vo);
 		}
 			
 		if(whamevo.getText().get(0).getText().equals("")){
 			codeList = session.selectList("whame.searchColor", whamevo);
 			if(codeList.size() != 0){
-				System.out.println("colorå ì™ì˜™å ì™ì˜™");
+				System.out.println("color¿¡ Á¢±Ù");
 				for(Integer i : codeList){
 					System.out.println(i);
 					count.add(i);				
@@ -124,14 +124,14 @@ public class WhameDAO {
 			codeList = session.selectList("whame.searchText", whamevo);
 			System.out.println(codeList);
 			if(codeList.size() != 0){
-				System.out.println("textå ì™ì˜™å ì™ì˜™");
+				System.out.println("text¿¡ Á¢±Ù");
 				for(Integer i : codeList){
 					System.out.println();
 					count.add(i);				
 				}
 			}
 			else{
-				System.out.println("nameå ì™ì˜™å ì™ì˜™");
+				System.out.println("name¿¡ Á¢±Ù");
 				codeList = session.selectList("whame.searchTextName", whamevo);
 				for(Integer i : codeList){
 					count.add(i);				
@@ -224,13 +224,13 @@ public class WhameDAO {
 		 List<CouponVO> clist = session.selectList("whame.getCoupon" , store_code);
 		 for(CouponVO cvo : clist){
 				if(date.before(cvo.getS_time())){
-					cvo.setState("ì˜ˆì •");
+					cvo.setState("¿¹Á¤");
 				}
 				else if(date.after(cvo.getE_time())){
-					cvo.setState("ì¢…ë£Œ");
+					cvo.setState("Á¾·á");
 				}
 				else{
-					cvo.setState("ì§„í–‰ì¤‘");
+					cvo.setState("ÁøÇàÁß");
 				}
 		 }
 		 return clist;
@@ -245,7 +245,13 @@ public class WhameDAO {
 	public void couponInsert(CouponVO cvo){
 		session.insert("whame.setCoupon", cvo);
 	}
-	
+	public List<CouponVO> getNowCoupon(int store_code){
+		 List<CouponVO> result = session.selectList("whame.getNowCoupon", store_code);
+		 for(CouponVO cvo : result){
+			 cvo.setState("ÁøÇàÁß");
+		 }
+		 return result;
+	}
 	public void recoupon(CouponVO cvo){
 		session.update("whame.reCoupon",cvo);
 	}

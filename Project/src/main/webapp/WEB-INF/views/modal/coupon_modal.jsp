@@ -41,6 +41,18 @@
 						<td colspan="2"><input type="button" class="btn blue" value="행사추가" onclick="add_coupon(${svo.value.store_code})" ></td>
 					<tr>
 					<tr>
+						<td colspan="5">
+							<center>
+								<label>행사상태</label>
+									<select class="browser-default coupon_state2" title="coupon_state2" style="width:30%" name="${svo.value.store_code }" onchange="stateChange(${svo.value.store_code },$(this))">
+										<option value="${svo.value.store_code }진행중2" selected="selected">진행중</option>
+					   					<option value="${svo.value.store_code }예정2">예정</option>
+					   					<option value="${svo.value.store_code }종료2">종료</option>
+						 			</select>
+					 		</center>
+						</td>
+					</tr>
+					<tr>
 						<th>진행상태</th>
 						<th>행사내용</th>
 						<th>시작일</th>
@@ -55,7 +67,7 @@
 							<c:set value="${clist.key }" var="key" />
 							<c:set value="${svo.value.store_code}" var="storee" />
  							<c:if test="${key eq storee}">
-								<tr id="${svo.value.store_code }${cvo.coupon_code }">
+								<tr id="${svo.value.store_code }${cvo.coupon_code }"  class="${svo.value.store_code }coupon_list2 hidemenu" name="${svo.value.store_code }${cvo.state }2">
 									<td><input type="text" value="${cvo.state }" id="${svo.value.store_code}${cvo.coupon_code }state"></td>
 									<td><input type="text" value="${cvo.contents }" id="${svo.value.store_code}${cvo.coupon_code }contents">
 										<input type="hidden" value="${cvo.coupon_code }"></td>
@@ -88,6 +100,18 @@
 
 	
 <script type="text/javascript">
+
+function stateChange(store_code,state){
+	selectState2 = state.val();
+	console.log(selectState2); 
+	$('tr[class='+store_code+'coupon_list2]').addClass('hidemenu');
+	if(selectState == store_code+"진행중2"){
+		$('tr[name='+store_code+'진행중2]').removeClass('hidemenu');
+	}else{
+		$('tr[name='+selectState2+']').removeClass('hidemenu');
+	}
+}
+
 function add_coupon(store_code){
 	var contents = $('#'+store_code+"contents").val();
 	var s_time = $('#'+store_code+"s_date").val();
@@ -102,10 +126,6 @@ function add_coupon(store_code){
 	var c2 = "s_time' class='datepicker' value='"+s_time+"'>";
 	var d = "<input type='date' id='"+store_code;
 	var d2 = "e_time' class='datepicker' value='"+e_time+"'>";
-	/* var re1 = "<a href='javascript:re_coupon('"+store_code+"','";
-	var re2 = "')' style='color:red'><i class='material-icons' id='"+store_code;
-	var re3 = "icon' >reply</i></a>";		
-	var del1 = "<a href='javascript:del_coupon("+store_code+","; */
 	var del2 = ")' style='color:black'><i class='material-icons' id='"+store_code;
 	var del3 = "del' >delete</i></a>";	
 	
@@ -187,11 +207,7 @@ $('.datepicker').pickadate({
 	clear: 'Clear',
 	close: 'Close'
 	});
-/* $(function(){
-		$('.datepicker').pickadate({
-		min: new Date(2017,06,02),
-	    selectMonths: true, // Creates a dropdown to control month
-	    selectYears: 15 // Creates a dropdown of 15 years to control year
-	  });
-	}); */
+	
+
+
 </script>

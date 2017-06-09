@@ -6,8 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=de8ef5ba97a6ddfb7081ba88f3c350e9&libraries=services"></script>
 <style>
 .storeform{
 	margin-top:5%;
@@ -120,7 +119,7 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 								<c:set value="${store.store_code}" var="storee"/>
 								<c:if test="${key eq storee}">
 									<c:forEach items="${mlist.value }" var="mvo">
-										<tr class="${store.store_code}menu_list hidemenu" name="${store.store_code}${mvo.menu_type}">
+										<tr class="${store.store_code}menu_list " name="${store.store_code}${mvo.menu_type}">
 											<td>${mvo.menu_type }</td>
 											<td>${mvo.menu_name }</td>
 											<td>${mvo.menu_price }</td>
@@ -135,6 +134,14 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 						</div>
 						
 						<div id="${store.store_code}event_info" class="col s12 ">
+						<label>행사진행상태</label>
+					 	<center>
+							<select class="browser-default" id="coupon_state" style="width:30%" name="${store.store_code}">
+					   			<option value="진행중" selected="selected">진행중</option>
+					   			<option value="예정">예정</option>
+					   			<option value="종료">종료</option>
+				 			</select>
+						</center>
 				      	<table class="centered highlight" >
 							<thead>
 								<tr>
@@ -149,7 +156,7 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 								<c:set value="${store.store_code}" var="storee"/>
 								<c:if test="${key eq storee}">
 									<c:forEach items="${clist.value }" var="cvo">
-										<tr>
+										<tr class="${store.store_code}coupon_list hidemenu hidemenu" name="${store.store_code}${cvo.state}">
 											<td>${cvo.state }</td>
 											<td>${cvo.contents }</td>
 											<td>${cvo.s_time }  ~  ${cvo.e_time }</td>
@@ -191,6 +198,7 @@ function store_modal(store_code){
 function coupon_modal(store_code){
 	console.log(store_code);
 	$('#'+store_code+"modal_coupon").modal('open');
+	$('tr[name='+store_code+'진행중2]').removeClass('hidemenu');
 }
 $(document).ready(function() {
 
@@ -279,6 +287,31 @@ $(document).ready(function() {
 			$('tr[name='+store_code+'커피\\&라떼]').removeClass('hidemenu');
 		}else{
 			$('tr[name='+selecttype+']').removeClass('hidemenu');
+		}
+	});
+	
+	$('select#menu_type').each(function(){
+		var store_code = $(this).attr('name');
+		selectState = $(this).val();
+		$('tr[class='+store_code+'coupon_list]').addClass('hidemenu');
+		$('tr[name='+store_code+'진행중]').removeClass('hidemenu');
+		var check = /[&]/gi;
+		if(selectState == "진행중"){
+			$('tr[name='+store_code+'진행중]').removeClass('hidemenu');
+		}else{
+			$('tr[name='+store_code+selectState+']').removeClass('hidemenu');
+		}
+	});
+	
+	$('select#coupon_state').on('change',function(){
+		var store_code = $(this).attr('name');
+		selectState = $(this).val();
+		$('tr[class='+store_code+'coupon_list]').addClass('hidemenu');
+		var check = /[&]/gi;
+		if(selectState == "진행중"){
+			$('tr[name='+store_code+'진행중]').removeClass('hidemenu');
+		}else{
+			$('tr[name='+store_code+selectState+']').removeClass('hidemenu');
 		}
 	});
 

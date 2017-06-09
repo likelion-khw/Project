@@ -23,7 +23,8 @@ function changeCategory() {
 			url : "categoryDetail.whame",
 			data : {'categoryDetail':categoryDetail},
 			success: function(data){
-				for(var index=1; index<data.length; index++){
+				for(var index=0; index<data.length; index++){
+					console.log("js수정완료");
 					var option = $("<option value="+data[index]+">"+data[index]+"</option>");
 					$('#categoryDetail').append(option);
 				}

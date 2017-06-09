@@ -13,6 +13,7 @@ public class StoreVO {
 		private String userid;
 		private String operating_time;
 		private String store_name;
+		private String store_category;
 		private int view_count;
 		
 		private int rcode;//r
@@ -65,6 +66,12 @@ public class StoreVO {
 			this.view_count = view_count;
 		}
 		
+		public String getStore_category() {
+			return store_category;
+		}
+		public void setStore_category(String store_category) {
+			this.store_category = store_category;
+		}
 		
 		public MultipartFile getImagefile() {
 			return imagefile;

@@ -54,8 +54,9 @@ public interface WhameService {
 	
 	public List<CouponVO> getCoupon(int store_code);
 	public void storeUpdate(StoreVO svo, LocationVO lvo);
-	public void couponInsert(CouponVO cvo);
 	
+	public void couponInsert(CouponVO cvo);
+	public List<CouponVO> getNowCoupon(int store_code);
 	public void recoupon(CouponVO cvo);
 	public void delcoupon(CouponVO cvo);
 	public void viewcount(int store_code);

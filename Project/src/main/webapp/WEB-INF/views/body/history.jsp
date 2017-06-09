@@ -42,7 +42,7 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 	    <ul class="slides">
 			<c:forEach items="${vo.value }" var="his">
 				<li>
-			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
+			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
 			        <div class="caption center-align">
 			          <h3>${his.store_code}</h3>
 			          <h5 class="light grey-text text-lighten-3">${his.h_date}</h5>

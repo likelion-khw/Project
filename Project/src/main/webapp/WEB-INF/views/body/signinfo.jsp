@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../modal/fileupload_modal.jsp" %>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+<%@include file="../modal/show_coupon_modal.jsp" %>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=de8ef5ba97a6ddfb7081ba88f3c350e9&libraries=services"></script>
 <style>
 .showinfoform{
 	margin-top:20px;
@@ -55,23 +55,6 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 			<h3>${error}</h3>
 		</c:when>
 		<c:otherwise>
-			<%-- <h5>사용자의 검색 정보</h5>
-			<table class="centered bordered">
-				<tbody>
-					<tr>
-						<td>ocr</td>
-						<td><c:forEach items="${result }" var="vo">
-					${vo.text }<br>
-							</c:forEach></td>
-					</tr>
-					<tr>
-						<td>color:</td>
-						<td>R: ${color.red }<br> G: ${color.green }<br> B:
-							${color.blue }<br>
-						</td>
-					</tr>
-				</tbody>
-			</table> --%>
 			<h4>${store.store_name} 메뉴</h4>
 		 	<label>메뉴종류</label>
 		 	<center>
@@ -134,6 +117,7 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 				  </div>
 			</div>
 			<div class="showinfo_btn center-align">
+				<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br><br>
 				<input type="button" value="재 검색" class="btn green" id="re_search"><br><br>
 				<c:if test="${memberVO.userid != null}">
 					<input type="button" value="히스토리" class="btn brown" id="history_load"><br><br>
@@ -149,6 +133,13 @@ f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	var coupon = '${couponlist}';
+	console.log("쿠폰존재여부"+coupon.length);
+	if(coupon.length-2 > 0){
+		$('#coupon1').openModal();
+		$('input[value="이벤트보기"]').removeClass('hidemenu');
+		
+	}
 		var user = '${memberVO.userid}';
 		var error = '${error}';
 		if(user != '')
@@ -197,6 +188,11 @@ $(document).ready(function() {
 					}
 				});
 
+		
+		$("#show_coupon").on('click',function(){
+			$('#coupon1').modal('open');
+		});
+		
 		$("#re_search").on('click',function(){
 			$('#modal1').modal('open');
 		});

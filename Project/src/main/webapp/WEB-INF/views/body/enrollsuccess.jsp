@@ -5,7 +5,7 @@
 	MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 	int num = 0;
 %>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=de8ef5ba97a6ddfb7081ba88f3c350e9&libraries=services"></script>
 <style>
 .menu_view{
 	margin-top:20px;

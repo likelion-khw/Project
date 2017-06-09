@@ -220,6 +220,7 @@ $(document).ready(function() {
 	$('select#menu_type2').each(function(){
 		var store_code = $(this).attr('name');
 		selecttype2 = $(this).val();
+		console.log("menu,each"+store_code);
 		$('tr[class='+store_code+'menu_list2]').addClass('hidemenu');
 		var check = /[&]/gi;
 		if(check.test(selecttype2) == true){
@@ -231,6 +232,7 @@ $(document).ready(function() {
 	
 	$('select#menu_type2').on('change',function(){
 		var store_code = $(this).attr('name');
+		console.log("menu,chage"+store_code);
 		selecttype2 = $(this).val();
 		$('tr[class='+store_code+'menu_list2]').addClass('hidemenu');
 		var check = /[&]/gi;

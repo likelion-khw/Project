@@ -169,6 +169,10 @@ public class WhameServiceImpl implements WhameService{
 		dao.couponInsert(cvo);
 	}
 	
+	public List<CouponVO> getNowCoupon(int store_code){
+		return dao.getNowCoupon(store_code);
+	}
+	
 	public void recoupon(CouponVO cvo){
 		dao.recoupon(cvo);
 	}
