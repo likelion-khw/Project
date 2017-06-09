@@ -3,7 +3,7 @@
 
 <mapper namespace="whame">
 	<insert id='enroll' parameterType="storevo">
- 		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0)
+ 		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0, #{store_category})
  	</insert>
  	
  	<insert id='setColor' parameterType="colorvo">
@@ -116,10 +116,6 @@
 	
 	
 	<!-- get -->
-	<select id="getCoupon" resultType="couponvo" parameterType="int">
- 		select * from coupon where store_code = #{store_code}
- 	</select>
- 	
  	
  	<update id="storeUpdate_store" parameterType="storevo">
  		update store 
@@ -178,6 +174,15 @@
  		select count(*) from store
  	</select>
  	
+ 	<select id="getCoupon" resultType="couponvo" parameterType="int">
+ 		select * from coupon where store_code = #{store_code}
+ 	</select>
+ 	
+ 	<!-- 진행중인 쿠폰출력  -->
+ 	<select id="getNowCoupon" resultType="couponvo" parameterType="int">
+ 		select * from coupon where store_code = #{store_code} and sysdate between s_time and e_time
+  	</select>
+ 	
  	<update id="reCoupon" parameterType="couponvo">
  		update coupon 
  		set contents = #{contents}, s_time = #{s_time} ,e_time = #{e_time} 
@@ -228,8 +233,8 @@
  		select category_name from category where category_no = #{store_category}
   	</select>
   	
-  	<select id="getTagStore" resultType="String" parameterType="String">
-  		select store_name, operating_time from store where store_category like #{tagClick}
+  	<select id="getTagStore" resultType="storevo" parameterType="String">
+  		select s.store_code, store_name, address, view_count from store s, store_location sl where s.store_code = sl.store_code and store_category like #{tagClick}
   	</select>
   	
   	<select id="getMenuTypeDistinct" resultType="String" parameterType="int">

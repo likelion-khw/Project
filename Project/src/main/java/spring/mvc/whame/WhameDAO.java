@@ -232,6 +232,13 @@ public class WhameDAO {
 		 return clist;
 	}
 	
+	public List<CouponVO> getNowCoupon(int store_code){
+		 List<CouponVO> result = session.selectList("whame.getNowCoupon", store_code);
+		 for(CouponVO cvo : result){
+			 cvo.setState("진행중");
+		 }
+		 return result;
+	}	
 	
 	public void storeUpdate(StoreVO svo, LocationVO lvo) {
 		session.update("whame.storeUpdate_store", svo);
@@ -258,8 +265,7 @@ public class WhameDAO {
 		return session.selectList("whame.getCategory", store_category);
 	}
 	
-	public List<String> getTagStore(String tagClick){
-		System.out.println(tagClick);
+	public List<StoreVO> getTagStore(String tagClick){
 		return session.selectList("whame.getTagStore", tagClick);
 	}
 	

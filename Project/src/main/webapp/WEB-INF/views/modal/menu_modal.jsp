@@ -108,7 +108,8 @@
 			</table>
 		</div>
 		<div class="modal-footer">
-			<a href="javascript:close();" class="modal-action modal-close btn green" id="close" style="float:none;">확인</a>
+			<a href="javascript:close();" class="modal-action modal-close btn red" id="close" style="float:none;">변경</a>
+			<a href="javascript:cl" class="modal-action modal-close btn green" style="float:none;">취소</a>
 		</div>
 	</div>
 </div>

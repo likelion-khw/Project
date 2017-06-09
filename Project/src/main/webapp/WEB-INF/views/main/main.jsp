@@ -101,7 +101,6 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 	var cl = new Array();
 	var positions = new Array();
 	$(document).ready(function() {
-		
 		var counter = function(){
  			 $(".counter").rollingCounter({
  		        animate : true,
