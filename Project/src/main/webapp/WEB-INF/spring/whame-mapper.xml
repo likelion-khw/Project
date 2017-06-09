@@ -224,12 +224,13 @@
  		select * from Store_location
  	</select>
  	
-  	 <select id="getCategory" resultType="String" parameterType="int">
+  	<select id="getCategory" resultType="String" parameterType="int">
  		select category_name from category where category_no = #{store_category}
   	</select>
-  	
-  	<select id="getTagStore" resultType="String" parameterType="String">
-  		select store_name, operating_time from store where store_category like #{tagClick}
+	  	
+  	<select id="getTagStore" resultType="storevo" parameterType="String">
+  		select s.store_code, store_name, address, view_count from store s, store_location sl where s.store_code = sl.store_code and store_category like #{tagClick}
+
   	</select>
   	
   	<select id="getMenuTypeDistinct" resultType="String" parameterType="int">

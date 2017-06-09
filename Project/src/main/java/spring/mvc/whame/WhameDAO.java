@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -258,9 +259,19 @@ public class WhameDAO {
 		return session.selectList("whame.getCategory", store_category);
 	}
 	
-	public List<String> getTagStore(String tagClick){
-		System.out.println(tagClick);
-		return session.selectList("whame.getTagStore", tagClick);
+	public List<StoreVO> getTagStore(String tagClick){
+		
+		List<StoreVO> result = session.selectList("whame.getTagStore", tagClick);
+
+		System.out.println(result.size());
+		
+		for(StoreVO stvo: result){
+			System.out.println(stvo.getStore_name());
+			System.out.println(stvo.getAddress());
+			System.out.println(stvo.getView_count());
+		}
+		
+		return result;
 	}
 	
 }

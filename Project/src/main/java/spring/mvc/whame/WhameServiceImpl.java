@@ -154,7 +154,7 @@ public class WhameServiceImpl implements WhameService{
 	}
 	
 	@Override
-	public List<String> getTagStore(String tagClick) {
+	public List<StoreVO> getTagStore(String tagClick) {
 		return dao.getTagStore(tagClick);
 	}
 	

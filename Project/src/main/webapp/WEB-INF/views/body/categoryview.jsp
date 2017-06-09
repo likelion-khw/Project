@@ -6,72 +6,67 @@
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <style>
 .search-class {
-	height: 40px;
-	width: 400px;
-	border: 0px;
+	margin: 50px auto;
 	text-align: center;
+	width: 400px;
+	height: 40px;
+	border: 0px;
 	} 
+
 .search-input {
-	font-size: 16px;
+	margin: 50px auto;
 	width: 325px;
+	font-size: 16px;
 	padding: 10px;
 	border: 0px;
 	outline: none;
 	float: left;
 }	
+
 .search-button {
+	margin: 50px auto;
 	width: 50px;
 	height: 100%;
-	border:0px;
+	color: #ffffff;
 	background: #1b5ac2;
+	border:0px;
 	outline: none;
 	float: right;
-	color: #ffffff;
 }
-
+ 
 .card-image{
-	width: 300px;
-	heigth: 300px;
-}
-
-img{
-	width: 100%;
-	height: 100%;
-}
-
-.storeList{
-	position: relative;
-	bottom: -100px;
+	float: left;
+	text-align: center;
+	width: 100px;
+	height: 100px;
+	max-width: 100px;
+	max-heigth: 100px;
 }
 </style>
 
 	<div class="search-class">
 		<p>
-			<input type="text" id="search-input" placeholder="업소명을 입력해주세요">
+				<input type="text" id="search-input" placeholder="메뉴를 입력해주세요">
+				<button id="search-button" >검색</button>
 			<span id="tagMenu">
-				<a href="javascript:ta" id="tagChicken" class="menu_tag">치킨</a>
-				 |  <a href="javascript:ta" id="tagPizza" class="menu_tag">피자</a>
-				 |  <a href="javascript:ta" id="tagPoke" class="menu_tag">삼겹살</a>
-				 |  <a href="javascript:ta" id="tagChinese" class="menu_tag">중국집</a>
-				 |  <a href="javascript:ta" id="tagSnackBar" class="menu_tag">분식</a>
-				 |  <a href="javascript:ta" id="tagBurger" class="menu_tag">햄버거</a>
-				 |  <a href="javascript:ta" id="tagCafe" class="menu_tag">카페</a>
+				<a href="javascript:ta" class="menu_tag" id="tagChicken">치킨</a>
+				 |  <a href="javascript:ta" class="menu_tag" id="tagPizza">피자</a>
+				 |  <a href="javascript:ta" class="menu_tag" id="tagPoke">삼겹살</a>
+				 |  <a href="javascript:ta" class="menu_tag" id="tagChinese">중국집</a>
+				 |  <a href="javascript:ta" class="menu_tag" id="tagSnackBar">분식</a>
+				 |  <a href="javascript:ta" class="menu_tag" id="tagBurger">햄버거</a>
+				 |  <a href="javascript:ta" class="menu_tag" id="tagCafe">카페</a>
 			</span>
-			<button id="search-button">검색</button>
 		</p>
 	</div>
-	
- 
-      <div class="storeList">
-      
-      </div>
 
-	
+		<div class="row storeList"></div>
+		
+
 <script type="text/javascript">
 
-// 태그 메뉴정보 출력
 $(document).ready(function(){
-	
+
 	$('a[class=menu_tag]').on('click',function(){
 		
 		$('.storeList').empty();
@@ -111,36 +106,41 @@ $(document).ready(function(){
 			type: "POST",
 			data: {"tagClick" : tagClick},
 			success: function(data){
-				
-				for(var index=0; index<data.length; index++){
 
-				var storeList=$(
-						  "<div class="+"row"+">"
-					        +"<div class="+"col s12 m7"+">"
-					          +"<div class="+"card"+">"
-					            +"<div class="+"card-image"+">"
-					              +"<img src="+"images/sample-1.jpg"+">"
-					              +"<span class="+"card-title"+">"+data[index]+"</span>"
+				for(var index=0; index<data.length; index++){
+					var storeList = $(
+					        "<div class='col s12 m4 l4 xl4' id='"+data[index].store_name+"'>"
+					          +"<div class='card'>"
+					            +"<div class='card-image'>"
+					              +"<img src='resources/img/4.jpg'>"
 					            +"</div>"
-					            +"<div class="+"card-content"+">"
-					              +"<p value="+"tag"+">I am a very simple card. I am good at containing small bits of information."
-					              +"I am convenient because I require little markup to use effectively.</p>"
+					            +"<div class='card-content'>"
+					            	+"<p class='viewCount'> 조회수 - "+ data[index].view_count+"</p>"
+				            		+"<div class='addr'>"+data[index].address+"</div>"
 					            +"</div>"
-					            +"<div class="+"card-action"+">"
-					              +"<a href="+"#+"+">"+data[index]+"</a>"
+					            +"<div class='card-action'>"
+					              +"<a href='javascript:tag()' class='tagStore' id='"+data[index].store_code+"'>"+data[index].store_name+"</a>"
 					            +"</div>"
 					          +"</div>"
 					        +"</div>"
-					      +"</div>" 
 					)
-					$(".storeList").append(storeList);	
-				}
-
+					$(".storeList").append(storeList);
+			}
 			}, error: function(){
 				alert("태그 사용불가");
 			}
-		}); 
+		});
 	});
+	
+	
+	
+	$(document).on('click','a[class=tagStore]',function(){
+		
+		var store_code = $(this).attr('id');
+		console.log(store_code);
+		$(location).attr("href", "forkakao.whame?store_code="+store_code);
+	
+	})
 })
 </script>
 

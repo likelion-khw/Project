@@ -1,4 +1,3 @@
-
 $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); 
 $('#e_submit').on('click',function(){
 		var a = $('#business_code');
@@ -47,20 +46,21 @@ function changeCategory() {
 		store_category = 600;
 	}
 	
-
 	$('#store_category').empty();
+
 	console.log(store_category);
 		$.ajax({
 			type : "POST",
 			url : "categoryDetail.whame",
 			data : {'store_category':store_category},
 			success: function(data){
-				for(var index=0; index<data.length; index++){
+				console.log("--------"+data);
+				/*for(var index=0; index<data.length; index++){
 					var option = $("<option value="+data[index]+">"+data[index]+"</option>");
 					$('#store_category').append(option);
-				}
-			}, error: function(){
-				console.log("디테일 음식 전송 에러");
+				}*/
+			},  error : function(request,status,error){alert("code:"+request.status+"\n\n"+"message:"+request.responseText+"\n\n"+"error:"+error);
+			
 			}
 		});
 }

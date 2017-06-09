@@ -71,7 +71,6 @@ public class WhameController {
 		return mav;
 	}
 
-	// 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙 OCR 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	@RequestMapping(value = "forkakao.whame")
 	public ModelAndView getshow(int store_code) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -89,6 +88,24 @@ public class WhameController {
 		mav.addObject("store", store);
 		return mav;
 	}
+	@RequestMapping(value = "forkakao.whame", method=RequestMethod.POST)
+	public ModelAndView getshow1(int store_code) throws Exception {
+		ModelAndView mav = new ModelAndView();
+
+		mav.setViewName("body/forkakao");
+
+		List<MenuVO> menuList = service.getMenu(store_code);
+		LocationVO location = service.getLocation_info(store_code);
+		StoreVO store = service.getStore_info(store_code);
+		List<String> menutype = service.getMenuDistinct(store_code);
+		
+		mav.addObject("menutype",menutype);
+		mav.addObject("menuList", menuList);
+		mav.addObject("location", location);
+		mav.addObject("store", store);
+		return mav;
+	}
+	
 	
 	@RequestMapping(value = "showinfo.whame")
 	public ModelAndView getimage(HttpSession session) throws Exception {
@@ -412,12 +429,14 @@ public class WhameController {
 	
 	@ResponseBody
 	@RequestMapping(value="categoryDetail.whame", method=RequestMethod.POST)
-	public List<String> getCategoryDetail(int categoryDetail){
-		List<String> result = service.getCategoryDetail(categoryDetail);
+	public List<String> getCategoryDetail(int store_category){
+		System.out.println("카테고리번호:"+store_category);
+		List<String> result = service.getCategoryDetail(store_category);
+		System.out.println(result+"result값");
 		return result;
 	}
 	
-
+	
 	@RequestMapping(value = "getCategory.whame", method=RequestMethod.GET)
 	public String getCategoryScreen1() {
 		return "body/categoryview";
@@ -425,10 +444,8 @@ public class WhameController {
 	
 	@ResponseBody
 	@RequestMapping(value= "getTagStore.whame", method=RequestMethod.POST)
-	public List<String> getTgStore(@RequestParam("tagClick") String tagClick){
-		List<String> result = service.getTagStore(tagClick);
-		System.out.println("연결");
-		System.out.println(result);
+	public List<StoreVO> getTgStore(@RequestParam("tagClick") String tagClick){
+		List<StoreVO> result = service.getTagStore(tagClick);
 		return result;
 	}
 	
@@ -436,7 +453,6 @@ public class WhameController {
 	public String getTageClear() {
 		return "body/categoryview";
 	}
-	
 	
 	@ResponseBody
 	@RequestMapping(value="storeUpdate.whame", method=RequestMethod.POST)
@@ -484,4 +500,5 @@ public class WhameController {
 	public void del_coupon(CouponVO cvo){
 		service.delcoupon(cvo);
 	}
+	
 }

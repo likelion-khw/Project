@@ -60,5 +60,5 @@ public interface WhameService {
 	public void viewcount(int store_code);
 	
 	public List<String> getCategoryDetail(int store_category);
-	public List<String> getTagStore(String tagClick);
+	public List<StoreVO> getTagStore(String tagClick);
 }
