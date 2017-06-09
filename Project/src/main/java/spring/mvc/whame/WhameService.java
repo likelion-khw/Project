@@ -51,6 +51,8 @@ public interface WhameService {
 	public List<String> getMenuDistinct(int store_code);
 	
 	public List<CouponVO> getCoupon(int store_code);
+	public List<CouponVO> getNowCoupon(int store_code);
+	
 	public void storeUpdate(StoreVO svo, LocationVO lvo);
 	public void couponInsert(CouponVO cvo);
 	
@@ -59,7 +61,9 @@ public interface WhameService {
 	public void viewcount(int store_code);
 	
 	public List<String> getCategoryDetail(int store_category);
-	public List<String> getTagStore(String tagClick);
+	public List<StoreVO> getTagStore(String tagClick);
 	
 	public List<StoreVO> getCountRanklist();
+	
+	public void removeHistory(HistoryVO historyvo);
 }

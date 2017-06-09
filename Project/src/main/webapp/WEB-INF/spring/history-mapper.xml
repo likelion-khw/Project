@@ -26,4 +26,8 @@
 		where store_code in (select store_code from history where userid = #{uerid})
 	</select>
 	
+	<select id="removehistory" parameterType="historyvo">
+		delete history where userid = #{userid} and store_code = #{store_code}
+	</select>
+	
 </mapper>

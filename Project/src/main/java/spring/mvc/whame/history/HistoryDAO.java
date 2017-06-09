@@ -39,4 +39,8 @@ public class HistoryDAO {
 	public List<Integer> gethstore_code(String userid) {
 		return session.selectList("history.gethstore_code", userid);
 	}
+	
+	public void removeHistory(HistoryVO historyvo){
+		session.delete("history.removehistory", historyvo);
+	}
 }

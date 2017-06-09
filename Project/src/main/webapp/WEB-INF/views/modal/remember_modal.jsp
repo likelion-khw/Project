@@ -54,7 +54,7 @@ $(document).ready(function() {
 			success : function(result) {
 				if(result == 1)
 					{
-						alert('중복된 닉네임입니다.');
+						$('#rem_nick_over').modal('open');
 						$('#re_nickname').val("${memberVO.nickname}");
 					}
 			}
@@ -80,7 +80,7 @@ $(document).ready(function() {
 				})
 			}else
 				{
-					alert("닉네임을 변경하세요.");
+					$('#rem_nick_no').modal('open');
 					$('#re_nickname').val("${memberVO.nickname}");
 				}
 		});

@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import ="spring.mvc.whame.history.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../modal/history_modal.jsp" %>  
+<%@include file="../modal/infomodal.jsp" %>
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
+6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
 	.history_form{
 		margin-top:20px;
@@ -42,7 +43,7 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 	    <ul class="slides">
 			<c:forEach items="${vo.value }" var="his">
 				<li>
-			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
+			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
 			        <div class="caption center-align">
 			          <h3>${his.store_code}</h3>
 			          <h5 class="light grey-text text-lighten-3">${his.h_date}</h5>
@@ -51,12 +52,13 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 			</c:forEach>
 		</ul>
 		<div class="center-align" style="margin-top:4px;">
-			<a href="javascript:"><i class="material-icons small" style="margin-right:70%;" id="left">keyboard_arrow_left</i></a>
+			<a href="javascript:"><i class="material-icons small" style="margin-right:35%;" id="left">keyboard_arrow_left</i></a>
+			<a href="javascript:"><i class="material-icons small" style="margin-right:35%;" id="del_his"><span style="color:red">cancel</span></i></a>
 			<a href="javascript:"><i class="material-icons small" id="right">keyboard_arrow_right</i></a>
 		</div>
 	  	</div>
 		</c:forEach> 
-	</div>  
+	</div>
 </div>
       
 <script type="text/javascript">
@@ -115,6 +117,25 @@ var positions=[];
 	});
 	$("#enroll").on('click',function(){
 		$(location).attr('href','enroll.whame');
+	});
+
+	$('#del_his').on('click',function(){
+		var store_code = $(this).parent().parent().parent().children().children().children().attr('id');
+		var userid = '${memberVO.userid}';
+		$('#history_del').modal('open');
+		$('#info_his_del').on('click',function(){
+			$.ajax({
+				url: 'removeHistory.whame',
+				type: 'post',
+				data : { 'store_code' : store_code ,
+						 'userid' : userid
+					},
+				success : function(result){
+					$(location).attr('href','history.whame');
+				}
+			
+			})
+		});
 	});
 	
 	$('.imagemodal').on('click',function(){ 

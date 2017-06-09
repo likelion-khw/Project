@@ -7,7 +7,7 @@
 </style>
 <div class="container center-align">
  	<c:forEach items="${storeMap }" var="svo">
-	 	<div class='locCode' style="visibility: hidden;">${svo.value.store_code } </div> 
+	 	<div class='locCode' style="display: none;">${svo.value.store_code } </div> 
 		 	<div id="${svo.value.store_code }modal_store" class="modal">
 		 	 <div class="modal-content" id='${svo.value.store_code }'> 
 				<h4>${svo.value.store_name }</h4>
@@ -47,7 +47,7 @@
 				
 				<div class="modal-footer" >
 					<input type="button" value="변경" id='storeupdate' class="modal-action modal-close btn blue floting" onclick='submit(${svo.value.store_code })' style="float:none;">
-					<input type="button"  value="상가삭제" class="modal-action modal-close btn red floting" style="float:none;">
+					<input type="button"  value="상가삭제" class="modal-action btn red floting" style="float:none;">
 					<a href="#!" class="modal-action modal-close btn green floting" style="float:none;">닫기</a>
 	 			</div>
 			</div> 
@@ -117,24 +117,24 @@ function submit(store_code){
  		}
  		
 		$('input[value=상가삭제]').on('click',function(){
-			var is = confirm('상가를 정말 삭제하시겠습니까? \n ** 주의 ** \n 한번 삭제시 돌릴 수 없음');
+			$('#store_del').modal('open');
 			var store_code = $(this).parent().parent().attr('id');
-			if(is == true)
-				{			
-					$.ajax({
-						url : 'deleteStore.whame',
-						type : 'post',
-						data : {
-							'store_code' : store_code
-						},
-						success : function(result){
-							if(result == 1)
-								{
-									$(location).attr('href','store.whame');
-								}
-						}
-					});
-				}
+
+			$('#info_store_del').on('click',function(){
+				$.ajax({
+					url : 'deleteStore.whame',
+					type : 'post',
+					data : {
+						'store_code' : store_code
+					},
+					success : function(result){
+						if(result == 1)
+							{
+								$(location).attr('href','store.whame');
+							}
+					}
+				});
+			})
 		});
  		
  	 });

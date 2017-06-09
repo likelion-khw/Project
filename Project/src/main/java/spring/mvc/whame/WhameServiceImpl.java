@@ -166,6 +166,9 @@ public class WhameServiceImpl implements WhameService{
 		dao.couponInsert(cvo);
 	}
 	
+	public List<CouponVO> getNowCoupon(int store_code){
+		return dao.getNowCoupon(store_code);
+	}
 	public void recoupon(CouponVO cvo){
 		dao.recoupon(cvo);
 	}
@@ -183,12 +186,16 @@ public class WhameServiceImpl implements WhameService{
 		return dao.getCategoryDetail(store_category);
 	}
 	
-	public List<String> getTagStore(String tagClick){
+	public List<StoreVO> getTagStore(String tagClick){
 		System.out.println(tagClick);
 		return dao.getTagStore(tagClick);
 	}
 	
 	public List<StoreVO> getCountRanklist(){
 		return dao.getCountRanklist();
+	}
+	
+	public void removeHistory(HistoryVO historyvo){
+		hdao.removeHistory(historyvo);
 	}
 }

@@ -2,11 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../modal/fileupload_modal.jsp" %>
+<%@include file="../modal/show_coupon_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
+6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
 .showinfoform{
-	margin-top:20px;
+	margin-top:5%;
 	width:80%;
 	padding:20px;
 }
@@ -43,6 +44,7 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 }
 
 </style>
+
 <div class="container center-align z-depth-3 showinfoform row">
 	<c:choose>
 		<c:when test="${error != null}">
@@ -97,6 +99,11 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 						</c:forEach>
 					</tbody>
 				</table>
+				
+				<div class="pagzing">
+					 <ul class="pagination" id="pagzing">
+					 </ul>
+				</div>
 			</div>
 			<div class="showinfo_card center-align col s12 m6">
 				<div class="card">
@@ -128,6 +135,7 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 				  </div>
 			</div>
 			<div class="showinfo_btn center-align col s12 m6">
+				<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br><br>
 				<input type="button" value="재 검색" class="btn green" id="re_search"><br><br>
 				<c:if test="${memberVO.userid != null}">
 					<input type="button" value="히스토리" class="btn brown" id="history_load"><br><br>
@@ -143,6 +151,18 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
+		var coupon= false;
+		<c:forEach items="${couponlist}" var="coupon">
+			if("${coupon.state}" == '진행중' || "${coupon.state}" == '예정'){
+				coupon=true;
+			}
+		</c:forEach>
+		if( coupon == true)
+			{
+				$("#coupon1").openModal();
+				$('input[value="이벤트보기"]').removeClass('hidemenu');
+			}
+		
 		var user = '${memberVO.userid}';
 		var error = '${error}';
 		if(user != '')
@@ -191,6 +211,10 @@ $(document).ready(function() {
 					}
 				});
 
+		$("#show_coupon").on('click',function(){
+			$('#coupon1').modal('open');
+		});
+
 		$("#re_search").on('click',function(){
 			$('#modal1').modal('open');
 		});
@@ -204,17 +228,142 @@ $(document).ready(function() {
 		});
 		
 		$('#menu_type:first-child').attr('selected');
+		
 		var selecttype = $('#menu_type').val();
-		$('tr#'+selecttype).removeClass('hidemenu');
+		var check = /[&]/gi;
+		if(check.test(selecttype) == true){
+			var num = 0;
+			var pagenum = parseInt($('tr#커피\\&라떼').length / 5);
+			$('tr#커피\\&라떼').each(function(){
+				if(num <= 4)
+					{
+						$(this).removeClass('hidemenu');
+						num +=1;
+					}
+				else{
+					return false;
+				}
+			});
+			if(($('tr#커피\\&라떼').length % 5) != 0 )
+				{
+					pagenum += 1;
+				}
+			for(var i = 1; i <= pagenum; i++){
+				$('ul#pagzing').append("<li name=\"pageing\" class=\"check\"><a href=\"javascript:ta\">"+i+"</a></li>");
+			}
+		}else{
+			var num = 0;
+			var pagenum = parseInt($('tr#'+selecttype).length / 5);
+			$('tr#'+selecttype).each(function(){
+				if(num <= 4)
+					{
+						$(this).removeClass('hidemenu');
+						num +=1;
+					}
+				else{
+					return false;
+				}
+			});
+			if(($('tr#'+selecttype).length % 5) != 0 )
+				{
+					pagenum += 1;
+				}
+			for(var i = 1; i <= pagenum; i++){
+				$('ul#pagzing').append("<li name=\"pageing\"><a href=\"javascript:ta\">"+i+"</a></li>");
+			}
+		}
+
+		$(document).on('click','li[name=\'pageing\']',function(){
+			var check = $(this).attr('class');
+			$('tr[class=menu_list]').addClass('hidemenu');
+
+			if( check != 'check'){
+				var pagelast = ($(this).text() * 5);
+				var pagefirst = pagelast - 5;
+				var firstnum = 0;
+
+				$('tr#'+selecttype).each(function(){
+					if( firstnum < pagefirst)
+						{
+							firstnum += 1;
+						}
+					else{
+							if(pagefirst < pagelast)
+								{
+									$(this).removeClass('hidemenu');
+									pagefirst +=1;
+									firstnum +=1;
+								}
+						}
+				});
+			}else{
+				var pagelast = ($(this).text() * 5);
+				var pagefirst = pagelast - 5;
+				var firstnum = 0;
+
+				$('tr#커피\\&라떼').each(function(){
+					if( firstnum < pagefirst)
+						{
+							firstnum += 1;
+						}
+					else{
+							if(pagefirst < pagelast)
+								{
+									$(this).removeClass('hidemenu');
+									pagefirst +=1;
+									firstnum +=1;
+								}
+						}
+				});
+			}
+			
+		});
 
 		$('#menu_type').on('change',function(){
+			$('ul#pagzing').html('');
 			selecttype = $(this).val();
 			$('tr[class=menu_list]').addClass('hidemenu');
 			var check = /[&]/gi;
 			if(check.test(selecttype) == true){
-				$('tr#커피\\&라떼').removeClass('hidemenu');
+				var num = 0;
+				var pagenum = parseInt($('tr#커피\\&라떼').length / 5);
+				$('tr#커피\\&라떼').each(function(){
+					if(num <= 4)
+						{
+							$(this).removeClass('hidemenu');
+							num +=1;
+						}
+					else{
+						return false;
+					}
+				});
+				if(($('tr#커피\\&라떼').length % 5) != 0 )
+					{
+						pagenum += 1;
+					}
+				for(var i = 1; i <= pagenum; i++){
+					$('ul#pagzing').append("<li name=\"pageing\" class=\"check\"><a href=\"javascript:ta\">"+i+"</a></li>");
+				}
 			}else{
-			$('tr#'+selecttype).removeClass('hidemenu');
+				var num = 0;
+				var pagenum = parseInt($('tr#'+selecttype).length / 5);
+				$('tr#'+selecttype).each(function(){
+					if(num <= 4)
+						{
+							$(this).removeClass('hidemenu');
+							num +=1;
+						}
+					else{
+						return false;
+					}
+				});
+				if(($('tr#'+selecttype).length % 5) != 0 )
+					{
+						pagenum += 1;
+					}
+				for(var i = 1; i <= pagenum; i++){
+					$('ul#pagzing').append("<li name=\"pageing\"><a href=\"javascript:ta\">"+i+"</a></li>");
+				}
 			}
 		})
 

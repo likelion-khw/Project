@@ -63,9 +63,9 @@ main{
 	$(document).ready(function() {
 		 $('.modal').modal({
 		      dismissible: true, // Modal can be dismissed by clicking outside of the modal
-		      opacity: .10, // Opacity of modal background
-		      inDuration: 100, // Transition in duration
-		      outDuration: 100, // Transition out duration
+		      opacity: .5, // Opacity of modal background
+		      inDuration: 200, // Transition in duration
+		      outDuration: 200, // Transition out duration
 		      startingTop: '4%', // Starting top style attribute
 		      endingTop: '5%' // Ending top style attribute
 		    }

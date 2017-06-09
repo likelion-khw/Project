@@ -126,6 +126,7 @@ public class WhameController {
 			LocationVO location = service.getLocation_info(store_code);
 			StoreVO store = service.getStore_info(store_code);
 			List<String> menutype = service.getMenuDistinct(store_code);
+			List<CouponVO> couponlist = service.getCoupon(store_code); 
 
 			mav.addObject("imgurl", history.getSignimage());
 			mav.addObject("result", result);
@@ -133,6 +134,7 @@ public class WhameController {
 			mav.addObject("color", color);
 			mav.addObject("menuList", menuList);
 			mav.addObject("location", location);
+			mav.addObject("couponlist", couponlist);
 			mav.addObject("store", store);
 		}
 		return mav;
@@ -413,8 +415,8 @@ public class WhameController {
 	
 	@ResponseBody
 	@RequestMapping(value="categoryDetail.whame", method=RequestMethod.POST)
-	public List<String> getCategoryDetail(int categoryDetail){
-		List<String> result = service.getCategoryDetail(categoryDetail);
+	public List<String> getCategoryDetail(int store_category){
+		List<String> result = service.getCategoryDetail(store_category);
 		return result;
 	}
 	
@@ -425,10 +427,8 @@ public class WhameController {
 	
 	@ResponseBody
 	@RequestMapping(value= "getTagStore.whame", method=RequestMethod.POST)
-	public List<String> getTgStore(String tagClick){
-		List<String> result = service.getTagStore(tagClick);
-		System.out.println("연결");
-		System.out.println(result);
+	public List<StoreVO> getTgStore(String tagClick){
+		List<StoreVO> result = service.getTagStore(tagClick);
 		return result;
 	}
 	
@@ -478,4 +478,11 @@ public class WhameController {
 	public void del_coupon(CouponVO cvo){
 		service.delcoupon(cvo);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="removeHistory.whame", method=RequestMethod.POST)
+	public void removehistory(HistoryVO historyvo){
+		service.removeHistory(historyvo);
+	}
+	
 }

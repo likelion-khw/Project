@@ -3,11 +3,12 @@
 <%@include file="../modal/menu_modal.jsp" %>
 <%@include file="../modal/store_modal.jsp" %>
 <%@include file="../modal/coupon_modal.jsp" %>
+<%@include file="../modal/infomodal.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
+6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
 span.badge{
 	position: static;
@@ -146,6 +147,14 @@ span.badge{
 						
 						<div id="${store.store_code}event_info" class="col s12 ">
 				      	<table class="centered highlight" >
+							<label>행사진행상태</label>
+						 	<center>
+								<select class="browser-default" id="coupon_state" style="width:30%" name="${store.store_code}">
+						   			<option value="진행중" selected="selected">진행중</option>
+						   			<option value="예정">예정</option>
+						   			<option value="종료">종료</option>
+					 			</select>
+							</center>
 							<thead>
 								<tr>
 									<th>진행상태</th>
@@ -159,7 +168,7 @@ span.badge{
 								<c:set value="${store.store_code}" var="storee"/>
 								<c:if test="${key eq storee}">
 									<c:forEach items="${clist.value }" var="cvo">
-										<tr>
+										<tr class="${store.store_code}coupon_list hidemenu" name="${store.store_code}${cvo.state}">
 											<td>
 												<c:choose>
 													<c:when test="${cvo.state == '진행중'}">
@@ -179,6 +188,9 @@ span.badge{
 									</c:forEach>
 								</c:if>
 							</c:forEach>
+								<tr class="hidemenu" name="${store.store_code}null">
+									<td colspan="3">등록된 이벤트가 없습니다.</td>
+								</tr>
 							</tbody>
 						</table>
 						
@@ -211,7 +223,6 @@ function store_modal(store_code){
 	$('#'+store_code+"modal_store").modal('open');
 }
 function coupon_modal(store_code){
-	console.log(store_code);
 	$('#'+store_code+"modal_coupon").modal('open');
 }
 $(document).ready(function() {
@@ -423,6 +434,33 @@ $(document).ready(function() {
 			for(var i = 1; i <= pagenum; i++){
 				$('ul[id='+store_code+'pagzing]').append("<li name=\""+store_code+"pageing\"><a href=\"javascript:ta\">"+i+"</a></li>");
 			}
+		}
+	});
+
+	$('select#coupon_state').each(function(){
+		var store_code = $(this).attr('name');
+		selectState = $(this).val();
+		$('tr[class='+store_code+'coupon_list]').addClass('hidemenu');
+		
+		var check = $('tr[name='+store_code+selectState+']').length;
+		if(check == 0){
+			$('tr[name='+store_code+'null]').removeClass('hidemenu');
+		}else{
+			$('tr[name='+store_code+selectState+']').removeClass('hidemenu');
+		}
+	});
+
+	$('select#coupon_state').on('change',function(){
+		var store_code = $(this).attr('name');
+		selectState = $(this).val();
+		$('tr[class='+store_code+'coupon_list]').addClass('hidemenu');
+		$('tr[name='+store_code+'null]').addClass('hidemenu');
+
+		var check = $('tr[name='+store_code+selectState+']').length;
+		if(check == 0){
+			$('tr[name='+store_code+'null]').removeClass('hidemenu');
+		}else{
+			$('tr[name='+store_code+selectState+']').removeClass('hidemenu');
 		}
 	});
 
