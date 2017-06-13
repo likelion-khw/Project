@@ -33,6 +33,25 @@ ul.review .sh_blog_passage{
 .crawhide{
 	display:none;
 }
+
+div.keyword li{
+	list-style: none;
+}
+
+div.keyword h5{
+	font-size: 19px;
+	font-weight: bold;
+}
+div.keyword strong{
+	font-size:14px;
+	background-color: blue;
+	color:white;
+	padding:5px;
+}
+div.txt{
+	margin:3px;
+	font-size:12px;
+}
 /* -------------------- */
 .showinfoform{
 	margin-top:5%;
@@ -47,12 +66,13 @@ ul.review .sh_blog_passage{
 	margin-left:auto;
 	margin-right: auto;
 }
-.showinfo_btn{
-	margin-top:6%;
-}
 
 .hidemenu{
 	display: none;
+}
+
+div.showinfo_btn input{
+	margin-bottom: 5px;
 }
 
 @media only screen and (min-width : 300px) and (max-width : 600px) {
@@ -157,13 +177,30 @@ ul.review .sh_blog_passage{
 						    </div>
 						  </div>
 					</div>
-					<div class="showinfo_btn center-align col s12 m6">
-						<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br><br>
-						<input type="button" value="재 검색" class="btn green" id="re_search"><br><br>
-						<input type="button" value="메인이동" class="btn red" id="main_load"><br><br>
+					<c:choose>
+						<c:when test="${crawl2 != null}">
+						<div class="showinfo_btn center-align col s12 m6">
+							<div class="keyword">
+								<h5>테마키워드</h5>
+							 	${crawl2}
+							 </div>
+						<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br>
+						<input type="button" value="재 검색" class="btn green" id="re_search"><br>
+						<input type="button" value="메인이동" class="btn red" id="main_load"><br>
 						<a id="kakao-link-btn" href="javascript:sendLink()">
-							<img width="50px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+							<img width="35px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
 						</a>
+						</c:when>
+						<c:otherwise>
+						<div class="showinfo_btn center-align col s12 m6" style="margin-top:5%;">
+						<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br>
+						<input type="button" value="재 검색" class="btn green" id="re_search"><br>
+						<input type="button" value="메인이동" class="btn red" id="main_load"><br>
+						<a id="kakao-link-btn" href="javascript:sendLink()">
+							<img width="35px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+						</a>
+						</c:otherwise>
+					</c:choose>
 					</div>
 				</div>
 			</div>

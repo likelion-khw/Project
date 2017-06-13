@@ -94,11 +94,15 @@ public class WhameController {
 		LocationVO location = service.getLocation_info(store_code);
 		StoreVO store = service.getStore_info(store_code);
 		List<String> menutype = service.getMenuDistinct(store_code);
-		String[] crawl = craw.run(location.getDong(), store.getStore_name())[0].split("</il>");
-		String[] crawl1 = craw.run(location.getDong(), store.getStore_name())[1].split("</il>");
+		String[] craws = craw.run(location.getDong(), store.getStore_name());
+		String[] crawl = craws[0].split("</li>");
+		String[] crawl1 = craws[1].split("</li>");
+		String crawl2 = craws[2];
+		
 	
 		mav.addObject("crawl", crawl);
 		mav.addObject("crawl1", crawl1);
+		mav.addObject("crawl2", crawl2);
 		mav.addObject("menutype",menutype);
 		mav.addObject("menuList", menuList);
 		mav.addObject("location", location);
@@ -142,11 +146,14 @@ public class WhameController {
 			StoreVO store = service.getStore_info(store_code);
 			List<String> menutype = service.getMenuDistinct(store_code);
 			List<CouponVO> couponlist = service.getCoupon(store_code); 
-			String[] crawl = craw.run(location.getDong(), store.getStore_name())[0].split("</il>");
-			String[] crawl1 = craw.run(location.getDong(), store.getStore_name())[1].split("</il>");
+			String[] craws = craw.run(location.getDong(), store.getStore_name());
+			String[] crawl = craws[0].split("</li>");
+			String[] crawl1 = craws[1].split("</li>");
+			String crawl2 = craws[2];
 
 			mav.addObject("crawl", crawl);
 			mav.addObject("crawl1", crawl1);
+			mav.addObject("crawl2", crawl2);
 			mav.addObject("imgurl", history.getSignimage());
 			mav.addObject("result", result);
 			mav.addObject("menutype", menutype);
