@@ -37,12 +37,6 @@ public class LoginController {
 	
 	String filepath="";
 
-	//초기 세션 memberVO 설정을 위한 메소드 초기값 null
-	@ModelAttribute("memberVO")
-	public MemberVO setSession(MemberVO vo) {
-		return vo;
-	}
-	
 	// 로그인 완료시에 실행되는 세션 저장 메소드
 	@RequestMapping(value="success.whame", method=RequestMethod.POST)
 	public String setSession2(MemberVO vo) {
@@ -74,7 +68,6 @@ public class LoginController {
 
 	@RequestMapping(value = "sign.whame", method = RequestMethod.POST)
 	public String signnew(MemberVO vo, MultipartFile image) throws Exception{
-		System.out.println(image.getSize());
 		if(image.getSize() != 0){
 			String bucketName = "whame/Userimage";
 			File convFile = new File(image.getOriginalFilename());
@@ -90,8 +83,20 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="remember.whame", method=RequestMethod.GET)
-	public String re_member(){
-		return "login/re_member";
+	public String re_member(HttpSession session){
+		mvo = (MemberVO)session.getAttribute("memberVO");
+		String path = "";
+		if (mvo != null) {
+			path = "login/re_member";
+			if (mvo.getUserid() != null) {
+				path ="login/re_member";
+			}else{
+				path = "redirect:/login.whame";
+			}
+		}else{
+			path = "redirect:/login.whame";
+		}
+		return path;
 	}
 	
 	@ResponseBody
@@ -120,8 +125,23 @@ public class LoginController {
 	public int repw(String pw, HttpSession session){
 		mvo = (MemberVO)session.getAttribute("memberVO");
 		mvo.setPw(pw);
-		
 		return service.repw(mvo);
+	}
+	
+	@RequestMapping(value="re_img.whame", method=RequestMethod.POST)
+	public String reimg(MultipartFile re_userimg, HttpSession session) throws Exception{
+		mvo = (MemberVO)session.getAttribute("memberVO");
+		if(re_userimg.getSize() != 0){
+			String bucketName = "whame/Userimage";
+			File convFile = new File(re_userimg.getOriginalFilename());
+			re_userimg.transferTo(convFile);
+			String filepath = s3.fileUpload(bucketName, convFile);
+			String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
+			mvo.setUserimage(imgurl);
+		}
+		service.re_img(mvo);
+		
+		return "redirect:/remember.whame";
 	}
 	
 	@ResponseBody

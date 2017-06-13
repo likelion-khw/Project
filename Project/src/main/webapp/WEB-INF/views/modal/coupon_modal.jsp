@@ -2,28 +2,33 @@
 	pageEncoding="UTF-8" import="spring.mvc.whame.store.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>        
 <style>
-@media only screen and (min-width : 321px) and (max-width : 500px) {
+@media only screen and (min-width : 321px) and (max-width : 600px) {
 }
 </style>
 <div class="container center-align">
 <c:forEach items="${storeMap }" var="svo">
 		<div id="${svo.value.store_code }modal_coupon" class="modal coupon_modalform">
 		<div class="modal-content">
-			<table class="centered highlight">
-			<thead>
+			<table class="centered">
+					<tr>
+						<th colspan="4">
+							<center>
+								<label>행사추가</label>
+								<select class="browser-default" name="coupon_state" id="${svo.value.store_code }state" style="width:200px;">
+									<option value="" disabled selected>진행상태 선택</option>
+									<option value="진행중">진행중</option>
+									<option value="예정">예정</option>
+									<option value="종료">종료</option>
+								</select>
+							</center>
+						</th>
+					</tr>
 					<tr id="${svo.value.store_code }">
-						<td>
-							<select class="browser-default" name="coupon_state" id="${svo.value.store_code }state">
-								<option value="" disabled selected>진행상태 선택</option>
-								<option value="진행중">진행중</option>
-								<option value="예정">예정</option>
-								<option value="종료">종료</option>
-							</select>
-						</td>
-						<td><input type="text" name="contents" id="${svo.value.store_code }contents"></td>
+						<td colspan="1"><input type="text" name="contents" id="${svo.value.store_code }contents"></td>
 						<td><input type="date" class = "datepicker" name="s_date" id="${svo.value.store_code }s_date"></td>
 						<td><input type="date" class = "datepicker" name="e_date" id="${svo.value.store_code }e_date"></td>
-						<td colspan="2"><input type="button" class="btn blue" value="행사추가" onclick="add_coupon(${svo.value.store_code})" ></td>
+						<td colspan="1"><input type="button" class="btn blue" value="행사추가" onclick="add_coupon(${svo.value.store_code})" ></td>
+					<tr>
 					<tr>
 					<td colspan="5">
 							<center>
@@ -36,7 +41,9 @@
 					 		</center>
 						</td>
 					</tr>
-					<tr>
+			</table>
+			<table class="centered highlight">
+				</thead>
 					<tr>
 						<th>진행상태</th>
 						<th>행사내용</th>

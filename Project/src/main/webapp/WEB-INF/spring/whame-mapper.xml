@@ -23,7 +23,7 @@
  	
  	<insert id='setLocation' parameterType="locationvo">
  		insert into store_location
- 		values(#{store_code}, #{rcode}, #{lat}, #{lon}, #{address})
+ 		values(#{store_code}, #{rcode}, #{lat}, #{lon}, #{address}, #{dong})
  	</insert>
  	
  	<insert id="setCoupon" parameterType="couponvo">

@@ -66,7 +66,7 @@
 			<th class="web_form">상가주소</th>
 			<td id="postcodify_search_button">
 				<input type="button" value="검색" class="btn blue">
-				<input type="text" class="postcodify_extra_info col s6" value="" placeholder="동"/>
+				<input type="text" class="postcodify_extra_info col s6" value="" placeholder="동" name="en_dong"/>
 				<input type="text" name="en_address" id="en_address" class="postcodify_address col s12" value="" placeholder="시/군/구"/>
 			</td>
 		</tr>
@@ -78,7 +78,7 @@
  			<td>
  				<label>음식점 카테고리</label>
  				<select class="browser-default" name="categorySelect" id="categorySelect" onchange="changeCategory()" >
- 					<option>음식점 카테고리 선택</option>
+ 					<option disabled="disabled" selected="selected">음식점 카테고리 선택</option>
  					<option>한식</option>
  					<option>중식</option>
  					<option>일식</option>

@@ -6,6 +6,7 @@ public class LocationVO {
 	private double lat;
 	private double lon;
 	private String address;
+	private String dong;
 	
 	public int getStore_code() {
 		return store_code;
@@ -38,6 +39,13 @@ public class LocationVO {
 		this.address = address;
 	}
 	
+	public String getDong() {
+		return dong;
+	}
+	
+	public void setDong(String dong) {
+		this.dong = dong;
+	}
 	@Override
 	public String toString() {
 		return store_code + "," +lat+","+lon;

@@ -53,6 +53,10 @@ public class LoginDAO {
 	public int repw(MemberVO membervo) {
 		return session.update("login.re_pw", membervo);
 	}
+	
+	public void re_img(MemberVO membervo){
+		session.update("login.re_img",membervo);
+	}
 
 	public MemberVO kakao(KakaoVO kvo) {
 		int same = session.selectOne("login.get_kakao", kvo);

@@ -3,7 +3,7 @@
 <%@include file="../modal/fileupload_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
+03947296fa39c02cca384bf32800c263&libraries=clusterer"></script>
 <style type="text/css">
 .mainform{
 	margin-top: 20px;
@@ -71,7 +71,7 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 		</div>
 		<div style="width:90%; margin-left: auto; margin-right: auto;" class="z-depth-1 row">
 			<div class="main_mapform col s12 m8">
-				<div class="counter" data-count="00000${count}" id="test"></div>
+				<div class="counter" data-count="000${count}" id="test"></div>
 				<div id="main_map"></div>
 			</div>
 			<div class="col s12 m4">
@@ -127,23 +127,27 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 		};
 		var map = new daum.maps.Map(container, options);
 
+		var clusterer = new daum.maps.MarkerClusterer({
+	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+	        minLevel: 5 // 클러스터 할 최소 지도 레벨 
+	    });
+	    
 		var locationlist = ${locationlist};
 		var max = locationlist.length / 3;
+		var markers = new Array();
 		var num = 0;
 		var pnum=0;
 		for(var i =0; i<max; i++)
 			{
 				if(num <= locationlist.length)
 					{
-						 var marker = new daum.maps.Marker({
-						        map: map, // 마커를 표시할 지도
-						        position: new daum.maps.LatLng(locationlist[num+1],locationlist[num+2]), // 마커를 표시할 위치
-						        title : locationlist[num] // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+						  var marker = new daum.maps.Marker({
+							  position: new daum.maps.LatLng(locationlist[num+1],locationlist[num+2])
 						  });
-
+						  markers.push(marker);
 						  positions[pnum] = {'lat':locationlist[num+1],'lng':locationlist[num+2],'code':locationlist[num]};
 
-						marker.setMap(map);
 						num += 3;
 						pnum ++;
 					}
@@ -152,7 +156,9 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 					}
 			}
 
-		$('tr[class=mover]').on('mouseover',function(){
+		clusterer.addMarkers(markers);
+
+ 		$('tr[class=mover]').on('mouseover',function(){
 			var id = $(this).attr('id');
 			
 			var locationlist2 = ${locationlist};
@@ -215,7 +221,7 @@ c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 						break;
 					}
 			}
-		});
+		}); 
 
 		
 	})

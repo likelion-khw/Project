@@ -33,6 +33,10 @@
  		update vm_user set pw = #{pw} where userid = #{userid}
  	</update>
  	
+ 	<update id="re_img" parameterType="membervo">
+ 		update vm_user set userimage = #{userimage} where userid = #{userid}
+ 	</update>
+ 	 	
  	<select id="get_kakao" resultType="int" parameterType="kakaovo">
  		select count(*) from kakao_user where kakaoauth = #{kakaoauth}
   	</select>
