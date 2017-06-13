@@ -34,7 +34,7 @@
 						<c:set var="lval" value="${lvo.value }"/>
 							<th>상가 위치</th>
 							<td><div id='${svo.value.store_code }sa'>
-								<input type="text" class="postcodify_extra_info col s6"  placeholder="동"/>
+								<input type="text" class="postcodify_extra_info col s6"  value="${lval.dong}" placeholder="동"/>
 								<input type="text" id="${svo.value.store_code }loc" name="address" class="postcodify_address col s12" value="${lval.address }" placeholder="시/군/구"/>
 								<input type="button" value="검색" class="btn blue floting postcodify_search_button${svo.value.store_code }" style="float:none;">
 							</div></td>

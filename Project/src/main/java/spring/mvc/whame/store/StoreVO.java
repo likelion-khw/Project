@@ -18,6 +18,7 @@ public class StoreVO {
 		
 		private int rcode;//r
 		private String address;//l
+		private String dong;
 		private MultipartFile imagefile;//	//���ε����� ��������
 		private String image;
 		int store_text;
@@ -105,6 +106,12 @@ public class StoreVO {
 			this.address = address;
 		}
 		
+		public String getDong() {
+			return dong;
+		}
+		public void setDong(String dong) {
+			this.dong = dong;
+		}
 		@Override
 		public String toString() {
 			return store_code+"";

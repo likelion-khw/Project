@@ -4,8 +4,36 @@
 <%@include file="../modal/fileupload_modal.jsp" %>
 <%@include file="../modal/show_coupon_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
+c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
 <style>
+/*  크롤링 결과 디자인  */
+div.thumb img{
+	width: 90px;
+	height: 90px;
+}
+ul.review.row .col{
+	padding : 15px;
+}
+ul.review .thumb_num{
+	display:none;
+}
+ul.review .scial{
+	display:none;
+}
+ul.review .txt_block{
+	display:none;
+}
+ul.review .txt_inline{
+	margin-left:0px;
+}
+ul.review .sh_blog_passage{
+	margin-left:0px;
+}
+
+.crawhide{
+	display:none;
+}
+/* -------------------- */
 .showinfoform{
 	margin-top:5%;
 	width:80%;
@@ -43,9 +71,25 @@
 	}
 }
 
+@media only screen and (min-width : 601px){
+	ul.review li{
+		height:300px;
+	}
+}
+@media only screen and (min-width : 993px){
+	ul.review li{
+		height:360px;
+	}
+}
+@media only screen and (min-width : 1360px){
+	ul.review li{
+		height:300px;
+	}
+}
 </style>
 
-<div class="container center-align z-depth-3 showinfoform row">
+<div class="container z-depth-3 showinfoform">
+	<div class="center-align">
 		<h4>${store.store_name} 메뉴</h4>
 		 	<label>메뉴종류</label>
 		 	<center>
@@ -83,47 +127,120 @@
 					 </ul>
 				</div>
 			</div>
-			<div class="showinfo_card center-align col s12 m6">
-				<div class="card">
-				    <div class="card-image waves-effect waves-block waves-light">
-				      <div id="map" style="width: 100%; height: 250px;"></div>
-				    </div>
-				    <div class="card-content">
-				      <span class="card-title activator grey-text text-darken-4">${store.store_name}<i class="material-icons right">more_vert</i></span>
-				    </div>
-				    <div class="card-reveal">
-				      <span class="card-title grey-text text-darken-4">${store.store_name}<i class="material-icons right">close</i></span>
-				      	<div style="margin-top:30px;">
-					      	<table class="centered">
-					      		<tr>
-					      			<td>영업시간</td>
-					      			<td>${store.operating_time}</td>
-					      		</tr>
-					      		<tr>
-					      			<td>사업자등록번호</td>
-					      			<td>${store.business_code}</td>
-					      		</tr>
-					      		<tr>
-					      			<td>주 소</td>
-					      			<td>${location.address}</td>
-					      		</tr>
-					      	</table>
-				      	</div>
-				    </div>
-				  </div>
+			<div class="row">
+				<div class="showinfo_card center-align col s12 m6">
+						<div class="card">
+						    <div class="card-image waves-effect waves-block waves-light">
+						      <div id="map" style="width: 100%; height: 250px;"></div>
+						    </div>
+						    <div class="card-content">
+						      <span class="card-title activator grey-text text-darken-4">${store.store_name}<i class="material-icons right">more_vert</i></span>
+						    </div>
+						    <div class="card-reveal">
+						      <span class="card-title grey-text text-darken-4">${store.store_name}<i class="material-icons right">close</i></span>
+						      	<div style="margin-top:30px;">
+							      	<table class="centered">
+							      		<tr>
+							      			<td>영업시간</td>
+							      			<td>${store.operating_time}</td>
+							      		</tr>
+							      		<tr>
+							      			<td>사업자등록번호</td>
+							      			<td>${store.business_code}</td>
+							      		</tr>
+							      		<tr>
+							      			<td>주 소</td>
+							      			<td>${location.address}</td>
+							      		</tr>
+							      	</table>
+						      	</div>
+						    </div>
+						  </div>
+					</div>
+					<div class="showinfo_btn center-align col s12 m6">
+						<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br><br>
+						<input type="button" value="재 검색" class="btn green" id="re_search"><br><br>
+						<input type="button" value="메인이동" class="btn red" id="main_load"><br><br>
+						<a id="kakao-link-btn" href="javascript:sendLink()">
+							<img width="50px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+						</a>
+					</div>
+				</div>
 			</div>
-			<div class="showinfo_btn center-align col s12 m6">
-				<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br><br>
-				<input type="button" value="재 검색" class="btn green" id="re_search"><br><br>
-				<input type="button" value="메인이동" class="btn red" id="main_load"><br><br>
-				<a id="kakao-link-btn" href="javascript:sendLink()">
-					<img width="50px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
-				</a>
+			<div class="center-align">
+				<h5>추천 블로그</h5>
+				<ul class="review row">
+					<c:forEach items="${crawl}" var="craw">
+						<div class="onepage">
+							${craw}
+							</li>
+						</div>
+					</c:forEach>
+					<c:forEach items="${crawl1}" var="craw1">
+						<div class="twopage">
+							${craw1}
+							</li>
+						</div>
+					</c:forEach>
+				</ul>
+				<span id="blog"><a href="javascript:;" id="showcrawl"><i class="material-icons large" style="color:black">arrow_drop_down</i></a></span>
+				<!-- <input type="button" class="btn" value="접기" id="hidecrawl" style="float:right"> -->
 			</div>
+			 <div class="fixed-action-btn horizontal">
+			    <a class="btn-floating btn-large white" id="upview" onclick="window.scrollTo(0,0); return false;">
+			      <i class="material-icons" style="color:black">arrow_upward</i>
+			    </a>
+			 </div>
 </div>
 
 <script type="text/javascript">
+	$('ul.review li').addClass('z-depth-1').addClass('col s12 m6 l4');
+	var crawmax = $('div.onepage li.sh_blog_top').length;
+	var crawmax1 = $('div.twopage li.sh_blog_top').length;
+	var crawstart = 7;
+	var crawstart1 = 3;
+	
+	for(var i=4; i<=crawmax; i++){
+		$('ul.review div.onepage li#sp_blog_'+i).addClass('crawhide');
+	}
+	
+	for(var i=1; i<=crawmax1; i++){
+		$('ul.review div.twopage li#sp_blog_'+i).addClass('crawhide');
+	}
 $(document).ready(function() {
+		$('#showcrawl').on('click',function(){
+			if(crawstart > crawmax){
+				if(crawstart1 >= crawmax1)
+					{
+						crawstart1 = crawmax1;
+						$('ul.review div.twopage li#sp_blog_'+10).removeClass('crawhide');
+						$('#blog').css('display','none');
+						
+					}
+				$('ul.review div.onepage li#sp_blog_'+10).removeClass('crawhide');
+				for(var i=1; i<crawstart1; i++){
+					$('ul.review div.twopage li#sp_blog_'+i).removeClass('crawhide');
+				}
+				crawstart1 += 3;
+			}else{
+				for(var i=1; i<crawstart; i++){
+					$('ul.review div.onepage li#sp_blog_'+i).removeClass('crawhide');
+				}
+				crawstart += 3;
+			}
+		});
+
+		$('#hidecrawl').on('click',function(){
+			for(var i=4; i<=crawmax; i++){
+				$('ul.review div.onepage li#sp_blog_'+i).addClass('crawhide');
+			}
+			crawstart = 7;
+			for(var i=1; i<=crawmax1; i++){
+				$('ul.review div.twopage li#sp_blog_'+i).addClass('crawhide');
+			}
+			crawstart1 = 3;		
+		});
+	
 		var coupon= false;
 		<c:forEach items="${couponlist}" var="coupon">
 			if("${coupon.state}" == '진행중' || "${coupon.state}" == '예정'){

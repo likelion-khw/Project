@@ -8,7 +8,6 @@
 	max-height: 200%;
 	height: 90%;
 }
-
 @media only screen and (min-width : 321px) and (max-width : 992px) {
 	.signinform {
 		width:90%;
@@ -24,25 +23,33 @@
 		<img class="circle" src="resources/img/user.png" style="width: 120px; height:120px" id="userimg"></a>
 		<div class="row">
 		      <div class="row">
-		        <div class="input-field col s12">
+		        <div class="input-field userid col s12">
 		          <i class="material-icons prefix">account_circle</i>
 		          <input id="sign_id" type="text" class="validate" name="userid">
-         		  <label for="email">사용자 아이디</label>
+         		  <label for="sign_id">사용자 아이디</label>
 		        </div>
-		        <div class="input-field col s12">
+		        <div id="userid_msg">
+		        </div>
+		        <div class="input-field nickname col s12">
 		          <i class="material-icons prefix">grade</i>
 		          <input type="text" class="validate" name="nickname" id="sign_nickname">
          		  <label for="nickname">닉네임</label>
 		        </div>
-		        <div class="input-field col s12">
+		        <div id="nickname_msg">
+		        </div>
+		        <div class="input-field pwdo col s12">
 		          <i class="material-icons prefix">https</i>
 		          <input id="sign_pw" type="password" class="validate" name="pw">
-		          <label for="pw">패스워드</label>
+		          <label for="pw">패스워드(6자리 이상)</label>
 		        </div>
-		        <div class="input-field col s12">
+		        <div id="pwdo_msg">
+		        </div>
+		        <div class="input-field pwdc col s12">
 		          <i class="material-icons prefix">lock_outline</i>
 		          <input id="pwcheck" type="password" class="validate">
-		          <label for="pwcheck">패스워드확인</label>
+		          <label for="pwcheck">패스워드 확인</label>
+		        </div>
+		        <div id="pwdc_msg">
 		        </div>
 		      </div>
 		  </div>
@@ -52,9 +59,10 @@
 
 	<div class="modal-footer">
 		<a href="#!"
-			class="modal-action modal-close btn" style="float:none;">취소</a>
-		<a href="#!" class="btn" id="success" style="float:none;">확인</a> 
+			class="modal-action modal-close btn red" style="float:none;">취소</a>
+		<a href="#!" class="btn blue" id="success" style="float:none;">확인</a> 
 	</div>
 </div>
 
-<script type="text/javascript" src="resources/js/signin_js.js"></script>
+<script type="text/javascript" src="resources/js/signin_js1.js">
+</script>

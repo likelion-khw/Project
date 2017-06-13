@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import spring.mvc.whame.aws.S3Util;
 import spring.mvc.whame.color.ColorVO;
+import spring.mvc.whame.crawling.Crawling;
 import spring.mvc.whame.history.HistoryVO;
 import spring.mvc.whame.login.MemberVO;
 import spring.mvc.whame.opencv.ImageVO;
@@ -50,6 +51,9 @@ public class WhameController {
 
 	@Autowired
 	HistoryVO history;
+	
+	@Autowired
+	Crawling craw;
 
 	String filepath = "";
 	String address = "";
@@ -57,6 +61,13 @@ public class WhameController {
 	double lat, lon;
 
 	List<Double> difflal = new ArrayList<Double>();
+	
+	@RequestMapping(value = "/test")
+	public ModelAndView test() throws Exception {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("body/test");
+		return mav;
+	}
 
 	@RequestMapping(value = "/")
 	public ModelAndView main() {
@@ -83,7 +94,11 @@ public class WhameController {
 		LocationVO location = service.getLocation_info(store_code);
 		StoreVO store = service.getStore_info(store_code);
 		List<String> menutype = service.getMenuDistinct(store_code);
-		
+		String[] crawl = craw.run(location.getDong(), store.getStore_name())[0].split("</il>");
+		String[] crawl1 = craw.run(location.getDong(), store.getStore_name())[1].split("</il>");
+	
+		mav.addObject("crawl", crawl);
+		mav.addObject("crawl1", crawl1);
 		mav.addObject("menutype",menutype);
 		mav.addObject("menuList", menuList);
 		mav.addObject("location", location);
@@ -127,7 +142,11 @@ public class WhameController {
 			StoreVO store = service.getStore_info(store_code);
 			List<String> menutype = service.getMenuDistinct(store_code);
 			List<CouponVO> couponlist = service.getCoupon(store_code); 
+			String[] crawl = craw.run(location.getDong(), store.getStore_name())[0].split("</il>");
+			String[] crawl1 = craw.run(location.getDong(), store.getStore_name())[1].split("</il>");
 
+			mav.addObject("crawl", crawl);
+			mav.addObject("crawl1", crawl1);
 			mav.addObject("imgurl", history.getSignimage());
 			mav.addObject("result", result);
 			mav.addObject("menutype", menutype);
@@ -159,7 +178,7 @@ public class WhameController {
 	}
 
 	@RequestMapping(value = "enrollconnect.whame", method = RequestMethod.POST)
-	public ModelAndView enrollconnect(@ModelAttribute(value = "storevo") StoreVO storevo, String en_address,
+	public ModelAndView enrollconnect(@ModelAttribute(value = "storevo") StoreVO storevo, String en_address, String en_dong,
 			HttpSession session) throws Exception {
 		MemberVO vo = (MemberVO) session.getAttribute("memberVO");
 		ModelAndView mav = new ModelAndView();
@@ -167,6 +186,7 @@ public class WhameController {
 			if (vo.getUserid() != null) {
 				this.address = en_address;
 				String s_rcode[] = en_address.split(" ");
+				storevo.setDong(en_dong.replaceAll("[\\(\\)]", ""));
 				int rcode = service.getrcodeNum(s_rcode[0] + " " + s_rcode[1]);
 				storevo.setRcode(rcode);
 
@@ -222,6 +242,7 @@ public class WhameController {
 
 		lvo.setRcode(enrollStore.getRcode());
 		lvo.setStore_code(store_code);
+		lvo.setDong(enrollStore.getDong());
 		System.out.println("menuupload==>" + lvo.getAddress());
 		System.out.println("lal ?�??=>" + lvo.getLat() + ":::" + lvo.getLon());
 		service.setLocation(lvo);
