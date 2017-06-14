@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+
 <style>
 .loginform{
 	width: 350px;
@@ -24,6 +25,21 @@
 }
 }
 </style>
+<%
+	Cookie[] cookies = request.getCookies();
+	String userid = "";
+	int userpw =-1;
+	if(cookies != null){
+		for(Cookie c : cookies){
+			if(c.getName().equals("userid")){  
+				userid = c.getValue();
+			}
+			if(c.getName().equals("pw")){  
+				userpw = Integer.parseInt(c.getValue());
+			}
+		}
+	}
+%>
 <div class="container loginform z-depth-2">
 	<div class="center-align">
 			<div name="header">
@@ -31,22 +47,22 @@
 			</div>
 			<div name="input">
 				<div class="input-field">
-			      <input value="" id="userid" type="text" class="validate" name="userid">
+			      <input value="<%=userid %>" id="userid" type="text" class="validate" name="userid">
 			      <label class="active" for="userid">아이디</label>
 			    </div>
 				<div class="input-field">
-			      <input id="pw" type="password" class="validate" name="pw">
+			      <input value="<%=userpw %>" id="pw" type="password" class="validate" name="pw" onkeyup="enterkey();">
 			      <label class="active" for="pw">패스워드</label>
 			    </div>
 			</div>
 			<div name="log">
-				<input type="checkbox" id="log" />
-				<label for="log">로그인유지</label> 
+				<input type="checkbox" id="log" name="idsave" value="selected"/>
+				<label for="log">로그인유지</label>
 			</div><br>
 			<div class="loginbtn">
 				<input type="button" value="로그인" class="btn black" id="login" style="width:300px"><br>
 			</div>
-			<a href="">아이디&패스워드 찾기</a> / <a href="#signin">회원가입</a>
+			<a href="searchMember.whame">아이디&패스워드 찾기</a> / <a href="#signin">회원가입</a>
 			<div class="snslogin">
 				<a id="login-btn" href="javascript:loginWithKakao()">
 					<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="250"/>
@@ -58,6 +74,12 @@
 <script type="text/javascript" src="resources/js/loginform_js.js"></script>
 <script type="text/javascript">
 Kakao.init('f83177e46350e0d7ba18232a50b978ed');
+
+function enterkey() {
+    if (window.event.keyCode == 13) {
+    	$('#login').trigger('click'); 
+    }
+}
 
 function loginWithKakao(){
 	Kakao.Auth.login({
@@ -110,4 +132,6 @@ function loginWithKakao(){
 		}
 	});
 }
+
+
 </script>

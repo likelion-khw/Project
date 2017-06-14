@@ -2,6 +2,7 @@ $(document).ready(function() {
 	$('#login').on('click', function() {
 		var userid = $('#userid').val();
 		var pw = $('#pw').val();
+		var cookie = $('#log').is(":checked");
 		var msg;
 
 		if (userid == "" || pw == "") {
@@ -36,7 +37,8 @@ $(document).ready(function() {
 								'userid' : result[0].userid,
 								'pw' : result[0].pw,
 								'userimage' : result[0].userimage,
-								'nickname' : result[0].nickname
+								'nickname' : result[0].nickname,
+								'cookie' : cookie
 							},
 							success : function() {
 								$(location).attr('href', '/whame');
@@ -48,5 +50,7 @@ $(document).ready(function() {
 			});
 		}
 	});
+	
+	
 	
 })

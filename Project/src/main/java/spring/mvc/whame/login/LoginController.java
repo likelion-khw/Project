@@ -3,11 +3,14 @@ package spring.mvc.whame.login;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.HttpSessionRequiredException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.amazonaws.http.HttpResponse;
 
 import spring.mvc.whame.aws.S3Util;
 
@@ -39,7 +44,16 @@ public class LoginController {
 
 	// 로그인 완료시에 실행되는 세션 저장 메소드
 	@RequestMapping(value="success.whame", method=RequestMethod.POST)
-	public String setSession2(MemberVO vo) {
+	public String setSession2(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
+		Cookie cookie = null;
+		String idsave = (String)request.getParameter("cookie");
+		System.out.println("saveid : "+idsave);
+		if(idsave != null && idsave.equals("true")){
+			cookie = new Cookie("userid", vo.getUserid());
+			cookie = new Cookie("pw", vo.getPw());
+			cookie.setMaxAge(60*365);
+			response.addCookie(cookie);
+		}
 		return "main/main";
 	}
 	
@@ -150,5 +164,16 @@ public class LoginController {
 		mvo = service.kakao(kvo);
 		return mvo;
 	}
+	
+	
+	@RequestMapping(value="searchMember.whame", method=RequestMethod.GET)
+	public String search(){
+		return "body/searchMember";
+	}
+	
+	/*@RequestMapping(value="searchMember.whame", method=RequestMethod.POST)
+	public ModelAndView search(MemberVO mvo){
+		return "body/searchMember";
+	}*/
 
 }
