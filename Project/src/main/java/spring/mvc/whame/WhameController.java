@@ -83,7 +83,7 @@ public class WhameController {
 		return mav;
 	}
 
-	// 占싱뱄옙占쏙옙占쏙옙 占쏙옙占쏙옙 OCR 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
+	// �뜝�떛諭꾩삕�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 OCR �뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕
 	@RequestMapping(value = "forkakao.whame")
 	public ModelAndView getshow(int store_code) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -130,7 +130,7 @@ public class WhameController {
 		// history insert
 		MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 		if (store_code == 0) {
-			mav.addObject("error", "등록된 상가가 아직 없네요 ㅠㅠ");
+			mav.addObject("error", "일치하는 값이 없습니다.");
 			return mav;
 		} else {
 			if(membervo != null){
@@ -202,7 +202,7 @@ public class WhameController {
 				File convFile = new File(imagefile.getOriginalFilename());
 				imagefile.transferTo(convFile);
 
-				// 占쏙옙占쏙옙 占쏙옙占싸듸옙
+				// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떥�벝�삕
 				filepath = s3.fileUpload(bucketName, convFile);
 				String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 				System.out.println("=========enrollconnect imgurl=======" + imgurl);
@@ -231,7 +231,7 @@ public class WhameController {
 				System.out.println(address);
 				mav.addObject("address", address);
 				mav.setViewName("body/enrollsuccess");
-				System.out.println("enrollsuccess占쏙옙 占싱듸옙");
+				System.out.println("enrollsuccess�뜝�룞�삕 �뜝�떛�벝�삕");
 			} else {
 				mav.setViewName("redirect:/login.whame");
 			}
@@ -251,7 +251,7 @@ public class WhameController {
 		lvo.setStore_code(store_code);
 		lvo.setDong(enrollStore.getDong());
 		System.out.println("menuupload==>" + lvo.getAddress());
-		System.out.println("lal ?�??=>" + lvo.getLat() + ":::" + lvo.getLon());
+		System.out.println("lal ?占�??=>" + lvo.getLat() + ":::" + lvo.getLon());
 		service.setLocation(lvo);
 		System.out.println(menulist.length);
 
@@ -279,23 +279,23 @@ public class WhameController {
 		return mav;
 	}
 
-	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占싸듸옙첼占� 占쏙옙占쏙옙풔占� 占쌨소듸옙 ( AWS 클占쏙옙占쏙옙 占쏙옙占� )
+	// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떥�벝�삕泥쇔뜝占� �뜝�룞�삕�뜝�룞�삕�뮅�뜝占� �뜝�뙣�냼�벝�삕 ( AWS �겢�뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝占� )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
 	public ModelAndView test(MultipartFile imagefile, Double lat, Double lon) throws Exception {
 		this.lat = lat;
 		this.lon = lon;
 		System.out.println("lal" + lat + ":" + lon);
 		MapTest mt = new MapTest();
-		difflal = mt.run(lat, 550);
+		difflal = mt.run(lat, 2000);
 
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame/StoreTitle";
 		File convFile = new File(imagefile.getOriginalFilename());
 		imagefile.transferTo(convFile);
 
-		// 占쏙옙占쏙옙 占쏙옙占싸듸옙
+		// �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕�뜝�떥�벝�삕
 		filepath = s3.fileUpload(bucketName, convFile);
-		// history 媛꾪뙋�씠誘몄� �뙆�씪紐�
+		// history 揶쏄쑵�솇占쎌뵠沃섎챷占� 占쎈솁占쎌뵬筌륅옙
 		history.setSignimage(filepath);
 		String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 		mav.addObject("imgurl", imgurl);
@@ -305,14 +305,14 @@ public class WhameController {
 		return mav;
 	}
 
-	// 占쏙옙占싸듸옙 占싱뱄옙占쏙옙占쏙옙 占쌨아쇽옙 Opencv 占쏙옙占쏙옙 占쏙옙 占싱뱄옙占쏙옙 占쏙옙占� 占쏙옙환 ( filename
+	// �뜝�룞�삕�뜝�떥�벝�삕 �뜝�떛諭꾩삕�뜝�룞�삕�뜝�룞�삕 �뜝�뙣�븘�눦�삕 Opencv �뜝�룞�삕�뜝�룞�삕 �뜝�룞�삕 �뜝�떛諭꾩삕�뜝�룞�삕 �뜝�룞�삕�뜝占� �뜝�룞�삕�솚 ( filename
 	// )
 	@ResponseBody
 	@RequestMapping(value = "result.whame", method = RequestMethod.POST)
 	public void openCV(ImageVO imagevo, String imgurl) throws Exception {
 		Opencv ivo = new Opencv();
 		imagevo.sortXY();
-		System.out.println("run占쏙옙占쏙옙載�---------" + imgurl);
+		System.out.println("run�뜝�룞�삕�뜝�룞�삕雍됵옙---------" + imgurl);
 		BufferedImage img = ImageIO.read(new URL(imgurl));
 		filepath = ivo.runOpencv(img, imagevo, imgurl);
 	}
@@ -465,7 +465,7 @@ public class WhameController {
 	public void storeUpdate(@ModelAttribute("storevo") StoreVO svo , @ModelAttribute("locationvo") LocationVO lvo){
 		System.out.println(lvo.getStore_code()+"LLLLLL"+lvo.getLat());
 		String region[] = lvo.getAddress().split(" ");
-		System.out.println("rcode수정 : " + region[0] + " " + region[1]);
+		System.out.println("rcode�닔�젙 : " + region[0] + " " + region[1]);
 		int rcode = service.getrcodeNum(region[0] + " " + region[1]);
 		lvo.setRcode(rcode);
 		service.storeUpdate(svo, lvo);

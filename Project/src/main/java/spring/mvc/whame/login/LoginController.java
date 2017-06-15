@@ -2,12 +2,15 @@ package spring.mvc.whame.login;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,7 +42,32 @@ public class LoginController {
 
 	// 로그인 완료시에 실행되는 세션 저장 메소드
 	@RequestMapping(value="success.whame", method=RequestMethod.POST)
-	public String setSession2(MemberVO vo) {
+	public String setSession2(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
+		String idsave = (String)request.getParameter("cookie");
+		System.out.println("saveid : "+idsave);
+		if(idsave != null && idsave.equals("true")){
+			System.out.println("id:"+vo.getUserid());
+			Cookie cookie = new Cookie("userid", vo.getUserid());
+			Cookie cookie2 = new Cookie("pw", vo.getPw());
+			cookie.setMaxAge(60*365);
+			response.addCookie(cookie);
+			response.addCookie(cookie2);
+		}else{
+			Cookie[] cookies = request.getCookies();
+			if(cookies != null){
+		        for(int i=0; i < cookies.length; i++){
+		            // 쿠키의 유효시간을 0으로 설정하여 만료시킨다
+		            cookies[i].setMaxAge(0) ;
+		            // 응답 헤더에 추가한다
+		            response.addCookie(cookies[i]) ;
+		        }
+		    }
+		    // 특정 쿠키만 삭제하기
+		    /*Cookie kc = new Cookie("memberNo", null) ;
+		    kc.setMaxAge(0) ;
+		    response.addCookie(kc) ;*/
+			
+		}
 		return "main/main";
 	}
 	
@@ -150,5 +178,16 @@ public class LoginController {
 		mvo = service.kakao(kvo);
 		return mvo;
 	}
+	
+	
+	@RequestMapping(value="searchMember.whame", method=RequestMethod.GET)
+	public String search(){
+		return "body/searchMember";
+	}
+	
+	/*@RequestMapping(value="searchMember.whame", method=RequestMethod.POST)
+	public ModelAndView search(MemberVO mvo){
+		return "body/searchMember";
+	}*/
 
 }
