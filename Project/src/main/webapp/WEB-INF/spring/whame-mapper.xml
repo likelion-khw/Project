@@ -252,4 +252,8 @@
   	<select id="initAllMenu" resultType="menuvo">
   		select * from menu
   	</select>
+  	
+  	<select id="getNewStore" resultType="storevo">
+  		select s.*, address, dong from store s, (select store_code, row_number() over(order by store_code desc) as rank from store) sr, store_location sl where sr.rank BETWEEN 1 and 10 and sr.store_code = s.store_code and sl.store_code = s.store_code order by s.store_code desc
+  	</select>
 </mapper>

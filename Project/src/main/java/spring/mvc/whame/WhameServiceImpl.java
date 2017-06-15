@@ -235,4 +235,8 @@ public class WhameServiceImpl implements WhameService{
 		}
 		return result;
 	}
+	
+	public List<StoreVO> getNewStore(){
+		return dao.getNewStore();
+	}
 }

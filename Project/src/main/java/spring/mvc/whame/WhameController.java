@@ -79,9 +79,11 @@ public class WhameController {
 		int count = service.getStoreCount();
 		List<LocationVO> locationlist = service.getlocation_list();
 		List<StoreVO> countrank = service.getCountRanklist();
+		List<StoreVO> getNewStore = service.getNewStore();
 		
 		mav.setViewName("main/main");
 		mav.addObject("count", count);
+		mav.addObject("getNewStore",getNewStore);
 		mav.addObject("countrank",countrank);
 		mav.addObject("locationlist", locationlist);
 		return mav;

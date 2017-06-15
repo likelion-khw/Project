@@ -118,87 +118,22 @@ div#onetop{
 		<div style="width: 90%; margin-left: auto; margin-right: auto" >
 			<span style="font-size: 35px;">New Store</span>
 			<div class="carousel">
-					<span style="background-color:blue;">
-				    <a class="carousel-item" href="#1">
-				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
-				    		<div class="col s12" style="height:40%; background-color: gray">
-				    			<h5>이미지</h5>
+				<c:forEach items="${getNewStore}" var="store">
+				    <a class="carousel-item" href="/whame/forkakao.whame?store_code=${store.store_code}">
+				    	<div class="row" style="border:1px #bdbdbd solid; height: 300px; padding:10px;">
+				    		<div class="col s12" style="height:150px;">
+				    			<img src="${store.store_image}" width="100%" height="150px" style="border-radius:30px">
 				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명2</h5>
+				    		<div class="col s12" style="height: 100px;">
+				    			<span style="font-size: 17px; color:black">${store.store_name}</span>
+				    			<span style="blue">(${store.dong})</span>
 				    		</div>
 				    		<div class="col s12">
-				    			<h5>하단</h5>
+				    			<span style="blue">${store.store_category}</span>
 				    		</div>
 				    	</div>
 				    </a>
-				    <a class="carousel-item" href="#2">
-				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
-				    		<div class="col s12" style="height:40%; background-color: gray">
-				    			<h5>이미지</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명2</h5>
-				    		</div>
-				    		<div class="col s12">
-				    			<h5>하단</h5>
-				    		</div>
-				    	</div>
-				    </a>
-				    <a class="carousel-item" href="#3">
-				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
-				    		<div class="col s12" style="height:40%; background-color: gray">
-				    			<h5>이미지</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명2</h5>
-				    		</div>
-				    		<div class="col s12">
-				    			<h5>하단</h5>
-				    		</div>
-				    	</div>
-				    </a>
-				    <a class="carousel-item" href="#4">
-				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
-				    		<div class="col s12" style="height:40%; background-color: gray">
-				    			<h5>이미지</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명2</h5>
-				    		</div>
-				    		<div class="col s12">
-				    			<h5>하단</h5>
-				    		</div>
-				    	</div>
-				    </a>
-				    <a class="carousel-item" href="#5">
-				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
-				    		<div class="col s12" style="height:40%; background-color: gray">
-				    			<h5>이미지</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명</h5>
-				    		</div>
-				    		<div class="col s6">
-				    			<h5>설명2</h5>
-				    		</div>
-				    		<div class="col s12">
-				    			<h5>하단</h5>
-				    		</div>
-				    	</div>
-				    </a>
+				</c:forEach>
 		 	 </div>
 	 	</div>
 	</div>
@@ -346,7 +281,7 @@ div#onetop{
 
 	    setInterval(function(){
 	    	$('.carousel').carousel('next');
-		    },1500);
+		    },2000);
 		
 	})
 </script>
