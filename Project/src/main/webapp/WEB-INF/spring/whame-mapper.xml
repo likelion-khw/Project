@@ -246,7 +246,7 @@
   	</select>
   	
   	<select id="initAllData" resultType="storeinitvo">
-  		select s.store_code, store_name, address, view_count, store_category, lat, lon from store s, store_location sl where s.store_code = sl.store_code
+  		select s.store_code, store_name, store_image, address, view_count, store_category, lat, lon from store s, store_location sl where s.store_code = sl.store_code
   	</select>
   	
   	<select id="initAllMenu" resultType="menuvo">
