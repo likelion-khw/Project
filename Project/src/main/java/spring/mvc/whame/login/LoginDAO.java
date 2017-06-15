@@ -71,6 +71,7 @@ public class LoginDAO {
 	public MemberVO facebook(FaceBookVO fvo){
 		int same = session.selectOne("login.get_facebook", fvo);
 		if (same != 1) {
+			System.out.println(fvo.getUserid());
 			session.insert("login.new_facebook", fvo);
 		}
 		mvo = session.selectOne("login.login_facebook", fvo);

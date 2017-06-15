@@ -43,7 +43,11 @@
 				if(response.authResponse){
 					var id = response.authResponse.userID;
 					FB.api('/'+id+'?fields=email,name,picture{url}', function(response) {
+						alert(JSON.stringify(response));
 			  		    var userid= response.email;
+			  		    if(userid == null){
+			  		    	userid = response.id;
+			  		    }
 			  		    var nickname= response.name;
 			  		    var userimage = response.picture.data.url;
 			  		    var facebookauth = response.id;
@@ -148,6 +152,12 @@
 <script type="text/javascript" src="resources/js/loginform_js1.js"></script>
 <script type="text/javascript">
 Kakao.init('f83177e46350e0d7ba18232a50b978ed');
+
+function enterkey() {
+    if (window.event.keyCode == 13) {
+    	$('#login').trigger('click'); 
+    }
+}
 
 function loginWithKakao(){
 	Kakao.Auth.login({

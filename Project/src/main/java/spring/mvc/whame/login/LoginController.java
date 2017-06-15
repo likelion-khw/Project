@@ -179,6 +179,7 @@ public class LoginController {
 	@ResponseBody
 	@RequestMapping(value="facebook.whame", method=RequestMethod.POST)
 	public MemberVO facebook(FaceBookVO fvo){
+		System.out.println(fvo.getUserid());
 		mvo = service.facebook(fvo);
 		return mvo;
 	}
