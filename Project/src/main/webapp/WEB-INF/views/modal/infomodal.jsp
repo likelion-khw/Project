@@ -25,6 +25,12 @@
 		color:white;
 		width:400px;
 	}
+	#enroll_menu_select{
+		background-color: #37474f;
+		color:white;
+		width:400px;
+		height: 300px;
+	}
 	.infomodal_form .modal-footer{
 		background-color: #37474f;
 	}
@@ -69,6 +75,18 @@
 	  </div>
 	  <div class="modal-footer">
 	    <a href="#!" class="modal-action modal-close btn red" style="float:none">확인</a>
+	  </div>
+	</div>
+	
+	<div id="enroll_menu_select" class="modal">
+	  <div class="modal-content">
+	    <h4>지금 메뉴를<br>등록하겠습니까?</h4>
+	   	<p>추후에도 메뉴를 추가 하실 수 있습니다.</p>
+	   	<p>현재 등록을 원하시면 '예' 버튼을 눌러주세요.</p>
+	  </div>
+	  <div class="modal-footer">
+	    <a href="#!" class="modal-action modal-close btn red" style="float:none">예</a>
+	    <a href="#!" class="modal-action modal-close btn" style="float:none" id="enroll_menu_no">아니요</a>
 	  </div>
 	</div>
 </div>

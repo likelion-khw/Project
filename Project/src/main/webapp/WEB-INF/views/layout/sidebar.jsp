@@ -100,6 +100,8 @@ Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 					$(location).attr('href', 'logout.whame');
 				},1000);
 		});
+
+		FB.logout();
 	}
 
 	function login(){

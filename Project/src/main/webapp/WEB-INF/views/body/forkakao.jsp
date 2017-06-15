@@ -5,15 +5,23 @@
 <%@include file="../modal/show_coupon_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
 c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <style>
 /*  크롤링 결과 디자인  */
 div.thumb img{
 	width: 90px;
 	height: 90px;
+	border-radius: 50px;
 }
-ul.review.row .col{
+ul.review li{
+	border: 1px #e0e0e0 solid;
+    border-radius: 25px;
+    padding:15px;
+    margin-bottom: 15px;
+}
+/* ul.review.row .col{
 	padding : 15px;
-}
+} */
 ul.review .thumb_num{
 	display:none;
 }
@@ -30,10 +38,20 @@ ul.review .sh_blog_passage{
 	margin-left:0px;
 }
 
+ul.review dt{
+	height: 45px;
+}
+
 .crawhide{
 	display:none;
 }
 
+div.keyword{
+	width:80%;
+	border: 2px #424242 solid;
+    border-radius: 25px;
+    margin-bottom:10px;
+}
 div.keyword li{
 	list-style: none;
 }
@@ -44,9 +62,10 @@ div.keyword h5{
 }
 div.keyword strong{
 	font-size:14px;
-	background-color: blue;
+	background-color: #3949ab;
 	color:white;
 	padding:5px;
+	border-radius: 50px;
 }
 div.txt{
 	margin:3px;
@@ -55,7 +74,7 @@ div.txt{
 /* -------------------- */
 .showinfoform{
 	margin-top:5%;
-	width:80%;
+	width:85%;
 	padding:20px;
 }
 .showinfo_card{
@@ -73,6 +92,9 @@ div.txt{
 
 div.showinfo_btn input{
 	margin-bottom: 5px;
+}
+.parallax-container {
+    height: 300px;
 }
 
 @media only screen and (min-width : 300px) and (max-width : 600px) {
@@ -93,24 +115,31 @@ div.showinfo_btn input{
 
 @media only screen and (min-width : 601px){
 	ul.review li{
-		height:300px;
+		height:455px;
+	}
+	ul.review dt{
+		height: 60px;
 	}
 }
 @media only screen and (min-width : 993px){
 	ul.review li{
-		height:360px;
+		height:505px;
 	}
 }
 @media only screen and (min-width : 1360px){
 	ul.review li{
-		height:300px;
+		height:430px;
 	}
 }
 </style>
-
 <div class="container z-depth-3 showinfoform">
 	<div class="center-align">
-		<h4>${store.store_name} 메뉴</h4>
+		<div class="parallax-container">
+		<div class="parallax"><img src="${store.store_image}" width="100%"></div>
+		<div style="background-color: gray; opacity:0.8; bottom: 0px; width:100%; position: absolute;">
+			<h4 style="color:white">${store.store_name} 메뉴</h4>
+		</div>
+		</div>
 		 	<label>메뉴종류</label>
 		 	<center>
 				<select class="browser-default" id="menu_type" style="width:40%">
@@ -180,41 +209,44 @@ div.showinfo_btn input{
 					<c:choose>
 						<c:when test="${crawl2 != null}">
 						<div class="showinfo_btn center-align col s12 m6">
-							<div class="keyword">
-								<h5>테마키워드</h5>
-							 	${crawl2}
-							 </div>
+							<center>
+								<div class="keyword">
+									<h5>테마키워드</h5>
+								 	${crawl2}
+								</div>
+							</center>
 						<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br>
 						<input type="button" value="재 검색" class="btn green" id="re_search"><br>
 						<input type="button" value="메인이동" class="btn red" id="main_load"><br>
 						<a id="kakao-link-btn" href="javascript:sendLink()">
 							<img width="35px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
 						</a>
+						</div>
 						</c:when>
 						<c:otherwise>
-						<div class="showinfo_btn center-align col s12 m6" style="margin-top:5%;">
+						<div class="showinfo_btn center-align col s12 m6" style="margin-top:10%;">
 						<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br>
 						<input type="button" value="재 검색" class="btn green" id="re_search"><br>
 						<input type="button" value="메인이동" class="btn red" id="main_load"><br>
 						<a id="kakao-link-btn" href="javascript:sendLink()">
 							<img width="35px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
 						</a>
+						</div>
 						</c:otherwise>
 					</c:choose>
-					</div>
 				</div>
 			</div>
 			<div class="center-align">
 				<h5>추천 블로그</h5>
 				<ul class="review row">
 					<c:forEach items="${crawl}" var="craw">
-						<div class="onepage">
+						<div class="onepage col s12 m6 l4" name="blogs">
 							${craw}
 							</li>
 						</div>
 					</c:forEach>
 					<c:forEach items="${crawl1}" var="craw1">
-						<div class="twopage">
+						<div class="twopage col s12 m6 l4" name="blogs">
 							${craw1}
 							</li>
 						</div>
@@ -231,7 +263,24 @@ div.showinfo_btn input{
 </div>
 
 <script type="text/javascript">
-	$('ul.review li').addClass('z-depth-1').addClass('col s12 m6 l4');
+	$('ul.review div[name=blogs] dt').after('<p style=\"border:1px gray solid; margin-left:20%;margin-right:20%;margin-top:5px;margin-bottom:5px;\">');
+	$('ul.review dd.txt_inline').css('color','pink');
+	$('div[name=blogs] li.sh_blog_top').each(function(i){
+		var thumb = $(this).children('div.thumb').html();
+
+		var bloger = $(this).children('dl').children('dd.txt_block').children().children('a.txt84').html();
+		var url = $(this).children('dl').children('dd.txt_block').children().children('a.url').html().split('/')[0];
+
+		$(this).append('<p style=\"border:1px #e0e0e0 solid; margin-left:30%;margin-right:30%;margin-top:5px;margin-bottom:15px;\">');
+		$(this).append("<span style=\"color:#ff4081\">By. "+"</span>"+bloger+"<br>");
+		$(this).append("<span style=\"color:#ff4081\">FROM. "+"</span>"+url);
+		
+		if(thumb == null)
+			{
+				var href = $(this).children('dl').children().children().attr('href');
+				$(this).prepend('<div class=\"thumb thumb-rollover\"><a href=\"'+href+'\" target=\"_blank\"><img src=\"resources/img/no-thumb.png"></a></div>');
+			}
+	});
 	var crawmax = $('div.onepage li.sh_blog_top').length;
 	var crawmax1 = $('div.twopage li.sh_blog_top').length;
 	var crawstart = 7;
@@ -245,6 +294,7 @@ div.showinfo_btn input{
 		$('ul.review div.twopage li#sp_blog_'+i).addClass('crawhide');
 	}
 $(document).ready(function() {
+		$('.parallax').parallax();
 		$('#showcrawl').on('click',function(){
 			if(crawstart > crawmax){
 				if(crawstart1 >= crawmax1)

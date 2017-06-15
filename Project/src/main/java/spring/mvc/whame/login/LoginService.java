@@ -14,4 +14,5 @@ public interface LoginService {
 	public void re_img(MemberVO membervo);
 	
 	public MemberVO kakao(KakaoVO kvo);
+	public MemberVO facebook(FaceBookVO fvo);
 }

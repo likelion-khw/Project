@@ -1,6 +1,9 @@
 package spring.mvc.whame;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
+import spring.mvc.whame.store.StoreInitVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 
@@ -25,6 +29,15 @@ public class WhameServiceImpl implements WhameService{
 	
 	@Autowired
 	HistoryDAO hdao;
+	
+	private List<StoreInitVO> storeInit;
+	private List<MenuVO> menuInit;
+	
+	@PostConstruct
+	public void init(){
+		storeInit = dao.getAllinitData();
+		menuInit = dao.getAllMenu();
+	}
 	
 	@Override
 	public List<TextVO> ocr(String filename) {
@@ -197,5 +210,29 @@ public class WhameServiceImpl implements WhameService{
 	
 	public void removeHistory(HistoryVO historyvo){
 		hdao.removeHistory(historyvo);
+	}
+	
+	public List<StoreInitVO> tagResult(String menuSearch, String choice){
+		List<StoreInitVO> result = new ArrayList<StoreInitVO>();
+		if(choice.equals("tag")){
+			for(int i = 0; i < storeInit.size(); i++){
+				if(menuSearch.equals(storeInit.get(i).getStore_category())){
+					result.add(storeInit.get(i));
+				}
+			}
+		}else if(choice.equals("search")){
+			for(int i = 0; i < menuInit.size(); i++){
+				if(menuInit.get(i).getMenu_name().contains(menuSearch)){
+					for(int j = 0; j<storeInit.size(); j++){
+						if(menuInit.get(i).getStore_code() == storeInit.get(j).getStore_code())
+						{
+							result.add(storeInit.get(j));
+						}
+						
+					}
+				}
+			}
+		}
+		return result;
 	}
 }

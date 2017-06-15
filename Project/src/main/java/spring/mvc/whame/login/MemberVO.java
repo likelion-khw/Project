@@ -10,6 +10,7 @@ public class MemberVO {
 	private String userimage;
 	private String nickname;
 	private String kakaoauth;
+	private String facebookauth;
 	
 	public MemberVO() {
 	}
@@ -59,7 +60,14 @@ public class MemberVO {
 	public void setKakaoauth(String kakaoauth) {
 		this.kakaoauth = kakaoauth;
 	}
-	
+
+	public String getFacebookauth() {
+		return facebookauth;
+	}
+
+	public void setFacebookauth(String facebookauth) {
+		this.facebookauth = facebookauth;
+	}
 	
 
 

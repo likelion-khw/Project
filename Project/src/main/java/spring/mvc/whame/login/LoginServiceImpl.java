@@ -42,4 +42,8 @@ public class LoginServiceImpl implements LoginService {
 	public MemberVO kakao(KakaoVO kvo){
 		return dao.kakao(kvo);
 	}
+	
+	public MemberVO facebook(FaceBookVO fvo){
+		return dao.facebook(fvo);
+	}
 }

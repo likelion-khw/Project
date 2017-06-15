@@ -34,6 +34,7 @@ import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
+import spring.mvc.whame.store.StoreInitVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 
@@ -42,6 +43,9 @@ public class WhameController {
 
 	@Autowired
 	S3Util s3;
+	
+	@Autowired
+	StoreInitVO storeinitvo;
 
 	@Autowired
 	WhameService service;
@@ -94,12 +98,13 @@ public class WhameController {
 		LocationVO location = service.getLocation_info(store_code);
 		StoreVO store = service.getStore_info(store_code);
 		List<String> menutype = service.getMenuDistinct(store_code);
+		List<CouponVO> couponlist = service.getCoupon(store_code); 
 		String[] craws = craw.run(location.getDong(), store.getStore_name());
 		String[] crawl = craws[0].split("</li>");
 		String[] crawl1 = craws[1].split("</li>");
 		String crawl2 = craws[2];
 		
-	
+		mav.addObject("couponlist", couponlist);
 		mav.addObject("crawl", crawl);
 		mav.addObject("crawl1", crawl1);
 		mav.addObject("crawl2", crawl2);
@@ -116,7 +121,7 @@ public class WhameController {
 		ModelAndView mav = new ModelAndView();
 		List<TextVO> result = service.ocr(filepath);
 		ColorVO color = service.color(filepath);
-
+		System.out.println(color.getRed() +":" + color.getBlue() + ":"+ color.getGreen());
 		whame.setColor(color);
 		whame.setText(result);
 		whame.setLat(lat);
@@ -206,8 +211,9 @@ public class WhameController {
 				filepath = s3.fileUpload(bucketName, convFile);
 				String imgurl = s3.getFileURL(bucketName, filepath).split("AWSAccessKeyId")[0];
 				System.out.println("=========enrollconnect imgurl=======" + imgurl);
-				mav.addObject("imgurl", imgurl);
+				storevo.setStore_image(imgurl);
 				enrollStore = storevo;
+				mav.addObject("imgurl", imgurl);
 				mav.setViewName("body/image_e");
 			} else {
 				mav.setViewName("redirect:/login.whame");
@@ -244,37 +250,36 @@ public class WhameController {
 	@RequestMapping(value = "menuUpload.whame", method = RequestMethod.POST)
 	public ModelAndView menuUpload(HttpServletRequest request, @ModelAttribute("locationVO") LocationVO lvo) {
 		System.out.println(lvo.getAddress());
-		String[] menulist = request.getParameterValues("menulist");
+		ModelAndView mav = new ModelAndView();
 		int store_code = Integer.parseInt(request.getParameter("store_code"));
-
 		lvo.setRcode(enrollStore.getRcode());
 		lvo.setStore_code(store_code);
 		lvo.setDong(enrollStore.getDong());
-		System.out.println("menuupload==>" + lvo.getAddress());
-		System.out.println("lal ?�??=>" + lvo.getLat() + ":::" + lvo.getLon());
 		service.setLocation(lvo);
-		System.out.println(menulist.length);
+		
+		String[] menulist = request.getParameterValues("menulist");
 
-		int[] menuListInt = new int[menulist.length];
-		List<MenuVO> menuList = new ArrayList<MenuVO>();
-
-		for (int i = 0; i < menulist.length; i++) {
-			System.out.println(menulist[i]);
-			String menuval[] = menulist[i].split(":");
-			menuListInt[i] = Integer.parseInt(menuval[1]);
-
-			MenuVO menu = new MenuVO();
-			menu.setStore_code(store_code);
-			menu.setMenu_name(menuval[0]);
-			menu.setMenu_price(menuListInt[i]);
-			menu.setMenu_type(menuval[2]);
-			menuList.add(menu);
+		if(menulist != null){
+			int[] menuListInt = new int[menulist.length];
+			List<MenuVO> menuList = new ArrayList<MenuVO>();
+	
+			for (int i = 0; i < menulist.length; i++) {
+				System.out.println(menulist[i]);
+				String menuval[] = menulist[i].split(":");
+				menuListInt[i] = Integer.parseInt(menuval[1]);
+	
+				MenuVO menu = new MenuVO();
+				menu.setStore_code(store_code);
+				menu.setMenu_name(menuval[0]);
+				menu.setMenu_price(menuListInt[i]);
+				menu.setMenu_type(menuval[2]);
+				menuList.add(menu);
+			}
+	
+			int menuNum = service.insertmenu(menuList);
+			
+			mav.addObject("menuNum", menuNum);
 		}
-
-		int menuNum = service.insertmenu(menuList);
-
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("menuNum", menuNum);
 		mav.setViewName("redirect:/store.whame");
 		return mav;
 	}
@@ -511,6 +516,12 @@ public class WhameController {
 	@RequestMapping(value="removeHistory.whame", method=RequestMethod.POST)
 	public void removehistory(HistoryVO historyvo){
 		service.removeHistory(historyvo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="search.whame", method=RequestMethod.POST)
+	public List<StoreInitVO> getSearchStore(String menuSearch, String choice){
+		return service.tagResult(menuSearch, choice);
 	}
 	
 }

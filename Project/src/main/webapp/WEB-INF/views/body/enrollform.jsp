@@ -4,6 +4,8 @@
 <style>
 .enrollform{
 	margin-top:20px;
+	padding:20px;
+	width: 85%;
 }
 
 .enrollform th{
@@ -13,7 +15,9 @@
 .mb_enform{
 	display: none;
 }
-
+.row .col.s3{
+	width: 20%;
+}
 @media only screen and (min-width : 321px) and (max-width : 600px) {
 	.enrollform{
 	width:90%;
@@ -34,13 +38,13 @@
 		text-align: center;
 		font-size:20px;
 		background-color: #eceff1;
-		border-style: groove;
+		border-radius:40px;
 	}
 }
 </style>
 <!-- jQuery와 Postcodify를 로딩한다 -->
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-<div class="container center-align enrollform">
+<div class="container center-align enrollform z-depth-3">
 <h4>${memberVO.nickname} 님<br> 상점을 등록 페이지</h4>
 	<form action="enrollconnect.whame" method="post"  enctype="multipart/form-data" id="enroll_form">
 	 <input type="hidden" name="userid" value="${memberVO.userid}"> 

@@ -36,7 +36,8 @@
  	<update id="re_img" parameterType="membervo">
  		update vm_user set userimage = #{userimage} where userid = #{userid}
  	</update>
- 	 	
+ 	
+ 	<!-- 카카오톡  -->
  	<select id="get_kakao" resultType="int" parameterType="kakaovo">
  		select count(*) from kakao_user where kakaoauth = #{kakaoauth}
   	</select>
@@ -47,6 +48,19 @@
   	
   	<insert id="new_kakao" parameterType="kakaovo">
   		insert into kakao_user values(#{userid},#{kakaoauth},#{nickname},#{userimage})
+  	</insert>
+  	
+  	<!-- 페이스북 -->
+  	<select id="get_facebook" resultType="int" parameterType="facebookvo">
+ 		select count(*) from facebook_user where facebookauth = #{facebookauth}
+  	</select>
+  	
+  	<select id="login_facebook" resultType="membervo" parameterType="facebookvo">
+  		select userid, facebookauth, nickname, userimage from facebook_user where facebookauth = #{facebookauth}
+  	</select>
+  	
+  	<insert id="new_facebook" parameterType="facebookvo">
+  		insert into facebook_user values(#{userid},#{facebookauth},#{nickname},#{userimage})
   	</insert>
   	
   	

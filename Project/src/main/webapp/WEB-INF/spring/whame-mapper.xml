@@ -3,7 +3,7 @@
 
 <mapper namespace="whame">
 	<insert id='enroll' parameterType="storevo">
- 		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0, #{store_category})
+ 		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0, #{store_category},#{store_image})
  	</insert>
  	
  	<insert id='setColor' parameterType="colorvo">
@@ -41,16 +41,16 @@
  	<!-- search -->
  	<!-- color+ocr -->
  	 <sql id="color_rate">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 1
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 1
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 1 <!-- between 0 and 0.45 -->
+		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.2
+			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.2
+			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.2 <!-- between 0 and 0.45 -->
 	</sql>
 	
 	<!-- color -->
  	<sql id="color_max">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.1
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.1 
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.1 <!-- between 0 and 0.45 -->
+		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.05
+			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.05 
+			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.05<!-- between 0 and 0.45 -->
 	</sql>
 	
 	<!-- 근방 Xm location -->
@@ -243,5 +243,13 @@
   	
   	<select id="getCountRanklist" resultType="storevo">
   		select * from store where not view_count = 0 order by view_count desc
+  	</select>
+  	
+  	<select id="initAllData" resultType="storeinitvo">
+  		select s.store_code, store_name, address, view_count, store_category, lat, lon from store s, store_location sl where s.store_code = sl.store_code
+  	</select>
+  	
+  	<select id="initAllMenu" resultType="menuvo">
+  		select * from menu
   	</select>
 </mapper>

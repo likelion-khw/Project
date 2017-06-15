@@ -5,7 +5,7 @@
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
+03947296fa39c02cca384bf32800c263&libraries=services"></script>
 <style>
 	.history_form{
 		margin-top:20px;
@@ -19,6 +19,10 @@
 	.history_form .sli{
 		margin-left:auto;
 		margin-right: auto;
+	}
+	.caption{
+		background: #ffffff;
+		background: rgba(255,255,255,0.5);
 	}
 	
 	@media only screen and (min-width : 321px) and (max-width : 600px) {
@@ -45,15 +49,21 @@
 				<li>
 			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
 			        <div class="caption center-align">
-			          <h3>${his.store_code}</h3>
-			          <h5 class="light grey-text text-lighten-3">${his.h_date}</h5>
+			          	<c:forEach items="${storelist }" var="comstore">
+	 				        <c:set value="${comstore.store_code }" var="scode"/>
+	 						<c:set value="${his.store_code}" var="hcode"/>
+	 			        	<c:if test="${scode == hcode }">
+	 			   	       <h3 class="grey-text text-darken-4">${comstore.store_name}</h3>			        
+	 			   	     	</c:if>
+	 		 		       </c:forEach>
+ 			          <h5 class="light grey-text text-darken-2">${his.h_date}</h5>
 			        </div>
 		      	</li>
 			</c:forEach>
 		</ul>
 		<div class="center-align" style="margin-top:4px;">
 			<a href="javascript:"><i class="material-icons small" style="margin-right:35%;" id="left">keyboard_arrow_left</i></a>
-			<a href="javascript:"><i class="material-icons small" style="margin-right:35%;" id="del_his"><span style="color:red">cancel</span></i></a>
+			<a href="javascript:"><i class="material-icons small del_his" style="margin-right:35%;"><span style="color:red">cancel</span></i></a>
 			<a href="javascript:"><i class="material-icons small" id="right">keyboard_arrow_right</i></a>
 		</div>
 	  	</div>
@@ -119,7 +129,7 @@ var positions=[];
 		$(location).attr('href','enroll.whame');
 	});
 
-	$('#del_his').on('click',function(){
+	$('.del_his').on('click',function(){
 		var store_code = $(this).parent().parent().parent().children().children().children().attr('id');
 		var userid = '${memberVO.userid}';
 		$('#history_del').modal('open');
