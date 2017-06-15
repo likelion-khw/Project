@@ -18,6 +18,7 @@ import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
+import spring.mvc.whame.store.StoreInitVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 import spring.mvc.whame.vision.TextApp;
@@ -29,9 +30,17 @@ public class WhameDAO {
 	@Autowired
 	SqlSession session;
 	
+	@Autowired
+	StoreInitVO storeinitvo;
+	
 	TextApp ocr;
 	ColorClass color;
-		
+
+	public List<StoreInitVO> getAllInitData(){
+		List<StoreInitVO> result = session.selectList("whame.initAllData");
+		return result;
+	}
+	
 	public List<TextVO> ocr(String filename){
 		List<TextVO> result=new ArrayList<TextVO>();
 		try {
@@ -265,11 +274,8 @@ public class WhameDAO {
 		return session.selectList("whame.getCategory", store_category);
 	}
 	
-	public List<StoreVO> getTagStore(String tagClick){
-		return session.selectList("whame.getTagStore", tagClick);
-	}
-	
 	public List<StoreVO> getCountRanklist(){
 		return session.selectList("whame.getCountRanklist");
 	}
+
 }

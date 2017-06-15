@@ -24,6 +24,7 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
+	
 
 	<!-- 4.service, dao, vo생성 -->
 	<context:component-scan base-package="spring.mvc.whame"></context:component-scan>

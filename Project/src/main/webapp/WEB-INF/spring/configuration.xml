@@ -19,6 +19,7 @@
 	<typeAlias alias="membervo" type="spring.mvc.whame.login.MemberVO"/>	
 	<typeAlias alias="kakaovo" type="spring.mvc.whame.login.KakaoVO"/>	
 	<typeAlias alias="couponvo" type="spring.mvc.whame.store.CouponVO"/>	
+	<typeAlias alias="storeinitvo" type="spring.mvc.whame.store.StoreInitVO"/>
 </typeAliases> 
 
 <mappers>

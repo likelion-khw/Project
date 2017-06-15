@@ -191,8 +191,6 @@
 			<version>1.6.0</version>
 		</dependency>
 
-
-		<!-- jsondata 파싱을 위한 jar -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>

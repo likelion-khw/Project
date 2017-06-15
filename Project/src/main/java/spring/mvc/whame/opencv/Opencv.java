@@ -11,7 +11,6 @@ import org.bytedeco.javacv.Java2DFrameConverter;
 import org.bytedeco.javacv.OpenCVFrameConverter;
 import org.springframework.stereotype.Component;
 
-@Component
 public class Opencv {
 
 	public String runOpencv(BufferedImage imgurl, ImageVO tvo, String imgurlString) throws Exception {
@@ -62,7 +61,7 @@ public class Opencv {
 		
 		
 		// ������ �̹����� ������ ���.
-		String target = "/Users/woong/Desktop/warping/" + filename;
+		String target = "C:/dev/imgsample/" + filename;
 		opencv_imgcodecs.imwrite(target, warpImg);
 		
 		return target;

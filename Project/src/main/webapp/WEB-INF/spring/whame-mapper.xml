@@ -2,6 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http:mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="whame">
+	
+	<select id="initAllData" resultType="storeinitvo">
+		select s.store_code, store_name, address, view_count, store_category, lat, lon from store s, store_location sl where s.store_code = sl.store_code
+	</select>	
+
+	<select id="initStoreCode" resultType="storeinitvo">
+		select store_code from store
+	</select>
+
+	<select id="initStoreBusinessCode" resultType="storeinitvo">
+		select business_code from store
+	</select>
+
+	<select id="initStoreAddress" resultType="storeinitvo">
+		select address from store_location
+	</select>	
+	
+	<select id="initStoreOperatingTime" resultType="storeinitvo">
+		select operating_time from store
+	</select>	
+
+	<select id="initStoreName" resultType="storeinitvo">
+		select store_name from store
+	</select>
+
+	<select id="initStoreCategory" resultType="storeinitvo">
+		select store_category from store
+	</select>
+	
+	<select id="initStoreViewCount" resultType="storeinitvo">
+		select view_count from store
+	</select>
+	
+
 	<insert id='enroll' parameterType="storevo">
  		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0, #{store_category})
  	</insert>
@@ -231,10 +265,6 @@
  	
  	<select id="getCategory" resultType="String" parameterType="int">
  		select category_name from category where category_no = #{store_category}
-  	</select>
-  	
-  	<select id="getTagStore" resultType="storevo" parameterType="String">
-  		select s.store_code, store_name, address, view_count from store s, store_location sl where s.store_code = sl.store_code and store_category like #{tagClick}
   	</select>
   	
   	<select id="getMenuTypeDistinct" resultType="String" parameterType="int">

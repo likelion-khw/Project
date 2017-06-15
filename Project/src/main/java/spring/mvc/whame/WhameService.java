@@ -1,5 +1,7 @@
 package spring.mvc.whame;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import spring.mvc.whame.color.ColorVO;
@@ -9,10 +11,13 @@ import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
+import spring.mvc.whame.store.StoreInitVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 
 public interface WhameService {
+	
+	
 	public List<TextVO> ocr(String filename);/*StoreVO storevo*/
 	public ColorVO color(String filename);/*StoreVO storevo*/
 	
@@ -61,9 +66,12 @@ public interface WhameService {
 	public void viewcount(int store_code);
 	
 	public List<String> getCategoryDetail(int store_category);
-	public List<StoreVO> getTagStore(String tagClick);
 	
 	public List<StoreVO> getCountRanklist();
 	
 	public void removeHistory(HistoryVO historyvo);
+
+	public HashMap<String, Object> tagResult(String menuSearch, String choice);
+	
+	
 }

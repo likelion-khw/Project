@@ -1,6 +1,10 @@
 package spring.mvc.whame;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,24 +17,83 @@ import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
+import spring.mvc.whame.store.StoreInitVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 
 @Service("whameService")
 public class WhameServiceImpl implements WhameService{
 
-	
 	@Autowired
 	WhameDAO dao;
 	
 	@Autowired
 	HistoryDAO hdao;
+
+	private List<StoreInitVO> storeInit;
+
+	@PostConstruct
+	public void init(){
+		
+		storeInit = dao.getAllInitData();
+
+	}
+	
+	public HashMap<String, Object> tagResult(String menuSearch, String choice){
+		
+		ArrayList<String> store_name = new ArrayList<>();
+		ArrayList<Integer> store_code = new ArrayList<>();
+		ArrayList<String> address = new ArrayList<>();
+		ArrayList<Integer> view_count = new ArrayList<>();
+		ArrayList<String> store_category = new ArrayList<>();
+		ArrayList<Integer> count = new ArrayList<>();
+		
+		if(choice.equals("tag")){
+			System.out.println("tag----" + menuSearch);
+			for(int i = 0; i < storeInit.size(); i++){
+				if(menuSearch.equals(storeInit.get(i).getStore_category())){
+					count.add(i);
+					store_name.add(storeInit.get(i).getStore_name());
+					store_code.add(storeInit.get(i).getStore_code());
+					address.add(storeInit.get(i).getAddress());
+					view_count.add(storeInit.get(i).getView_count());
+					store_category.add(storeInit.get(i).getStore_category());
+					System.out.println(storeInit.get(i).getStore_name());
+				}
+			}
+		}
+		if(choice.equals("search")){
+			System.out.println("menuSearch----" + menuSearch);
+			for(int e = 0; e < storeInit.size(); e++){
+				if(storeInit.get(e).getStore_name().contains(menuSearch)){
+					count.add(e);
+					store_name.add(storeInit.get(e).getStore_name());
+					store_code.add(storeInit.get(e).getStore_code());
+					address.add(storeInit.get(e).getAddress());
+					view_count.add(storeInit.get(e).getView_count());
+					store_category.add(storeInit.get(e).getStore_category());
+				}
+			}
+		}
+
+		HashMap<String, Object> hashResult = new HashMap<String, Object>();
+
+			hashResult.put("store_name", store_name);
+			hashResult.put("store_code", store_code);
+			hashResult.put("address", address);
+			hashResult.put("view_count", view_count);
+			hashResult.put("store_catagory", store_category);
+			hashResult.put("count", count);
+			
+		return hashResult;
+	}
 	
 	@Override
 	public List<TextVO> ocr(String filename) {
 		List<TextVO> result = dao.ocr(filename);
 		return result;
 	}
+
 
 	@Override
 	public ColorVO color(String filename) {
@@ -184,11 +247,6 @@ public class WhameServiceImpl implements WhameService{
 	
 	public List<String> getCategoryDetail(int store_category){	
 		return dao.getCategoryDetail(store_category);
-	}
-	
-	public List<StoreVO> getTagStore(String tagClick){
-		System.out.println(tagClick);
-		return dao.getTagStore(tagClick);
 	}
 	
 	public List<StoreVO> getCountRanklist(){

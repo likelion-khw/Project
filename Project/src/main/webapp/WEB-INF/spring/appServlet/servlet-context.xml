@@ -43,7 +43,7 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
-
+	
 	<context:component-scan base-package="spring.mvc.whame"></context:component-scan>
 	<context:component-scan base-package="spring.mvc.whame.aws"></context:component-scan>
 	<context:component-scan base-package="spring.mvc.whame.store"></context:component-scan>

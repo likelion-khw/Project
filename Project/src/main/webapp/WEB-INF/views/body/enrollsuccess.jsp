@@ -5,7 +5,7 @@
 	MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 	int num = 0;
 %>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=f0f441314c4cc2b255e1663dc273009f&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=922df9ba00cb62f7b7fd9ff6e2e2af5e&libraries=services"></script>
 <style>
 .menu_view{
 	margin-top:20px;
@@ -55,7 +55,6 @@
 	</div>
 	<div id="map" style="width: 100%; height: 350px;"></div>
 </div>
-
 <script type="text/javascript">
 	/* window.onload = function(){ */
 	$('.insBtn')
