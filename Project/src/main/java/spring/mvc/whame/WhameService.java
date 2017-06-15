@@ -68,7 +68,7 @@ public interface WhameService {
 	
 	public void removeHistory(HistoryVO historyvo);
 	
-	public List<StoreInitVO> tagResult(String menuSearch, String choice);
+	public List<StoreInitVO> tagResult(String menuSearch, String choice, WhameVO wvo);
 	
 	public List<StoreVO> getNewStore();
 }

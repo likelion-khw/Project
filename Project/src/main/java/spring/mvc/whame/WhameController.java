@@ -522,8 +522,16 @@ public class WhameController {
 	
 	@ResponseBody
 	@RequestMapping(value="search.whame", method=RequestMethod.POST)
-	public List<StoreInitVO> getSearchStore(String menuSearch, String choice){
-		return service.tagResult(menuSearch, choice);
+	public List<StoreInitVO> getSearchStore(String menuSearch, String choice, double clat, double clon){
+		System.out.println("clat"+clat);
+		MapTest mt = new MapTest();
+		difflal = mt.run(clat, 200);
+		WhameVO wvo = new WhameVO();
+		wvo.setLat(clat);
+		wvo.setLon(clon);
+		wvo.setDifflat(difflal.get(0));
+		wvo.setDifflon(difflal.get(1));
+		return service.tagResult(menuSearch, choice, wvo);
 	}
 	
 }

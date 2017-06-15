@@ -51,7 +51,7 @@
 			</span>
 		</p>
 	</div>
-	
+	<div id='lal'></div>
 	<div class="count"></div>
 	<div class="row storeList"></div>
 </div>
@@ -64,6 +64,7 @@ var storeAddr = [];
 var storeVC = [];
 
 $(document).ready(function(){
+	navigator.geolocation.getCurrentPosition(showPosition,showError);
 	
 	$('#searchbutton').click(function(){
 		var menuSearch = $("#inputMenu").val();
@@ -109,7 +110,11 @@ $(document).ready(function(){
 			search(menuSearch, choice);
 		});
 		
+
+		
+		
 	})
+	
 	
 	$(document).on('click','a[class=tagStore]',function(){
 		var store_code = $(this).attr('id');
@@ -119,7 +124,34 @@ $(document).ready(function(){
 		
 	})
 	
+	function showPosition(position) {
+			$.when( 
+				lat = position.coords.latitude,
+				lng = position.coords.longitude
+			).then(function(){
+				document.getElementById("lal").innerHTML += "<input type=hidden name=lat id='lat' value=" + lat+ ">"
+				+"<input type=hidden id='lon' name=lon value=" + lng + ">";
+			});
+			console.log("===="+lat+":::"+lng);
+			}
+		
+		function showError(error)
+		{
+			var no_text;
+			lat = 37.520498;
+			lng = 127.022959;
+			document.getElementById("lal").innerHTML += "<input type=hidden name=lat id='lat' value=" + lat+ ">"
+			+"<input type=hidden id='lon' name=lon value=" + lng + ">";
+		}
+		
 	var search = function(menuSearch, choice){
+		var lat;
+		var lng;
+		
+		
+		var clat = $('#lat').val();
+		var clon = $('#lon').val();
+		
 		console.log("연결성공");
 		$('.count').empty();
 		$.ajax({
@@ -127,7 +159,9 @@ $(document).ready(function(){
 				type: "POST",
 				data: {
 					"menuSearch": menuSearch,
-					"choice" : choice	
+					"choice" : choice,	
+					"clat" : clat,
+					"clon" : clon
 				},
 				success: function(data){
 					console.log(data.length);

@@ -287,4 +287,8 @@ public class WhameDAO {
 	public List<StoreVO> getNewStore(){
 		return session.selectList("whame.getNewStore");
 	}
+	
+	public List<Integer> getCategoryLoc(WhameVO wvo){
+		return session.selectList("whame.searchLoc", wvo);
+	}
 }

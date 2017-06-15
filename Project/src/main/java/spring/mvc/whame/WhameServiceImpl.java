@@ -212,12 +212,17 @@ public class WhameServiceImpl implements WhameService{
 		hdao.removeHistory(historyvo);
 	}
 	
-	public List<StoreInitVO> tagResult(String menuSearch, String choice){
+	public List<StoreInitVO> tagResult(String menuSearch, String choice, WhameVO wvo){
 		List<StoreInitVO> result = new ArrayList<StoreInitVO>();
+		List<Integer> cloc_code = dao.getCategoryLoc(wvo);
 		if(choice.equals("tag")){
 			for(int i = 0; i < storeInit.size(); i++){
 				if(menuSearch.equals(storeInit.get(i).getStore_category())){
-					result.add(storeInit.get(i));
+					for(Integer j : cloc_code){
+						if(j == storeInit.get(i).getStore_code()){
+							result.add(storeInit.get(i));						
+						}
+					}
 				}
 			}
 		}else if(choice.equals("search")){
