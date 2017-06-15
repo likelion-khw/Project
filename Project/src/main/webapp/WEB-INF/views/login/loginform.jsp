@@ -121,9 +121,9 @@
 			    </div>
 				<div class="input-field">
 					<%if(state.equals("t")){ %>
-			    	  <input value="<%=userpw %>" id="pw" type="password" class="validate" name="pw">
+			    	  <input value="<%=userpw %>" id="pw" type="password" class="validate" name="pw" onkeyup="enterkey();">
 			    	<%}else{ %>
-			    	<input value="" id="pw" type="password" class="validate" name="pw">
+			    	<input value="" id="pw" type="password" class="validate" name="pw" onkeyup="enterkey();">
 			    	<%} %>
 			      <label class="active" for="pw">패스워드</label>
 			    </div>

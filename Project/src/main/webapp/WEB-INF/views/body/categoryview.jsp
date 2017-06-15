@@ -168,22 +168,22 @@ $(document).ready(function(){
 					$('.count').append("총 " + data.length +"곳을 찾았습니다");
 					
 					for(var i = 0 ; i < data.length; i++){
-					var storeList = $(
-					        "<div class='col s12 m4' id='"+data[i].store_name.replace("\\(\\)","")+"'>"
-					          +"<div class='card'>"
-					            +"<div class='card-image'>"
-					              +"<img src='resources/img/4.jpg'>"
-					            +"</div>"
-					            +"<div class='card-content'>"
-					            	+"<p class='viewcount'> 조회수 - "+ data[i].view_count+"</p>"
-				            		+"<div class='address'>"+data[i].address+"</div>"
-					            +"</div>"
-					            +"<div class='card-action' style='height:70px;'>"
-					              +"<a href='javascript:tag()' class='tagStore' id='"+data[i].store_code+"'>"+data[i].store_name.replace("\\(\\)","")+"</a>"
-					            +"</div>"
-					          +"</div>"
-					        +"</div>"
-					)
+						var storeList = $(
+						        "<div class='col s12 m4' id='"+data[i].store_name.replace("\\(\\)","")+"'>"
+						          +"<div class='card'>"
+						            +"<div class='card-image'>"
+						              +"<img src='"+data[i].store_image+"' width='100%' height='200px;'>"
+						            +"</div>"
+						            +"<div class='card-content'>"
+						            	+"<p class='viewcount'> 조회수 - "+ data[i].view_count+"</p>"
+					            		+"<div class='address'>"+data[i].address+"</div>"
+						            +"</div>"
+						            +"<div class='card-action' style='height:70px;'>"
+						              +"<a href='javascript:tag()' class='tagStore' id='"+data[i].store_code+"'>"+data[i].store_name.replace("\\(\\)","")+"</a>"
+						            +"</div>"
+						          +"</div>"
+						        +"</div>"
+						)
 						$(".storeList").append(storeList);
 					}
 					

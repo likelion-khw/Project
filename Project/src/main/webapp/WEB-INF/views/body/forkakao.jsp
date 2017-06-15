@@ -111,6 +111,15 @@ div.showinfo_btn input{
 		margin-left:auto;
 		margin-right: auto;
 	}
+	.parallax img{
+		width: 130%;
+	}
+	.parallax-container {
+    	height: 200px;
+	}
+	.card .card-title{
+		font-size: 18px;
+	}
 }
 
 @media only screen and (min-width : 601px){

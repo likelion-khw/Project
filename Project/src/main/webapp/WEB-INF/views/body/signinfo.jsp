@@ -5,6 +5,7 @@
 <%@include file="../modal/show_coupon_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
 c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <style>
 /*  크롤링 결과 디자인  */
 div.thumb img{
@@ -94,6 +95,9 @@ div.txt{
 div.showinfo_btn input{
 	margin-bottom: 5px;
 }
+.parallax-container {
+    height: 300px;
+}
 @media only screen and (min-width : 300px) and (max-width : 600px) {
 
 	.showinfoform{
@@ -107,6 +111,12 @@ div.showinfo_btn input{
 		width:100%;
 		margin-left:auto;
 		margin-right: auto;
+	}
+	.parallax img{
+		width: 130%;
+	}
+	.parallax-container {
+    	height: 200px;
 	}
 }
 @media only screen and (min-width : 601px){
@@ -153,7 +163,12 @@ div.showinfo_btn input{
 				</tbody>
 			</table> --%>
 			<div class="center-align">
-				<h4>${store.store_name} 메뉴</h4>
+				<div class="parallax-container">
+					<div class="parallax"><img src="${store.store_image}" width="100%"></div>
+					<div style="background-color: gray; opacity:0.8; bottom: 0px; width:100%; position: absolute;">
+						<h4 style="color:white">${store.store_name} 메뉴</h4>
+					</div>
+				</div>
 			 	<label>메뉴종류</label>
 			 	<center>
 					<select class="browser-default" id="menu_type" style="width:40%">
@@ -310,6 +325,7 @@ div.showinfo_btn input{
 		$('ul.review div.twopage li#sp_blog_'+i).addClass('crawhide');
 	}
 $(document).ready(function() {
+			$('.parallax').parallax();
 	 		// 블로그 더보기 이벤트
 			$('#showcrawl').on('click',function(){
 				if(crawstart > crawmax){
