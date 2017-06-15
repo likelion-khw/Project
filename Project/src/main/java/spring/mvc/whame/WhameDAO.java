@@ -283,4 +283,8 @@ public class WhameDAO {
 	public List<MenuVO> getAllMenu(){
 		return session.selectList("whame.initAllMenu");
 	}
+	
+	public List<StoreVO> getNewStore(){
+		return session.selectList("whame.getNewStore");
+	}
 }
