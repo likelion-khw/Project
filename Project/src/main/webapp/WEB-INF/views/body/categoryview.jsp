@@ -36,8 +36,10 @@
 <div class="container category_form center-align"> 
 	<div class="search-class">
 		<p>
-			<input type="text" id="search-input" placeholder="메뉴를 입력해주세요" style="width:40%">
-			<button id="search-button" class="btn">검색</button><br>
+			<input type="text" id="inputMenu" placeholder="메뉴를 입력해주세요" style="width:40%">
+			<div class="input">
+				<button id="searchbutton" class="btn">검색</button><br>
+			</div>
 			<span id="tagMenu">
 				<a href="javascript:ta" class="menu_tag" id="tagChicken">치킨</a>
 				 |  <a href="javascript:ta" class="menu_tag" id="tagPizza">피자</a>
@@ -49,82 +51,114 @@
 			</span>
 		</p>
 	</div>
-
+	
+	<div class="count"></div>
 	<div class="row storeList"></div>
 </div>
 		
 
 <script type="text/javascript">
+var storeName = [];
+var storeCode = [];
+var storeAddr = [];
+var storeVC = [];
+
 $(document).ready(function(){
+	
+	$('#searchbutton').click(function(){
+		var menuSearch = $("#inputMenu").val();
+		var choice = "search";
+		$('.storeList').empty();
+		search(menuSearch, choice);
+		
+	});
+	
 	$('a[class=menu_tag]').on('click',function(){
 		$('.storeList').empty();
 		
-	var tagClick;
-	
-	if($(this).attr('id')=="tagChicken"){
-		tagClick = "치킨";
-	} 
-	if($(this).attr('id')=="tagPizza"){
-		tagClick = "피자";
-	}
-	
-	if($(this).attr('id')=="tagPoke"){
-		tagClick = "삼겹살";
-	}
-	
-	if($(this).attr('id')=="tagChinese"){
-		tagClick = "중국집";
-	}
+		var menuSearch;
 		
-	if($(this).attr('id')=="tagSnackBar"){
-		tagClick = "분식";
-	} 
-	if($(this).attr('id')=="tagBurger"){
-		tagClick = "햄버거";
-	}
+		if($(this).attr('id')=="tagChicken"){
+			menuSearch = "치킨";
+		} 
+		
+		if($(this).attr('id')=="tagPizza"){
+			menuSearch = "피자";
+		}
+		
+		if($(this).attr('id')=="tagPoke"){
+			menuSearch = "삼겹살";
+		}
+		
+		if($(this).attr('id')=="tagChinese"){
+			menuSearch = "중국집";
+		}
+			
+		if($(this).attr('id')=="tagSnackBar"){
+			menuSearch = "분식";
+		} 
+		if($(this).attr('id')=="tagBurger"){
+			menuSearch = "햄버거";
+		}
+		
+		if($(this).attr('id')=="tagCafe"){
+			menuSearch = "카페";
+		}
+		
+		var choice = "tag";
+			search(menuSearch, choice);
+		});
+		
+	})
 	
-	if($(this).attr('id')=="tagCafe"){
-		tagClick = "카페";
-	}
+	$(document).on('click','a[class=tagStore]',function(){
+		var store_code = $(this).attr('id');
+		console.log(store_code);
+			
+		$(location).attr("href", "forkakao.whame?store_code="+store_code);
+		
+	})
 	
+	var search = function(menuSearch, choice){
+		console.log("연결성공");
+		$('.count').empty();
 		$.ajax({
-			url: "getTagStore.whame",
-			type: "POST",
-			data: {"tagClick" : tagClick},
-			success: function(data){
-				for(var index=0; index<data.length; index++){
+				url: "search.whame",
+				type: "POST",
+				data: {
+					"menuSearch": menuSearch,
+					"choice" : choice	
+				},
+				success: function(data){
+					console.log(data.length);
+					$('.count').append("총 " + data.length +"곳을 찾았습니다");
+					
+					for(var i = 0 ; i < data.length; i++){
 					var storeList = $(
-					        "<div class='col s12 m4' id='"+data[index].store_name+"'>"
+					        "<div class='col s12 m4' id='"+data[i].store_name.replace("\\(\\)","")+"'>"
 					          +"<div class='card'>"
 					            +"<div class='card-image'>"
 					              +"<img src='resources/img/4.jpg'>"
 					            +"</div>"
 					            +"<div class='card-content'>"
-					            	+"<p class='viewCount'> 조회수 - "+ data[index].view_count+"</p>"
-				            		+"<div class='addr'>"+data[index].address+"</div>"
+					            	+"<p class='viewcount'> 조회수 - "+ data[i].view_count+"</p>"
+				            		+"<div class='address'>"+data[i].address+"</div>"
 					            +"</div>"
-					            +"<div class='card-action'>"
-					              +"<a href='javascript:tag()' class='tagStore' id='"+data[index].store_code+"'>"+data[index].store_name+"</a>"
+					            +"<div class='card-action' style='height:70px;'>"
+					              +"<a href='javascript:tag()' class='tagStore' id='"+data[i].store_code+"'>"+data[i].store_name.replace("\\(\\)","")+"</a>"
 					            +"</div>"
 					          +"</div>"
 					        +"</div>"
 					)
-					$(".storeList").append(storeList);
-			}
-			}, error: function(){
-				alert("태그 사용불가");
+						$(".storeList").append(storeList);
+					}
+					
+					$('.tagStore').css('font-size','0.85rem');
+					$('.viewcount').css('font-size','0.9rem');
+					$('.address').css('font-size','0.9rem');
+				}, error: function(){
+					alert("다시한번 검색하십시오");
 			}
 		});
-	});
-	
-	
-	
-	$(document).on('click','a[class=tagStore]',function(){
-		
-		var store_code = $(this).attr('id');
-		console.log(store_code);
-		$(location).attr("href", "forkakao.whame?store_code="+store_code);
-	
-	})
-})
+	}
 </script>

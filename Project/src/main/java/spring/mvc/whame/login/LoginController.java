@@ -3,11 +3,13 @@ package spring.mvc.whame.login;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,7 +41,30 @@ public class LoginController {
 
 	// 로그인 완료시에 실행되는 세션 저장 메소드
 	@RequestMapping(value="success.whame", method=RequestMethod.POST)
-	public String setSession2(MemberVO vo) {
+	public String setSession2(MemberVO vo, HttpServletResponse res, String idsave) {
+		Cookie id = null;
+		Cookie pw = null;
+		Cookie state = null;
+		if(vo.getPw() != null){
+			if(idsave.equals("true"))
+			{
+				System.out.println("쿠키생성");
+				id = new Cookie("userid", vo.getUserid());
+				pw = new Cookie("pw", vo.getPw());
+				state  = new Cookie("state", "t");
+				id.setMaxAge(60*365);
+				pw.setMaxAge(60*365);
+				state.setMaxAge(60*365);
+				res.addCookie(id);
+				res.addCookie(pw);
+				res.addCookie(state);
+			}else if(idsave.equals("false"))
+			{
+				System.out.println("저장안함");
+				state = new Cookie("state","f");
+				res.addCookie(state);
+			}
+		}
 		return "main/main";
 	}
 	
@@ -148,6 +173,13 @@ public class LoginController {
 	@RequestMapping(value="kakao.whame", method=RequestMethod.POST)
 	public MemberVO kakao(KakaoVO kvo){
 		mvo = service.kakao(kvo);
+		return mvo;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="facebook.whame", method=RequestMethod.POST)
+	public MemberVO facebook(FaceBookVO fvo){
+		mvo = service.facebook(fvo);
 		return mvo;
 	}
 

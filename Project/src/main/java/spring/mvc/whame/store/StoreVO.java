@@ -14,6 +14,7 @@ public class StoreVO {
 		private String operating_time;
 		private String store_name;
 		private String store_category;
+		private String store_image;
 		private int view_count;
 		
 		private int rcode;//r
@@ -111,6 +112,13 @@ public class StoreVO {
 		}
 		public void setDong(String dong) {
 			this.dong = dong;
+		}
+		
+		public String getStore_image() {
+			return store_image;
+		}
+		public void setStore_image(String store_image) {
+			this.store_image = store_image;
 		}
 		@Override
 		public String toString() {

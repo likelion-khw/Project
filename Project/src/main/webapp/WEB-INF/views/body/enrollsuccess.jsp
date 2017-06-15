@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="spring.mvc.whame.login.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@include file="../modal/infomodal.jsp" %>
 <%
 	MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 	int num = 0;
 %>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
 .menu_view{
@@ -12,6 +14,12 @@
 	margin-bottom:20px;
 }
 </style>
+<script type="text/javascript">
+var modalopen = function(){
+	$('#enroll_menu_select').modal('open');
+}
+</script>
+<body onload="modalopen();">
 <div class="container center-align">
 	<div class="menu_view">
 	<h4><%=membervo.getNickname()%>님 ${store_name}의 초기 메뉴를 업로드하세요.
@@ -55,6 +63,7 @@
 	</div>
 	<div id="map" style="width: 100%; height: 350px;"></div>
 </div>
+</body>
 
 <script type="text/javascript">
 	/* window.onload = function(){ */
@@ -116,4 +125,9 @@
 						}
 					});
 	//}
+		
+		$('#enroll_menu_no').on('click',function(){
+			$('#menuform').submit();
+		});
+	
 </script>

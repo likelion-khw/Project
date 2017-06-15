@@ -9,6 +9,7 @@ import spring.mvc.whame.region.RegionVO;
 import spring.mvc.whame.store.CouponVO;
 import spring.mvc.whame.store.MenuVO;
 import spring.mvc.whame.store.ReMenuVO;
+import spring.mvc.whame.store.StoreInitVO;
 import spring.mvc.whame.store.StoreVO;
 import spring.mvc.whame.store.TypeVO;
 
@@ -66,4 +67,6 @@ public interface WhameService {
 	public List<StoreVO> getCountRanklist();
 	
 	public void removeHistory(HistoryVO historyvo);
+	
+	public List<StoreInitVO> tagResult(String menuSearch, String choice);
 }

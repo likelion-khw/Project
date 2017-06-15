@@ -1,11 +1,9 @@
 $(document).ready(function() {
-	alert('gg')
 	$('#login').on('click', function() {
 		var userid = $('#userid').val();
 		var pw = $('#pw').val();
 		var idsave = $('#log').is(":checked");
 		var msg;
-		var ck_check = $('#ck_check').val();
 
 		if (userid == "" || pw == "") {
 			if (userid == "") {

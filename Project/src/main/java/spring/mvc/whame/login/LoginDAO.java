@@ -67,5 +67,15 @@ public class LoginDAO {
 		
 		return mvo;
 	}
+	
+	public MemberVO facebook(FaceBookVO fvo){
+		int same = session.selectOne("login.get_facebook", fvo);
+		if (same != 1) {
+			session.insert("login.new_facebook", fvo);
+		}
+		mvo = session.selectOne("login.login_facebook", fvo);
+		
+		return mvo;
+	}
 
 }

@@ -4,12 +4,11 @@
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
 03947296fa39c02cca384bf32800c263&libraries=clusterer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <style type="text/css">
 .mainform{
-	margin-top: 20px;
-	padding-top: 20px;
 	padding-bottom: 20px;
-	width: 90%;
+	width: 100%;
 	}
 	
 .mainimg{
@@ -18,6 +17,7 @@
 .main_text{
 	padding:20px; width:80%; margin-top:20px;
 	background-color: #f5f5f5;
+	border-radius:40px;
 }
 .main_mapform{
 	margin-bottom:10px;
@@ -32,6 +32,26 @@
 		width:100%;
 		height: 270px;
 }
+
+
+/*  */
+
+.carousel .carousel-item{
+	opacity:1 !important;
+}
+
+.carousel .carousel-item div.row{
+	border-radius:20px;
+}
+
+div#onetop{
+	background-image: url('resources/img/t3.gif');
+	background-size: cover;
+	width: 100%;
+	padding-bottom: 25%;
+}
+
+/*  */
 
 @media only screen and (min-width : 321px) and (max-width : 600px) {
 	.mainimg{
@@ -57,13 +77,18 @@
 }
 </style>
 
-<div class="container mainform z-depth-3">
-	<div class="center-align row" style="padding:10px">
+<div id="onetop" class="center-align">
+	<div style="padding-top:25%;">
+	<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+	<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+	</div>
+</div>
+	<div class="center-align row" style="padding:10px" id="downf">
 		<input type="button" class="btn green" value="메뉴찾기(간판이미지 업로드)" id="fileupload">
 		<input type="button" class="btn pink darken-2" value="간판등록하기" id="enroll"><br>
 		<div class="main_text z-depth-1 row" style="margin-left:auto; margin-right: auto;">
 			<div class="col s12">
-			<img src="resources/img/main.png" class="mainimg">
+			<img src="resources/img/main.png" class="mainimg" style="border-radius:150px">
 			<h3>Whame란?</h3>
 			<p>Whame는 'What Menu'에서 비롯된 타이틀입니다. </p>
 			<p>상가의 메뉴를 직접 들어가지 않고 밖에서 간판 사진을 이용하여 메뉴정보를 얻을 수 있습니다.</p>
@@ -82,7 +107,7 @@
 				<tr id="${rank.store_code}" class="mover">
 					<th><i class="material-icons" name="${count}rank">stars</i></th>
 					<td>${count}위</td>
-					<td>${rank.store_name}</td>
+					<td style="width:50%;">${rank.store_name}</td>
 					<td>${rank.view_count}</td>
 					<c:set var="count" value="${count+1}"/>
 				</tr>
@@ -90,8 +115,93 @@
 				</table>
 			</div>
 		</div>
+		<div style="width: 90%; margin-left: auto; margin-right: auto" >
+			<span style="font-size: 35px;">New Store</span>
+			<div class="carousel">
+					<span style="background-color:blue;">
+				    <a class="carousel-item" href="#1">
+				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
+				    		<div class="col s12" style="height:40%; background-color: gray">
+				    			<h5>이미지</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명2</h5>
+				    		</div>
+				    		<div class="col s12">
+				    			<h5>하단</h5>
+				    		</div>
+				    	</div>
+				    </a>
+				    <a class="carousel-item" href="#2">
+				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
+				    		<div class="col s12" style="height:40%; background-color: gray">
+				    			<h5>이미지</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명2</h5>
+				    		</div>
+				    		<div class="col s12">
+				    			<h5>하단</h5>
+				    		</div>
+				    	</div>
+				    </a>
+				    <a class="carousel-item" href="#3">
+				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
+				    		<div class="col s12" style="height:40%; background-color: gray">
+				    			<h5>이미지</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명2</h5>
+				    		</div>
+				    		<div class="col s12">
+				    			<h5>하단</h5>
+				    		</div>
+				    	</div>
+				    </a>
+				    <a class="carousel-item" href="#4">
+				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
+				    		<div class="col s12" style="height:40%; background-color: gray">
+				    			<h5>이미지</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명2</h5>
+				    		</div>
+				    		<div class="col s12">
+				    			<h5>하단</h5>
+				    		</div>
+				    	</div>
+				    </a>
+				    <a class="carousel-item" href="#5">
+				    	<div class="row" style="border:1px gray solid; height: 300px; padding:10px;">
+				    		<div class="col s12" style="height:40%; background-color: gray">
+				    			<h5>이미지</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명</h5>
+				    		</div>
+				    		<div class="col s6">
+				    			<h5>설명2</h5>
+				    		</div>
+				    		<div class="col s12">
+				    			<h5>하단</h5>
+				    		</div>
+				    	</div>
+				    </a>
+		 	 </div>
+	 	</div>
 	</div>
-</div>
 
 
 <script type="text/javascript">
@@ -223,6 +333,20 @@
 			}
 		}); 
 
+		$('.carousel').carousel({
+	          dist:0,
+	          shift:0,
+	          padding:60,
+	    });
+
+	    $("#down").click(function(event){            
+	        event.preventDefault();
+	        $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 1000);
+		});
+
+	    setInterval(function(){
+	    	$('.carousel').carousel('next');
+		    },1500);
 		
 	})
 </script>
