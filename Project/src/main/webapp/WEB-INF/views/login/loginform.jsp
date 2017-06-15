@@ -29,6 +29,7 @@
 	Cookie[] cookies = request.getCookies();
 	String userid = "";
 	int userpw =-1;
+	int isornot = cookies.length;
 	if(cookies != null){
 		for(Cookie c : cookies){
 			if(c.getName().equals("userid")){  
@@ -41,7 +42,6 @@
 	}
 %>
 <div class="container loginform z-depth-2">
-<%=userid %><%=userpw %>
 	<div class="center-align">
 			<div name="header">
 				<i class="large material-icons">account_circle</i>
@@ -57,7 +57,14 @@
 			    </div>
 			</div>
 			<div name="log">
-				<input type="checkbox" id="log" name="idsave" value="selected"/>
+			<% 
+				if(isornot > 1){
+			%>		
+				<input type="checkbox" id="log" name="idsave" checked="checked"/>
+			<%	}else{ %>
+				<input type="checkbox" id="log" name="idsave"/>
+			<%	}
+			%>
 				<label for="log">로그인유지</label>
 			</div><br>
 			<div class="loginbtn">
