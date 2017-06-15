@@ -41,6 +41,7 @@
 	}
 %>
 <div class="container loginform z-depth-2">
+<%=userid %><%=userpw %>
 	<div class="center-align">
 			<div name="header">
 				<i class="large material-icons">account_circle</i>

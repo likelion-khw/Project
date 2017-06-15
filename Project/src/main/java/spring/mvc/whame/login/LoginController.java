@@ -45,14 +45,15 @@ public class LoginController {
 	// 로그인 완료시에 실행되는 세션 저장 메소드
 	@RequestMapping(value="success.whame", method=RequestMethod.POST)
 	public String setSession2(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
-		Cookie cookie = null;
 		String idsave = (String)request.getParameter("cookie");
 		System.out.println("saveid : "+idsave);
 		if(idsave != null && idsave.equals("true")){
-			cookie = new Cookie("userid", vo.getUserid());
-			cookie = new Cookie("pw", vo.getPw());
+			System.out.println("id:"+vo.getUserid());
+			Cookie cookie = new Cookie("userid", vo.getUserid());
+			Cookie cookie2 = new Cookie("pw", vo.getPw());
 			cookie.setMaxAge(60*365);
 			response.addCookie(cookie);
+			response.addCookie(cookie2);
 		}
 		return "main/main";
 	}
