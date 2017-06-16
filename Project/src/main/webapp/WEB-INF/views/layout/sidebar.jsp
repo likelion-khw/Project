@@ -5,26 +5,38 @@
 	MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
 %>
 <style>
-@media only screen and (min-width : 1200px) {
+.side-nav .userView .circle{
+	width: 80px; 
+	height: 80px;
+	margin-left: auto;
+	margin-right: auto;
+}
+@media only screen and (min-width : 200px) and (max-width:991px) {
+	.side-nav .userView{
+		margin-top: -45px;
+	}
+	.white-text.name.top{
+		margin-top: -20px;
+	}
 }
 </style>
-<ul id="mobile-demo" class="side-nav fixed">
-    <li style="background-color:#673ab7; height:200px;">
+<ul id="mobile-demo" class="side-nav fixed" style="width:240px">
+    <li style="background-color:#673ab7; height:240px;">
     <div class="userView">
-			<div class="center-align" style="padding-top:10px;">
+			<div class="center-align">
 				<c:choose>
 					<c:when test="${memberVO.userid != null }">
 						<%if(membervo.getUserimage() == null){ %>
 						<a href="#!user">
-						<img class="circle" src="resources/img/user.png" style="width: 80px; height: 80px;"></a> 
+						<img class="circle" src="resources/img/user.png"></a> 
 						<%}else{ %>
 						<a href="#!user">
-						<img class="circle" src="<%=membervo.getUserimage()%>" style="width: 80px; height: 80px;"></a> 
+						<img class="circle" src="<%=membervo.getUserimage()%>"></a> 
 						<%} %>
-						<a href="#!name"> <span class="white-text name"> ${memberVO.nickname} 회원님
-						</span></a>
-						<a href="#!name"> <span class="white-text name"> ${memberVO.userid}
-						</span></a>
+						<span class="white-text name top"> ${memberVO.nickname} 회원님
+						</span>
+						<span class="white-text name"> ${memberVO.userid}
+						</span>
 					</c:when>
 					<c:when test="${memberVO.userid == null }">
 					<span class="white-text name"> 로그인이 필요합니다.</span><br>
@@ -74,7 +86,6 @@
 		            <div class="collapsible-body">
 		              <ul>
 		                <li><a href="javascript:storeform();">음식점 정보</a></li>
-		                <li><a href="javascript:storeCategory()">음식점 메뉴</a></li>
 		              </ul>
 		            </div>
 		          </li>
@@ -105,10 +116,7 @@ Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 	}
 
 	function login(){
-		$(location).attr('href', 'login.whame');
-	}
-	function sign(){
-		$(location).attr('href', 'sign.whame');
+		$('#sign_login').modal('open');
 	}
 	function main(){
 		$(location).attr('href', '/whame');
@@ -121,8 +129,5 @@ Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 	}
 	function storeform(){
 		$(location).attr('href', 'store.whame');
-	}
-	function storeCategory(){
-		$(location).attr('href', 'getCategory.whame');
 	}
 </script>

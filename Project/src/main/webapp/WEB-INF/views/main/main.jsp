@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../modal/fileupload_modal.jsp" %>
+<%@include file="../modal/search_cg_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-03947296fa39c02cca384bf32800c263&libraries=clusterer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+c32b76f1aa052608845dc92dd7326946&libraries=clusterer"></script>
 <style type="text/css">
 .mainform{
 	padding-bottom: 20px;
@@ -35,9 +35,11 @@
 
 
 /*  */
-
+.carousel{
+}
 .carousel .carousel-item{
 	opacity:1 !important;
+	top:-40px;
 }
 
 .carousel .carousel-item div.row{
@@ -74,6 +76,9 @@ div#onetop{
 	.main_mapform{
 	width:90%;
 	}
+	.carousel .carousel-item .caro {
+		height: 100px;
+	}
 }
 </style>
 
@@ -84,8 +89,11 @@ div#onetop{
 	</div>
 </div>
 	<div class="center-align row" style="padding:10px" id="downf">
-		<input type="button" class="btn green" value="메뉴찾기(간판이미지 업로드)" id="fileupload">
-		<input type="button" class="btn pink darken-2" value="간판등록하기" id="enroll"><br>
+		<div style="width: 50%; margin-left:auto; margin-right:auto;" >
+			<input type="button" class="btn green col s12" value="메뉴찾기" id="fileupload" style="border-radius:20px;">
+			<input type="button" class="btn pink darken-2 col s12" value="간판등록하기" id="enroll" style="border-radius:20px;"><br>
+			<button  data-activates="search_cg" class="btn button-collapse search_cg" style="margin:7px;border-radius:20px;"><i class="material-icons">search</i></button>
+		</div>
 		<div class="main_text z-depth-1 row" style="margin-left:auto; margin-right: auto;">
 			<div class="col s12">
 			<img src="resources/img/main.png" class="mainimg" style="border-radius:150px">
@@ -120,7 +128,7 @@ div#onetop{
 			<div class="carousel">
 				<c:forEach items="${getNewStore}" var="store">
 				    <a class="carousel-item" href="/whame/forkakao.whame?store_code=${store.store_code}">
-				    	<div class="row" style="border:1px #bdbdbd solid; height: 300px; padding:10px;">
+				    	<div class="caro row" style="border:1px #bdbdbd solid; height: 300px; padding:10px;">
 				    		<div class="col s12" style="height:150px;">
 				    			<img src="${store.store_image}" width="100%" height="150px" style="border-radius:30px">
 				    		</div>
@@ -161,8 +169,15 @@ div#onetop{
 			$('#modal1').modal('open');
 		});
 	
-		$("#enroll").on('click',function(){
-			$(location).attr('href','enroll.whame');
+		$("#enroll").on('click',function(event){
+			var member = '${memberVO.userid}';
+			if(member == "")
+				{
+					$('#sign_login').modal('open');
+				}
+			else{
+				$(location).attr('href','enroll.whame');
+			}
 		});
 
 		var container = document.getElementById('main_map');
@@ -281,8 +296,19 @@ div#onetop{
 
 	    setInterval(function(){
 	    	$('.carousel').carousel('next');
-		    },2000);
-		
+		    },2000); 
+	    
+	    $('.button-collapse.search_cg').sideNav({
+		      menuWidth: 360, // Default is 300
+		      edge: 'bottom', // Choose the horizontal origin
+		      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+		      draggable: true // Choose whether you can drag to open on touch screens
+		    }
+		  );
+
+		$('#search_close').on('click',function(){
+	   	 	$('.button-collapse.search_cg').sideNav('hide');
+		});
 	})
 </script>
 

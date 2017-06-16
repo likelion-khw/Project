@@ -183,10 +183,10 @@ public class WhameController {
 				mav.addObject("region", gu);
 				mav.setViewName("body/enrollform");
 			} else {
-				mav.setViewName("redirect:/login.whame");
+				mav.setViewName("redirect:/");
 			}
 		} else {
-			mav.setViewName("redirect:/login.whame");
+			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
@@ -218,10 +218,10 @@ public class WhameController {
 				mav.addObject("imgurl", imgurl);
 				mav.setViewName("body/image_e");
 			} else {
-				mav.setViewName("redirect:/login.whame");
+				mav.setViewName("redirect:/");
 			}
 		} else {
-			mav.setViewName("redirect:/login.whame");
+			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
@@ -241,10 +241,10 @@ public class WhameController {
 				mav.setViewName("body/enrollsuccess");
 				System.out.println("enrollsuccess占쏙옙 占싱듸옙");
 			} else {
-				mav.setViewName("redirect:/login.whame");
+				mav.setViewName("redirect:/");
 			}
 		} else {
-			mav.setViewName("redirect:/login.whame");
+			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
@@ -282,7 +282,7 @@ public class WhameController {
 			
 			mav.addObject("menuNum", menuNum);
 		}
-		mav.setViewName("redirect:/store.whame");
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 
@@ -370,10 +370,10 @@ public class WhameController {
 
 				mav.setViewName("body/history");
 			} else {
-				mav.setViewName("redirect:/login.whame");
+				mav.setViewName("redirect:/");
 			}
 		} else {
-			mav.setViewName("redirect:/login.whame");
+			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}
@@ -416,10 +416,10 @@ public class WhameController {
 				mav.addObject("loclist", loclist);
 				mav.setViewName("body/storeform");
 			} else {
-				mav.setViewName("redirect:/login.whame");
+				mav.setViewName("redirect:/");
 			}
 		} else {
-			mav.setViewName("redirect:/login.whame");
+			mav.setViewName("redirect:/");
 		}
 		return mav;
 	}

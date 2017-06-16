@@ -5,10 +5,17 @@
 .remember_modalform{
 	width:300px;
 }
+
+.nick.modal{
+	height: 40%;
+}
+.pass.modal{
+	height: 55%;
+}
 </style>
 
 <!-- 닉네임 변경 모달 -->
-<div id="remember_nickname" class="modal remember_modalform center-align">
+<div id="remember_nickname" class="nick modal remember_modalform center-align">
 	<div class="modal-content">
 		<h4>닉네임 변경</h4>
 		닉네임<br>
@@ -23,7 +30,7 @@
 </div>
 
 <!-- 패스워드 변경 모달 -->
-<div id="remember_pw" class="modal remember_modalform center-align">
+<div id="remember_pw" class="pass modal remember_modalform center-align">
 	<div class="modal-content">
 		<h4>패스워드 변경</h4>
 		변경 패스워드<br>

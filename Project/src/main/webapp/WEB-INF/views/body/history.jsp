@@ -69,6 +69,11 @@
 	  	</div>
 		</c:forEach> 
 	</div>
+	<div class="fixed-action-btn horizontal">
+	    <a class="btn-floating btn-large white" id="upview" href="#top_view">
+	      <i class="material-icons" style="color:black">arrow_upward</i>
+	    </a>
+	 </div>
 </div>
       
 <script type="text/javascript">
@@ -153,7 +158,11 @@ var positions=[];
 		console.log(store_code);
 		$('#'+store_code+"modal").modal('open');
 	}); 
-	
+
+	$("#upview").click(function(event){            
+	    event.preventDefault();
+	    $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 500);
+	});
 	
 }) 
 </script>

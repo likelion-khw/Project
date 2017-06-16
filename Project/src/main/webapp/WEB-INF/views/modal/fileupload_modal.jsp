@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
 <!-- Modal Structure -->
 <style>
+.modal.modal-fixed-footer.fileuploadform{
+	height: 85%;
+}
 .fileup_run{
 	width:100%;
 }
@@ -12,7 +15,7 @@
 	.fileuploadform {
 		width:90%;
 		height: 100%;
-}
+	}
 	.fileup_run{
 	margin-top: 20%;
 	height: 350px;
