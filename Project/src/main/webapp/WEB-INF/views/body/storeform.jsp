@@ -5,8 +5,6 @@
 <%@include file="../modal/coupon_modal.jsp" %>
 <%@include file="../modal/infomodal.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
 6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
@@ -61,9 +59,9 @@ span.badge{
 				      	<div class="container" id="${store.store_code}">
 			      	  <div class="row">
 				      	<ul id="tabs-swipe-demo" class="tabs">
-						    <li class="tab col s3"><a href="#${store.store_code}store_info">상가정보</a></li>
-						    <li class="tab col s3"><a class="active" href="#${store.store_code}menu_info">메뉴정보</a></li>
-						    <li class="tab col s3"><a  href="#${store.store_code}event_info">행사정보</a></li>
+						    <li class="tab col s4"><a href="#${store.store_code}store_info">상가정보</a></li>
+						    <li class="tab col s4"><a class="active" href="#${store.store_code}menu_info">메뉴정보</a></li>
+						    <li class="tab col s4"><a  href="#${store.store_code}event_info">행사정보</a></li>
 						   
 						 </ul>
 					 <div id="${store.store_code}store_info" class="col s12">

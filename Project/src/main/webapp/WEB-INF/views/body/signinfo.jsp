@@ -285,7 +285,7 @@ div.showinfo_btn input{
 				<!-- <input type="button" class="btn" value="접기" id="hidecrawl" style="float:right"> -->
 			</div>
 			<div class="fixed-action-btn horizontal">
-			    <a class="btn-floating btn-large white" id="upview" onclick="window.scrollTo(0,0); return false;">
+			    <a class="btn-floating btn-large white" id="upview" href="#top_view">
 			      <i class="material-icons" style="color:black">arrow_upward</i>
 			    </a>
 			 </div>
@@ -579,6 +579,10 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
+$("#upview").click(function(event){            
+    event.preventDefault();
+    $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 500);
+});
 Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
    	function sendLink(){

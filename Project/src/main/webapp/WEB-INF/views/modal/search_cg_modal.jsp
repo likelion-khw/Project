@@ -1,69 +1,53 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="spring.mvc.whame.store.*,java.util.*"%>
-<%@include file="../modal/menu_modal.jsp" %>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
-<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <style>
-.card-content{
-	height: 150px;
-}
 .category_form{
 	margin-top:20px;
-	padding:5px;
-}
-
-@media only screen and (min-width : 601px) and (max-width: 1000px) {
-	.card-content{
-		font-size: 16px;
-	}
-	
-}
-
-@media only screen and (min-width : 300px) and (max-width: 600px) {
-	.card-content{
-		font-size: 16px;
-	}
-	.card-content{
-		height: 100px;
-	}
-}
-	
-}
-	
+	padding:10%;
 }
 </style>
-<div class="container category_form center-align"> 
-	<div class="search-class">
-		<p>
-			<input type="text" id="inputMenu" placeholder="메뉴를 입력해주세요" style="width:40%">
-			<div class="input">
-				<button id="searchbutton" class="btn">검색</button><br>
-			</div>
-			<span id="tagMenu">
-				<a href="javascript:ta" class="menu_tag" id="tagChicken">치킨</a>
-				 |  <a href="javascript:ta" class="menu_tag" id="tagPizza">피자</a>
-				 |  <a href="javascript:ta" class="menu_tag" id="tagPoke">삼겹살</a>
-				 |  <a href="javascript:ta" class="menu_tag" id="tagChinese">중국집</a>
-				 |  <a href="javascript:ta" class="menu_tag" id="tagSnackBar">분식</a>
-				 |  <a href="javascript:ta" class="menu_tag" id="tagBurger">햄버거</a>
-				 |  <a href="javascript:ta" class="menu_tag" id="tagCafe">카페</a>
-			</span>
-		</p>
+<div id="search_cg" class="side-nav search_cg">
+	<a href="#!"><i class="material-icons" id="search_close" style="margin-top:20px; margin-left:20px; color:black">close</i></a>
+	<div class="category_form center-align"> 
+		<div class="search-class" id="top_search">
+				<div class="input-field">
+				  <i class="material-icons prefix">search</i>
+				  <input type="text" id="inputMenu" class="validate" style="width:80%" onkeyup="enterkey2()">
+		          <label for="inputMenu">메뉴를 입력해주세요.</label>
+		        </div>
+				<div class="input">
+					<button id="searchbutton" class="btn">검색</button><br>
+				</div>
+				<!-- <span id="tagMenu">
+					<a href="javascript:ta" class="menu_tag" id="tagChicken">치킨</a>
+					 |  <a href="javascript:ta" class="menu_tag" id="tagPizza">피자</a>
+					 |  <a href="javascript:ta" class="menu_tag" id="tagPoke">삼겹살</a>
+					 |  <a href="javascript:ta" class="menu_tag" id="tagChinese">중국집</a>
+					 |  <a href="javascript:ta" class="menu_tag" id="tagSnackBar">분식</a>
+					 |  <a href="javascript:ta" class="menu_tag" id="tagBurger">햄버거</a>
+					 |  <a href="javascript:ta" class="menu_tag" id="tagCafe">카페</a>
+				</span> -->
+			</p>
+		</div>
+		<div id='lal'></div>
+		<div class="count"></div>
+		<div class="row storeList"></div>
 	</div>
-	<div id='lal'></div>
-	<div class="count"></div>
-	<div class="row storeList"></div>
-</div>
-		
-
+</div>	
 <script type="text/javascript">
 var storeName = [];
 var storeCode = [];
 var storeAddr = [];
 var storeVC = [];
+function enterkey2() {
+    if (window.event.keyCode == 13) {
+    	$('#searchbutton').trigger('click'); 
+    }
+}
 
 $(document).ready(function(){
+	
 	navigator.geolocation.getCurrentPosition(showPosition,showError);
 	
 	$('#searchbutton').click(function(){
@@ -124,6 +108,10 @@ $(document).ready(function(){
 		
 	})
 	
+	$(document).on('click','span#test_sc',function(event){
+		$('#inputMenu').focus();
+	});
+	
 	function showPosition(position) {
 			$.when( 
 				lat = position.coords.latitude,
@@ -169,16 +157,19 @@ $(document).ready(function(){
 					
 					for(var i = 0 ; i < data.length; i++){
 						var storeList = $(
-						        "<div class='col s12 m4' id='"+data[i].store_name.replace("\\(\\)","")+"'>"
+						        "<div class='col s12' id='"+data[i].store_name.replace("\\(\\)","")+"'>"
 						          +"<div class='card'>"
 						            +"<div class='card-image'>"
 						              +"<img src='"+data[i].store_image+"' width='100%' height='200px;'>"
 						            +"</div>"
 						            +"<div class='card-content'>"
-						            	+"<p class='viewcount'> 조회수 - "+ data[i].view_count+"</p>"
+							            +"<span style='float:right; border-radius:30px; text-align:center' class='btn white' id='test_sc'>"
+					          	      	+"<i class='material-icons' style='color:black'>arrow_drop_up</i>"
+					          	      +"</span>"
+						            	+"<p class='viewcount'> 조회수 - "+ data[i].view_count+"</p><br>"
 					            		+"<div class='address'>"+data[i].address+"</div>"
 						            +"</div>"
-						            +"<div class='card-action' style='height:70px;'>"
+						            +"<div class='card-action'>"
 						              +"<a href='javascript:tag()' class='tagStore' id='"+data[i].store_code+"'>"+data[i].store_name.replace("\\(\\)","")+"</a>"
 						            +"</div>"
 						          +"</div>"
@@ -186,10 +177,7 @@ $(document).ready(function(){
 						)
 						$(".storeList").append(storeList);
 					}
-					
-					$('.tagStore').css('font-size','0.85rem');
-					$('.viewcount').css('font-size','0.9rem');
-					$('.address').css('font-size','0.9rem');
+					$('.tagStore').css('font-size','14px');
 				}, error: function(){
 					alert("다시한번 검색하십시오");
 			}
