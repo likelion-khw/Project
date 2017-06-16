@@ -75,7 +75,6 @@ public class WhameController {
 
 	@RequestMapping(value = "/")
 	public ModelAndView main() {
-		System.out.println("ssh성공goggg");
 		ModelAndView mav = new ModelAndView();
 		int count = service.getStoreCount();
 		List<LocationVO> locationlist = service.getlocation_list();
