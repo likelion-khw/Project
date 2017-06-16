@@ -229,9 +229,10 @@ public class WhameServiceImpl implements WhameService{
 			for(int i = 0; i < menuInit.size(); i++){
 				if(menuInit.get(i).getMenu_name().contains(menuSearch)){
 					for(int j = 0; j<storeInit.size(); j++){
-						if(menuInit.get(i).getStore_code() == storeInit.get(j).getStore_code())
-						{
-							result.add(storeInit.get(j));
+						for(Integer jj : cloc_code){
+							if(menuInit.get(i).getStore_code() == storeInit.get(j).getStore_code() && jj == storeInit.get(j).getStore_code()){
+								result.add(storeInit.get(j));
+							}
 						}
 						
 					}
