@@ -68,6 +68,7 @@ public class WhameController {
 	
 	@RequestMapping(value = "/test")
 	public ModelAndView test() throws Exception {
+		System.out.println("mong테스트중");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("body/test");
 		return mav;
