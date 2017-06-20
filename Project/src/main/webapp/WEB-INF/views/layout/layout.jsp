@@ -55,6 +55,11 @@ main{
 		<tiles:insertAttribute name="sidebar" />
 		<main> <tiles:insertAttribute name="body" /> </main>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<tiles:insertAttribute name="footer" />
+		</div>
+	</div>
 </body>
 
 <script type="text/javascript">
