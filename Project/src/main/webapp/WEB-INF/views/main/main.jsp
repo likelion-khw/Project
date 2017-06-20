@@ -4,7 +4,7 @@
 <%@include file="../modal/search_cg_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-c32b76f1aa052608845dc92dd7326946&libraries=clusterer"></script>
+a6149740a5939346f553130276762c3d&libraries=clusterer"></script>
 <style type="text/css">
 .mainform{
 	padding-bottom: 20px;
@@ -36,6 +36,7 @@ c32b76f1aa052608845dc92dd7326946&libraries=clusterer"></script>
 
 /*  */
 .carousel{
+	height: 250px;
 }
 .carousel .carousel-item{
 	opacity:1 !important;
@@ -43,7 +44,7 @@ c32b76f1aa052608845dc92dd7326946&libraries=clusterer"></script>
 }
 
 .carousel .carousel-item div.row{
-	border-radius:20px;
+	 border-radius:20px; 
 }
 
 div#onetop{
@@ -66,18 +67,18 @@ div#onetop{
 		font-size:15px;
 		font-weight: bolder;
 	}
-	.mainform input{
+	.mainform input{ 
 		margin-bottom:10px;
 	}
 	.main_text{
 		width:90%;
 	}
-	
+	 
 	.main_mapform{
 	width:90%;
 	}
 	.carousel .carousel-item .caro {
-		height: 100px;
+		 height: 100px; 
 	}
 }
 </style>
@@ -123,16 +124,16 @@ div#onetop{
 				</table>
 			</div>
 		</div>
-		<div style="width: 90%; margin-left: auto; margin-right: auto" >
+		<div style="width: 100%; margin-left: auto; margin-right: auto;" >
 			<span style="font-size: 35px;">New Store</span>
-			<div class="carousel">
+			<div class="carousel" style="margin-top:40px;" >
 				<c:forEach items="${getNewStore}" var="store">
-				    <a class="carousel-item" href="/whame/forkakao.whame?store_code=${store.store_code}">
-				    	<div class="caro row" style="border:1px #bdbdbd solid; height: 300px; padding:10px;">
-				    		<div class="col s12" style="height:150px;">
-				    			<img src="${store.store_image}" width="100%" height="150px" style="border-radius:30px">
+					<a class="carousel-item" style="width:250px; height:170px;" href="/whame/forkakao.whame?store_code=${store.store_code}">
+				    	<div class="caro row" > 
+				    		<div class="col s12 image" id="${store.store_code}">
+				    			<img src="${store.store_image}" width="227px" height="170px" style="border-radius:30px">
 				    		</div>
-				    		<div class="col s12" style="height: 100px;">
+				    		<div class="col s12"  style="height: 45px;"> 
 				    			<span style="font-size: 17px; color:black">${store.store_name}</span>
 				    			<span style="blue">(${store.dong})</span>
 				    		</div>
@@ -140,10 +141,11 @@ div#onetop{
 				    			<span style="blue">${store.store_category}</span>
 				    		</div>
 				    	</div>
-				    </a>
+					  </a>
 				</c:forEach>
 		 	 </div>
 	 	</div>
+	 	<div id="msg"></div>
 	</div>
 
 
@@ -151,6 +153,12 @@ div#onetop{
 	$('i[name=1rank]').css('color','gold');
 	$('i[name=2rank]').css('color','silver');
 	$('i[name=3rank]').css('color','brown');
+	
+	function movetostore(store_code){
+		console.log("/whame/forkakao.whame?store_code="+store_code);
+		//location.href='/whame/forkakao.whame?store_code='+store_code;
+	}
+	
 	var cl = new Array();
 	var positions = new Array();
 	$(document).ready(function() {
@@ -283,20 +291,48 @@ div#onetop{
 			}
 		}); 
 
-		$('.carousel').carousel({
-	          dist:0,
-	          shift:0,
-	          padding:60,
-	    });
-
 	    $("#down").click(function(event){            
 	        event.preventDefault();
 	        $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 1000);
 		});
 
-	    setInterval(function(){
+	    $('.carousel').carousel({
+	          dist:0,
+	          shift:0,
+	          padding:-5
+	    });
+
+		setInterval(function(){
 	    	$('.carousel').carousel('next');
-		    },2000); 
+		    },2000);
+
+	    function stopScroll(){
+	    	clearInterval(v);
+	    	$('.carousel').carousel({
+	    		time_constant : 0
+	    	});
+	    }
+	     var fingerMove = false;
+	     
+	     $('.carousel-item .row .image').bind('touchstart click', function(e) {
+			//e.preventDefault();	//	이벤트취소.
+			fingerMove = false;
+		});
+
+		$('.carousel-item .row .image').bind('touchmove', function(e) {
+			//e.preventDefault();
+			fingerMove = true;
+		});
+
+		$('.carousel-item .row .image').bind('touchend', function(e) {
+			//e.preventDefault(); 
+			var store_code = $(this).attr('id');
+			if(fingerMove == false){
+				location.href='/whame/forkakao.whame?store_code='+store_code;
+				
+			}
+		}); 
+
 	    
 	    $('.button-collapse.search_cg').sideNav({
 		      menuWidth: 360, // Default is 300

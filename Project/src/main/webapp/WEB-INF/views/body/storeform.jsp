@@ -6,7 +6,7 @@
 <%@include file="../modal/infomodal.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
+a6149740a5939346f553130276762c3d&libraries=services"></script>
 <style>
 span.badge{
 	position: static;

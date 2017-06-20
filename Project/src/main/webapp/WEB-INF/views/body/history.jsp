@@ -5,7 +5,7 @@
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-03947296fa39c02cca384bf32800c263&libraries=services"></script>
+a6149740a5939346f553130276762c3d&libraries=services"></script>
 <style>
 	.history_form{
 		margin-top:20px;
@@ -98,11 +98,10 @@ var positions=[];
 	        latlng: new daum.maps.LatLng(x.slice(3*i+1,3*i+2), x.slice(3*i+2,3*i+3))
 	    };
 	}
-	
 	var container = document.getElementById('map');
 	var options = {
-		center: new daum.maps.LatLng(37.49655,127.02964),
-		level: 8
+		center: new daum.maps.LatLng(x.slice(3*(length-1)+1,3*(length-1)+2),x.slice(3*(length-1)+2,3*(length-1)+3)),
+		level: 4
 	};
 	var map = new daum.maps.Map(container, options);
 	

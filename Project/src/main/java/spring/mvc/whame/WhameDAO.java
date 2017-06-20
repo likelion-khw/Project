@@ -111,13 +111,13 @@ public class WhameDAO {
 		
 		List<Integer> l_code = session.selectList("whame.searchLoc", whamevo);
 		for(Integer vo : l_code){
-			System.out.println("dao �쐞�룄寃쎈룄 寃곌낵 " + vo);
+			System.out.println("location범위 " + vo);
 		}
 			
 		if(whamevo.getText().get(0).getText().equals("")){
 			codeList = session.selectList("whame.searchColor", whamevo);
 			if(codeList.size() != 0){
-				System.out.println("color占쏙옙占쏙옙");
+				System.out.println("color에 접근");
 				for(Integer i : codeList){
 					System.out.println(i);
 					count.add(i);				
@@ -128,17 +128,31 @@ public class WhameDAO {
 			codeList = session.selectList("whame.searchText", whamevo);
 			System.out.println(codeList);
 			if(codeList.size() != 0){
-				System.out.println("text占쏙옙占쏙옙");
+				System.out.println("text에접근");
 				for(Integer i : codeList){
-					System.out.println();
+					System.out.println(i);
 					count.add(i);				
 				}
 			}
 			else{
-				System.out.println("name占쏙옙占쏙옙");
+				System.out.println("name에접근");
 				codeList = session.selectList("whame.searchTextName", whamevo);
 				for(Integer i : codeList){
+					System.out.println(i);
 					count.add(i);				
+				}
+				if(codeList.size() == 0){
+					codeList = session.selectList("whame.searchColor", whamevo);
+					if(codeList.size() != 0){
+						System.out.println("color에 접근");
+						for(Integer i : codeList){
+							System.out.println(i);
+							count.add(i);				
+						}
+					}
+					/*System.out.println("namecut에 접근");
+					int samecount = session.selectOne("whame.searchTextNameCut", whamevo);
+					System.out.println(samecount);*/
 				}
 			}
 		}

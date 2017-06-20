@@ -41,16 +41,16 @@
  	<!-- search -->
  	<!-- color+ocr -->
  	 <sql id="color_rate">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.2
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.2
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.2 <!-- between 0 and 0.45 -->
+		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.45
+			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.45
+			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.45 <!-- between 0 and 0.45 -->
 	</sql>
 	
 	<!-- color -->
  	<sql id="color_max">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.05
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.05 
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.05<!-- between 0 and 0.45 -->
+		where (abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.1 and abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.1 )
+			or (abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.1 and abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.1)
+			or (abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.1 and abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.1 )<!-- between 0 and 0.45 -->
 	</sql>
 	
 	<!-- 근방 Xm location -->
@@ -101,6 +101,19 @@
             ) m
         <include refid="color_rate" />  
         <!-- and m.store_code in (<include refid="loc" />) -->
+   </select> 
+   
+   <!-- name search -->
+   <select id="searchTextNameCut" resultType="int" parameterType="whamevo">
+     select count(*)
+     from store
+     where <foreach collection="text" item="text" open="(" close=")" separator="or">
+             	<foreach collection="#{text.text}" item="cuttext" index="index">               	
+                  <if test="text.text != null and text.text.length() >= 2 ">
+                     upper(store_name) like upper('%'||substr(#{cuttext},#{index},#{index}+1)||'%')
+                  </if>
+               	</foreach>
+           </foreach>        
    </select> 
    
    <!-- color search -->
