@@ -122,7 +122,7 @@ public class WhameServiceImpl implements WhameService{
 	}
 	
 	@Override
-	public List<LocationVO> getHistotyLoc(String userid){
+	public List<LocationVO> getHistoryLoc(String userid){
 		return hdao.getHistoryLoc(userid);
 	}
 	

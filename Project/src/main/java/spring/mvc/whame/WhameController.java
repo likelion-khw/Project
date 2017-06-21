@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -68,7 +69,7 @@ public class WhameController {
 	
 	@RequestMapping(value = "/test")
 	public ModelAndView test() throws Exception {
-		System.out.println("mong테스트중");
+		System.out.println("mong테스트중_mong");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("body/test");
 		return mav;
@@ -294,7 +295,7 @@ public class WhameController {
 		this.lon = lon;
 		System.out.println("lal" + lat + ":" + lon);
 		MapTest mt = new MapTest();
-		difflal = mt.run(lat, 550);
+		difflal = mt.run(lat, 2000);
 
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame/StoreTitle";
@@ -334,9 +335,9 @@ public class WhameController {
 			if (membervo.getUserid() != null) {
 				List<HistoryVO> list = service.getHistoryList(membervo.getUserid());
 				System.out.println(list.size());
-				List<LocationVO> historyLoc = service.getHistotyLoc(membervo.getUserid());
+				List<LocationVO> historyLoc = service.getHistoryLoc(membervo.getUserid());
 				List<Integer> hstore_code = service.gethstore_code(membervo.getUserid());
-				HashMap<Integer, List<HistoryVO>> hList = new HashMap<Integer, List<HistoryVO>>();
+				HashMap<Integer, List<HistoryVO>> hList = new LinkedHashMap<Integer, List<HistoryVO>>();
 				HashMap<Integer, List<String>> menutype = new HashMap<Integer, List<String>>();
 				
 				mav.addObject("historylist", list);
@@ -526,7 +527,7 @@ public class WhameController {
 	public List<StoreInitVO> getSearchStore(String menuSearch, String choice, double clat, double clon){
 		System.out.println("clat"+clat);
 		MapTest mt = new MapTest();
-		difflal = mt.run(clat, 200);
+		difflal = mt.run(clat, 350);
 		WhameVO wvo = new WhameVO();
 		wvo.setLat(clat);
 		wvo.setLon(clon);
