@@ -105,16 +105,26 @@
    
    <!-- name search -->
    <select id="searchTextNameCut" resultType="int" parameterType="whamevo">
-     select count(*)
-     from store
-     where <foreach collection="text" item="text" open="(" close=")" separator="or">
-             	<foreach collection="#{text.text}" item="cuttext" index="index">               	
-                  <if test="text.text != null and text.text.length() >= 2 ">
-                     upper(store_name) like '%'||upper(substr(#{cuttext},#{index},#{index}+1))||'%'
-                  </if>
-               	</foreach>
-           </foreach>        
+    	select store_code
+      	from (
+      			select 	store_code, 
+      					<foreach collection="textString" item="text" open="count(" close=")" separator=") + count(">   
+		                     case when upper(store_name) like '%'||upper(#{text})||'%' then 1 end
+		               	</foreach>  
+		               	 b_cnt 
+  				from store 
+  				group by store_code 
+  				order by b_cnt desc
+            ) 
+        where rownum=1        
    </select> 
+  	<!-- select store_code 
+  	from (
+  			select store_code, count(case when store_name like '%co%' then 1 end)+count(case when store_name like '%ff%' then 1 end) b_cnt 
+  			from store 
+  			group by store_name order by b_cnt desc
+  		 ) 
+  	where rownum=1; -->
    
    <!-- color search -->
    <select id="searchColor" resultType="int" parameterType="whamevo">
