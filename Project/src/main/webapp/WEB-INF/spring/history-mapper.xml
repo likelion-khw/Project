@@ -3,15 +3,16 @@
 
 <mapper namespace="history">
 	<select id='getlist' resultType="historyvo" parameterType="string">
- 		select * from history where userid = #{userid}
+ 		select * from history where userid = #{userid} order by historyid desc
  	</select> 
  	
  	<select id='gethstore_code' resultType="int" parameterType="string">
- 		select store_code from history where userid = #{userid} group by store_code
+ 		select store_code from (select store_code, max(historyid) historyid from history where userid=#{userid} group by store_code order by historyid desc)
  	</select>
+ 	<!-- select store_code from history where userid = #{userid} group by store_code  -->
  	
  	<select id='getlistGroup' resultType="historyvo" parameterType="historyvo">
- 		select * from history where userid = #{userid} and store_code = #{store_code}
+ 		select * from history where userid = #{userid} and store_code = #{store_code} order by historyid desc
  	</select> 
  	
  	<insert id='sethistory' parameterType="historyvo">

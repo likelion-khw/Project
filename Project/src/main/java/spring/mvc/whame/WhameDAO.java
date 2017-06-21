@@ -142,13 +142,11 @@ public class WhameDAO {
 					count.add(i);				
 				}
 				if(codeList.size() == 0){
+					System.out.println("color에 접근");
 					codeList = session.selectList("whame.searchColor", whamevo);
-					if(codeList.size() != 0){
-						System.out.println("color에 접근");
-						for(Integer i : codeList){
-							System.out.println(i);
-							count.add(i);				
-						}
+					for(Integer i : codeList){
+						System.out.println(i);
+						count.add(i);				
 					}
 					/*System.out.println("namecut에 접근");
 					int samecount = session.selectOne("whame.searchTextNameCut", whamevo);

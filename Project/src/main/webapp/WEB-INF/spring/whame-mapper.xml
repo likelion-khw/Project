@@ -41,16 +41,16 @@
  	<!-- search -->
  	<!-- color+ocr -->
  	 <sql id="color_rate">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.45
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.45
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.45 <!-- between 0 and 0.45 -->
+		where abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.45
+			or abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.45
+			or abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.45 <!-- between 0 and 0.45 -->
 	</sql>
 	
 	<!-- color -->
  	<sql id="color_max">
-		where (abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.1 and abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.1 )
-			or (abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.1 and abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.1)
-			or (abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.1 and abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.1 )<!-- between 0 and 0.45 -->
+		where (abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.1 )
+			or (abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1)
+			or (abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.1 )<!-- between 0 and 0.45 -->
 	</sql>
 	
 	<!-- 근방 Xm location -->
@@ -101,7 +101,7 @@
             ) m
         <include refid="color_rate" />  
         <!-- and m.store_code in (<include refid="loc" />) -->
-   </select> 
+   </select>
    
    <!-- name search -->
    <select id="searchTextNameCut" resultType="int" parameterType="whamevo">
@@ -110,7 +110,7 @@
      where <foreach collection="text" item="text" open="(" close=")" separator="or">
              	<foreach collection="#{text.text}" item="cuttext" index="index">               	
                   <if test="text.text != null and text.text.length() >= 2 ">
-                     upper(store_name) like upper('%'||substr(#{cuttext},#{index},#{index}+1)||'%')
+                     upper(store_name) like '%'||upper(substr(#{cuttext},#{index},#{index}+1))||'%'
                   </if>
                	</foreach>
            </foreach>        

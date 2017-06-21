@@ -24,8 +24,12 @@ a6149740a5939346f553130276762c3d&libraries=services"></script>
 		background: #ffffff;
 		background: rgba(255,255,255,0.5);
 	}
+	.h_map{
+		width:100%;
+		height:350px;
+	}
 	
-	@media only screen and (min-width : 321px) and (max-width : 600px) {
+	@media only screen and (min-width : 320px) and (max-width : 600px) {
 	
 		.slider{
 			width:125%;
@@ -36,17 +40,24 @@ a6149740a5939346f553130276762c3d&libraries=services"></script>
 		margin-right: 0;
 		}
 		
+		.h_map{
+			height: 250px;
+		}
+		
+		.slides .listsize{
+			height: 200px;
+		}
 	}
 	
 </style>
 <div class="container history_form">
-	<div id="map" style="width:100%;height:350px;" class="h_map"></div>
+	<div id="map" class="h_map"></div>
 	<div style="width:80%;" class="sli">
 		<c:forEach items="${hMap}" var="vo" >
 		<div class="slider z-depth-3" style="margin-bottom:30px;">
 	    <ul class="slides">
 			<c:forEach items="${vo.value }" var="his">
-				<li>
+				<li class='listsize' style="heigth:200px;">
 			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
 			        <div class="caption center-align">
 			          	<c:forEach items="${storelist }" var="comstore">
