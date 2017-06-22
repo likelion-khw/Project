@@ -218,7 +218,6 @@ public class WhameServiceImpl implements WhameService{
 		List<Integer> scodeCheck = new ArrayList<Integer>();
 		List<StoreInitVO> result = new ArrayList<StoreInitVO>();
 		List<Integer> cloc_code = dao.getCategoryLoc(wvo);
-		System.out.println(cloc_code.size());
 		if(choice.equals("tag")){
 			for(int i = 0; i < storeInit.size(); i++){
 				if(menuSearch.equals(storeInit.get(i).getStore_category())){
@@ -234,7 +233,6 @@ public class WhameServiceImpl implements WhameService{
 				if(menuInit.get(i).getMenu_name().contains(menuSearch)){
 					for(int j = 0; j<storeInit.size(); j++){
 						for(Integer jj : cloc_code){
-							System.out.println(jj);
 							if(menuInit.get(i).getStore_code() == storeInit.get(j).getStore_code() 
 									&& jj == storeInit.get(j).getStore_code() && result.contains(storeInit.get(j)) == false){
 								result.add(storeInit.get(j));
@@ -250,5 +248,25 @@ public class WhameServiceImpl implements WhameService{
 	
 	public List<StoreVO> getNewStore(){
 		return dao.getNewStore();
+	}
+	
+	public List<String> getMenuAuto(){
+		List<String> menu = new ArrayList<String>();
+		
+		for(MenuVO mvo : menuInit){
+			int check = 0;
+			for(String s: menu){
+				if(s.equals(mvo.getMenu_name().split("\\(")[0].replace(" ", "")))
+				{
+					check++;
+				}
+			}
+			
+			if(check == 0){menu.add(mvo.getMenu_name().split("\\(")[0].replace(" ", ""));}
+		}
+		
+		System.out.println(menu.size());
+		
+		return menu;
 	}
 }

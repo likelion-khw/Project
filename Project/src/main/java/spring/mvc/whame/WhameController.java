@@ -82,11 +82,13 @@ public class WhameController {
 		List<LocationVO> locationlist = service.getlocation_list();
 		List<StoreVO> countrank = service.getCountRanklist();
 		List<StoreVO> getNewStore = service.getNewStore();
+		List<String> getMenuAuto = service.getMenuAuto();
 		
 		mav.setViewName("main/main");
 		mav.addObject("count", count);
 		mav.addObject("getNewStore",getNewStore);
 		mav.addObject("countrank",countrank);
+		mav.addObject("getMenuAuto", getMenuAuto);
 		mav.addObject("locationlist", locationlist);
 		return mav;
 	}
@@ -524,16 +526,20 @@ public class WhameController {
 	
 	@ResponseBody
 	@RequestMapping(value="search.whame", method=RequestMethod.POST)
-	public List<StoreInitVO> getSearchStore(String menuSearch, String choice, double clat, double clon){
-		System.out.println("clat"+clat);
+	public List<StoreInitVO> getSearchStore(String menuSearch, String choice, double clat, double clon, int meter){
+		System.out.println(meter);
 		MapTest mt = new MapTest();
-		difflal = mt.run(clat, 350);
+		difflal = mt.run(clat, meter);
 		WhameVO wvo = new WhameVO();
 		wvo.setLat(clat);
 		wvo.setLon(clon);
 		wvo.setDifflat(difflal.get(0));
 		wvo.setDifflon(difflal.get(1));
-		return service.tagResult(menuSearch, choice, wvo);
+		List<StoreInitVO> result = service.tagResult(menuSearch, choice, wvo);
+		
+		for(StoreInitVO svo : result){
+			svo.setMeter(mt.distance(clat, clon, svo.getLat(), svo.getLon(), "meter"));
+		}
+		return result;
 	}
-	
 }

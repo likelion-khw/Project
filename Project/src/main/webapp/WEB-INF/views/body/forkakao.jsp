@@ -75,6 +75,8 @@ div.txt{
 	margin-top:5%;
 	width:85%;
 	padding:20px;
+	margin-bottom:5%;
+	border-radius:20px;
 }
 .showinfo_card{
 	width:60%;
@@ -142,7 +144,7 @@ div.showinfo_btn input{
 </style>
 <div class="container z-depth-3 showinfoform">
 	<div class="center-align">
-		<div class="parallax-container">
+		<div class="parallax-container" style="border-radius:20px;">
 		<div class="parallax"><img src="${store.store_image}" width="100%"></div>
 		<div style="background-color: gray; opacity:0.8; bottom: 0px; width:100%; position: absolute;">
 			<h4 style="color:white">${store.store_name} 메뉴</h4>

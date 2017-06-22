@@ -71,4 +71,6 @@ public interface WhameService {
 	public List<StoreInitVO> tagResult(String menuSearch, String choice, WhameVO wvo);
 	
 	public List<StoreVO> getNewStore();
+	
+	public List<String> getMenuAuto();
 }

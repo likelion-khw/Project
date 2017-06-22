@@ -2,13 +2,15 @@
    pageEncoding="UTF-8"%>
 <style>
 .imageform{
-	margin-top : 20px;;
+	margin-top : 20px;
+	margin-bottom: 20px;
 	padding-top: 20px;
 	padding-left:20px;
 	padding-right:20px;
 	padding-bottom:50px;
 	width:60%;
 	height: 200%;
+	border-radius:20px;
 }
 
 #loading{
@@ -50,7 +52,7 @@
    }
 </script>
 <body onload="draw();">
-	<div class="container imageform center-align">
+	<div class="container imageform center-align z-depth-2">
 		<div class="images" id="images">
 		   <canvas id="sample" style="max-width:1024px; max-height:800px; width:100%; height:100%; padding-bottom:20px;"></canvas>
 		   <br>
