@@ -73,7 +73,8 @@
 
 		var lat;
 		var lng;
-		
+		/* var lat = 37.516284;
+		var lng = 127.020021; */
 		if (navigator.geolocation) 
 		{
 			navigator.geolocation.getCurrentPosition(showPosition,showError);
