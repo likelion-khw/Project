@@ -75,8 +75,6 @@
 		var lng;
 		/* var lat = 37.516284;
 		var lng = 127.020021; */
-		document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat+ ">"
-		+"<input type=hidden name=lon value=" + lng + ">";
 		if (navigator.geolocation) 
 		{
 			navigator.geolocation.getCurrentPosition(showPosition,showError);
