@@ -75,16 +75,34 @@
       from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
             from (<include refid="loc" />) s, store_text st, store_color sc
             where s.store_code = st.store_code and sc.store_code = s.store_code
-            and 
-               <foreach collection="text" item="text" open="(" close=")" separator="or">
-                  <if test="text.text != null and text.text.length() >= 2">
-                  upper(st.text) like upper('%'||#{text.text}||'%')
-                  </if>
-               </foreach>            
+            and s.store_code in 
+            		(select store_code
+            		from 	(select store_code, 
+            						<foreach collection="text" item="text1" open="count(" close=")" separator=") + count(">   
+            						<if test="text1.text != null and text1.text.length() >= 2">
+					                     case when upper(text) like '%'||upper(#{text1.text})||'%' then 1 end
+					                </if>
+					               	</foreach> 
+					             	 b_cnt 
+							from store_text 
+							group by store_code)
+					where b_cnt = 	(select max(b_cnt)
+									from 	(select store_code, 
+											<foreach collection="text" item="text1" open="count(" close=")" separator=") + count(">   
+											<if test="text1.text != null and text1.text.length() >= 2">
+							                     case when upper(text) like '%'||upper(#{text1.text})||'%' then 1 end
+							                </if>
+							               	</foreach> 
+							               	b_cnt
+											from store_text 
+											group by store_code)
+							)
+            		)           
             ) m
         <include refid="color_rate" /><!-- 
         and m.store_code in (<include refid="loc" />) -->
    </select> 
+   
    
    <!-- name search -->
    <select id="searchTextName" resultType="int" parameterType="whamevo">
@@ -103,28 +121,41 @@
         <!-- and m.store_code in (<include refid="loc" />) -->
    </select>
    
-   <!-- name search -->
+   
+   <!-- cropOcr search -->
    <select id="searchTextNameCut" resultType="int" parameterType="whamevo">
-    	select store_code
-      	from (
-      			select 	store_code, 
-      					<foreach collection="textString" item="text" open="count(" close=")" separator=") + count(">   
-		                     case when upper(store_name) like '%'||upper(#{text})||'%' then 1 end
-		               	</foreach>  
-		               	 b_cnt 
-  				from store 
-  				group by store_code 
-  				order by b_cnt desc
-            ) 
-        where rownum=1        
+	   select distinct(m.store_code), red, blue, green
+	      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+	            from (<include refid="loc" />) s, store_text st, store_color sc
+	            where s.store_code = st.store_code and sc.store_code = s.store_code
+	            and s.store_code in (
+			    	select store_code
+			      	from (
+			      			select 	store_code, 
+			      					<foreach collection="textString" item="text" open="count(" close=")" separator=") + count(">   
+					                     case when upper(store_name) like '%'||upper(#{text})||'%' then 1 end
+					               	</foreach>  
+					               	 b_cnt 
+			  				from store 
+			  				group by store_code 
+			            ) 
+			        where b_cnt	= (
+			        				select max(b_cnt)
+			        				from (
+							      			select 	store_code, 
+							      					<foreach collection="textString" item="text" open="count(" close=")" separator=") + count(">   
+									                     case when upper(store_name) like '%'||upper(#{text})||'%' then 1 end
+									               	</foreach>  
+									               	 b_cnt 
+							  				from store 
+							  				group by store_code 
+							             ) 
+							       )
+								)
+					)m    
+			<include refid="color_rate" />
    </select> 
-  	<!-- select store_code 
-  	from (
-  			select store_code, count(case when store_name like '%co%' then 1 end)+count(case when store_name like '%ff%' then 1 end) b_cnt 
-  			from store 
-  			group by store_name order by b_cnt desc
-  		 ) 
-  	where rownum=1; -->
+  	
    
    <!-- color search -->
    <select id="searchColor" resultType="int" parameterType="whamevo">

@@ -145,9 +145,11 @@ public class WhameDAO {
 					System.out.println("namecut에 접근");
 					whamevo.setTextString(whamevo.getText());
 					System.out.println("whametext붙이기:::"+whamevo.getTextString());
-					int maxtext = session.selectOne("whame.searchTextNameCut", whamevo);
-					count.add(maxtext);
-					
+					codeList = session.selectList("whame.searchTextNameCut", whamevo);
+					for(Integer i : codeList){
+						System.out.println(i);
+						count.add(i);
+					}
 					/*
 					 * System.out.println("color에 접근");
 					codeList = session.selectList("whame.searchColor", whamevo);
