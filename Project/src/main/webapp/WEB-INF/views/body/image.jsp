@@ -2,13 +2,15 @@
    pageEncoding="UTF-8"%>
 <style>
 .imageform{
-	margin-top : 20px;;
+	margin-top : 20px;
+	margin-bottom: 20px;
 	padding-top: 20px;
 	padding-left:20px;
 	padding-right:20px;
 	padding-bottom:50px;
 	width:60%;
 	height: 200%;
+	border-radius:20px;
 }
 
 #loading{

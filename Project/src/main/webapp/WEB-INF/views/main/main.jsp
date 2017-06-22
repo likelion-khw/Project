@@ -4,7 +4,7 @@
 <%@include file="../modal/search_cg_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-a6149740a5939346f553130276762c3d&libraries=clusterer"></script>
+6ae58faecc0e06a5ecbf63977aa440b0&libraries=clusterer"></script>
 <style type="text/css">
 .mainform{
 	padding-bottom: 20px;

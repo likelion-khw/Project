@@ -156,7 +156,7 @@ container.testmo{
 			    <li class="tab col s6"><a class="active" href="#test-swipe-2" style="color:black;">로그인</a></li>
 			    <li class="tab col s6"><a href="#test-swipe-1">회원가입</a></li>
 			</ul>
-			<a class="modal-close" style="color:black;"><i class="material-icons" style="color:red;">cancel</i></a>
+			<a class="modal-close" style="color:black;"><i class="material-icons" style="color:red;margin-top:10px;margin-left:10px">close</i></a>
 			<div class="container center-align signinform">
 				<div id="test-swipe-1" class="col s12" style="margin-bottom:20px;">
 					<form action="sign.whame" method="post" enctype="multipart/form-data" id="signnew">

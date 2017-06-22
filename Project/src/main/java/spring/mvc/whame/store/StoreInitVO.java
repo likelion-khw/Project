@@ -10,6 +10,7 @@ public class StoreInitVO {
 
 	private double lat;
 	private double lon;
+	private double meter;
 	
 	private String business_code;
 	private String store_name;
@@ -18,6 +19,7 @@ public class StoreInitVO {
 	private String store_category;
 	private String userid;
 	private String store_image;
+	
 	
 	public double getLat() {
 		return lat;
@@ -85,6 +87,14 @@ public class StoreInitVO {
 	public void setStore_image(String store_image) {
 		this.store_image = store_image;
 	}
+	public double getMeter() {
+		return meter;
+	}
+	public void setMeter(double meter) {
+		this.meter = meter;
+	}
+	
+	
 	
 	
 }

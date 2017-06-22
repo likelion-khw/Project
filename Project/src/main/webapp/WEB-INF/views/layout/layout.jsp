@@ -51,11 +51,9 @@ main{
 </head>
 <body>
 	<header> <tiles:insertAttribute name="header" /> </header>
-	<div class="row">
+	<div class="row" style="margin-bottom:0px;">
 		<tiles:insertAttribute name="sidebar" />
 		<main> <tiles:insertAttribute name="body" /> </main>
-	</div>
-	<div class="row">
 		<div class="col-md-12">
 			<tiles:insertAttribute name="footer" />
 		</div>

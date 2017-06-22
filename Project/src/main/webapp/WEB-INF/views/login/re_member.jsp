@@ -12,6 +12,7 @@
 
 .re_memberform1{
 	margin-top:50px;
+	height: 500px;
 }
 
 .re_memberform1 img{
