@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../modal/fileupload_modal.jsp" %>
+<%@include file="../modal/search_cg_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-03947296fa39c02cca384bf32800c263&libraries=clusterer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+a6149740a5939346f553130276762c3d&libraries=clusterer"></script>
 <style type="text/css">
 .mainform{
 	padding-bottom: 20px;
@@ -35,13 +35,16 @@
 
 
 /*  */
-
+.carousel{
+	height: 250px;
+}
 .carousel .carousel-item{
 	opacity:1 !important;
+	top:-40px;
 }
 
 .carousel .carousel-item div.row{
-	border-radius:20px;
+	 border-radius:20px; 
 }
 
 div#onetop{
@@ -64,15 +67,18 @@ div#onetop{
 		font-size:15px;
 		font-weight: bolder;
 	}
-	.mainform input{
+	.mainform input{ 
 		margin-bottom:10px;
 	}
 	.main_text{
 		width:90%;
 	}
-	
+	 
 	.main_mapform{
 	width:90%;
+	}
+	.carousel .carousel-item .caro {
+		 height: 100px; 
 	}
 }
 </style>
@@ -84,8 +90,11 @@ div#onetop{
 	</div>
 </div>
 	<div class="center-align row" style="padding:10px" id="downf">
-		<input type="button" class="btn green" value="메뉴찾기(간판이미지 업로드)" id="fileupload">
-		<input type="button" class="btn pink darken-2" value="간판등록하기" id="enroll"><br>
+		<div style="width: 50%; margin-left:auto; margin-right:auto;" >
+			<input type="button" class="btn green col s12" value="메뉴찾기" id="fileupload" style="border-radius:20px;">
+			<input type="button" class="btn pink darken-2 col s12" value="간판등록하기" id="enroll" style="border-radius:20px;"><br>
+			<button  data-activates="search_cg" class="btn button-collapse search_cg" style="margin:7px;border-radius:20px;"><i class="material-icons">search</i></button>
+		</div>
 		<div class="main_text z-depth-1 row" style="margin-left:auto; margin-right: auto;">
 			<div class="col s12">
 			<img src="resources/img/main.png" class="mainimg" style="border-radius:150px">
@@ -115,16 +124,16 @@ div#onetop{
 				</table>
 			</div>
 		</div>
-		<div style="width: 90%; margin-left: auto; margin-right: auto" >
+		<div style="width: 100%; margin-left: auto; margin-right: auto;" >
 			<span style="font-size: 35px;">New Store</span>
-			<div class="carousel">
+			<div class="carousel" style="margin-top:40px;" >
 				<c:forEach items="${getNewStore}" var="store">
-				    <a class="carousel-item" href="/whame/forkakao.whame?store_code=${store.store_code}">
-				    	<div class="row" style="border:1px #bdbdbd solid; height: 300px; padding:10px;">
-				    		<div class="col s12" style="height:150px;">
-				    			<img src="${store.store_image}" width="100%" height="150px" style="border-radius:30px">
+					<a class="carousel-item" style="width:250px; height:170px;" href="/whame/forkakao.whame?store_code=${store.store_code}">
+				    	<div class="caro row" > 
+				    		<div class="col s12 image" id="${store.store_code}">
+				    			<img src="${store.store_image}" width="227px" height="170px" style="border-radius:30px">
 				    		</div>
-				    		<div class="col s12" style="height: 100px;">
+				    		<div class="col s12"  style="height: 45px;"> 
 				    			<span style="font-size: 17px; color:black">${store.store_name}</span>
 				    			<span style="blue">(${store.dong})</span>
 				    		</div>
@@ -132,10 +141,11 @@ div#onetop{
 				    			<span style="blue">${store.store_category}</span>
 				    		</div>
 				    	</div>
-				    </a>
+					  </a>
 				</c:forEach>
 		 	 </div>
 	 	</div>
+	 	<div id="msg"></div>
 	</div>
 
 
@@ -143,6 +153,12 @@ div#onetop{
 	$('i[name=1rank]').css('color','gold');
 	$('i[name=2rank]').css('color','silver');
 	$('i[name=3rank]').css('color','brown');
+	
+	function movetostore(store_code){
+		console.log("/whame/forkakao.whame?store_code="+store_code);
+		//location.href='/whame/forkakao.whame?store_code='+store_code;
+	}
+	
 	var cl = new Array();
 	var positions = new Array();
 	$(document).ready(function() {
@@ -161,8 +177,15 @@ div#onetop{
 			$('#modal1').modal('open');
 		});
 	
-		$("#enroll").on('click',function(){
-			$(location).attr('href','enroll.whame');
+		$("#enroll").on('click',function(event){
+			var member = '${memberVO.userid}';
+			if(member == "")
+				{
+					$('#sign_login').modal('open');
+				}
+			else{
+				$(location).attr('href','enroll.whame');
+			}
 		});
 
 		var container = document.getElementById('main_map');
@@ -268,21 +291,60 @@ div#onetop{
 			}
 		}); 
 
-		$('.carousel').carousel({
-	          dist:0,
-	          shift:0,
-	          padding:60,
-	    });
-
 	    $("#down").click(function(event){            
 	        event.preventDefault();
 	        $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 1000);
 		});
 
-	    setInterval(function(){
+	    $('.carousel').carousel({
+	          dist:0,
+	          shift:0,
+	          padding:-5
+	    });
+
+		setInterval(function(){
 	    	$('.carousel').carousel('next');
 		    },2000);
-		
+
+	    function stopScroll(){
+	    	clearInterval(v);
+	    	$('.carousel').carousel({
+	    		time_constant : 0
+	    	});
+	    }
+	     var fingerMove = false;
+	     
+	     $('.carousel-item .row .image').bind('touchstart click', function(e) {
+			//e.preventDefault();	//	이벤트취소.
+			fingerMove = false;
+		});
+
+		$('.carousel-item .row .image').bind('touchmove', function(e) {
+			//e.preventDefault();
+			fingerMove = true;
+		});
+
+		$('.carousel-item .row .image').bind('touchend', function(e) {
+			//e.preventDefault(); 
+			var store_code = $(this).attr('id');
+			if(fingerMove == false){
+				location.href='/whame/forkakao.whame?store_code='+store_code;
+				
+			}
+		}); 
+
+	    
+	    $('.button-collapse.search_cg').sideNav({
+		      menuWidth: 360, // Default is 300
+		      edge: 'bottom', // Choose the horizontal origin
+		      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+		      draggable: true // Choose whether you can drag to open on touch screens
+		    }
+		  );
+
+		$('#search_close').on('click',function(){
+	   	 	$('.button-collapse.search_cg').sideNav('hide');
+		});
 	})
 </script>
 

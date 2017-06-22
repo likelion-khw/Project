@@ -4,7 +4,8 @@
 <%@include file="../modal/fileupload_modal.jsp" %>
 <%@include file="../modal/show_coupon_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
+a6149740a5939346f553130276762c3d&libraries=services"></script>
+<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <style>
 /*  크롤링 결과 디자인  */
 div.thumb img{
@@ -94,6 +95,9 @@ div.txt{
 div.showinfo_btn input{
 	margin-bottom: 5px;
 }
+.parallax-container {
+    height: 300px;
+}
 @media only screen and (min-width : 300px) and (max-width : 600px) {
 
 	.showinfoform{
@@ -107,6 +111,12 @@ div.showinfo_btn input{
 		width:100%;
 		margin-left:auto;
 		margin-right: auto;
+	}
+	.parallax img{
+		width: 130%;
+	}
+	.parallax-container {
+    	height: 200px;
 	}
 }
 @media only screen and (min-width : 601px){
@@ -153,7 +163,12 @@ div.showinfo_btn input{
 				</tbody>
 			</table> --%>
 			<div class="center-align">
-				<h4>${store.store_name} 메뉴</h4>
+				<div class="parallax-container">
+					<div class="parallax"><img src="${store.store_image}" width="100%"></div>
+					<div style="background-color: gray; opacity:0.8; bottom: 0px; width:100%; position: absolute;">
+						<h4 style="color:white">${store.store_name} 메뉴</h4>
+					</div>
+				</div>
 			 	<label>메뉴종류</label>
 			 	<center>
 					<select class="browser-default" id="menu_type" style="width:40%">
@@ -270,7 +285,7 @@ div.showinfo_btn input{
 				<!-- <input type="button" class="btn" value="접기" id="hidecrawl" style="float:right"> -->
 			</div>
 			<div class="fixed-action-btn horizontal">
-			    <a class="btn-floating btn-large white" id="upview" onclick="window.scrollTo(0,0); return false;">
+			    <a class="btn-floating btn-large white" id="upview" href="#top_view">
 			      <i class="material-icons" style="color:black">arrow_upward</i>
 			    </a>
 			 </div>
@@ -310,6 +325,7 @@ div.showinfo_btn input{
 		$('ul.review div.twopage li#sp_blog_'+i).addClass('crawhide');
 	}
 $(document).ready(function() {
+			$('.parallax').parallax();
 	 		// 블로그 더보기 이벤트
 			$('#showcrawl').on('click',function(){
 				if(crawstart > crawmax){
@@ -563,6 +579,10 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
+$("#upview").click(function(event){            
+    event.preventDefault();
+    $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 500);
+});
 Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
    	function sendLink(){

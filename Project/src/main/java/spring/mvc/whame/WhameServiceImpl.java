@@ -35,6 +35,7 @@ public class WhameServiceImpl implements WhameService{
 	
 	@PostConstruct
 	public void init(){
+		System.out.println("init생성");
 		storeInit = dao.getAllinitData();
 		menuInit = dao.getAllMenu();
 	}
@@ -121,7 +122,7 @@ public class WhameServiceImpl implements WhameService{
 	}
 	
 	@Override
-	public List<LocationVO> getHistotyLoc(String userid){
+	public List<LocationVO> getHistoryLoc(String userid){
 		return hdao.getHistoryLoc(userid);
 	}
 	
@@ -213,8 +214,11 @@ public class WhameServiceImpl implements WhameService{
 	}
 	
 	public List<StoreInitVO> tagResult(String menuSearch, String choice, WhameVO wvo){
+		//중복체크
+		List<Integer> scodeCheck = new ArrayList<Integer>();
 		List<StoreInitVO> result = new ArrayList<StoreInitVO>();
 		List<Integer> cloc_code = dao.getCategoryLoc(wvo);
+		System.out.println(cloc_code.size());
 		if(choice.equals("tag")){
 			for(int i = 0; i < storeInit.size(); i++){
 				if(menuSearch.equals(storeInit.get(i).getStore_category())){
@@ -229,9 +233,12 @@ public class WhameServiceImpl implements WhameService{
 			for(int i = 0; i < menuInit.size(); i++){
 				if(menuInit.get(i).getMenu_name().contains(menuSearch)){
 					for(int j = 0; j<storeInit.size(); j++){
-						if(menuInit.get(i).getStore_code() == storeInit.get(j).getStore_code())
-						{
-							result.add(storeInit.get(j));
+						for(Integer jj : cloc_code){
+							System.out.println(jj);
+							if(menuInit.get(i).getStore_code() == storeInit.get(j).getStore_code() 
+									&& jj == storeInit.get(j).getStore_code() && result.contains(storeInit.get(j)) == false){
+								result.add(storeInit.get(j));
+							}
 						}
 						
 					}

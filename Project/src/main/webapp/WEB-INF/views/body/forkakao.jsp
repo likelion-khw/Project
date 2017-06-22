@@ -4,8 +4,7 @@
 <%@include file="../modal/fileupload_modal.jsp" %>
 <%@include file="../modal/show_coupon_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+03947296fa39c02cca384bf32800c263&libraries=services"></script>
 <style>
 /*  크롤링 결과 디자인  */
 div.thumb img{
@@ -110,6 +109,15 @@ div.showinfo_btn input{
 		width:100%;
 		margin-left:auto;
 		margin-right: auto;
+	}
+	.parallax img{
+		width: 130%;
+	}
+	.parallax-container {
+    	height: 200px;
+	}
+	.card .card-title{
+		font-size: 18px;
 	}
 }
 
@@ -256,7 +264,7 @@ div.showinfo_btn input{
 				<!-- <input type="button" class="btn" value="접기" id="hidecrawl" style="float:right"> -->
 			</div>
 			 <div class="fixed-action-btn horizontal">
-			    <a class="btn-floating btn-large white" id="upview" onclick="window.scrollTo(0,0); return false;">
+			    <a class="btn-floating btn-large white" id="upview" href="#top_view">
 			      <i class="material-icons" style="color:black">arrow_upward</i>
 			    </a>
 			 </div>
@@ -336,7 +344,7 @@ $(document).ready(function() {
 		</c:forEach>
 		if( coupon == true)
 			{
-				$("#coupon1").openModal();
+				$("#coupon1").modal('open');
 				$('input[value="이벤트보기"]').removeClass('hidemenu');
 			}
 		
@@ -537,6 +545,11 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
+$("#upview").click(function(event){            
+    event.preventDefault();
+    $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 500);
+});
+
 Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
    	function sendLink(){

@@ -5,7 +5,7 @@
 
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-03947296fa39c02cca384bf32800c263&libraries=services"></script>
+a6149740a5939346f553130276762c3d&libraries=services"></script>
 <style>
 	.history_form{
 		margin-top:20px;
@@ -24,8 +24,12 @@
 		background: #ffffff;
 		background: rgba(255,255,255,0.5);
 	}
+	.h_map{
+		width:100%;
+		height:350px;
+	}
 	
-	@media only screen and (min-width : 321px) and (max-width : 600px) {
+	@media only screen and (min-width : 320px) and (max-width : 600px) {
 	
 		.slider{
 			width:125%;
@@ -36,17 +40,24 @@
 		margin-right: 0;
 		}
 		
+		.h_map{
+			height: 250px;
+		}
+		
+		.slides .listsize{
+			height: 200px;
+		}
 	}
 	
 </style>
 <div class="container history_form">
-	<div id="map" style="width:100%;height:350px;" class="h_map"></div>
+	<div id="map" class="h_map"></div>
 	<div style="width:80%;" class="sli">
 		<c:forEach items="${hMap}" var="vo" >
 		<div class="slider z-depth-3" style="margin-bottom:30px;">
 	    <ul class="slides">
 			<c:forEach items="${vo.value }" var="his">
-				<li>
+				<li class='listsize' style="heigth:200px;">
 			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
 			        <div class="caption center-align">
 			          	<c:forEach items="${storelist }" var="comstore">
@@ -69,6 +80,11 @@
 	  	</div>
 		</c:forEach> 
 	</div>
+	<div class="fixed-action-btn horizontal">
+	    <a class="btn-floating btn-large white" id="upview" href="#top_view">
+	      <i class="material-icons" style="color:black">arrow_upward</i>
+	    </a>
+	 </div>
 </div>
       
 <script type="text/javascript">
@@ -93,11 +109,10 @@ var positions=[];
 	        latlng: new daum.maps.LatLng(x.slice(3*i+1,3*i+2), x.slice(3*i+2,3*i+3))
 	    };
 	}
-	
 	var container = document.getElementById('map');
 	var options = {
-		center: new daum.maps.LatLng(37.49655,127.02964),
-		level: 8
+		center: new daum.maps.LatLng(x.slice(3*(length-1)+1,3*(length-1)+2),x.slice(3*(length-1)+2,3*(length-1)+3)),
+		level: 4
 	};
 	var map = new daum.maps.Map(container, options);
 	
@@ -153,7 +168,11 @@ var positions=[];
 		console.log(store_code);
 		$('#'+store_code+"modal").modal('open');
 	}); 
-	
+
+	$("#upview").click(function(event){            
+	    event.preventDefault();
+	    $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 500);
+	});
 	
 }) 
 </script>

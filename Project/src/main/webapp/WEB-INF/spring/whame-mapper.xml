@@ -41,16 +41,16 @@
  	<!-- search -->
  	<!-- color+ocr -->
  	 <sql id="color_rate">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.2
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.2
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.2 <!-- between 0 and 0.45 -->
+		where abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.45
+			or abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.45
+			or abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.45 <!-- between 0 and 0.45 -->
 	</sql>
 	
 	<!-- color -->
  	<sql id="color_max">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.05
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.05 
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.05<!-- between 0 and 0.45 -->
+		where (abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.1 )
+			or (abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1)
+			or (abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.1 )<!-- between 0 and 0.45 -->
 	</sql>
 	
 	<!-- 근방 Xm location -->
@@ -75,16 +75,34 @@
       from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
             from (<include refid="loc" />) s, store_text st, store_color sc
             where s.store_code = st.store_code and sc.store_code = s.store_code
-            and 
-               <foreach collection="text" item="text" open="(" close=")" separator="or">
-                  <if test="text.text != null and text.text.length() >= 2">
-                  upper(st.text) like upper('%'||#{text.text}||'%')
-                  </if>
-               </foreach>            
+            and s.store_code in 
+            		(select store_code
+            		from 	(select store_code, 
+            						<foreach collection="text" item="text1" open="count(" close=")" separator=") + count(">   
+            						<if test="text1.text != null and text1.text.length() >= 2">
+					                     case when upper(text) like '%'||upper(#{text1.text})||'%' then 1 end
+					                </if>
+					               	</foreach> 
+					             	 b_cnt 
+							from store_text 
+							group by store_code)
+					where b_cnt = 	(select max(b_cnt)
+									from 	(select store_code, 
+											<foreach collection="text" item="text1" open="count(" close=")" separator=") + count(">   
+											<if test="text1.text != null and text1.text.length() >= 2">
+							                     case when upper(text) like '%'||upper(#{text1.text})||'%' then 1 end
+							                </if>
+							               	</foreach> 
+							               	b_cnt
+											from store_text 
+											group by store_code)
+							)
+            		)           
             ) m
         <include refid="color_rate" /><!-- 
         and m.store_code in (<include refid="loc" />) -->
    </select> 
+   
    
    <!-- name search -->
    <select id="searchTextName" resultType="int" parameterType="whamevo">
@@ -101,7 +119,43 @@
             ) m
         <include refid="color_rate" />  
         <!-- and m.store_code in (<include refid="loc" />) -->
+   </select>
+   
+   
+   <!-- cropOcr search -->
+   <select id="searchTextNameCut" resultType="int" parameterType="whamevo">
+	   select distinct(m.store_code), red, blue, green
+	      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+	            from (<include refid="loc" />) s, store_text st, store_color sc
+	            where s.store_code = st.store_code and sc.store_code = s.store_code
+	            and s.store_code in (
+			    	select store_code
+			      	from (
+			      			select 	store_code, 
+			      					<foreach collection="textString" item="text" open="count(" close=")" separator=") + count(">   
+					                     case when upper(store_name) like '%'||upper(#{text})||'%' then 1 end
+					               	</foreach>  
+					               	 b_cnt 
+			  				from store 
+			  				group by store_code 
+			            ) 
+			        where b_cnt	= (
+			        				select max(b_cnt)
+			        				from (
+							      			select 	store_code, 
+							      					<foreach collection="textString" item="text" open="count(" close=")" separator=") + count(">   
+									                     case when upper(store_name) like '%'||upper(#{text})||'%' then 1 end
+									               	</foreach>  
+									               	 b_cnt 
+							  				from store 
+							  				group by store_code 
+							             ) 
+							       )
+								)
+					)m    
+			<include refid="color_rate" />
    </select> 
+  	
    
    <!-- color search -->
    <select id="searchColor" resultType="int" parameterType="whamevo">
@@ -246,7 +300,7 @@
   	</select>
   	
   	<select id="initAllData" resultType="storeinitvo">
-  		select s.store_code, store_name, address, view_count, store_category, lat, lon from store s, store_location sl where s.store_code = sl.store_code
+  		select s.store_code, store_name, store_image, address, view_count, store_category, lat, lon from store s, store_location sl where s.store_code = sl.store_code
   	</select>
   	
   	<select id="initAllMenu" resultType="menuvo">

@@ -1,6 +1,9 @@
 package spring.mvc.whame;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.internal.matchers.SubstringMatcher;
 
 import spring.mvc.whame.color.ColorVO;
 
@@ -13,6 +16,7 @@ public class WhameVO {
 	private double lon;
 	private double difflat;
 	private double difflon;
+	private List<String> textString;
 	
 	public List<TextVO> getText() {
 		return text;
@@ -55,6 +59,20 @@ public class WhameVO {
 	}
 	public void setDifflon(double difflon) {
 		this.difflon = difflon;
+	}
+	
+	public void setTextString(List<TextVO> textvo){
+		List<String> result = new ArrayList<String>();
+		for(TextVO vo : textvo){
+			for(int i=0; i<vo.getText().length()-2; i++){
+				result.add(vo.getText().substring(i, i+2));	
+			}
+		}
+		this.textString = result;
+	}
+	
+	public List<String> getTextString() {
+		return textString;
 	}
 	
 	
