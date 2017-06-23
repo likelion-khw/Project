@@ -1,10 +1,13 @@
 package spring.mvc.whame.login;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import spring.mvc.whame.store.StoreVO;
 
 @Component
 public class LoginDAO {
@@ -77,6 +80,39 @@ public class LoginDAO {
 		mvo = session.selectOne("login.login_facebook", fvo);
 		
 		return mvo;
+	}
+	
+	public void member_out(String userid){
+		session.delete("login.del_history",userid);
+		List<StoreVO> svo = session.selectList("whame.getStore", userid);
+		
+		for(StoreVO sv : svo){
+			session.delete("whame.delstore0",sv.getStore_code());
+			session.delete("whame.delstore1",sv.getStore_code());
+			session.delete("whame.delstore2",sv.getStore_code());
+			session.delete("whame.delstore3",sv.getStore_code());
+			session.delete("whame.delstore4",sv.getStore_code());
+			session.delete("whame.delstore5",sv.getStore_code());
+		}
+		
+		session.delete("login.del_user",userid);
+	}
+	
+	public void member_out_sns(String userid){
+		session.delete("login.del_history",userid);
+		List<StoreVO> svo = session.selectList("whame.getStore", userid);
+		
+		for(StoreVO sv : svo){
+			session.delete("whame.delstore0",sv.getStore_code());
+			session.delete("whame.delstore1",sv.getStore_code());
+			session.delete("whame.delstore2",sv.getStore_code());
+			session.delete("whame.delstore3",sv.getStore_code());
+			session.delete("whame.delstore4",sv.getStore_code());
+			session.delete("whame.delstore5",sv.getStore_code());
+		}
+		
+		session.delete("login.del_user_kakao",userid);
+		session.delete("login.del_user_facebook",userid);
 	}
 
 }

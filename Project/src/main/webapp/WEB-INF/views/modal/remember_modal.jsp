@@ -12,6 +12,25 @@
 .pass.modal{
 	height: 55%;
 }
+.out{
+	height: 55%;
+	background-color: #37474f;
+	color:white;
+}
+
+.out .modal-footer{
+	background-color: #37474f;
+}
+
+.out2{
+	height: 40%;
+	background-color: #37474f;
+	color:white;
+}
+
+.out2 .modal-footer{
+	background-color: #37474f;
+}
 </style>
 
 <!-- 닉네임 변경 모달 -->
@@ -45,10 +64,37 @@
 			class="modal-action modal-close btn" style="float:none;">취소</a>
 	</div>
 </div>
+<!-- 회원탈퇴 -->
+<div id="remember_out" class="out modal remember_modalform center-align">
+	<div class="modal-content">
+		<h4 style="color: #d32f2f">회원탈퇴</h4>
+		<p>회원정보를 모두 삭제합니다.</p>
+		<p>패스워드를 입력 후<br>확인 버튼을 누르세요.</p>
+		<input type="password" id="re_pass_out" style="width:100px">
+	</div>
+	<div class="modal-footer">
+		<a href="#!"
+			class="modal-action btn red" id="reload_out" style="float:none;">확인</a>
+		<a href="#!"
+			class="modal-action modal-close btn blue" style="float:none;">취소</a>
+	</div>
+</div>
+
+<div id="remember_out2" class="out2 modal remember_modalform center-align">
+	<div class="modal-content">
+		<h4 style="color: #d32f2f">회원탈퇴</h4>
+		<p>회원정보를 모두 삭제합니다.</p>
+	</div>
+	<div class="modal-footer">
+		<a href="#!"
+			class="modal-action btn red" id="reload_out2" style="float:none;">확인</a>
+		<a href="#!"
+			class="modal-action modal-close btn blue" style="float:none;">취소</a>
+	</div>
+</div>
 
 <script type="text/javascript">
 $(document).ready(function() {
-
 	//닉네임 변경
 	$('#re_nickname').on('change',function(){
 		var nickname = $('#re_nickname').val();
@@ -159,6 +205,42 @@ $(document).ready(function() {
 			{
 				alert("비밀번호가 다릅니다.");
 			}
+	});
+
+
+	$('#reload_out').on('click',function(){
+		var pw = '${memberVO.pw}';
+		var inpw = $('#re_pass_out').val();
+		if( pw == inpw)
+			{
+				$.ajax({
+					url : "member_out.whame",
+					type : 'post',
+					data : {
+							'userid' : '${memberVO.userid}'
+						},
+					success : function(){
+							$(location).attr('href','/whame/logout.whame');
+						}
+					})
+			}
+		else{
+				$('#re_pass_out').val('');
+				alert('비밀번호가 다릅니다.');
+			}
+	});
+
+	$('#reload_out2').on('click',function(){
+		$.ajax({
+			url : "member_out_sns.whame",
+			type : 'post',
+			data : {
+					'userid' : '${memberVO.userid}'
+				},
+			success : function(){
+					$(location).attr('href','/whame/logout.whame');
+				}
+			})
 	});
 	
 

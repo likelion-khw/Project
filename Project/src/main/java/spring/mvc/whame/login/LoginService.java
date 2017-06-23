@@ -15,4 +15,7 @@ public interface LoginService {
 	
 	public MemberVO kakao(KakaoVO kvo);
 	public MemberVO facebook(FaceBookVO fvo);
+	
+	public void member_out(String userid);
+	public void member_out_sns(String userid);
 }

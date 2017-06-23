@@ -6,6 +6,12 @@
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
 6ae58faecc0e06a5ecbf63977aa440b0&libraries=clusterer"></script>
 <style type="text/css">
+#menu{
+		position: fixed;
+		bottom:20px;
+		float:right;
+		right:20px;
+	}
 .mainform{
 	padding-bottom: 20px;
 	width: 100%;
@@ -89,6 +95,32 @@ div#onetop{
 	<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
 	</div>
 </div>
+<!-- <div class="row">
+	<div class="center-align col s12 m6">
+		<div style="padding-top:25%;">
+		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
+	</div>
+	<div class="center-align col s12 m6">
+		<div style="padding-top:25%;">
+		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
+	</div>
+	<div class="center-align col s12 m6">
+		<div style="padding-top:25%;">
+		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
+	</div>
+	<div class="center-align col s12 m6">
+		<div style="padding-top:25%;">
+		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+		<a id="test" class="btn blue lighten-2" style="border-radius:20px;">Whame?</a>
+		</div>
+	</div>
+</div> -->
 	<div class="center-align row" style="padding:10px" id="downf">
 		<div style="width: 50%; margin-left:auto; margin-right:auto;" >
 			<input type="button" class="btn green col s12" value="메뉴찾기" id="fileupload" style="border-radius:20px;">
@@ -147,7 +179,16 @@ div#onetop{
 	 	</div>
 	 	<div id="msg"></div>
 	</div>
-
+	
+<a id="menu"><img src="resources/img/main.png" width="80px"></a>
+<!-- Tap Target Structure -->
+<div class="tap-target" data-activates="menu" style="background-color: #9575cd">
+  <div class="tap-target-content" style="color:white">
+    <h5 class="center-align">Whame란?</h5>
+    <p>Whame는 'What Menu'에서 비롯된 타이틀입니다. </p>
+	<p>상가의 메뉴를 직접 들어가지 않고 밖에서 간판 사진을 이용하여 메뉴정보를 얻을 수 있습니다.</p>
+  </div>
+</div>
 
 <script type="text/javascript">
 	$('i[name=1rank]').css('color','gold');
@@ -345,6 +386,10 @@ div#onetop{
 		$('#search_close').on('click',function(){
 	   	 	$('.button-collapse.search_cg').sideNav('hide');
 		});
+
+		$('#test').on('click',function(){
+			$('.tap-target').tapTarget('open');
+		})
 	})
 </script>
 

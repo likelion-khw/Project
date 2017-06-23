@@ -10,10 +10,19 @@
 	display: none;
 }
 
-.re_memberform1{
-	margin-top:50px;
+.re_form{
+	margin-top:60px;
+	margin-bottom:60px;
 	height: 500px;
+	padding:20px;
+	border-radius:30px;
 }
+
+.re_form .btn{
+	border-radius:20px;
+	background-color:green;
+}
+
 
 .re_memberform1 img{
 	width: 200px;
@@ -22,7 +31,9 @@
 
 .image {
     position:relative;
+    margin-bottom:10px;
 }
+
 @media only screen and (min-width : 321px) and (max-width : 600px) {
 	.re_memberform1 th{
 		width:1px;
@@ -43,7 +54,7 @@
 	.mb_remform th{
 		width:500px;
 		text-align: center;
-		font-size:20px;
+		font-size:15px;
 		background-color: #eceff1;
 		border-style: groove;
 	}
@@ -51,7 +62,7 @@
 
 
 </style>
-<div class="container">
+<div class="re_form container z-depth-2">
 	<div class="re_memberform1 center-align">
 		<c:choose>
 				<c:when test="${memberVO.userimage == ''}">
@@ -59,9 +70,6 @@
 					<a href="javascript:;">
 						<img class="circle" src="resources/img/user.png" id="re_img">
 					</a>
-					<div class="text">
-					    <p>이미지 변경</p>
-					</div>
 				</div>
 				</c:when>
 				<c:when test="${memberVO.userimage != ''}">
@@ -69,35 +77,40 @@
 					<a href="javascript:;">
 						<img class="circle" src="${memberVO.userimage }" id="re_img">
 					</a>
-					<div class="text">
-					    <p>이미지 변경</p>
-					</div>
 				</div>
 				</c:when>
 		</c:choose>
 		<form action="re_img.whame" method="post" enctype="multipart/form-data" id="re_img_form">
 			<input type="file" id="re_userimg" style="display:none" name="re_userimg">
 		</form>
-		<table class="centered">
-			<tr class="mb_remform">
-				<th>닉네임</th>
-			</tr>
-			<tr>
-				<th class="web_form">닉네임</th>
-				<td><input type="text" value="${memberVO.nickname }" class="col s6" disabled>
-				<a href="#remember_nickname" class="btn">닉네임변경</a>
-				</td>
-			</tr>
-			<tr class="mb_remform">
-				<th>패스워드</th>
-			</tr>
-			<tr>
-				<th class="web_form">패스워드</th>
-				<td><input type="password" value="${memberVO.pw }" class="col s6" disabled>
-				<a href="#remember_pw" class="btn">패스워드변경</a>
-				</td>
-			</tr>
-		</table>
+		<c:choose>
+			<c:when test="${memberVO.pw != null}">
+				<table class="centered">
+					<tr class="mb_remform">
+						<th>닉네임</th>
+					</tr>
+					<tr>
+						<th class="web_form">닉네임</th>
+						<td><input type="text" value="${memberVO.nickname }" class="col s6" disabled>
+						<a href="#remember_nickname" class="btn">닉네임변경</a>
+						</td>
+					</tr>
+						<tr class="mb_remform">
+							<th>패스워드</th>
+						</tr>
+						<tr>
+							<th class="web_form">패스워드</th>
+							<td><input type="password" value="${memberVO.pw }" class="col s6" disabled>
+							<a href="#remember_pw" class="btn">패스워드변경</a>
+							</td>
+						</tr>
+				</table>
+				<a href="#remember_out" class="btn red">회원탈퇴</a>
+			</c:when>
+			<c:otherwise>
+				<a href="#remember_out2" class="btn red" style="margin-top:70px;">회원탈퇴</a>
+			</c:otherwise>
+		</c:choose>
 	</div>
 </div>
 

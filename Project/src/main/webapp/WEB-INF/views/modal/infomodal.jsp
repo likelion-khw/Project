@@ -4,7 +4,7 @@
 
 <style>
 	.info.modal{
-		height: 50%;
+		height: 300px;
 	}
 	#history_del{
 		width:400px;

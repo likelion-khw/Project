@@ -2,16 +2,26 @@
 	pageEncoding="UTF-8" import="spring.mvc.whame.login.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="../modal/infomodal.jsp" %>
-<%
-	MemberVO membervo = (MemberVO) session.getAttribute("memberVO");
-	int num = 0;
-%>
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
 <style>
+.enrolls_form{
+   	padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 30px;
+}
 .menu_view{
-	margin-top:20px;
 	margin-bottom:20px;
+}
+
+.enrolls_form .btn{
+	border-radius:20px;
+}
+.enrolls_form lable{
+	font-size:12px;
+}
+#menutable{
+	display: none;
 }
 </style>
 <script type="text/javascript">
@@ -20,9 +30,9 @@ var modalopen = function(){
 }
 </script>
 <body onload="modalopen();">
-<div class="container center-align">
+<div class="enrolls_form container center-align z-depth-2">
 	<div class="menu_view">
-	<h4><%=membervo.getNickname()%>님 ${store_name}의 초기 메뉴를 업로드하세요.
+	<h4>${memberVO.nickname}님 ${storename}의 초기 메뉴를 업로드하세요.
 	</h4>
 	<h5>추후에도 변경 및 추가 하실 수 있습니다.</h5>
 		<form action="menuUpload.whame" method="post" id="menuform">
@@ -45,20 +55,20 @@ var modalopen = function(){
 			<div id="show"></div>
 		<table class="centered">
 			<tr class="item">
-					<td><select name="menu_type" id="menu_type"
+					<td><lable>메뉴종류</lable><select name="menu_type" id="menu_type"
 						class="browser-default">
 							<c:forEach items="${typelist}" var="vo2">
 								<option>${vo2.type_name}</option>
 							</c:forEach>
 					</select></td>
-					<td><input type="text" id="menu_name"></td>
-					<td><input type="text" id="menu_price"></td>
-					<td><input type="button" value="등록" class="insBtn btn"></td>
+					<td><lable>메뉴명</lable><input type="text" id="menu_name"></td>
+					<td><lable>가격</lable><input type="text" id="menu_price"></td>
+					<td><input type="button" value="추가" class="insBtn btn green"></td>
 					<!-- <td><input type="button" value="삭제" class="delBtn"></td> -->
 				</tr>
 		</table>
 		<input type="hidden" value="${menulist }" id="menulist"> <input
-				type="submit" value="메뉴등록" class="btn">
+				type="submit" value="메뉴등록" class="btn blue">
 		</form>
 	</div>
 	<div id="map" style="width: 100%; height: 350px;"></div>
@@ -67,22 +77,31 @@ var modalopen = function(){
 
 <script type="text/javascript">
 	/* window.onload = function(){ */
+	
+	$(document).on('click','#del_me',function(){
+		var id = $(this).attr('name');
+		$('tr[name='+id+']').remove();
+		$('input[id='+id+']').remove();
+	});
+	var count = 0;
 	$('.insBtn')
 			.click(
 					function() {
+						$('#menutable').css('display','table');
 						var menu = new Object(); $('#menu_name').val();
 						menu.menu_name = $('#menu_name').val();
 						menu.menu_price = $('#menu_price').val();
 						menu.menu_type = $('#menu_type').val();
 						$('#menu_t').append(
-								"<tr><td>"
+								"<tr name='"+count+"'><td>"
 										+ menu.menu_type + "</td><td>"
 										+ menu.menu_name + "</td><td>"
-										+ menu.menu_price + "</td></tr>");
+										+ menu.menu_price + "</td><td><a href='javascript:t()' id='del_me' name='"+count+"'><i class='material-icons' style='color:red'>close</i></a></td></tr>");
 						$('#menu_name').val("");
 						$('#menu_price').val("");
-						$('#show').html($('#show').html() + "<input type=hidden name=menulist value=" + menu.menu_name + ":" 
+						$('#show').html($('#show').html() + "<input id='"+count+"' type=hidden name=menulist value=" + menu.menu_name + ":" 
 								+ menu.menu_price + ":" + menu.menu_type + ">");
+						count++;
 
 					})
 
@@ -115,7 +134,7 @@ var modalopen = function(){
 							// 인포윈도우로 장소에 대한 설명을 표시합니다
 							var infowindow = new daum.maps.InfoWindow(
 									{
-										content : '<div style="width:150px;text-align:center;padding:6px 0;">${store_name}</div>'
+										content : '<div style="width:150px;text-align:center;padding:6px 0;">${storename}</div>'
 									});
 							infowindow.open(map, marker);
 							// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다

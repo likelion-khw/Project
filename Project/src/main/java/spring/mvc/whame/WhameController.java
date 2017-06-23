@@ -109,11 +109,17 @@ public class WhameController {
 		String[] crawl = craws[0].split("</li>");
 		String[] crawl1 = craws[1].split("</li>");
 		String crawl2 = craws[2];
+		String[] crawl3 = craws[3].split("<!-- /react-text -->");
+		
+		for(int i=0; i<crawl3.length; i++){
+			crawl3[i] = crawl3[i].replaceAll("[!><-]|span","").replaceAll(" ", "").replaceAll("class=\"grade\"datareactid=\"|\n", "").replaceAll("reacttext:...|4..../|%", "");
+		}
 		
 		mav.addObject("couponlist", couponlist);
 		mav.addObject("crawl", crawl);
 		mav.addObject("crawl1", crawl1);
 		mav.addObject("crawl2", crawl2);
+		mav.addObject("crawl3", crawl3);
 		mav.addObject("menutype",menutype);
 		mav.addObject("menuList", menuList);
 		mav.addObject("location", location);
@@ -161,10 +167,16 @@ public class WhameController {
 			String[] crawl = craws[0].split("</li>");
 			String[] crawl1 = craws[1].split("</li>");
 			String crawl2 = craws[2];
+			String[] crawl3 = craws[3].split("<!-- /react-text -->");
+			
+			for(int i=0; i<crawl3.length; i++){
+				crawl3[i] = crawl3[i].replaceAll("[!><-]|span","").replaceAll(" ", "").replaceAll("class=\"grade\"datareactid=\"|\n", "").replaceAll("reacttext:...|4..../|%", "");
+			}
 
 			mav.addObject("crawl", crawl);
 			mav.addObject("crawl1", crawl1);
 			mav.addObject("crawl2", crawl2);
+			mav.addObject("crawl3", crawl3);
 			mav.addObject("imgurl", history.getSignimage());
 			mav.addObject("result", result);
 			mav.addObject("menutype", menutype);
@@ -242,8 +254,9 @@ public class WhameController {
 				mav.addObject("typelist", typelist);
 				System.out.println(address);
 				mav.addObject("address", address);
+				mav.addObject("storename",enrollStore.getStore_name());
 				mav.setViewName("body/enrollsuccess");
-				System.out.println("enrollsuccess占쏙옙 占싱듸옙");
+				System.out.println("enrollsuccess 이동");
 			} else {
 				mav.setViewName("redirect:/");
 			}
@@ -297,7 +310,7 @@ public class WhameController {
 		this.lon = lon;
 		System.out.println("lal" + lat + ":" + lon);
 		MapTest mt = new MapTest();
-		difflal = mt.run(lat, 2000);
+		difflal = mt.run(lat, 500);
 
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame/StoreTitle";
