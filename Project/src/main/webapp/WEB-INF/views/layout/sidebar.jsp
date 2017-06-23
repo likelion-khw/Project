@@ -11,6 +11,10 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+#mobile-demo li.topli{
+	height: 240px;
+}
+<% if(membervo != null){%>
 @media only screen and (min-width : 200px) and (max-width:991px) {
 	.side-nav .userView{
 		margin-top: -45px;
@@ -18,10 +22,14 @@
 	.white-text.name.top{
 		margin-top: -20px;
 	}
+	#mobile-demo li.topli{
+		height: 280px;
+	}
 }
+<%}%>
 </style>
 <ul id="mobile-demo" class="side-nav fixed" style="width:240px">
-    <li style="background-color:#673ab7; height:240px;">
+    <li style="background-color:#673ab7;" class="topli">
     <div class="userView">
 			<div class="center-align">
 				<c:choose>

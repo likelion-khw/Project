@@ -63,5 +63,22 @@
   		insert into facebook_user values(#{userid},#{facebookauth},#{nickname},#{userimage})
   	</insert>
   	
+  	<!-- 회원 탈퇴 과정 -->
+  	<delete id="del_history" parameterType="string">
+  		delete history where userid = #{userid}
+  	</delete>
+  	
+  	<delete id="del_user" parameterType="string">
+  		delete vm_user where userid = #{userid}
+  	</delete>
+  	
+  	<delete id="del_user_kakao" parameterType="string">
+  		delete kakao_user where userid = #{userid}
+  	</delete>
+  	
+  	<delete id="del_user_facebook" parameterType="string">
+  		delete facebook_user where userid = #{userid}
+  	</delete>
+  	
   	
 </mapper>

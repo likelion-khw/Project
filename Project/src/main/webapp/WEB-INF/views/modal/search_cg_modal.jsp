@@ -32,11 +32,12 @@ function enterkey2() {
 				    <option value="500">500m</option>
 				    <option value="800">800m</option>
 				    <option value="1000">1000m</option>
+				    <option value="10000">전체</option>
 				</select>
 		          <label for="inputMenu">메뉴를 입력해주세요.</label>
 				  <input type="text" id="inputMenu" class="validate" style="border:1px #e0e0e0 solid" onkeyup="enterkey2()">
 				<div class="input">
-					<button id="searchbutton" class="btn">검색</button><br>
+					<button id="searchbutton" class="btn green" style="border-radius:30px">검색</button><br>
 				</div>
 			</p>
 		</div>
@@ -196,7 +197,7 @@ $(document).ready(function(){
 						              +"<img src='"+data[i].store_image+"' width='100%' height='200px;'>"
 						            +"</div>"
 						            +"<div class='card-content'>"
-						            	+"<p class='viewcount'> 거리 : 약 <span style='color:red'>"+ parseInt(data[i].meter)+"</span>m</p><br>"
+						            	+"<p class='viewcount'>약 <span style='color:red'>"+ parseInt(data[i].meter)+"</span>m</p><br>"
 						            	+"<p> 도보 : "+walkHour+walkMin+"</p><br>"
 					            		+"<div class='address'>"+data[i].address+"</div>"
 						            +"</div>"

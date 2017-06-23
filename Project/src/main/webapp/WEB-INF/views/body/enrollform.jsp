@@ -6,6 +6,8 @@
 	margin-top:20px;
 	padding:20px;
 	width: 85%;
+	margin-bottom:20px;
+	border-radius:30px;
 }
 
 .enrollform th{
@@ -45,7 +47,7 @@
 <!-- jQuery와 Postcodify를 로딩한다 -->
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <div class="container center-align enrollform z-depth-3">
-<h4>${memberVO.nickname} 님<br> 상점을 등록 페이지</h4>
+<h4>상점 등록 페이지</h4>
 	<form action="enrollconnect.whame" method="post"  enctype="multipart/form-data" id="enroll_form">
 	 <input type="hidden" name="userid" value="${memberVO.userid}"> 
 	<table class="centered">
