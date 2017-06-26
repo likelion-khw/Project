@@ -39,17 +39,20 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/GeonS/amazon/commons-logging-1.1.3.jar"/>
-	<classpathentry kind="lib" path="D:/GeonS/amazon/httpclient-4.2.3.jar"/>
-	<classpathentry kind="lib" path="D:/GeonS/amazon/httpcore-4.2.jar"/>
-	<classpathentry kind="lib" path="D:/GeonS/amazon/jackson-annotations-2.4.1.jar"/>
-	<classpathentry kind="lib" path="D:/GeonS/amazon/jackson-core-2.4.1.jar"/>
-	<classpathentry kind="lib" path="D:/GeonS/amazon/joda-time-2.2.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/amazon/amazon/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/amazon/amazon/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/amazon/amazon/jackson-annotations-2.4.1.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/amazon/amazon/jackson-core-2.4.1.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/amazon/amazon/jackson-databind-2.4.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/amazon/amazon/joda-time-2.2.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/amazon/amazon/jsoup-1.10.3.jar"/>
 	<classpathentry kind="lib" path="D:/GeonS/needlib/javacpp.jar"/>
 	<classpathentry kind="lib" path="D:/GeonS/needlib/javacv.jar"/>
 	<classpathentry kind="lib" path="D:/GeonS/needlib/javacv-platform.jar"/>
 	<classpathentry kind="lib" path="D:/GeonS/needlib/opencv.jar"/>
 	<classpathentry kind="lib" path="D:/GeonS/needlib/opencv-platform.jar"/>
 	<classpathentry kind="lib" path="D:/GeonS/needlib/opencv-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/activation.jar"/>
+	<classpathentry kind="lib" path="D:/GeonS/javamail-1.4.3/mail.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -5,17 +5,22 @@
 <configuration>
 
 <typeAliases>
-	<typeAlias alias="membervo" type="spring.mvc.whame.login.MemberVO"/>		
-	<typeAlias alias="regionvo" type="spring.mvc.whame.region.RegionVO"/>	
 	<typeAlias alias="menuvo" type="spring.mvc.whame.store.MenuVO"/>
 	<typeAlias alias="storevo" type="spring.mvc.whame.store.StoreVO"/>
 	<typeAlias alias="colorvo" type="spring.mvc.whame.color.ColorVO"/>
 	<typeAlias alias="textvo" type="spring.mvc.whame.TextVO"/>
 	<typeAlias alias="typevo" type="spring.mvc.whame.store.TypeVO"/>
+	<typeAlias alias="remenuvo" type="spring.mvc.whame.store.ReMenuVO"/>
 	<typeAlias alias="whamevo" type="spring.mvc.whame.WhameVO"/>
 	<typeAlias alias="searchvo" type="spring.mvc.whame.SearchVO"/>
+	<typeAlias alias="locationvo" type="spring.mvc.whame.region.LocationVO"/>
 	<typeAlias alias="historyvo" type="spring.mvc.whame.history.HistoryVO"/>
-	
+	<typeAlias alias="membervo" type="spring.mvc.whame.login.MemberVO"/>	
+	<typeAlias alias="kakaovo" type="spring.mvc.whame.login.KakaoVO"/>	
+	<typeAlias alias="facebookvo" type="spring.mvc.whame.login.FaceBookVO"/>
+	<typeAlias alias="couponvo" type="spring.mvc.whame.store.CouponVO"/>
+	<typeAlias alias="regionvo" type="spring.mvc.whame.region.RegionVO"/>
+	<typeAlias alias="storeinitvo" type="spring.mvc.whame.store.StoreInitVO"/>		
 </typeAliases> 
 
 <mappers>

@@ -1,29 +1,49 @@
 package spring.mvc.whame.history;
 
+import java.util.Date;
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class HistoryVO {
+	
+	private int historyid;
 	private int store_code;
-	private float lat;
-	private float lon;
+	private String userid;
+	private String signimage;	//ÆÄÀÏÀÌ¸§
+	private Date h_date;
+	
+	public int getHistoryid() {
+		return historyid;
+	}
+	public void setHistoryid(int historyid) {
+		this.historyid = historyid;
+	}
 	public int getStore_code() {
 		return store_code;
 	}
 	public void setStore_code(int store_code) {
 		this.store_code = store_code;
 	}
-	public float getLat() {
-		return lat;
+	public String getUserid() {
+		return userid;
 	}
-	public void setLat(float lat) {
-		this.lat = lat;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
-	public float getLon() {
-		return lon;
+	public String getSignimage() {
+		return signimage;
 	}
-	public void setLon(float lon) {
-		this.lon = lon;
+	public void setSignimage(String signimage) {
+		this.signimage = signimage;
 	}
-	@Override
-	public String toString() {
-		return +lat+","+lon ;
+	public Date getH_date() {
+		return h_date;
 	}
+	public void setH_date(Date h_date) {
+		this.h_date = h_date;
+	}
+	
+	
+	
 }

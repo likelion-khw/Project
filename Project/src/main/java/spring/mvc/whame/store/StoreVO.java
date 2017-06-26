@@ -7,15 +7,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Component
 public class StoreVO {
 	
-		private int store_code;
-		private String business_code;//
-		private int rcode;//
-		private String address;//
+		//store
+		private int store_code;	
+		private String business_code;
 		private String userid;
-		private String operating_time;//
-		private String store_name;//
+		private String operating_time;
+		private String store_name;
+		private String store_category;
+		private String store_image;
 		private int view_count;
-		private MultipartFile imagefile;//	//¾÷·ÎµåÆÄÀÏ ¼­¹öÀúÀå
+		
+		private int rcode;//r
+		private String address;//l
+		private String dong;
+		private MultipartFile imagefile;//	//ï¿½ï¿½ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		private String image;
 		int store_text;
 		int store_color;
@@ -43,6 +48,12 @@ public class StoreVO {
 		}
 		public void setUserid(String userid) {
 			this.userid = userid;
+		}
+		public String getStore_category() {
+			return store_category;
+		}
+		public void setStore_category(String store_category) {
+			this.store_category = store_category;
 		}
 		public String getOperating_time() {
 			return operating_time;
@@ -96,8 +107,23 @@ public class StoreVO {
 			this.address = address;
 		}
 		
+		public String getDong() {
+			return dong;
+		}
+		public void setDong(String dong) {
+			this.dong = dong;
+		}
 		
-		
+		public String getStore_image() {
+			return store_image;
+		}
+		public void setStore_image(String store_image) {
+			this.store_image = store_image;
+		}
+		@Override
+		public String toString() {
+			return store_code+"";
+		}		
 		
 	
 }

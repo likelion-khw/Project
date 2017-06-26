@@ -5,4 +5,63 @@
 	<select id='login' resultType="membervo" parameterType="membervo">
  		select * from vm_user where userid = #{userid}
  	</select> 
+ 	
+ 	<insert id="signnew" parameterType="membervo">
+ 	<choose>
+ 		<when test="userimage != null">
+ 			insert into vm_user values(#{userid},#{pw},#{userimage},#{nickname})
+ 		</when>
+ 		<when test="userimage == null">
+ 			insert into vm_user(userid,pw,nickname) values(#{userid},#{pw},#{nickname})
+ 		</when>
+ 	</choose>
+ 	</insert>
+ 	
+ 	<select id="idcheck" resultType="int" parameterType="string">
+ 		select count(*) from vm_user where userid= #{userid}
+ 	</select>
+ 	
+ 	<select id="nncheck" resultType="int" parameterType="string">
+ 		select count(*) from vm_user where nickname= #{nickname}
+ 	</select>
+ 	
+ 	<update id="re_nickname" parameterType="membervo">
+ 		update vm_user set nickname = #{nickname} where userid = #{userid}
+ 	</update>
+ 	
+ 	<update id="re_pw" parameterType="membervo">
+ 		update vm_user set pw = #{pw} where userid = #{userid}
+ 	</update>
+ 	
+ 	<update id="re_img" parameterType="membervo">
+ 		update vm_user set userimage = #{userimage} where userid = #{userid}
+ 	</update>
+ 	
+ 	<!-- 카카오톡  -->
+ 	<select id="get_kakao" resultType="int" parameterType="kakaovo">
+ 		select count(*) from kakao_user where kakaoauth = #{kakaoauth}
+  	</select>
+  	
+  	<select id="login_kakao" resultType="membervo" parameterType="kakaovo">
+  		select userid, kakaoauth, nickname, userimage from kakao_user where kakaoauth = #{kakaoauth}
+  	</select>
+  	
+  	<insert id="new_kakao" parameterType="kakaovo">
+  		insert into kakao_user values(#{userid},#{kakaoauth},#{nickname},#{userimage})
+  	</insert>
+  	
+  	<!-- 페이스북 -->
+  	<select id="get_facebook" resultType="int" parameterType="facebookvo">
+ 		select count(*) from facebook_user where facebookauth = #{facebookauth}
+  	</select>
+  	
+  	<select id="login_facebook" resultType="membervo" parameterType="facebookvo">
+  		select userid, facebookauth, nickname, userimage from facebook_user where facebookauth = #{facebookauth}
+  	</select>
+  	
+  	<insert id="new_facebook" parameterType="facebookvo">
+  		insert into facebook_user values(#{userid},#{facebookauth},#{nickname},#{userimage})
+  	</insert>
+  	
+  	
 </mapper>

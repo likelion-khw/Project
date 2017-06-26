@@ -2,37 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http:mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="whame">
-	<select id='login' resultType="membervo" parameterType="membervo">
- 		select * from vm_user where userid = #{userid} and pw = #{pw} 
- 	</select> 
- 	
- 	<select id='rcodelist' resultType="regionvo" >
- 		select * from region
- 	</select> 
- 	
- 	<select id='getgu' resultType="regionvo" >
- 		select * from region where length(rcode)=2
- 	</select>
- 	
- 	<select id='getrcode' resultType="regionvo" parameterType="string">
- 		select * from region where rname like #{gu}||'%'
- 	</select>
- 	
- 	<select id='getrcodeNum' resultType="int" parameterType="string">
- 		select rcode from region where rname = #{rname}
- 	</select>
- 	
- 	<select id='getstore_code' resultType="int" parameterType="String" >
- 		select store_code from store where business_code= #{business_code}
- 	</select> 
- 	
- 	<select id='getType' resultType="typevo"  >
- 		select type_name, type_code from type
- 	</select> 
- 	
- 	<insert id='enroll' parameterType="storevo">
- 		insert into store(store_code, business_code, rcode, userid, operating_time, store_name, view_count)
- 		values(store_seq.nextval, #{business_code}, #{rcode}, #{userid}, #{operating_time}, #{store_name}, 0)
+	<insert id='enroll' parameterType="storevo">
+ 		insert into store values(store_seq.nextval, #{business_code}, #{userid}, #{operating_time}, #{store_name}, 0, #{store_category},#{store_image})
  	</insert>
  	
  	<insert id='setColor' parameterType="colorvo">
@@ -50,71 +21,292 @@
  		values(#{store_code}, #{menu_name}, #{menu_price}, #{menu_type})
  	</insert>
  	
+ 	<insert id='setLocation' parameterType="locationvo">
+ 		insert into store_location
+ 		values(#{store_code}, #{rcode}, #{lat}, #{lon}, #{address}, #{dong})
+ 	</insert>
+ 	
+ 	<insert id="setCoupon" parameterType="couponvo">
+ 		insert into coupon
+ 		values(#{store_code}, coupon_seq.nextval, #{contents}, #{s_time}, #{e_time})
+ 	</insert>
+ 	
+ 	<!-- viewcount -->
+	<update id="viewcount" parameterType="int" >
+		update store 
+		set view_count = view_count+1   
+		where store_code = #{store_code}
+	</update>
+ 	
+ 	<!-- search -->
+ 	<!-- color+ocr -->
  	 <sql id="color_rate">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 1
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 1
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 1 <!-- between 0 and 0.45 -->
+		where abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.45
+			or abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.45
+			or abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.45 <!-- between 0 and 0.45 -->
 	</sql>
 	
+	<!-- color -->
  	<sql id="color_max">
-		where abs((red/#{color.red})-(blue/#{color.blue})) between 0 and 0.1
-			or abs((red/#{color.red})-(green/#{color.green})) between 0 and 0.1 
-			or abs((green/#{color.green})-(blue/#{color.blue})) between 0 and 0.1 <!-- between 0 and 0.45 -->
+		where (abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.1 )
+			or (abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1)
+			or (abs(nvl(green/decode(#{color.green},0,null,#{color.green}),0)-nvl(blue/decode(#{color.blue},0,null,#{color.blue}),0)) between 0 and 0.1 and abs(nvl(red/decode(#{color.red},0,NULL,#{color.red}),0)-nvl(green/decode(#{color.green},0,null,#{color.green}),0)) between 0 and 0.1 )<!-- between 0 and 0.45 -->
 	</sql>
 	
+	<!-- 근방 Xm location -->
+	<select id="searchLoc" resultType="int" parameterType="whamevo">
+		select store_code
+		from store_location
+		where lat between #{lat}-#{difflat} and #{lat}+#{difflat}
+		and lon between #{lon}-#{difflon} and #{lon}+#{difflon} 
+	</select>
 	
- 	<sql id="color_maxmin">
-		where #{color.red} between (select max(red) from store_color where store_code = m.store_code) and (select min(red)-40 from store_color where store_code = m.store_code)
-		and #{color.blue} between (select max(blue)+40 from store_color where store_code = m.store_code) and (select min(blue)-40 from store_color where store_code = m.store_code)
-		and #{color.green} between (select max(green)+40 from store_color where store_code = m.store_code) and (select min(green)-40 from store_color where store_code = m.store_code) 	
-	</sql>
-	
- 	<select id="searchText" resultType="int" parameterType="whamevo">
-		select distinct(m.store_code), red, blue, green
-		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
-				where s.store_code = st.store_code and sc.store_code = s.store_code
-				and 
-					<foreach collection="text" item="text" open="(" close=")" separator="or">
-						<if test="text.text != null and text.text.length() > 2">
-						upper(st.text) like upper('%'||#{text.text}||'%')
-						</if>
-					</foreach>				
-				) m
-	 	 <include refid="color_rate" />
-	</select> 
-	
-	<select id="searchTextName" resultType="int" parameterType="whamevo">
-		select distinct(m.store_code), red, blue, green
-		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
-				where s.store_code = st.store_code and sc.store_code = s.store_code
-				and 
-					<foreach collection="text" item="text" open="(" close=")" separator="or">
-						<if test="text.text != null and text.text.length() >= 2 ">
-							upper(s.store_name) like upper('%'||#{text.text}||'%')
-						</if>
-					</foreach>				
-				) m
-	  	<include refid="color_rate" />  
-	</select> 
-	
-	<select id="searchColor" resultType="int" parameterType="whamevo">
-		select distinct(m.store_code), red, blue, green
-		from 	(select distinct(s.store_code), sc.red, sc.blue, sc.green
-				from store s, store_text st, store_color sc
-				where s.store_code = st.store_code and sc.store_code = s.store_code
-				) m
-	  	<include refid="color_max" />
-	</select> 
+	<sql id="loc">
+      select ssl.store_code, ss.store_name
+      from store_location ssl, store ss
+      where ssl.store_code = ss.store_code 
+      and lat between #{lat}-#{difflat} and #{lat}+#{difflat}
+      and lon between #{lon}-#{difflon} and #{lon}+#{difflon} 
+   </sql>
+   
+   <!-- ocr search -->
+    <select id="searchText" resultType="int" parameterType="whamevo">
+      select distinct(m.store_code), red, blue, green
+      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+            from (<include refid="loc" />) s, store_text st, store_color sc
+            where s.store_code = st.store_code and sc.store_code = s.store_code
+            and s.store_code in 
+            		(select store_code
+            		from 	(select store_code, 
+            						<foreach collection="text" item="text1" open="count(" close=")" separator=") + count(">   
+            						<if test="text1.text != null and text1.text.length() > 2">
+					                     case when upper(text) like '%'||upper(#{text1.text})||'%' then 1 end
+					                </if>
+					               	</foreach> 
+					             	 b_cnt 
+							from store_text 
+							group by store_code)
+					where b_cnt = 	(select case max(b_cnt) when 0 then 100 else max(b_cnt) end
+									from 	(select store_code, 
+											<foreach collection="text" item="text1" open="count(" close=")" separator=") + count(">   
+											<if test="text1.text != null and text1.text.length() > 2">
+							                     case when upper(text) like '%'||upper(#{text1.text})||'%' then 1 end
+							                </if>
+							               	</foreach> 
+							               	b_cnt
+											from store_text 
+											group by store_code)
+							)
+            		)           
+            ) m
+        <include refid="color_rate" />
+   </select> 
+   
+   
+   <!-- name search -->
+   <select id="searchTextName" resultType="int" parameterType="whamevo">
+      select distinct(m.store_code), red, blue, green
+      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+            from (<include refid="loc" />) s, store_text st, store_color sc
+            where s.store_code = st.store_code and sc.store_code = s.store_code
+            and 
+               <foreach collection="text" item="text" open="(" close=")" separator="or">
+                  <if test="text.text != null and text.text.length() >= 2 ">
+                     upper(s.store_name) like upper('%'||#{text.text}||'%')
+                  </if>
+               </foreach>            
+            ) m
+        <include refid="color_rate" />  
+        <!-- and m.store_code in (<include refid="loc" />) -->
+   </select>
+   
+   
+   <!-- cropOcr search -->
+   <select id="searchTextNameCut" resultType="int" parameterType="whamevo">
+	   select distinct(m.store_code), red, blue, green
+	      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+	            from (<include refid="loc" />) s, store_text st, store_color sc
+	            where s.store_code = st.store_code and sc.store_code = s.store_code
+	            and s.store_code in (
+			    	select store_code
+			      	from (
+			      			select 	store_code, 
+			      					<foreach collection="textString" item="text" open="count(" close=")" separator=") + count(">   
+					                     case when upper(store_name) like '%'||upper(#{text})||'%' then 1 end
+					               	</foreach>  
+					               	 b_cnt 
+			  				from store 
+			  				group by store_code 
+			            ) 
+			        where b_cnt	= (
+			        				select case max(b_cnt) when 0 then 100 else max(b_cnt) end
+			        				from (
+							      			select 	store_code, 
+							      					<foreach collection="textString" item="text" open="count(" close=")" separator=") + count(">   
+									                     case when upper(store_name) like '%'||upper(#{text})||'%' then 1 end
+									               	</foreach>  
+									               	 b_cnt 
+							  				from store 
+							  				group by store_code 
+							             ) 
+							       )
+								)
+					)m    
+			<include refid="color_rate" />
+   </select> 
+  	
+   
+   <!-- color search -->
+   <select id="searchColor" resultType="int" parameterType="whamevo">
+      select distinct(m.store_code), red, blue, green
+      from    (select distinct(s.store_code), sc.red, sc.blue, sc.green
+            from (<include refid="loc" />) s, store_text st, store_color sc
+            where s.store_code = st.store_code and sc.store_code = s.store_code
+            ) m
+        <include refid="color_max" />  
+   </select> 
 
-
+	
+	
+	<!-- get -->
+ 	
+ 	<update id="storeUpdate_store" parameterType="storevo">
+ 		update store 
+ 		set business_code = #{business_code}, userid = #{userid}, store_name = #{store_name}, operating_time = #{operating_time}
+ 		where store_code = #{store_code}
+ 	</update>
+ 	
+ 	<update id="storeUpdate_loc" parameterType="storevo">
+ 		update store_location
+ 		set rcode = #{rcode}, lat = #{lat}, lon = #{lon}, address = #{address}
+ 		where store_code = #{store_code}
+ 	</update>
+ 	
+ 	<select id='getstore_code' resultType="int" parameterType="String" >
+ 		select store_code from store where business_code= #{business_code}
+ 	</select> 
+ 	
+ 	<select id='getType' resultType="typevo"  >
+ 		select type_name, type_code from type
+ 	</select> 
+ 	
 	<select id="getMenu" resultType="menuvo" parameterType="int">
 		select * from menu where store_code = #{store_code}
 	</select>
-		<select id="getHistory" resultType="historyvo" parameterType="list">
-		select d.store_code,lat, lon
-		from store_location e, store d, vm_user 
-		where e.store_code = d.store_code and upper(d.userid) like upper('%'||#{uerid}||'%')
-	</select>
+	
+	<!-- get region -->
+	<select id='rcodelist' resultType="regionvo" >
+ 		select * from region
+ 	</select> 
+ 	
+ 	<select id='getgu' resultType="regionvo" >
+ 		select * from region where length(rcode)=2
+ 	</select>
+ 	
+ 	<select id='getrcode' resultType="regionvo" parameterType="string">
+ 		select * from region where rname like #{gu}||'%'
+ 	</select>
+ 	
+ 	<select id='getrcodeNum' resultType="int" parameterType="string">
+ 		select rcode from region where rname = #{rname}
+ 	</select>
+ 	
+ 	<select id='getstore_info' resultType="storevo" parameterType="int">
+ 		select * from store where store_code = #{store_code}
+ 	</select>
+ 	
+ 	<select id='getlocation_info' resultType="locationvo" parameterType="int">
+ 		select * from store_location where store_code = #{store_code}
+ 	</select>
+ 	
+ 	<select id="getStore" resultType="storevo" parameterType="string">
+ 		select * from store where userid = #{userid}
+ 	</select>
+ 	
+ 	<select id="getStoreCount" resultType="int">
+ 		select count(*) from store
+ 	</select>
+ 	
+ 	<select id="getCoupon" resultType="couponvo" parameterType="int">
+ 		select * from coupon where store_code = #{store_code}
+ 	</select>
+ 	
+ 	<!-- 진행중인 쿠폰출력  -->
+ 	<select id="getNowCoupon" resultType="couponvo" parameterType="int">
+ 		select * from coupon where store_code = #{store_code} and sysdate between s_time and e_time
+  	</select>
+ 	
+ 	<update id="reCoupon" parameterType="couponvo">
+ 		update coupon 
+ 		set contents = #{contents}, s_time = #{s_time} ,e_time = #{e_time} 
+ 		where store_code = #{store_code} and coupon_code = #{coupon_code}
+ 	</update>
+ 	
+ 	<delete id="delCoupon" parameterType="couponvo">
+ 		delete coupon where store_code = #{store_code} and coupon_code = #{coupon_code}
+ 	</delete>
+ 	
+ 	<update id="reMenu" parameterType="remenuvo">
+ 		update menu set menu_name = #{new_name}, menu_price = #{new_price}, menu_type = #{new_type} where store_code = #{store_code} and menu_name = #{ori_name}
+ 	</update>
+ 	
+ 	<delete id="delMenu" parameterType="remenuvo">
+ 		delete menu where store_code = #{store_code} and menu_name = #{ori_name}
+ 	</delete>
+ 	<!-- 스토어 삭제 시작 ( 상속된 테이블 포함 ) -->
+ 	<delete id="delstore0" parameterType="int">
+ 		delete menu where store_code = #{store_code}
+ 	</delete>
+ 	<delete id="delstore1" parameterType="int">
+ 		delete store_location where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<delete id="delstore2" parameterType="int">
+ 		delete store_color where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<delete id="delstore3" parameterType="int">
+ 		delete store_text where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<delete id="delstore4" parameterType="int">	
+ 		delete coupon where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<delete id="delstore5" parameterType="int">
+ 		delete store where store_code = #{store_code}
+ 	</delete>
+ 	
+ 	<!-- 스토어 삭제 끝   -->
+ 	<select id="getlocationList" resultType="locationvo">
+ 		select * from Store_location
+ 	</select>
+ 	
+ 	<select id="getCategory" resultType="String" parameterType="int">
+ 		select category_name from category where category_no = #{store_category}
+  	</select>
+  	
+  	<select id="getTagStore" resultType="storevo" parameterType="String">
+  		select s.store_code, store_name, address, view_count from store s, store_location sl where s.store_code = sl.store_code and store_category like #{tagClick}
+  	</select>
+  	
+  	<select id="getMenuTypeDistinct" resultType="String" parameterType="int">
+  		select distinct(menu_type) from menu where store_code = #{store_code}
+  	</select>
+  	
+  	<select id="getCountRanklist" resultType="storevo">
+  		select * from store where not view_count = 0 order by view_count desc
+  	</select>
+  	
+  	<select id="initAllData" resultType="storeinitvo">
+  		select s.store_code, store_name, store_image, address, view_count, store_category, lat, lon from store s, store_location sl where s.store_code = sl.store_code
+  	</select>
+  	
+  	<select id="initAllMenu" resultType="menuvo">
+  		select * from menu
+  	</select>
+  	
+  	<select id="getNewStore" resultType="storevo">
+  		select s.*, address, dong from store s, (select store_code, row_number() over(order by store_code desc) as rank from store) sr, store_location sl where sr.rank BETWEEN 1 and 10 and sr.store_code = s.store_code and sl.store_code = s.store_code order by s.store_code desc
+  	</select>
 </mapper>

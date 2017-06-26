@@ -22,59 +22,60 @@ import com.amazonaws.util.IOUtils;
 
 @Component
 public class S3Util {
-   //Å° Á¤º¸
+	// Å° ï¿½ï¿½ï¿½ï¿½
 	@Autowired
 	CommonUtils cu;
-	private String accessKey = "AKIAJ4QUJIXZROBELTTA";
-    private String secretKey = "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";
-     
-    private AmazonS3 conn;
-     
-    public S3Util() {
-        AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-        ClientConfiguration clientConfig = new ClientConfiguration();
-        clientConfig.setProtocol(Protocol.HTTP);
-        this.conn = new AmazonS3Client(credentials, clientConfig);
-        // s3 ¿£µåÆ÷ÀÎÆ® Áö¿ª ( µµÄì )
-        conn.setEndpoint("s3-ap-northeast-1.amazonaws.com");
-    }
-     
-    // Bucket List
-    public List<Bucket> getBucketList() {
-        return conn.listBuckets();
-    }
-     
-    // Bucket »ý¼º
-    public Bucket createBucket(String bucketName) {
-        return conn.createBucket(bucketName);
-    }
-     
-    // Æú´õ »ý¼º (Æú´õ´Â ÆÄÀÏ¸í µÚ¿¡ "/"¸¦ ºÙ¿©¾ßÇÑ´Ù.)
-//    public void createFolder(String bucketName, String folderName) {
-//        conn.putObject(new PutObjectRequest(bucketName, folderName + "/",  new ByteArrayInputStream(new byte[0]), new ObjectMetadata()));
-//    }
+	
+	Keyload key = new Keyload();
+	
+	private AmazonS3 conn;
 
-    // ÆÄÀÏ ¾÷·Îµå
-    public String fileUpload(String bucketName, File file) throws Exception {
-    	System.out.println("fileupload" + bucketName);
-       String filename = cu.getRandomString()+"."+file.getName().split("\\.")[1];
-       ObjectMetadata metaData = new ObjectMetadata();
-       byte[] bytes = IOUtils.toByteArray(new FileInputStream(file));
-       metaData.setContentLength(bytes.length);
-       ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-       PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, filename, byteArrayInputStream, metaData);
-       conn.putObject(putObjectRequest);
-       return filename;
-    }
-     
-    // ÆÄÀÏ »èÁ¦
-    public void fileDelete(String bucketName, String fileName) {
-        conn.deleteObject(bucketName, fileName);
-    }
-     
-    // ÆÄÀÏ URL
-    public String getFileURL(String bucketName, String fileName) {
-        return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, fileName)).toString();
-    }
+	public S3Util(){
+		AWSCredentials credentials = new BasicAWSCredentials(key.getAccessKey(), key.getSecretKey());
+		ClientConfiguration clientConfig = new ClientConfiguration();
+		clientConfig.setProtocol(Protocol.HTTP);
+		this.conn = new AmazonS3Client(credentials, clientConfig);
+		// s3 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ( ï¿½ï¿½ï¿½ï¿½ )
+		conn.setEndpoint("s3-ap-northeast-1.amazonaws.com");
+	}
 
+	// Bucket List
+	public List<Bucket> getBucketList() {
+		return conn.listBuckets();
+	}
+
+	// Bucket ï¿½ï¿½ï¿½ï¿½
+	public Bucket createBucket(String bucketName) {
+		return conn.createBucket(bucketName);
+	}
+
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ú¿ï¿½ "/"ï¿½ï¿½ ï¿½Ù¿ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.)
+	// public void createFolder(String bucketName, String folderName) {
+	// conn.putObject(new PutObjectRequest(bucketName, folderName + "/", new
+	// ByteArrayInputStream(new byte[0]), new ObjectMetadata()));
+	// }
+
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
+	public String fileUpload(String bucketName, File file) throws Exception {
+		System.out.println("fileupload" + bucketName);
+		String filename = cu.getRandomString() + "." + file.getName().split("\\.")[1];
+		ObjectMetadata metaData = new ObjectMetadata();
+		byte[] bytes = IOUtils.toByteArray(new FileInputStream(file));
+		metaData.setContentLength(bytes.length);
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+		PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, filename, byteArrayInputStream, metaData);
+		conn.putObject(putObjectRequest);
+		return filename;
+	}
+
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	public void fileDelete(String bucketName, String fileName) {
+		conn.deleteObject(bucketName, fileName);
+	}
+
+	// ï¿½ï¿½ï¿½ï¿½ URL
+	public String getFileURL(String bucketName, String fileName) {
+		return conn.generatePresignedUrl(new GeneratePresignedUrlRequest(bucketName, fileName)).toString();
+	}
+	
 }

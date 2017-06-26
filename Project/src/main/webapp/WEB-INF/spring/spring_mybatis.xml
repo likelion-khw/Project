@@ -8,9 +8,9 @@
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@192.168.1.17:1521:xe" />
+		<property name="url" value="jdbc:oracle:thin:@whame.cd2rqkuthkqk.ap-northeast-2.rds.amazonaws.com:1521:Whame" />
 		<property name="username" value="vm" />
-		<property name="password" value="vm" />
+		<property name="password" value="vm123123" />
 	</bean>
 
 	<!-- 2.SqlSessionFactory생성 -->
@@ -35,7 +35,6 @@
 	<context:component-scan base-package="spring.mvc.whame.region"></context:component-scan>
 	<context:component-scan base-package="spring.mvc.whame.login"></context:component-scan>
 	<context:component-scan base-package="spring.mvc.whame.history"></context:component-scan>
-	
 
 
 </beans>
