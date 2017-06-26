@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../modal/fileupload_modal.jsp" %>
-<%@include file="../modal/search_cg_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
 6ae58faecc0e06a5ecbf63977aa440b0&libraries=clusterer"></script>
 <style type="text/css">
+#menu{
+		position: fixed;
+		bottom:20px;
+		float:right;
+		right:20px;
+	}
 .mainform{
 	padding-bottom: 20px;
 	width: 100%;
@@ -32,8 +36,6 @@
 		width:100%;
 		height: 270px;
 }
-
-
 /*  */
 .carousel{
 	height: 250px;
@@ -42,20 +44,16 @@
 	opacity:1 !important;
 	top:-40px;
 }
-
 .carousel .carousel-item div.row{
 	 border-radius:20px; 
 }
-
 div#onetop{
 	background-image: url('resources/img/t3.gif');
 	background-size: cover;
 	width: 100%;
 	padding-bottom: 25%;
 }
-
 /*  */
-
 @media only screen and (min-width : 321px) and (max-width : 600px) {
 	.mainimg{
 	width:100%;
@@ -89,11 +87,37 @@ div#onetop{
 	<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
 	</div>
 </div>
+<!-- <div class="row">
+	<div class="center-align col s12 m6">
+		<div style="padding-top:25%;">
+		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
+	</div>
+	<div class="center-align col s12 m6">
+		<div style="padding-top:25%;">
+		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
+	</div>
+	<div class="center-align col s12 m6">
+		<div style="padding-top:25%;">
+		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
+	</div>
+	<div class="center-align col s12 m6">
+		<div style="padding-top:25%;">
+		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+		<a id="test" class="btn blue lighten-2" style="border-radius:20px;">Whame?</a>
+		</div>
+	</div>
+</div> -->
 	<div class="center-align row" style="padding:10px" id="downf">
 		<div style="width: 50%; margin-left:auto; margin-right:auto;" >
-			<input type="button" class="btn green col s12" value="메뉴찾기" id="fileupload" style="border-radius:20px;">
+			<input type="button" class="btn green col s12" value="메뉴찾기" id="fileupload" style="border-radius:20px; margin-bottom:7px; width:">
 			<input type="button" class="btn pink darken-2 col s12" value="간판등록하기" id="enroll" style="border-radius:20px;"><br>
-			<button  data-activates="search_cg" class="btn button-collapse search_cg" style="margin:7px;border-radius:20px;"><i class="material-icons">search</i></button>
+			<button  data-activates="search_cg" class="btn button-collapse search_cg" style="margin:7px;border-radius:20px; height:45px;"><i class="material-icons">search</i><span>주변검색</span></button>
 		</div>
 		<div class="main_text z-depth-1 row" style="margin-left:auto; margin-right: auto;">
 			<div class="col s12">
@@ -147,7 +171,16 @@ div#onetop{
 	 	</div>
 	 	<div id="msg"></div>
 	</div>
-
+	
+<a id="menu"><img src="resources/img/main.png" width="80px"></a>
+<!-- Tap Target Structure -->
+<div class="tap-target" data-activates="menu" style="background-color: #9575cd">
+  <div class="tap-target-content" style="color:white">
+    <h5 class="center-align">Whame란?</h5>
+    <p>Whame는 'What Menu'에서 비롯된 타이틀입니다. </p>
+	<p>상가의 메뉴를 직접 들어가지 않고 밖에서 간판 사진을 이용하여 메뉴정보를 얻을 수 있습니다.</p>
+  </div>
+</div>
 
 <script type="text/javascript">
 	$('i[name=1rank]').css('color','gold');
@@ -187,14 +220,12 @@ div#onetop{
 				$(location).attr('href','enroll.whame');
 			}
 		});
-
 		var container = document.getElementById('main_map');
 		var options = {
 			center: new daum.maps.LatLng(37.509657,127.032893),
 			level: 8
 		};
 		var map = new daum.maps.Map(container, options);
-
 		var clusterer = new daum.maps.MarkerClusterer({
 	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
 	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
@@ -215,7 +246,6 @@ div#onetop{
 						  });
 						  markers.push(marker);
 						  positions[pnum] = {'lat':locationlist[num+1],'lng':locationlist[num+2],'code':locationlist[num]};
-
 						num += 3;
 						pnum ++;
 					}
@@ -223,9 +253,7 @@ div#onetop{
 						break;
 					}
 			}
-
 		clusterer.addMarkers(markers);
-
  		$('tr[class=mover]').on('mouseover',function(){
 			var id = $(this).attr('id');
 			
@@ -249,7 +277,6 @@ div#onetop{
 					}
 			}
 		});
-
 		$('tr[class=mover]').on('click',function(){
 			var id = $(this).attr('id');
 			
@@ -262,14 +289,11 @@ div#onetop{
 					{
 						if(locationlist2[num2] == id)
 							{
-
 								var points = [
 												new daum.maps.LatLng(locationlist2[num2+1], locationlist2[num2+2])
 								          ];
-
 								          // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
 								          var bounds = new daum.maps.LatLngBounds();    
-
 								          var i, marker;
 								          for (i = 0; i < points.length; i++) {
 								              // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
@@ -279,7 +303,6 @@ div#onetop{
 								              // LatLngBounds 객체에 좌표를 추가합니다
 								              bounds.extend(points[i]);
 								          }
-
 								          map.setBounds(bounds);
 								break;
 							}
@@ -290,22 +313,18 @@ div#onetop{
 					}
 			}
 		}); 
-
 	    $("#down").click(function(event){            
 	        event.preventDefault();
 	        $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 1000);
 		});
-
 	    $('.carousel').carousel({
 	          dist:0,
 	          shift:0,
 	          padding:-5
 	    });
-
 		setInterval(function(){
 	    	$('.carousel').carousel('next');
 		    },2000);
-
 	    function stopScroll(){
 	    	clearInterval(v);
 	    	$('.carousel').carousel({
@@ -318,12 +337,10 @@ div#onetop{
 			//e.preventDefault();	//	이벤트취소.
 			fingerMove = false;
 		});
-
 		$('.carousel-item .row .image').bind('touchmove', function(e) {
 			//e.preventDefault();
 			fingerMove = true;
 		});
-
 		$('.carousel-item .row .image').bind('touchend', function(e) {
 			//e.preventDefault(); 
 			var store_code = $(this).attr('id');
@@ -332,19 +349,12 @@ div#onetop{
 				
 			}
 		}); 
-
-	    
-	    $('.button-collapse.search_cg').sideNav({
-		      menuWidth: 360, // Default is 300
+		 $('.button-collapse.search_cg').sideNav({
+		      menuWidth: 330, // Default is 300
 		      edge: 'bottom', // Choose the horizontal origin
 		      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
 		      draggable: true // Choose whether you can drag to open on touch screens
 		    }
 		  );
-
-		$('#search_close').on('click',function(){
-	   	 	$('.button-collapse.search_cg').sideNav('hide');
-		});
 	})
 </script>
-
