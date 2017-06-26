@@ -12,6 +12,7 @@
 		font-family: 'Nanum Pen Script';
 		font-size:45px;
 	 } 
+	 
 </style>
 
 <div class="show_coupon container center-align">

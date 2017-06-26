@@ -82,13 +82,11 @@ public class WhameController {
 		List<LocationVO> locationlist = service.getlocation_list();
 		List<StoreVO> countrank = service.getCountRanklist();
 		List<StoreVO> getNewStore = service.getNewStore();
-		List<String> getMenuAuto = service.getMenuAuto();
 		
 		mav.setViewName("main/main");
 		mav.addObject("count", count);
 		mav.addObject("getNewStore",getNewStore);
 		mav.addObject("countrank",countrank);
-		mav.addObject("getMenuAuto", getMenuAuto);
 		mav.addObject("locationlist", locationlist);
 		return mav;
 	}
@@ -310,7 +308,7 @@ public class WhameController {
 		this.lon = lon;
 		System.out.println("lal" + lat + ":" + lon);
 		MapTest mt = new MapTest();
-		difflal = mt.run(lat, 500);
+		difflal = mt.run(lat, 100000);
 
 		ModelAndView mav = new ModelAndView();
 		String bucketName = "whame/StoreTitle";
@@ -554,5 +552,11 @@ public class WhameController {
 			svo.setMeter(mt.distance(clat, clon, svo.getLat(), svo.getLon(), "meter"));
 		}
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="getMenuAuto.whame", method=RequestMethod.POST)
+	public List<String> getMenuAuto(HistoryVO historyvo){
+		return service.getMenuAuto();
 	}
 }

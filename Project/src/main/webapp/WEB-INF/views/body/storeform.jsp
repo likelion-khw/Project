@@ -42,6 +42,14 @@ span.badge{
 	.maps{
 		width:100%;
 	}
+	
+	.collapsible th, td{
+		font-size: 9px;
+		padding:15px 2px;
+	}
+	.chip{
+		font-size: 10px;
+	}
 }
 
 @media only screen and (min-width : 1300px) {
@@ -104,7 +112,7 @@ span.badge{
 				      <div id="${store.store_code}menu_info" class="col s12 ">
 				      <label>메뉴종류</label>
 					 	<center>
-							<select class="browser-default" id="menu_type" style="width:40%" name="${store.store_code}">
+							<select class="browser-default" id="menu_type" style="width:50%" name="${store.store_code}">
 									<c:forEach items="${menutype }" var="mtype">
 										<c:set value="${mtype.key }" var="mkey"/>
 										<c:set value="${store.store_code}" var="stkey"/>
@@ -155,7 +163,7 @@ span.badge{
 				      	<table class="centered highlight" >
 							<label>행사진행상태</label>
 						 	<center>
-								<select class="browser-default" id="coupon_state" style="width:30%" name="${store.store_code}">
+								<select class="browser-default" id="coupon_state" style="width:35%" name="${store.store_code}">
 						   			<option value="진행중" selected="selected">진행중</option>
 						   			<option value="예정">예정</option>
 						   			<option value="종료">종료</option>

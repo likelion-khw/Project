@@ -71,6 +71,10 @@ main{
 		      endingTop: '5%' // Ending top style attribute
 		    }
 		  );
+
+		$('#search_close').on('click',function(){
+	   	 	$('.button-collapse.search_cg').sideNav('hide');
+		});
 	})
 </script>
 </html>

@@ -32,10 +32,10 @@ function enterkey2() {
 				    <option value="500">500m</option>
 				    <option value="800">800m</option>
 				    <option value="1000">1000m</option>
-				    <option value="10000">전체</option>
+				    <option value="100000">전체</option>
 				</select>
 		          <label for="inputMenu">메뉴를 입력해주세요.</label>
-				  <input type="text" id="inputMenu" class="validate" style="border:1px #e0e0e0 solid" onkeyup="enterkey2()">
+				  <input type="text" id="inputMenu" class="validate" style="border:1px #e0e0e0 solid; width:240px;" onkeyup="enterkey2()" >
 				<div class="input">
 					<button id="searchbutton" class="btn green" style="border-radius:30px">검색</button><br>
 				</div>
@@ -65,9 +65,16 @@ $(document).ready(function(){
 	});
 
 	var Menudata = new Array();
-	<c:forEach items="${getMenuAuto}" var="menu">
-		Menudata.push(('${menu}'));
-	</c:forEach>
+
+	$.ajax({
+		url : 'getMenuAuto.whame',
+		type: 'post',
+		success : function(menu){
+			for(var i = 0; i<menu.length; i++){
+				Menudata.push(menu[i]);
+			}
+		}
+	})
 	var options = {
 			data: Menudata,
 			list: {
@@ -125,7 +132,15 @@ $(document).ready(function(){
 			
 		$(location).attr("href", "forkakao.whame?store_code="+store_code);
 		
-	})
+	});
+
+	$(document).on('click','a[class=tagStore1]',function(){
+		var store_code = $(this).attr('id');
+		console.log(store_code);
+			
+		$(location).attr("href", "forkakao.whame?store_code="+store_code);
+		
+	});
 	
 	$(document).on('click','span#test_sc',function(event){
 		$('#inputMenu').focus();
@@ -191,7 +206,8 @@ $(document).ready(function(){
 							  }
 						  
 						var storeList = $(
-						        "<div class='col s12' id='"+data[i].store_name+"' style='border-radius:50px;'>"
+								"<a href='javascript:t()' class='tagStore1' id='"+data[i].store_code+"' style='padding:0px; color:black'>"
+						        +"<div class='col s12' id='"+data[i].store_name+"' style='border-radius:50px;'>"
 						          +"<div class='card'>"
 						            +"<div class='card-image'>"
 						              +"<img src='"+data[i].store_image+"' width='100%' height='200px;'>"
@@ -202,13 +218,13 @@ $(document).ready(function(){
 					            		+"<div class='address'>"+data[i].address+"</div>"
 						            +"</div>"
 						            +"<div class='card-action'>"
-						              +"<a href='javascript:tag()' class='tagStore' id='"+data[i].store_code+"' style='margin-right:0px'>"+data[i].store_name+"</a><br>"
+						              +"<span class='tagStore' id='"+data[i].store_code+"' style='margin-right:0px; color:orange'>"+data[i].store_name+"</span]><br>"
 						              +"<span style='border-radius:30px; text-align:center' class='btn white' id='test_sc'>"
 					          	      	+"<i class='material-icons' style='color:black'>arrow_drop_up</i>"
 					          	     	+"</span>"
 						            +"</div>"
 						          +"</div>"
-						        +"</div>"
+						        +"</div></a>"
 						)
 						$(".storeList").append(storeList);
 					}

@@ -73,8 +73,8 @@
 
 		/* var lat;
 		var lng; */
-		var lat = 37.516284;
-		var lng = 127.020021;
+		var lat = 37.520438;
+		var lng = 127.022976;
 
 		document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat+ ">"
 		+"<input type=hidden name=lon value=" + lng + ">";

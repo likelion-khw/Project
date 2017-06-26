@@ -31,6 +31,12 @@
 	.modal .price{
 		width:60px;
 	}
+	.menu_modal_form th{
+		font-size:10px;
+	}
+	.menu_modal_form input{
+		font-size:10px;
+	}
 }
 </style>
 
@@ -40,7 +46,7 @@
 			List<MenuVO> menu = menulist.get(store_code);
 			List<String> menutypel = menutype.get(store_code);
 %>
-<div class="container center-align">
+<div class="menu_modal_form container center-align">
 	<div id="<%=store_code%>modal_menu" class="modal modal-fixed-footer">
 		<div class="modal-content">
 			<table class="centered highlight">

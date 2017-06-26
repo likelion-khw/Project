@@ -4,7 +4,6 @@
 <%@	include file="../modal/remember_modal.jsp"%>
 <%@include file="../modal/infomodal.jsp" %>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <style>
 .mb_remform{
 	display: none;
@@ -56,7 +55,7 @@
 		text-align: center;
 		font-size:15px;
 		background-color: #eceff1;
-		border-style: groove;
+		border-radius:30px;
 	}
 }
 

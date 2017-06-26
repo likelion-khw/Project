@@ -87,12 +87,15 @@
 	font-family:  'Nanum Pen Script';
 	font-size: 20px;
  }
- 
+#sign_login{
+	width: 400px;
+}
 container.testmo{
 	width: 60%;
 }
 .loginform2{
 	width: 80%;
+	margin-bottom:15px;
 }
 .loginbtn{
 	margin-bottom:20px;
@@ -105,18 +108,26 @@ container.testmo{
 }
 .modal{
 	max-height: 200%;
-	height: 90%;
 }
 .tabs div.indicator{
 	background-color: #b0c4f3;
 }
 
+.snslogin img{
+	width: 200px
+}
+
+.signinform .row{
+	margin-bottom:0;
+}
+
+.signinform input{
+	margin-top:0;
+}
+
 @media only screen and (min-width:1450px){
 	.modal{
 		width: 30%;
-	}
-	.snslogin img{
-		width: 50%;
 	}
 	.signinform {
 		margin-top:8%;
@@ -128,11 +139,12 @@ container.testmo{
 	}
 }
 @media only screen and (min-width : 200px) and (max-width : 600px){
-	.snslogin img{
-		width: 80%;
-	}
 	.loginbtn input{
 		width:100%;
+	}
+	
+	#sign_login{
+		width: 340px;
 	}
 }
 @media only screen and (min-width : 321px) and (max-width : 992px) {
@@ -146,7 +158,7 @@ container.testmo{
 		margin-top: 8%;
 	}
 	.modal{
-		height: 80%;
+		height: 75%;
 	}
 }
 
@@ -162,7 +174,7 @@ container.testmo{
 					<form action="sign.whame" method="post" enctype="multipart/form-data" id="signnew">
 						이미지 변경<br>
 						<a href="javascript:;" id="img">
-						<img class="circle" src="resources/img/user.png" style="width: 120px; height:120px" id="userimg"></a>
+						<img class="circle" src="resources/img/user.png" style="width: 100px; height:100px" id="userimg"></a>
 						<div class="row">
 						        <div class="input-field userid col s12">
 						          <i class="material-icons prefix">account_circle</i>
