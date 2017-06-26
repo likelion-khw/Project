@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@include file="../modal/fileupload_modal.jsp" %>
-<%@include file="../modal/search_cg_modal.jsp" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
 6ae58faecc0e06a5ecbf63977aa440b0&libraries=clusterer"></script>
@@ -123,9 +121,9 @@ div#onetop{
 </div> -->
 	<div class="center-align row" style="padding:10px" id="downf">
 		<div style="width: 50%; margin-left:auto; margin-right:auto;" >
-			<input type="button" class="btn green col s12" value="메뉴찾기" id="fileupload" style="border-radius:20px;">
+			<input type="button" class="btn green col s12" value="메뉴찾기" id="fileupload" style="border-radius:20px; margin-bottom:7px; width:">
 			<input type="button" class="btn pink darken-2 col s12" value="간판등록하기" id="enroll" style="border-radius:20px;"><br>
-			<button  data-activates="search_cg" class="btn button-collapse search_cg" style="margin:7px;border-radius:20px;"><i class="material-icons">search</i></button>
+			<button  data-activates="search_cg" class="btn button-collapse search_cg" style="margin:7px;border-radius:20px; height:45px;"><i class="material-icons">search</i><span>주변검색</span></button>
 		</div>
 		<div class="main_text z-depth-1 row" style="margin-left:auto; margin-right: auto;">
 			<div class="col s12">
@@ -191,6 +189,7 @@ div#onetop{
 </div>
 
 <script type="text/javascript">
+
 	$('i[name=1rank]').css('color','gold');
 	$('i[name=2rank]').css('color','silver');
 	$('i[name=3rank]').css('color','brown');
@@ -374,22 +373,14 @@ div#onetop{
 			}
 		}); 
 
-	    
-	    $('.button-collapse.search_cg').sideNav({
-		      menuWidth: 360, // Default is 300
+		 $('.button-collapse.search_cg').sideNav({
+		      menuWidth: 330, // Default is 300
 		      edge: 'bottom', // Choose the horizontal origin
 		      closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
 		      draggable: true // Choose whether you can drag to open on touch screens
 		    }
 		  );
 
-		$('#search_close').on('click',function(){
-	   	 	$('.button-collapse.search_cg').sideNav('hide');
-		});
-
-		$('#test').on('click',function(){
-			$('.tap-target').tapTarget('open');
-		})
 	})
 </script>
 
