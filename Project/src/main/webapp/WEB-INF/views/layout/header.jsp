@@ -37,6 +37,9 @@
 		        <li class="mfont"><a href="javascript:login();"><span style="font-size:20px;">LogIn</span></a></li>
 		      </c:when>
 		      <c:when test="${memberVO.userid != null }">
+		      	<li>
+			      	<i class="material-icons" style="margin-right:0px;">power_settings_new</i>
+		      	</li>
 		      	<li class="mfont"><a href="javascript:logout();"><span style="font-size:20px;">LogOut</span></a></li>
 		      </c:when>
 	      </c:choose>

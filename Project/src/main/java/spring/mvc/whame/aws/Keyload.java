@@ -12,8 +12,8 @@ public class Keyload {
 
 	private String accessKey = "";
 	private String secretKey = "";
-	private String accessFile = "/Users/woong/Desktop/project/accessFile.txt";
-	private String secretFile = "/Users/woong/Desktop/project/secretFile.txt";
+	private String accessFile = "F:/project/accessFile.txt";
+	private String secretFile = "F:/project/secretFile.txt";
 
 	public Keyload(){
 	        try {

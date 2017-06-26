@@ -49,7 +49,7 @@
 				<div class="btn red" style="float:none;">
 					<span><i class="material-icons">camera_enhance</i></span> <input type="file" name="imagefile" id="imagefile">
 				</div>
-				<div id="lal"></div>
+				<div id="lal_f"></div>
 				<div id="company_ul"></div>
 			</div>
 		</form>
@@ -72,10 +72,9 @@
 		});
 
 		var lat;
-		var lng;
-		/* var lat = 37.516284;
-		var lng = 127.020021; */
-		if (navigator.geolocation) 
+		var lng; 
+		
+		 if (navigator.geolocation) 
 		{
 			navigator.geolocation.getCurrentPosition(showPosition,showError);
 		}
@@ -89,8 +88,8 @@
 				lat = position.coords.latitude,
 				lng = position.coords.longitude
 			).then(function(){
-				document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat+ ">"
-				+"<input type=hidden name=lon value=" + lng + ">";
+				document.getElementById("lal_f").innerHTML += "<input type=text name=lat value=" + lat+ ">"
+				+"<input type=text name=lon value=" + lng + ">";
 				$('#company_ul').append('<div class="error">'+ no_text +'</div>');
 			});
 		}
@@ -100,7 +99,7 @@
 			var no_text;
 			lat = 37.520498;
 			lng = 127.022959;
-			document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat+ ">"
+			document.getElementById("lal_f").innerHTML += "<input type=hidden name=lat value=" + lat+ ">"
 			+"<input type=hidden name=lon value=" + lng + ">";
 			switch (error.code)
 			{
@@ -118,7 +117,7 @@
 				break;
 			};
 			$('#company_ul').append('<div class="error">'+ no_text +'</div>');
-		}
+		} 
 	})
 </script>
 

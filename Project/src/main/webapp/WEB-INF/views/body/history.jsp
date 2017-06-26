@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import ="spring.mvc.whame.history.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../modal/history_modal.jsp" %>  
+<%@include file="../modal/fileupload_modal.jsp" %>
 <%@include file="../modal/infomodal.jsp" %>
-
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-a6149740a5939346f553130276762c3d&libraries=services"></script>
+03947296fa39c02cca384bf32800c263&libraries=services"></script>
 <style>
 	.history_form{
 		margin-top:20px;
+		margin-bottom:20px;
+		width: 80%;
+		padding:20px;
+		border-radius:30px;
 	}
 	.history_form .h_map{
 		margin-bottom:20px;
@@ -28,11 +31,15 @@ a6149740a5939346f553130276762c3d&libraries=services"></script>
 		width:100%;
 		height:350px;
 	}
+	.his_no{
+		height:450px;
+		padding-top:15%;
+	}
 	
 	@media only screen and (min-width : 320px) and (max-width : 600px) {
 	
 		.slider{
-			width:125%;
+			width:112%;
 		}
 		
 		.history_form .sli{
@@ -49,42 +56,65 @@ a6149740a5939346f553130276762c3d&libraries=services"></script>
 		}
 	}
 	
+	@media only screen and (min-height : 636px) {
+		.his_no{
+			height:570px;
+		}
+	}
+	
 </style>
-<div class="container history_form">
-	<div id="map" class="h_map"></div>
-	<div style="width:80%;" class="sli">
-		<c:forEach items="${hMap}" var="vo" >
-		<div class="slider z-depth-3" style="margin-bottom:30px;">
-	    <ul class="slides">
-			<c:forEach items="${vo.value }" var="his">
-				<li class='listsize' style="heigth:200px;">
-			        <img src="http://s3-ap-northeast-1.amazonaws.com/whame/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
-			        <div class="caption center-align">
-			          	<c:forEach items="${storelist }" var="comstore">
-	 				        <c:set value="${comstore.store_code }" var="scode"/>
-	 						<c:set value="${his.store_code}" var="hcode"/>
-	 			        	<c:if test="${scode == hcode }">
-	 			   	       <h3 class="grey-text text-darken-4">${comstore.store_name}</h3>			        
-	 			   	     	</c:if>
-	 		 		       </c:forEach>
- 			          <h5 class="light grey-text text-darken-2">${his.h_date}</h5>
-			        </div>
-		      	</li>
-			</c:forEach>
-		</ul>
-		<div class="center-align" style="margin-top:4px;">
-			<a href="javascript:"><i class="material-icons small" style="margin-right:35%;" id="left">keyboard_arrow_left</i></a>
-			<a href="javascript:"><i class="material-icons small del_his" style="margin-right:35%;"><span style="color:red">cancel</span></i></a>
-			<a href="javascript:"><i class="material-icons small" id="right">keyboard_arrow_right</i></a>
-		</div>
-	  	</div>
-		</c:forEach> 
-	</div>
-	<div class="fixed-action-btn horizontal">
-	    <a class="btn-floating btn-large white" id="upview" href="#top_view">
-	      <i class="material-icons" style="color:black">arrow_upward</i>
-	    </a>
-	 </div>
+
+<script>
+ function his_new(){
+	 $('#modal1').modal('open');
+ }
+</script>
+<div class="container history_form z-depth-2">
+	<c:choose>
+		<c:when test="${historylist != '[]'}">
+			<div id="map" class="h_map"></div>
+			<div style="width:90%;" class="sli">
+				<c:forEach items="${hMap}" var="vo" >
+				<div class="slider z-depth-3" style="margin-bottom:30px;">
+			    <ul class="slides">
+					<c:forEach items="${vo.value }" var="his">
+						<li class='listsize' style="heigth:200px;">
+					        <img src="http://s3-ap-northeast-1.amazonaws.com/whame/StoreTitle/${his.signimage}" class="imagemodal" id='${his.store_code}'> <!-- random image -->
+					        <div class="caption center-align">
+					          	<c:forEach items="${storelist }" var="comstore">
+			 				        <c:set value="${comstore.store_code }" var="scode"/>
+			 						<c:set value="${his.store_code}" var="hcode"/>
+			 			        	<c:if test="${scode == hcode }">
+			 			   	       <h3 class="grey-text text-darken-4">${comstore.store_name}</h3>			        
+			 			   	     	</c:if>
+			 		 		       </c:forEach>
+		 			          <h5 class="light grey-text text-darken-2">${his.h_date}</h5>
+					        </div>
+				      	</li>
+					</c:forEach>
+				</ul>
+				<div class="center-align" style="margin-top:4px;">
+					<a href="javascript:"><i class="material-icons small" style="margin-right:30%;" id="left">keyboard_arrow_left</i></a>
+					<a href="javascript:"><i class="material-icons small del_his" style="margin-right:30%;"><span style="color:red">close</span></i></a>
+					<a href="javascript:"><i class="material-icons small" id="right">keyboard_arrow_right</i></a>
+				</div>
+			  	</div>
+				</c:forEach> 
+			</div>
+			<div class="fixed-action-btn horizontal">
+			    <a class="btn-floating btn-large white" id="upview" href="#top_view">
+			      <i class="material-icons" style="color:black">arrow_upward</i>
+			    </a>
+			 </div>
+		</c:when>
+		<c:otherwise>
+			<div class="his_no center-align">
+				<h3 style="width: 100%;">히스토리 정보가 없습니다.</h3>
+				<h5 style="width: 100%">히스토리를 추가하러 가볼까요?</h5>
+				<input type="button" class="btn green" value="메뉴찾기" onclick="his_new();" style="border-radius:30px; margin-top:20px;"><br>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </div>
       
 <script type="text/javascript">
@@ -112,7 +142,7 @@ var positions=[];
 	var container = document.getElementById('map');
 	var options = {
 		center: new daum.maps.LatLng(x.slice(3*(length-1)+1,3*(length-1)+2),x.slice(3*(length-1)+2,3*(length-1)+3)),
-		level: 4
+		level: 7
 	};
 	var map = new daum.maps.Map(container, options);
 	
@@ -173,6 +203,5 @@ var positions=[];
 	    event.preventDefault();
 	    $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 500);
 	});
-	
 }) 
 </script>

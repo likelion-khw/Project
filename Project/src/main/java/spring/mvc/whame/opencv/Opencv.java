@@ -62,7 +62,7 @@ public class Opencv {
 		
 		
 		// ������ �̹����� ������ ���.
-		String target = "/Users/woong/Desktop/warping/" + filename;
+		String target = "C:/Users/myeongeun/Desktop/warping/" + filename;
 		opencv_imgcodecs.imwrite(target, warpImg);
 		
 		return target;

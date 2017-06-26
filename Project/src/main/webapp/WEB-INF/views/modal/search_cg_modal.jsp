@@ -32,11 +32,12 @@ function enterkey2() {
 				    <option value="500">500m</option>
 				    <option value="800">800m</option>
 				    <option value="1000">1000m</option>
+				    <option value="100000">전체</option>
 				</select>
 		          <label for="inputMenu">메뉴를 입력해주세요.</label>
-				  <input type="text" id="inputMenu" class="validate" style="border:1px #e0e0e0 solid" onkeyup="enterkey2()">
+				  <input type="text" id="inputMenu" class="validate" style="border:1px #e0e0e0 solid; width:240px;" onkeyup="enterkey2()" >
 				<div class="input">
-					<button id="searchbutton" class="btn">검색</button><br>
+					<button id="searchbutton" class="btn green" style="border-radius:30px">검색</button><br>
 				</div>
 			</p>
 		</div>
@@ -64,9 +65,16 @@ $(document).ready(function(){
 	});
 
 	var Menudata = new Array();
-	<c:forEach items="${getMenuAuto}" var="menu">
-		Menudata.push(('${menu}'));
-	</c:forEach>
+
+	$.ajax({
+		url : 'getMenuAuto.whame',
+		type: 'post',
+		success : function(menu){
+			for(var i = 0; i<menu.length; i++){
+				Menudata.push(menu[i]);
+			}
+		}
+	})
 	var options = {
 			data: Menudata,
 			list: {
@@ -124,7 +132,15 @@ $(document).ready(function(){
 			
 		$(location).attr("href", "forkakao.whame?store_code="+store_code);
 		
-	})
+	});
+
+	$(document).on('click','a[class=tagStore1]',function(){
+		var store_code = $(this).attr('id');
+		console.log(store_code);
+			
+		$(location).attr("href", "forkakao.whame?store_code="+store_code);
+		
+	});
 	
 	$(document).on('click','span#test_sc',function(event){
 		$('#inputMenu').focus();
@@ -135,8 +151,8 @@ $(document).ready(function(){
 				lat = position.coords.latitude,
 				lng = position.coords.longitude
 			).then(function(){
-				document.getElementById("lal").innerHTML += "<input type=hidden name=lat id='lat' value=" + lat+ ">"
-				+"<input type=hidden id='lon' name=lon value=" + lng + ">";
+				document.getElementById("lal").innerHTML += "<input type=text name=lat id='lat' value=" + lat+ ">"
+				+"<input type=text id='lon' name=lon value=" + lng + ">";
 			});
 			console.log("===="+lat+":::"+lng);
 			}
@@ -144,10 +160,10 @@ $(document).ready(function(){
 		function showError(error)
 		{
 			var no_text;
-			lat = 37.520498;
-			lng = 127.022959;
-			document.getElementById("lal").innerHTML += "<input type=hidden name=lat id='lat' value=" + lat+ ">"
-			+"<input type=hidden id='lon' name=lon value=" + lng + ">";
+			lat = 35.854741;
+			lng = 128.650206;
+			document.getElementById("lal").innerHTML += "에러<input type=text name=lat id='lat' value=" + lat+ ">"
+			+"<input type=text id='lon' name=lon value=" + lng + ">";
 		}
 		
 	var search = function(menuSearch, choice){
@@ -190,24 +206,25 @@ $(document).ready(function(){
 							  }
 						  
 						var storeList = $(
-						        "<div class='col s12' id='"+data[i].store_name+"' style='border-radius:50px;'>"
+								"<a href='javascript:t()' class='tagStore1' id='"+data[i].store_code+"' style='padding:0px; color:black'>"
+						        +"<div class='col s12' id='"+data[i].store_name+"' style='border-radius:50px;'>"
 						          +"<div class='card'>"
 						            +"<div class='card-image'>"
 						              +"<img src='"+data[i].store_image+"' width='100%' height='200px;'>"
 						            +"</div>"
 						            +"<div class='card-content'>"
-						            	+"<p class='viewcount'> 거리 : 약 <span style='color:red'>"+ parseInt(data[i].meter)+"</span>m</p><br>"
+						            	+"<p class='viewcount'>약 <span style='color:red'>"+ parseInt(data[i].meter)+"</span>m</p><br>"
 						            	+"<p> 도보 : "+walkHour+walkMin+"</p><br>"
 					            		+"<div class='address'>"+data[i].address+"</div>"
 						            +"</div>"
 						            +"<div class='card-action'>"
-						              +"<a href='javascript:tag()' class='tagStore' id='"+data[i].store_code+"' style='margin-right:0px'>"+data[i].store_name+"</a><br>"
+						              +"<span class='tagStore' id='"+data[i].store_code+"' style='margin-right:0px; color:orange'>"+data[i].store_name+"</span]><br>"
 						              +"<span style='border-radius:30px; text-align:center' class='btn white' id='test_sc'>"
 					          	      	+"<i class='material-icons' style='color:black'>arrow_drop_up</i>"
 					          	     	+"</span>"
 						            +"</div>"
 						          +"</div>"
-						        +"</div>"
+						        +"</div></a>"
 						)
 						$(".storeList").append(storeList);
 					}

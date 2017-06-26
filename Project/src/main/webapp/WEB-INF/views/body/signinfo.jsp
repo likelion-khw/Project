@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@include file="../modal/fileupload_modal.jsp" %>
 <%@include file="../modal/show_coupon_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-a6149740a5939346f553130276762c3d&libraries=services"></script>
-<script	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+c32b76f1aa052608845dc92dd7326946&libraries=services"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 <style>
 /*  크롤링 결과 디자인  */
 div.thumb img{
@@ -88,7 +89,6 @@ div.txt{
 	margin-right: auto;
 }
 .showinfo_btn{
-	margin-top:6%;
 }
 
 .hidemenu{
@@ -239,32 +239,42 @@ div.showinfo_btn input{
 					</div>
 					<c:choose>
 						<c:when test="${crawl2 != null}">
-						<div class="showinfo_btn center-align col s12 m6">
-							<center>
-								<div class="keyword">
-									<h5>테마키워드</h5>
-								 	${crawl2}
-								</div>
-							</center>
-						<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br>
-						<input type="button" value="재 검색" class="btn green" id="re_search"><br>
-						<input type="button" value="메인이동" class="btn red" id="main_load"><br>
-						<a id="kakao-link-btn" href="javascript:sendLink()">
-							<img width="35px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
-						</a>
-						</div>
+							<div class="showinfo_btn center-align col s12 m6">
+								<center>
+									<div class="keyword">
+										<h5>테마키워드</h5>
+									 	${crawl2}
+									</div>
+								</center>
+							<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br>
+							<input type="button" value="재 검색" class="btn green" id="re_search"><br>
+							<input type="button" value="메인이동" class="btn red" id="main_load"><br>
+							<a id="kakao-link-btn" href="javascript:sendLink()">
+								<img width="35px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+							</a>
+							</div>
 						</c:when>
 						<c:otherwise>
-						<div class="showinfo_btn center-align col s12 m6" style="margin-top:10%;">
-						<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br>
-						<input type="button" value="재 검색" class="btn green" id="re_search"><br>
-						<input type="button" value="메인이동" class="btn red" id="main_load"><br>
-						<a id="kakao-link-btn" href="javascript:sendLink()">
-							<img width="35px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
-						</a>
-						</div>
+							<div class="showinfo_btn center-align col s12 m6" style="margin-top:10%;">
+							<input type="button" value="이벤트보기" class="btn blue hidemenu" id="show_coupon"><br>
+							<input type="button" value="재 검색" class="btn green" id="re_search"><br>
+							<input type="button" value="메인이동" class="btn red" id="main_load"><br>
+							<a id="kakao-link-btn" href="javascript:sendLink()">
+								<img width="35px" src="//dev.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png"/>
+							</a>
+							</div>
 						</c:otherwise>
 					</c:choose>
+					<c:if test="${fn:length(crawl3)==7}">
+						<div style="width:200px; margin-left:auto;margin-right:auto;">
+							<canvas id="myChart" width="100" height="100"></canvas>
+						</div>
+					</c:if>
+					<c:if test="${crawl3 != null}">
+						<div style="width:200px; display:none;">
+							<canvas id="myChart" width="100" height="100"></canvas>
+						</div>
+					</c:if>
 				</div>
 			</div>
 			<div class="center-align">
@@ -326,6 +336,55 @@ div.showinfo_btn input{
 	for(var i=1; i<=crawmax1; i++){
 		$('ul.review div.twopage li#sp_blog_'+i).addClass('crawhide');
 	}
+
+var datat = new Array();
+	
+	<c:forEach items="${crawl3}" var="craw" begin="0" end="5">
+		datat.push(parseInt('${craw}'));
+	</c:forEach>
+	
+	var ctx = document.getElementById("myChart");
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
+	        datasets: [{
+	            label:'연령별',
+	            data: datat,
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.8)',
+	                'rgba(54, 162, 235, 0.8)',
+	                'rgba(255, 206, 86, 0.8)',
+	                'rgba(75, 192, 192, 0.8)',
+	                'rgba(153, 102, 255, 0.8)',
+	                'rgba(255, 159, 64, 0.8)'
+	            ],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 2
+	        }]
+	    },
+	    options: {
+	    	title: {
+	            display: true,
+	            text: '연령별 검색 인기도'
+	        },
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true,
+	                    suggestedMax: 100
+	                }
+	            }]
+	        }
+	    }
+	});
 $(document).ready(function() {
 			$('.parallax').parallax();
 	 		// 블로그 더보기 이벤트
@@ -368,7 +427,7 @@ $(document).ready(function() {
 		</c:forEach>
 		if( coupon == true)
 			{
-				$("#coupon1").openModal();
+				$("#coupon1").modal('open');
 				$('input[value="이벤트보기"]').removeClass('hidemenu');
 			}
 		

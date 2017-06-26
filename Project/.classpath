@@ -34,22 +34,23 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="target\generated-sources\annotations">
+	<classpathentry kind="src" path="target/generated-sources/annotations">
 		<attributes>
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/javacv/javacpp.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/javacv/javacv-platform.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/javacv/javacv.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/javacv/opencv-macosx-x86_64.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/javacv/opencv-platform.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/javacv/opencv-windows-x86_64.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/javacv/opencv.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/amazon/jackson-annotations-2.4.1.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/amazon/jackson-core-2.4.1.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/amazon/joda-time-2.2.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/amazon/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="/Users/woong/Desktop/project/amazon/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="D:/javacv-bin/javacpp.jar"/>
+	<classpathentry kind="lib" path="D:/javacv-bin/javacv.jar"/>
+	<classpathentry kind="lib" path="D:/javacv-bin/javacv-platform.jar"/>
+	<classpathentry kind="lib" path="D:/javacv-bin/opencv.jar"/>
+	<classpathentry kind="lib" path="D:/javacv-bin/opencv-platform.jar"/>
+	<classpathentry kind="lib" path="D:/javacv-bin/opencv-windows-x86_64.jar"/>
+	<classpathentry kind="lib" path="C:/Users/myeongeun/Documents/카카오톡 받은 파일/amazon/amazon/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/myeongeun/Documents/카카오톡 받은 파일/amazon/amazon/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/myeongeun/Documents/카카오톡 받은 파일/amazon/amazon/jackson-annotations-2.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/myeongeun/Documents/카카오톡 받은 파일/amazon/amazon/jackson-core-2.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/myeongeun/Documents/카카오톡 받은 파일/amazon/amazon/jackson-databind-2.4.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/myeongeun/Documents/카카오톡 받은 파일/amazon/amazon/joda-time-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/myeongeun/Documents/카카오톡 받은 파일/amazon/amazon/jsoup-1.10.3.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

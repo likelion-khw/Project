@@ -4,8 +4,20 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"/>
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <style>
+@media only screen and (min-width : 321px) and (max-width : 600px) {
+	.store_modal_form .modal{
+		font-size: 12px;
+	}
+	.store_modal_form. th{
+		width: 30%;
+	}
+	
+	.store_modal_form td{
+		width: 70%;
+	}
+}
 </style>
-<div class="container center-align">
+<div class="store_modal_form container center-align">
  	<c:forEach items="${storeMap }" var="svo">
 	 	<div class='locCode' style="display: none;">${svo.value.store_code } </div> 
 		 	<div id="${svo.value.store_code }modal_store" class="modal">

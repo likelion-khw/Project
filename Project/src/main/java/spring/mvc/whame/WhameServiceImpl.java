@@ -230,7 +230,7 @@ public class WhameServiceImpl implements WhameService{
 			}
 		}else if(choice.equals("search")){
 			for(int i = 0; i < menuInit.size(); i++){
-				if(menuInit.get(i).getMenu_name().contains(menuSearch)){
+				if(menuInit.get(i).getMenu_name().split("\\(")[0].replace(" ", "").contains(menuSearch)){
 					for(int j = 0; j<storeInit.size(); j++){
 						for(Integer jj : cloc_code){
 							if(menuInit.get(i).getStore_code() == storeInit.get(j).getStore_code() 

@@ -38,16 +38,17 @@ public class Crawling {
 		}
 		
 		store += "+\"" + store + "\"";
-		
 	    Document doc2 = Jsoup.connect("https://search.naver.com/search.naver?where=post&sm=tab_pge&query="+address+"%20"+store+"&st=sim&date_option=7&date_from=20160101&date_to="+sdf.format(new Date())+"&dup_remove=1&post_blogurl=&post_blogurl_without=&srchby=all&nso=&ie=utf8&start=1").get();
 	    Document doc3 = Jsoup.connect("https://search.naver.com/search.naver?where=post&sm=tab_pge&query="+address+"%20"+store+"&st=sim&date_option=7&date_from=20160101&date_to="+sdf.format(new Date())+"&dup_remove=1&post_blogurl=&post_blogurl_without=&srchby=all&nso=&ie=utf8&start=11").get();
 	    Document data = Jsoup.connect("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query="+address+"+"+store1).get();
+	    Document data2 = Jsoup.connect("https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query="+store1).get();
 	    Elements el = doc2.select("div.blog ul.type01");
 	    Elements el1 = doc3.select("div.blog ul.type01");
 	    Elements el2 = data.select("div.theme_kwd_area ul.list_theme");
+	    Elements el3 = data.select("div.list_chart div.flick_content div.chart.type_age li.list_item span.fill");
 	    
-	    String result[] = new String[3];
-	    
+	    String result[] = new String[4];
+	    result[3] = el3.html();
 	    if(el.html().split("</li>").length == 10)
 	    {
 	    	if(el2.size() != 0)

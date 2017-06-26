@@ -3,9 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>        
 <style>
 @media only screen and (min-width : 321px) and (max-width : 600px) {
+	.coupon_modal_form .modal{
+		font-size: 10px;
+	}
+	.coupon_modal_form input{
+		font-size: 10px;
+	}
 }
 </style>
-<div class="container center-align">
+<div class="coupon_modal_form container center-align">
 <c:forEach items="${storeMap }" var="svo">
 		<div id="${svo.value.store_code }modal_coupon" class="modal coupon_modalform">
 		<div class="modal-content">

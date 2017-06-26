@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@include file="../modal/fileupload_modal.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <%@include file="../modal/show_coupon_modal.jsp" %>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-03947296fa39c02cca384bf32800c263&libraries=services"></script>
+6ae58faecc0e06a5ecbf63977aa440b0&libraries=services"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 <style>
 /*  크롤링 결과 디자인  */
 div.thumb img{
@@ -244,6 +245,16 @@ div.showinfo_btn input{
 						</div>
 						</c:otherwise>
 					</c:choose>
+					<c:if test="${fn:length(crawl3)==7}">
+						<div style="width:200px; margin-left:auto;margin-right:auto;">
+							<canvas id="myChart" width="100" height="100"></canvas>
+						</div>
+					</c:if>
+					<c:if test="${crawl3 != null}">
+						<div style="width:200px; display:none;">
+							<canvas id="myChart" width="100" height="100"></canvas>
+						</div>
+					</c:if>
 				</div>
 			</div>
 			<div class="center-align">
@@ -271,7 +282,6 @@ div.showinfo_btn input{
 			    </a>
 			 </div>
 </div>
-
 <script type="text/javascript">
 	$('ul.review div[name=blogs] dt').after('<p style=\"border:1px gray solid; margin-left:20%;margin-right:20%;margin-top:5px;margin-bottom:5px;\">');
 	$('ul.review dd.txt_inline').css('color','pink');
@@ -303,6 +313,55 @@ div.showinfo_btn input{
 	for(var i=1; i<=crawmax1; i++){
 		$('ul.review div.twopage li#sp_blog_'+i).addClass('crawhide');
 	}
+
+	var datat = new Array();
+	
+	<c:forEach items="${crawl3}" var="craw" begin="0" end="5">
+		datat.push(parseInt('${craw}'));
+	</c:forEach>
+	
+	var ctx = document.getElementById("myChart");
+	var myChart = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+	        labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
+	        datasets: [{
+	            label:'연령별',
+	            data: datat,
+	            backgroundColor: [
+	                'rgba(255, 99, 132, 0.8)',
+	                'rgba(54, 162, 235, 0.8)',
+	                'rgba(255, 206, 86, 0.8)',
+	                'rgba(75, 192, 192, 0.8)',
+	                'rgba(153, 102, 255, 0.8)',
+	                'rgba(255, 159, 64, 0.8)'
+	            ],
+	            borderColor: [
+	                'rgba(255,99,132,1)',
+	                'rgba(54, 162, 235, 1)',
+	                'rgba(255, 206, 86, 1)',
+	                'rgba(75, 192, 192, 1)',
+	                'rgba(153, 102, 255, 1)',
+	                'rgba(255, 159, 64, 1)'
+	            ],
+	            borderWidth: 2
+	        }]
+	    },
+	    options: {
+	    	title: {
+	            display: true,
+	            text: '연령별 검색 인기도'
+	        },
+	        scales: {
+	            yAxes: [{
+	                ticks: {
+	                    beginAtZero:true,
+	                    suggestedMax: 100
+	                }
+	            }]
+	        }
+	    }
+	});
 $(document).ready(function() {
 		$('.parallax').parallax();
 		$('#showcrawl').on('click',function(){
@@ -561,7 +620,7 @@ Kakao.init('f83177e46350e0d7ba18232a50b978ed');
    	      content: {
    	    	title: '${store.store_name}',
    	    	description: '${location.address}',
-   	    	imageUrl: 'http://s3-ap-northeast-1.amazonaws.com/whame01/StoreTitle/${imgurl}',
+   	    	imageUrl: '${store.store_image}',
    	    	link: {
    	    	  mobileWebUrl: 'http://192.168.1.38:8080/whame/forkakao.whame?store_code=${store.store_code}',
    	    	  webUrl: 'http://192.168.1.38:8080/whame/forkakao.whame?store_code=${store.store_code}'

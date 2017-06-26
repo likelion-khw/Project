@@ -183,5 +183,17 @@ public class LoginController {
 		mvo = service.facebook(fvo);
 		return mvo;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="member_out.whame", method=RequestMethod.POST)
+	public void member_out(String userid){
+		service.member_out(userid);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="member_out_sns.whame", method=RequestMethod.POST)
+	public void member_out_sns(String userid){
+		service.member_out_sns(userid);
+	}
 
 }

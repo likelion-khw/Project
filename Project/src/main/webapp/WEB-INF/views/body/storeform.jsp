@@ -12,14 +12,16 @@ span.badge{
 	position: static;
 }
 .storeform{
-	margin-top:1%;
-	padding-top: 5px;
+	margin-bottom:60px;
+	padding-top: 60px;
 	padding-bottom: 20px;
 	width: 90%;
+	border-radius:30px;
 }
 
 .storeform .empt{
-	margin-top:20%;
+	margin-top:10%;
+	margin-bottom:10%;
 }
 
 .storeform .collapsible-body{
@@ -28,7 +30,7 @@ span.badge{
 }
 
 .maps{
-	width:60%; 
+	width:100%; 
 	height:250px; 
 	margin-bottom:20px;
 }
@@ -40,6 +42,20 @@ span.badge{
 	.maps{
 		width:100%;
 	}
+	
+	.collapsible th, td{
+		font-size: 9px;
+		padding:15px 2px;
+	}
+	.chip{
+		font-size: 10px;
+	}
+}
+
+@media only screen and (min-width : 1300px) {
+		.storeform{
+			margin-top:120px;
+		}
 }
 </style>
 <div id="store_h">
@@ -47,13 +63,13 @@ span.badge{
 		<input type="hidden" value="${store.store_code}">
 	</c:forEach>
 </div>
-<div class="container storeform center-align">
 	<c:choose>
 		<c:when test="${storelist != null}">
-			<ul class="collapsible" data-collapsible="accordion">
+		<div class="container storeform center-align">
+			<ul class="collapsible" data-collapsible="accordion" style="border-radius:5px">
 				<c:forEach items="${storelist}" var="store">
 				<li id='${store.store_code}' class="on">
-			      <div class="collapsible-header"><i class="material-icons">filter_drama</i><h5>${store.store_name}</h5></div>
+			      <div class="collapsible-header"><img class="circle" src="${store.store_image}" width="30px" height="30px" style="float:left;"><h5>${store.store_name}</h5></div>
 			      <div class="collapsible-body">
 			      	<div class="container" id="${store.store_code}">
 				      	<div class="container" id="${store.store_code}">
@@ -96,7 +112,7 @@ span.badge{
 				      <div id="${store.store_code}menu_info" class="col s12 ">
 				      <label>메뉴종류</label>
 					 	<center>
-							<select class="browser-default" id="menu_type" style="width:40%" name="${store.store_code}">
+							<select class="browser-default" id="menu_type" style="width:50%" name="${store.store_code}">
 									<c:forEach items="${menutype }" var="mtype">
 										<c:set value="${mtype.key }" var="mkey"/>
 										<c:set value="${store.store_code}" var="stkey"/>
@@ -147,7 +163,7 @@ span.badge{
 				      	<table class="centered highlight" >
 							<label>행사진행상태</label>
 						 	<center>
-								<select class="browser-default" id="coupon_state" style="width:30%" name="${store.store_code}">
+								<select class="browser-default" id="coupon_state" style="width:35%" name="${store.store_code}">
 						   			<option value="진행중" selected="selected">진행중</option>
 						   			<option value="예정">예정</option>
 						   			<option value="종료">종료</option>
@@ -203,10 +219,11 @@ span.badge{
 			  </ul>
 		</c:when>
 		<c:otherwise>
+		<div class="container storeform center-align z-depth-2">
 			<div class="empt">
 				<h3>등록된 상가 정보가 없습니다.</h3>
 				<h5>상가를 등록하시겠습니까?</h5>
-				<input type="button" class="btn" value="간판등록하기" id="enroll"><br>
+				<input type="button" class="btn green" value="간판등록하기" id="enroll" style="border-radius:30px;"><br>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -252,7 +269,6 @@ $(document).ready(function() {
 		var mapContainer = document.getElementById('map'+store_code), // 지도를 표시할 div 
 		mapOption = {
 			center : new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			draggable :false,
 			level : 3
 		// 지도의 확대 레벨
 		};

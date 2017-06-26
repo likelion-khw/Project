@@ -46,4 +46,11 @@ public class LoginServiceImpl implements LoginService {
 	public MemberVO facebook(FaceBookVO fvo){
 		return dao.facebook(fvo);
 	}
+	public void member_out(String userid){
+		dao.member_out(userid);
+	}
+	
+	public void member_out_sns(String userid){
+		dao.member_out_sns(userid);
+	}
 }
