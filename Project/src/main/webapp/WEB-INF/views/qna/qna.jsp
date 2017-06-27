@@ -50,7 +50,7 @@ ul {
 	</div>
 </div>
 
-  <ul class="collapsible" data-collapsible="accordion">
+  <ul class="collapsible popout" data-collapsible="accordion">
     <li>
       <div class="collapsible-header" id="exam0"><i class="material-icons">info</i><span style="color:blue;float:left;">[whaME]</span>&emsp;&emsp;제공서비스는 무엇인가요?</div>
       <div class="collapsible-body" style="text-align:center;">
@@ -135,7 +135,6 @@ ul {
                 	$('#exam'+i+'').css('display','none');
 	                count++
                 }else{
-                	console.log($('#exam'+i+'').text().toLowerCase().indexOf(k));
                 	$('#exam'+i+'').css('display','block');
                 	$('#test').text('');
                 }

@@ -17,7 +17,7 @@
 	}
 	.white-text.name.top{
 		margin-top: -20px;
-	}
+	} 
 }
 </style>
 <ul id="mobile-demo" class="side-nav fixed" style="width:240px">

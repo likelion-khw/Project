@@ -37,14 +37,14 @@
     <tr>
       <td>&nbsp;</td>
       <td align="center">비밀번호</td>
-      <td><input type="password" id="pw" name="password" size="50" maxlength="50"></td>
+      <td><input type="password" id="pw1" name="password" size="50" maxlength="50"></td>
       <td>&nbsp;</td>
      </tr>
      <tr height="1" bgcolor="#dddddd"><td colspan="4"></td></tr>
      <tr>
      <tr>
       <td>&nbsp;</td>
-      <td align="center">메일</td>
+      <td align="center">메일주소</td>
       <td><input type="text" id="email" name="email" size="50" maxlength="50"></td>
       <td>&nbsp;</td>
      </tr>
@@ -76,10 +76,10 @@
 	$('#send').on('click',function(){
 		var a = $('#title').val();
 		var b = $('#name').val();
-		var c = $('#pw').val();
+		var c = $('#pw1').val();
 		var d = $('#memo').val();
 		var e = $('#email').val();
-		
+		console.log(c);
 		if(a == ""){
 			alert("내용을 확인해주세요.");
 			$(location).attr('href', '#!');
