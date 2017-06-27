@@ -69,6 +69,7 @@
 		                <li class="center-align"><a href="javascript:t();" name="msearch"><i class="material-icons" style="margin-right:0px;">camera_enhance</i>메뉴찾기</a></li>
 					  	 <li class="center-align"><a href="javascript:t();" name="menroll"><i class="material-icons" style="margin-right:0px;">mode_edit</i>간판등록</a></li>
 					  	 <li class="center-align"><a href="javascript:t();" name="rsearch"><i class="material-icons" style="margin-right:0px;">search</i>주변검색</a></li>
+					  	 <li class="center-align"><a href="javascript:t();" name="qna"><i class="material-icons" style="margin-right:0px;">help</i>Q&A</a></li>
 		              </ul>
 		            </div>
 		          </li>
@@ -129,6 +130,7 @@
 		                <li class="center-align"><a href="javascript:t();" name="msearch"><i class="material-icons" style="margin-right:0px;">camera_enhance</i>메뉴찾기</a></li>
 					  	 <li class="center-align"><a href="javascript:t();" name="menroll"><i class="material-icons" style="margin-right:0px;">mode_edit</i>간판등록</a></li>
 					  	 <li class="center-align"><a href="javascript:t();" name="rsearch"><i class="material-icons" style="margin-right:0px;">search</i>주변검색</a></li>
+					  	 <li class="center-align"><a href="javascript:t();" name="qna"><i class="material-icons" style="margin-right:0px;">help</i>Q&A</a></li>
 		              </ul>
 		            </div>
 		          </li>
@@ -191,6 +193,10 @@ Kakao.init('f83177e46350e0d7ba18232a50b978ed');
 	$("a[name=rsearch]").on('click',function(){
 		$('#mobile-demo').sideNav('hide');
 		$('.search_cg1').sideNav('show');
+	});
+
+	$("a[name=qna]").on('click',function(){
+		$(location).attr('href','qna.whame');
 	});
 
 	 $('.button-collapse.search_cg1').sideNav({

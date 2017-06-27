@@ -75,6 +75,13 @@ public class WhameController {
 		mav.setViewName("body/test");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/qna.whame")
+	public ModelAndView qna() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("body/qna");
+		return mav;
+	}
 
 	@RequestMapping(value = "/")
 	public ModelAndView main() {
