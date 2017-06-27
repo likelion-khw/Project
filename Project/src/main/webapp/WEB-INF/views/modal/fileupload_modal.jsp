@@ -43,7 +43,6 @@
 				<div class="btn red" style="float:none;">
 					<span><i class="material-icons">camera_enhance</i></span> <input type="file" name="imagefile" id="imagefile">
 				</div>
-				<div id="lal"></div>
 				<div id="company_ul"></div>
 			</div>
 		</form>
@@ -66,12 +65,12 @@
 		});
 
 		/* var lat;
-		var lng; */
-		var lat = 37.520438;
-		var lng = 127.022976;
+		var lng;
+		/* var lat = 37.520438;
+		var lng = 127.022976; */
 
-		document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat+ ">"
-		+"<input type=hidden name=lon value=" + lng + ">";
+		/* document.getElementById("lal").innerHTML += "<input type=hidden name=lat value=" + lat+ ">"
+		+"<input type=hidden name=lon value=" + lng + ">"; */
 		/* if (navigator.geolocation) 
 		{
 			navigator.geolocation.getCurrentPosition(showPosition,showError);

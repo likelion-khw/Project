@@ -26,7 +26,7 @@
 	}
 </style>
 <div class="container" style="width:90%;">
-	<div id="content" class="row">
+	<!-- <div id="content" class="row">
 		<div class="imge col s4 m4" style="background :url('resources/img/1.png') center center / cover no-repeat;">
 			<img src="resources/img/1logo.ico">
 		</div>
@@ -36,7 +36,10 @@
 		<div class="imge col s4 m4" style="background: url('resources/img/3.png') center center / cover no-repeat;">
 			<img src="resources/img/3logo.png">
 		</div>
-	</div>
+	</div> -->
+	<c:forEach items="${locationlist}" var="lo">
+		${lo.store_name}
+	</c:forEach>
 </div>
 <script type="text/javascript">
 	$('img').mouseover(function(){
@@ -50,6 +53,9 @@
 	});
 
 	$(document).ready(function(){
+		<c:forEach items="${locationlist}" var="lo">
+			alert('${lo.store_name}');
+		</c:forEach>
 			$('.geo_loding').css('display','inline');
 		})
 </script>

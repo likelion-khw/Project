@@ -115,7 +115,7 @@
 			<th>간판이미지</th>
 		</tr>
 		<tr>
-			<th class="web_form">간판이미지</th><td><input type="file" name="imagefile"></td>
+			<th class="web_form">간판이미지</th><td><input type="file" id="imagefiles" name="imagefile"></td>
 		
 		<tr><td colspan="2"><input type="button" class="btn green" value="등록하기" id="e_submit"></td></tr>
 	</table>
@@ -134,7 +134,7 @@ $('#e_submit').on('click',function(){
 		var d = $('#categoryDetail');
 		var e = $("#store_name");
 		var f = $('#operating_time');
-		var g = $('#imagefile');
+		var g = $('#imagefiles');
 		
 		if(a.val() == ""){
 			alert("사업자 번호를 인증하세요.");
