@@ -81,11 +81,9 @@ public class WhameController {
 		int count = service.getStoreCount();
 		List<LocationVO> locationlist = service.getlocation_list();
 		List<StoreVO> countrank = service.getCountRanklist();
-		List<StoreVO> getNewStore = service.getNewStore();
 		
 		mav.setViewName("main/main");
 		mav.addObject("count", count);
-		mav.addObject("getNewStore",getNewStore);
 		mav.addObject("countrank",countrank);
 		mav.addObject("locationlist", locationlist);
 		return mav;
@@ -304,9 +302,9 @@ public class WhameController {
 	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占싸듸옙첼占� 占쏙옙占쏙옙풔占� 占쌨소듸옙 ( AWS 클占쏙옙占쏙옙 占쏙옙占� )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
 	public ModelAndView test(MultipartFile imagefile, Double lat, Double lon) throws Exception {
+		System.out.println("lal" + lat + ":" + lon);
 		this.lat = lat;
 		this.lon = lon;
-		System.out.println("lal" + lat + ":" + lon);
 		MapTest mt = new MapTest();
 		difflal = mt.run(lat, 100000);
 
@@ -558,5 +556,16 @@ public class WhameController {
 	@RequestMapping(value="getMenuAuto.whame", method=RequestMethod.POST)
 	public List<String> getMenuAuto(HistoryVO historyvo){
 		return service.getMenuAuto();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="getNewStore.whame", method=RequestMethod.POST)
+	public List<StoreVO> getNewStore2(WhameVO wvo){
+		MapTest mt = new MapTest();
+		difflal = mt.run(wvo.getLat(), 1000);
+		wvo.setDifflat(difflal.get(0));
+		wvo.setDifflon(difflal.get(1));
+		
+		return service.getNewStore2(wvo);
 	}
 }
