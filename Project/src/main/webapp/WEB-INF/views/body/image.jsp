@@ -43,8 +43,8 @@
          canvas.width = img.width;
          canvas.height = img.height;
          ctx.drawImage(img, 0, 0);
-         $('#loading').hide();
-         $('#images').show();
+         $('main').css('opacity','1');
+		 $('.img_loding').css('display','none');
       };
 
       img.src = "${imgurl}";
@@ -57,17 +57,16 @@
 		   <br>
 		   <input type="button" class="btn" value="재표시" id="del">
 		   <input type="button" class="btn blue" value="전송" id="send">
-		<form action="image.whame" method="post" enctype="multipart/form-data" id="upload" class="forms">
+		<form action="image.whame" method="post" enctype="multipart/form-data" id="upload2" class="forms">
 			<input type="hidden" name="lat" value="${lat}">
 			<input type="hidden" name="lon" value="${lon}">
 			<div class="file-field input-field">
 				<div class="btn red">
-					<span>다른이미지</span> <input type="file" name="imagefile" id="imagefile">
+					<span>다른이미지</span> <input type="file" name="imagefile" id="imagefile2">
 				</div>
 			</div>
 		</form>
 		</div>
-		<jsp:include page="../layout/loading.jsp"/>
 	</div>
 </body>
 
@@ -75,7 +74,8 @@
 
 $(document).ready(
 		function() {
-			$('#images').hide();
+			$('main').css('opacity','0.1');
+			$('.img_loding').css('display','inline');
 			var one;
 			var two;
 			var three;
@@ -204,8 +204,8 @@ $(document).ready(
 			})
 
 			$('#send').on('click', function() {
-				$('#images').hide();
-				$('#loading').show();
+				$('main').css('opacity','0.1');
+				$('.img_loding').css('display','inline');
 				$.ajax({
 					url : 'result.whame',
 					type : 'post',
@@ -223,8 +223,8 @@ $(document).ready(
 
 			});
 
-			$('#imagefile').on('change', function(e) {
-				$('#upload').submit();
+			$('#imagefile2').on('change', function(e) {
+				$('#upload2').submit();
 			});
 
 			var sortfun = function(){

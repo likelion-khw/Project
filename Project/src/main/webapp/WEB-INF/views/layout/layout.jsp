@@ -22,22 +22,38 @@
 header, main, footer {
 	padding-left: 240px;
 }
+ @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+.geo_text{
+	font-family: 'Nanum Pen Script';
+	font-size:36px;
+	font:bold;
+}
+.geo_loding{
+	padding-left: 240px;
+	position: fixed;
+	width:100%;
+	top:25%;
+}
+
+.img_loding{
+	padding-left: 240px;
+	position: fixed;
+	width:100%;
+	top:25%;
+}
 
 @media only screen and (max-width : 992px) {
-	header, main, footer {
+	header, main, footer, .geo_loding, .img_loding {
 		padding-left: 0;
 	}
 	
-	/*  @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
-	 *{
-		font-family: 'Nanum Pen Script';
-		font-size:25px;
-	 } */
 	
 }
 
-@media only screen and (min-width : 1280px) and (max-width:1920px) {
-	
+@media only screen and (min-width : 300px) and (max-width:700px) {
+	.geo_loding img, .img_loding img{
+		width:40%;
+	}
 }
 
 
@@ -57,6 +73,15 @@ main{
 		<div class="col-md-12">
 			<tiles:insertAttribute name="footer" />
 		</div>
+	</div>
+	
+	<div class="geo_loding center-align" style="display:none;">
+		<img src="resources/img/loding.gif">
+		<h5 class="geo_text">사용자 위치정보 로딩중..</h5>
+	</div>
+	<div class="img_loding center-align" style="display:none;">
+		<img src="resources/img/loding.gif">
+		<h5 class="geo_text">데이터 로딩중..</h5>
 	</div>
 </body>
 

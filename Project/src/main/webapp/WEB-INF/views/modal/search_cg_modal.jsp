@@ -41,7 +41,7 @@ function enterkey2() {
 				</div>
 			</p>
 		</div>
-		<div id='lal'></div>
+		<div id='lal_f'></div>
 		<div class="count" style="font-size:12px"></div>
 		<div class="row storeList" id="staggered-test">
 		</div>
@@ -162,7 +162,7 @@ $(document).ready(function(){
 			var no_text;
 			lat = 37.520498;
 			lng = 127.022959;
-			document.getElementById("lal").innerHTML += "<input type=hidden name=lat id='lat' value=" + lat+ ">"
+			document.getElementById("lal_f").innerHTML += "<input type=hidden name=lat id='lat' value=" + lat+ ">"
 			+"<input type=hidden id='lon' name=lon value=" + lng + ">";
 		}
 		

@@ -12,7 +12,7 @@
 .re_form{
 	margin-top:60px;
 	margin-bottom:60px;
-	height: 500px;
+	height: 520px;
 	padding:20px;
 	border-radius:30px;
 }
