@@ -250,6 +250,10 @@ public class WhameServiceImpl implements WhameService{
 		return dao.getNewStore();
 	}
 	
+	public List<StoreVO> getNewStore2(WhameVO wvo){
+		return dao.getNewStore2(wvo);
+	}
+	
 	public List<String> getMenuAuto(){
 		List<String> menu = new ArrayList<String>();
 		
