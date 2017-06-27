@@ -100,6 +100,62 @@ main{
 		$('#search_close').on('click',function(){
 	   	 	$('.button-collapse.search_cg').sideNav('hide');
 		});
+
+		setInterval(function(){
+			
+			var lat;
+			var lng;
+			
+			if (navigator.geolocation) 
+			{
+				navigator.geolocation.getCurrentPosition(showPosition,showError);
+			}
+			else
+			{
+				$('#container').append('<div class="error">위치정보를 사용 할 수 없는 환경입니다.</div>');
+			}
+
+			function showPosition(position) {
+				$.when( 
+					lat = position.coords.latitude,
+					lng = position.coords.longitude
+				).then(function(){
+					$.ajax({
+							url:'setLocation.whame',
+							type:'post',
+							data:{'lat':lat,'lon':lng}
+						})
+				});
+			}
+
+			function showError(error)
+			{
+				var no_text;
+				lat = 37.520498;
+				lng = 127.022959;
+				$.ajax({
+					url:'setLocation.whame',
+					type:'post',
+					data:{'lat':lat,'lon':lng}
+				})
+				switch (error.code)
+				{
+					case error.PERMISSION_DENIED:
+						no_text = '위치정보 획득권한을 거부 당했습니다.<br />위치정보를 활용 할 수 있도록 허용 해주세요.';
+					break;
+					case error.POSITION_UNAVAILABLE:
+						no_text = '위치정보를 사용 할 수 없습니다.<br />페이지를 다시 로드 해주세요.';
+					break;
+					case error.TIMEOUT:
+						no_text = '위치정보 요청시간이 지났습니다.<br />페이지를 다시 로드 해주세요.';
+					break;
+					default:
+						no_text = '알 수없는 오류가 발생했습니다.<br />페이지를 다시 로드 해주세요.';
+					break;
+				};
+				$('#company_ul').append('<div class="error">'+ no_text +'</div>');
+			}
+	    },5000);
 	})
 </script>
 </html>

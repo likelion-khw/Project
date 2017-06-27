@@ -71,6 +71,7 @@ public class WhameController {
 	public ModelAndView test() throws Exception {
 		System.out.println("mong테스트중_mong");
 		ModelAndView mav = new ModelAndView();
+		
 		mav.setViewName("body/test");
 		return mav;
 	}
@@ -106,9 +107,12 @@ public class WhameController {
 		String[] crawl1 = craws[1].split("</li>");
 		String crawl2 = craws[2];
 		String[] crawl3 = craws[3].split("<!-- /react-text -->");
+		double[] loca = new double[2];
+		loca[0] = lat;
+		loca[1] = lon;
 		
 		for(int i=0; i<crawl3.length; i++){
-			crawl3[i] = crawl3[i].replaceAll("[!><-]|span","").replaceAll(" ", "").replaceAll("class=\"grade\"datareactid=\"|\n", "").replaceAll("reacttext:...|4..../|%", "");
+			crawl3[i] = crawl3[i].replaceAll("[!><-]|span","").replaceAll(" ", "").replaceAll("class=\"grade\"datareactid=\"|\n", "").replaceAll("reacttext:...|4..../|%", "").replaceAll("...../", "");
 		}
 		
 		mav.addObject("couponlist", couponlist);
@@ -119,6 +123,7 @@ public class WhameController {
 		mav.addObject("menutype",menutype);
 		mav.addObject("menuList", menuList);
 		mav.addObject("location", location);
+		mav.addObject("loca", loca);
 		mav.addObject("store", store);
 		return mav;
 	}
@@ -166,7 +171,7 @@ public class WhameController {
 			String[] crawl3 = craws[3].split("<!-- /react-text -->");
 			
 			for(int i=0; i<crawl3.length; i++){
-				crawl3[i] = crawl3[i].replaceAll("[!><-]|span","").replaceAll(" ", "").replaceAll("class=\"grade\"datareactid=\"|\n", "").replaceAll("reacttext:...|4..../|%", "");
+				crawl3[i] = crawl3[i].replaceAll("[!><-]|span","").replaceAll(" ", "").replaceAll("class=\"grade\"datareactid=\"|\n", "").replaceAll("reacttext:...|4..../|%", "").replaceAll("...../", "");
 			}
 
 			mav.addObject("crawl", crawl);
@@ -301,10 +306,10 @@ public class WhameController {
 
 	// 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占싸듸옙첼占� 占쏙옙占쏙옙풔占� 占쌨소듸옙 ( AWS 클占쏙옙占쏙옙 占쏙옙占� )
 	@RequestMapping(value = "image.whame", method = RequestMethod.POST)
-	public ModelAndView test(MultipartFile imagefile, Double lat, Double lon) throws Exception {
-		System.out.println("lal" + lat + ":" + lon);
-		this.lat = lat;
-		this.lon = lon;
+	public ModelAndView test(MultipartFile imagefile) throws Exception {
+//		System.out.println("lal" + lat + ":" + lon);
+//		this.lat = lat;
+//		this.lon = lon;
 		MapTest mt = new MapTest();
 		difflal = mt.run(lat, 100000);
 
@@ -535,19 +540,19 @@ public class WhameController {
 	
 	@ResponseBody
 	@RequestMapping(value="search.whame", method=RequestMethod.POST)
-	public List<StoreInitVO> getSearchStore(String menuSearch, String choice, double clat, double clon, int meter){
+	public List<StoreInitVO> getSearchStore(String menuSearch, String choice, int meter){
 		System.out.println(meter);
 		MapTest mt = new MapTest();
-		difflal = mt.run(clat, meter);
+		difflal = mt.run(lat, meter);
 		WhameVO wvo = new WhameVO();
-		wvo.setLat(clat);
-		wvo.setLon(clon);
+		wvo.setLat(lat);
+		wvo.setLon(lon);
 		wvo.setDifflat(difflal.get(0));
 		wvo.setDifflon(difflal.get(1));
 		List<StoreInitVO> result = service.tagResult(menuSearch, choice, wvo);
 		
 		for(StoreInitVO svo : result){
-			svo.setMeter(mt.distance(clat, clon, svo.getLat(), svo.getLon(), "meter"));
+			svo.setMeter(mt.distance(lat, lon, svo.getLat(), svo.getLon(), "meter"));
 		}
 		return result;
 	}
@@ -567,5 +572,12 @@ public class WhameController {
 		wvo.setDifflon(difflal.get(1));
 		
 		return service.getNewStore2(wvo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="setLocation.whame", method=RequestMethod.POST)
+	public void setLocation(double lat, double lon){
+		this.lat = lat;
+		this.lon = lon;
 	}
 }

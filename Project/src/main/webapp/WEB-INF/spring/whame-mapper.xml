@@ -279,7 +279,7 @@
  	
  	<!-- 스토어 삭제 끝   -->
  	<select id="getlocationList" resultType="locationvo">
- 		select * from Store_location
+ 		select sl.*, s.store_name from Store_location sl, store s where s.store_code = sl.store_code
  	</select>
  	
  	<select id="getCategory" resultType="String" parameterType="int">

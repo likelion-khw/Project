@@ -2,6 +2,7 @@ package spring.mvc.whame.region;
 
 public class LocationVO {
 	private int store_code;
+	private String store_name;
 	private int rcode;
 	private double lat;
 	private double lon;
@@ -45,6 +46,13 @@ public class LocationVO {
 	
 	public void setDong(String dong) {
 		this.dong = dong;
+	}
+	
+	public String getStore_name() {
+		return store_name;
+	}
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
 	}
 	@Override
 	public String toString() {

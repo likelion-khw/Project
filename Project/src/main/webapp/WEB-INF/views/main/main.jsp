@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-c32b76f1aa052608845dc92dd7326946&libraries=clusterer"></script>
+6ae58faecc0e06a5ecbf63977aa440b0&libraries=clusterer"></script>
 <style type="text/css">
 main{
 	opacity : 0.1;
@@ -188,7 +188,7 @@ div.textt{
 	 var timer = setInterval("fadeInOut()",5000); 
 	
 	var cl = new Array();
-	var positions = new Array();
+	
 	$(document).ready(function() {
 		$('.geo_loding').css('display','inline');
 		var counter = function(){
@@ -301,7 +301,6 @@ div.textt{
 						};
 
 						startcarousel();
-
 						$('.geo_loding').css('display','none');
 						$('main').css('opacity','1');
 				  }
@@ -336,10 +335,11 @@ div.textt{
 			map = new daum.maps.Map(container, options);
 
 			var imageSrc = 'resources/img/me.png', // 마커이미지의 주소입니다    
-			    imageSize = new daum.maps.Size(40, 40) // 마커이미지의 크기입니다
+			    imageSize = new daum.maps.Size(40, 40), // 마커이미지의 크기입니다
+			    imageOption = {offset: new daum.maps.Point(20, 20)};
 			      
 			// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-			var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize),
+			var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize,imageOption),
 			    markerPosition = new daum.maps.LatLng(lat, lng); // 마커가 표시될 위치입니다
 	
 			// 마커를 생성합니다
@@ -356,95 +356,77 @@ div.textt{
 		        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
 		        minLevel: 5 // 클러스터 할 최소 지도 레벨 
 		    });
-		    
-			var locationlist = ${locationlist};
-			var max = locationlist.length / 3;
+
+			function makeOverListener(map, marker, infowindow) {
+			    return function() {
+			        infowindow.open(map, marker);
+			    };
+			}
+
+			// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+			function makeOutListener(infowindow) {
+			    return function() {
+			        infowindow.close();
+			    };
+			}
+
 			var markers = new Array();
-			var num = 0;
-			var pnum=0;
-			for(var i =0; i<max; i++)
-				{
-					if(num <= locationlist.length)
-						{
-							  var marker = new daum.maps.Marker({
-								  position: new daum.maps.LatLng(locationlist[num+1],locationlist[num+2])
-							  });
-							  markers.push(marker);
-							  positions[pnum] = {'lat':locationlist[num+1],'lng':locationlist[num+2],'code':locationlist[num]};
+			
+			<c:forEach items="${locationlist}" var="lo">
+				var marker = new daum.maps.Marker({
+					  position: new daum.maps.LatLng('${lo.lat}','${lo.lon}')
+				  });
 	
-							num += 3;
-							pnum ++;
-						}
-					else{
-							break;
-						}
-				}
+					var infowindow = new daum.maps.InfoWindow({
+				        content: '<div style="padding:5px;width:100%;" class="info_map container">'+
+					        	'<div class="center-align" style="width:100%;">${lo.store_name}</div>'+
+			        			'</div>'// 인포윈도우에 표시할 내용
+				    });
+				daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			    daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+
+				  markers.push(marker);
+			</c:forEach>
 	
 			clusterer.addMarkers(markers);
-	
+
 	 		$('tr[class=mover]').on('mouseover',function(){
 				var id = $(this).attr('id');
-				
-				var locationlist2 = ${locationlist};
-				var max2 = locationlist2.length / 3;
-				var num2 = 0;
-				for(var i =0; i<max2; i++)
-				{
-					if(num2 <= locationlist2.length)
+				<c:forEach items="${locationlist}" var="lo2">
+					if('${lo2.store_code}' == id)
 						{
-							if(locationlist2[num2] == id)
-								{
-									var moveLatLon = new daum.maps.LatLng(locationlist2[num2+1], locationlist2[num2+2]);
-									map.panTo(moveLatLon);
-									break;
-								}
-							num2 += 3;
-						}
-					else{
-							break;
-						}
-				}
+							var moveLatLon = new daum.maps.LatLng('${lo2.lat}','${lo2.lon}');
+							map.panTo(moveLatLon);
+						}				  
+				</c:forEach>
 			});
 	
 			$('tr[class=mover]').on('click',function(){
 				var id = $(this).attr('id');
 				
-				var locationlist2 = ${locationlist};
-				var max2 = locationlist2.length / 3;
-				var num2 = 0;
-				for(var i =0; i<max2; i++)
-				{
-					if(num2 <= locationlist2.length)
+				<c:forEach items="${locationlist}" var="lo2">
+					if('${lo2.store_code}' == id)
 						{
-							if(locationlist2[num2] == id)
-								{
+						var points = [
+										new daum.maps.LatLng('${lo2.lat}','${lo2.lon}')
+						          ];
 	
-									var points = [
-													new daum.maps.LatLng(locationlist2[num2+1], locationlist2[num2+2])
-									          ];
+						          // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+						          var bounds = new daum.maps.LatLngBounds();    
 	
-									          // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-									          var bounds = new daum.maps.LatLngBounds();    
+						          var i, marker;
+						          for (i = 0; i < points.length; i++) {
+						              // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+						              marker =  new daum.maps.Marker({ position : points[i] });
+						              marker.setMap(map);
+						              
+						              // LatLngBounds 객체에 좌표를 추가합니다
+						              bounds.extend(points[i]);
+						          }
 	
-									          var i, marker;
-									          for (i = 0; i < points.length; i++) {
-									              // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-									              marker =  new daum.maps.Marker({ position : points[i] });
-									              marker.setMap(map);
-									              
-									              // LatLngBounds 객체에 좌표를 추가합니다
-									              bounds.extend(points[i]);
-									          }
-	
-									          map.setBounds(bounds);
-									break;
-								}
-							num2 += 3;
-						}
-					else{
-							break;
-						}
-				}
+						          map.setBounds(bounds);
+						}				  
+				</c:forEach>
 			}); 
 		};
 
@@ -507,6 +489,7 @@ div.textt{
 		      draggable: true // Choose whether you can drag to open on touch screens
 		    }
 		  );
+
 
 	});
 </script>
