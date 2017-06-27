@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import ="spring.mvc.whame.history.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../modal/history_modal.jsp" %>  
 <%@include file="../modal/fileupload_modal.jsp" %>
 <%@include file="../modal/infomodal.jsp" %>
@@ -73,6 +74,11 @@
 	<c:choose>
 		<c:when test="${historylist != '[]'}">
 			<div id="map" class="h_map"></div>
+			<div class = 'row'>
+				<input type="date" class="datepicker col s5" name="s_date" id="s_date">
+				<input type="date" class="datepicker col s5" name="e_date" id="e_date">
+				<input type="button" class= "btn green" value="조회" id="sort">
+			</div>
 			<div style="width:90%;" class="sli">
 				<c:forEach items="${hMap}" var="vo" >
 				<div class="slider z-depth-3" style="margin-bottom:30px;">
@@ -88,7 +94,9 @@
 			 			   	       <h3 class="grey-text text-darken-4">${comstore.store_name}</h3>			        
 			 			   	     	</c:if>
 			 		 		       </c:forEach>
-		 			          <h5 class="light grey-text text-darken-2">${his.h_date}</h5>
+		 			          <h5 class="light grey-text text-darken-2">
+		 			          <fmt:formatDate type="both" dateStyle="short" timeStyle = "short" value="${his.h_date}"/>
+		 			          </h5>
 					        </div>
 				      	</li>
 					</c:forEach>
@@ -99,13 +107,13 @@
 					<a href="javascript:"><i class="material-icons small" id="right">keyboard_arrow_right</i></a>
 				</div>
 			  	</div>
-				</c:forEach> 
+				</c:forEach>
 			</div>
 			<div class="fixed-action-btn horizontal">
 			    <a class="btn-floating btn-large white" id="upview" href="#top_view">
 			      <i class="material-icons" style="color:black">arrow_upward</i>
 			    </a>
-			 </div>
+			 </div> 
 		</c:when>
 		<c:otherwise>
 			<div class="his_no center-align">
@@ -202,6 +210,54 @@ var positions=[];
 	$("#upview").click(function(event){            
 	    event.preventDefault();
 	    $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 500);
+	});
+	
+	$('.datepicker').pickadate({
+		selectMonths: true, // Creates a dropdown to control month
+		selectYears: 15, // Creates a dropdown of 15 years to control year
+		format: 'yyyy-mm-dd',
+		labelMonthNext: '이전 달',
+		labelMonthPrev: '다음 달',
+		monthsFull: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		monthsShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		weekdaysFull: ['일', '월', '화', '수', '목', '금', '토'],
+		weekdaysShort: ['일', '월', '화', '수', '목', '금', '토'],
+		weekdaysLetter: ['일', '월', '화', '수', '목', '금', '토'],
+		max: new Date(),
+		today: 'Today',
+		clear: 'Clear',
+		close: 'Close'
+		});
+	$('#sort').on('click', function(){
+		var s_date = $('#s_date').val();
+		var e_date = $('#e_date').val();
+		console.log("시작일과 종료일 조회:::"+s_date +":::"+e_date);
+		$('.sli').html('<c:forEach items="${hMap}" var="vo" >'
+				+'<div class="slider z-depth-3" style="margin-bottom:30px;">'
+				+' <ul class="slides">'
+				+'<c:forEach items="${vo.value }" var="his">'
+				+'<li class="listsize" style="heigth:200px;">'
+				+' <img src="http://s3-ap-northeast-1.amazonaws.com/whame/StoreTitle/${his.signimage}" class="imagemodal" id="${his.store_code}"> '
+				+' <div class="caption center-align">'
+				+'<c:forEach items="${storelist }" var="comstore">'
+				+'  <c:set value="${comstore.store_code }" var="scode"/>'
+				+'<c:set value="${his.store_code}" var="hcode"/>'
+				+'<c:if test="${scode == hcode }">'
+				+' <h3 class="grey-text text-darken-4">${comstore.store_name}</h3>	'		        
+				+'	</c:if>'
+				+'   </c:forEach>'
+				+' <h5 class="light grey-text text-darken-2">${his.h_date}</h5>'
+				+' </div>'
+				+' </li>'
+				+' </c:forEach>'
+				+' </ul>'
+				+' <div class="center-align" style="margin-top:4px;">'
+				+' <a href="javascript:"><i class="material-icons small" style="margin-right:30%;" id="left">keyboard_arrow_left</i></a>'
+				+' <a href="javascript:"><i class="material-icons small del_his" style="margin-right:30%;"><span style="color:red">close</span></i></a>'
+				+' <a href="javascript:"><i class="material-icons small" id="right">keyboard_arrow_right</i></a>'
+				+' </div>'
+				+' </div>'
+				+' </c:forEach> ');
 	});
 }) 
 </script>
