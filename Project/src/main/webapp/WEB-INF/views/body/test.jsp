@@ -1,50 +1,56 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="spring.mvc.whame.login.*"%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-<div style="width:200px;">
-	<canvas id="myChart" width="100" height="100"></canvas>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- Compiled and minified JavaScript -->
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
+6ae58faecc0e06a5ecbf63977aa440b0&libraries=clusterer"></script>
+<style type="text/css">
+	.imge{
+		width:100%;
+		border-radius:10px;
+		padding-top : calc (300 / 1000 * 100 %);
+	}
+	
+	.imge img{
+		width: 100%;
+		border-radius:10px;
+	}
+	
+	#content.row .col{
+		padding:0px;
+	}
+	.geo_loding{
+		display:inline;
+	}
+	.img_loding{
+		display:inline;
+	}
+</style>
+<div class="container" style="width:90%;">
+	<div id="content" class="row">
+		<div class="imge col s4 m4" style="background :url('resources/img/1.png') center center / cover no-repeat;">
+			<img src="resources/img/1logo.ico">
+		</div>
+		<div class="imge col s4 m4" style="background: url('resources/img/2.png') center center / cover no-repeat;">
+			<img src="resources/img/2logo.png">
+		</div>
+		<div class="imge col s4 m4" style="background: url('resources/img/3.png') center center / cover no-repeat;">
+			<img src="resources/img/3logo.png">
+		</div>
+	</div>
 </div>
-<script>
-var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
-        datasets: [{
-            label:'# test',
-            data: [23, 76,33, 45, 62, 23],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.8)',
-                'rgba(54, 162, 235, 0.8)',
-                'rgba(255, 206, 86, 0.8)',
-                'rgba(75, 192, 192, 0.8)',
-                'rgba(153, 102, 255, 0.8)',
-                'rgba(255, 159, 64, 0.8)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 2
-        }]
-    },
-    options: {
-    	title: {
-            display: true,
-            text: '연령 검색 인기도'
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true,
-                    suggestedMax: 100
-                }
-            }]
-        }
-    }
-});
+<script type="text/javascript">
+	$('img').mouseover(function(){
+			var ori = $(this).attr('src');
+			$(this).css('opacity','0.1');
+			/* $(this).attr('src','resources/img/'+$(this).attr('name')+'logo.png').css({'opacity':'0.5'}); */
+			$(this).mouseout(function(){
+				$(this).css({'opacity':'1'});
+				/* $(this).attr('src',ori); */
+			});
+	});
+
+	$(document).ready(function(){
+			$('.geo_loding').css('display','inline');
+		})
 </script>
+

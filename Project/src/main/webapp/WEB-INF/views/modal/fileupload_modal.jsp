@@ -3,13 +3,10 @@
 <!-- Modal Structure -->
 <style>
 .modal.modal-fixed-footer.fileuploadform{
-	height: 85%;
+	height: 600px;
 }
 .fileup_run{
 	width:100%;
-}
-.fm_read{
-	margin-top:1%;
 }
 @media only screen and (min-width : 321px) and (max-width : 992px) {
 	.fileuploadform {
@@ -24,14 +21,11 @@
 		font-size: 2rem;
 	}
 	.fm_read{
-		margin-top:1%;
 		margin-bottom:5%;
 	}
 }
 
 @media only screen and (min-width : 1300px) and (max-width : 1920px) {
-	.fm_read{
-	margin-top:15%;
 }
 }
 </style>

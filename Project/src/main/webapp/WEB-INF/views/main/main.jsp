@@ -2,8 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Compiled and minified JavaScript -->
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=
-6ae58faecc0e06a5ecbf63977aa440b0&libraries=clusterer"></script>
+c32b76f1aa052608845dc92dd7326946&libraries=clusterer"></script>
 <style type="text/css">
+main{
+	opacity : 0.1;
+}
 #menu{
 		position: fixed;
 		bottom:20px;
@@ -51,11 +54,17 @@
 	 border-radius:20px; 
 }
 
-div#onetop{
-	background-image: url('resources/img/t3.gif');
-	background-size: cover;
+#content {
+ margin:-1px;
+ height: 650px;
+ width:100%; 
+}
+#content div.trans{width: 100%; height: 650px;}
+ 
+div.textt{
+	padding-top:300px;
+	text-align: center;
 	width: 100%;
-	padding-bottom: 25%;
 }
 
 /*  */
@@ -87,38 +96,26 @@ div#onetop{
 }
 </style>
 
-<div id="onetop" class="center-align">
-	<div style="padding-top:25%;">
-	<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
-	<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+<div id="content"> 
+	<div class="active trans" style="background-image: url('resources/img/1.png'); background-size:cover;">
+		<div class="textt">
+		  	<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+			<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
+	</div>
+	<div class="trans" style="background-image: url('resources/img/2.png'); background-size:cover; display:none;">
+		<div class="textt">
+		  	<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+			<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
+	</div>
+	<div  class="trans" style="background-image: url('resources/img/3.png'); background-size:cover; display:none;">
+		<div class="textt">
+		  	<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
+			<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
+		</div>
 	</div>
 </div>
-<!-- <div class="row">
-	<div class="center-align col s12 m6">
-		<div style="padding-top:25%;">
-		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
-		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
-		</div>
-	</div>
-	<div class="center-align col s12 m6">
-		<div style="padding-top:25%;">
-		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
-		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
-		</div>
-	</div>
-	<div class="center-align col s12 m6">
-		<div style="padding-top:25%;">
-		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
-		<a href="#downf" id="down" class="btn red lighten-2" style="border-radius:20px;">START</a>
-		</div>
-	</div>
-	<div class="center-align col s12 m6">
-		<div style="padding-top:25%;">
-		<span style="font-size: 40px; color:white; font-weight: bold;">What Menu?</span><br>
-		<a id="test" class="btn blue lighten-2" style="border-radius:20px;">Whame?</a>
-		</div>
-	</div>
-</div> -->
 	<div class="center-align row" style="padding:10px" id="downf">
 		<div style="width: 50%; margin-left:auto; margin-right:auto;" >
 			<input type="button" class="btn green col s12" value="메뉴찾기" id="fileupload" style="border-radius:20px; margin-bottom:7px; width:">
@@ -139,7 +136,7 @@ div#onetop{
 				<div id="main_map"></div>
 			</div>
 			<div class="col s12 m4">
-				<h4>Top View</h4>
+				<h4>Top View</h4><a class="btn-floating red" id="me"><i class="material-icons">gps_fixed</i></a>
 				<c:set var="count" value="1"/>
 				<table class="centered highlight">
 				<c:forEach items="${countrank}" var="rank" end="4">
@@ -154,54 +151,46 @@ div#onetop{
 				</table>
 			</div>
 		</div>
-		<div style="width: 100%; margin-left: auto; margin-right: auto;" >
-			<span style="font-size: 35px;">New Store</span>
-			<div class="carousel" style="margin-top:40px;" >
-				<c:forEach items="${getNewStore}" var="store">
-					<a class="carousel-item" style="width:250px; height:170px;" href="/whame/forkakao.whame?store_code=${store.store_code}">
-				    	<div class="caro row" > 
-				    		<div class="col s12 image" id="${store.store_code}">
-				    			<img src="${store.store_image}" width="227px" height="170px" style="border-radius:30px">
-				    		</div>
-				    		<div class="col s12"  style="height: 45px;"> 
-				    			<span style="font-size: 17px; color:black">${store.store_name}</span>
-				    			<span style="blue">(${store.dong})</span>
-				    		</div>
-				    		<div class="col s12">
-				    			<span style="blue">${store.store_category}</span>
-				    		</div>
-				    	</div>
-					  </a>
-				</c:forEach>
+		<div style="width: 100%; margin-left: auto; margin-right: auto;">
+			<span style="font-size: 25px;">주변 신규 등록</span><span style="font-size: 13px;">(1km)</span>
+			<div class="carousel" style="margin-top:40px;" id="newStore">
 		 	 </div>
 	 	</div>
-	 	<div id="msg"></div>
 	</div>
 	
 <a id="menu"><img src="resources/img/main.png" width="80px"></a>
-<!-- Tap Target Structure -->
-<div class="tap-target" data-activates="menu" style="background-color: #9575cd">
-  <div class="tap-target-content" style="color:white">
-    <h5 class="center-align">Whame란?</h5>
-    <p>Whame는 'What Menu'에서 비롯된 타이틀입니다. </p>
-	<p>상가의 메뉴를 직접 들어가지 않고 밖에서 간판 사진을 이용하여 메뉴정보를 얻을 수 있습니다.</p>
-  </div>
-</div>
 
 <script type="text/javascript">
-
 	$('i[name=1rank]').css('color','gold');
 	$('i[name=2rank]').css('color','silver');
 	$('i[name=3rank]').css('color','brown');
 	
-	function movetostore(store_code){
-		console.log("/whame/forkakao.whame?store_code="+store_code);
-		//location.href='/whame/forkakao.whame?store_code='+store_code;
+	var showImg, nextImg;
+
+	function fadeInOut()
+	{
+	 //id가 content의 노드중  첫번째img(img:eq(0))를 showImg에 저장
+	 showImg = $("#content div.trans:eq(0)");
+	 //id가 content의 노드중  두번째img(img:eq(1))를 showImg에 저장
+	 nextImg = $("#content div.trans:eq(1)");
+	 //nextImg에 active클래스 적용
+	 nextImg.addClass("active");
+	 //nextImg를 처음에는 보이지 않게 처리
+	    nextImg.css('display','')
+	     //애니메이션 효과로 1초동안 opacity 값이 1로 변경되면서 나타난다.
+	    //콜백함수 실행, 처음 보였던 이미지를 dic id="content" 안의 가장 마지막 노드로 이동시킨다.
+	    $("#content").append(showImg);
+	    //showImg에 적용되어 있던 active 클래스를 제거한다.
+	    showImg.removeClass("active").css('display','none');
 	}
+	  
+	 //2초 간격으로 fadeInOut()함수를 실행 시킨다.
+	 var timer = setInterval("fadeInOut()",5000); 
 	
 	var cl = new Array();
 	var positions = new Array();
 	$(document).ready(function() {
+		$('.geo_loding').css('display','inline');
 		var counter = function(){
  			 $(".counter").rollingCounter({
  		        animate : true,
@@ -228,119 +217,257 @@ div#onetop{
 			}
 		});
 
+		/* 좌표인식 */
+		var lat;
+		var lng;
+
+		if (navigator.geolocation) 
+		{
+			navigator.geolocation.getCurrentPosition(showPosition,showError);
+		}
+		else
+		{
+			$('#container').append('<div class="error">위치정보를 사용 할 수 없는 환경입니다.</div>');
+		}
+
+		function showPosition(position) {
+			$.when( 
+				lat = position.coords.latitude,
+				lng = position.coords.longitude
+			).then(function(){
+				mapstart(lat,lng);
+				 $.ajax({
+					  url : "getNewStore.whame",
+					  type : 'post',
+					  data : {'lat': lat, 'lon':lng},
+					  success :function(result){
+						  	for(var i = 0; i< result.length; i++){
+							  	$('#newStore').html($('#newStore').html()+
+							  		'<a class="carousel-item" style="width:250px; height:170px;" href="/whame/forkakao.whame?store_code='+result[i].store_code+'">'
+								    	+'<div class="caro row" >'
+								    		+'<div class="col s12 image" id="'+result[i].store_code+'">'
+								    			+'<img src="'+result[i].store_image+'" width="227px" height="170px" style="border-radius:30px">'
+								    		+'</div>'
+								    		+'<div class="col s12"  style="height: 45px;">'
+								    		+	'<span style="font-size: 17px; color:black">'+result[i].store_name+'</span>'
+								    		+	'<span style="blue">('+result[i].dong+')</span>'
+								    	+	'</div>'
+								    	+	'<div class="col s12">'
+								    	+		'<span style="blue">'+result[i].store_category+'</span>'
+								    	+	'</div>'
+								    	+'</div>'
+									+  '</a>'
+								);
+							};
+
+							startcarousel();
+
+							$('.geo_loding').css('display','none');
+							$('main').css('opacity','1');
+					  }
+					});
+			});
+		}
+
+		function showError(error)
+		{
+			var no_text;
+			lat = 37.520498;
+			lng = 127.022959;
+			mapstart(lat,lng);
+
+			 $.ajax({
+				  url : "getNewStore.whame",
+				  type : 'post',
+				  data : {'lat': lat, 'lon':lng},
+				  success :function(result){
+					  	for(var i = 0; i< result.length; i++){
+						  	$('#newStore').html($('#newStore').html()+
+						  		'<a class="carousel-item" style="width:250px; height:170px;" href="/whame/forkakao.whame?store_code='+result[i].store_code+'">'
+							    	+'<div class="caro row" >'
+							    		+'<div class="col s12 image" id="'+result[i].store_code+'">'
+							    			+'<img src="'+result[i].store_image+'" width="227px" height="170px" style="border-radius:30px">'
+							    		+'</div>'
+							    		+'<div class="col s12"  style="height: 45px;">'
+							    		+	'<span style="font-size: 17px; color:black">'+result[i].store_name+'</span>'
+							    		+	'<span style="blue">('+result[i].dong+')</span>'
+							    	+	'</div>'
+							    	+	'<div class="col s12">'
+							    	+		'<span style="blue">'+result[i].store_category+'</span>'
+							    	+	'</div>'
+							    	+'</div>'
+								+  '</a>'
+							);
+						};
+
+						startcarousel();
+
+						$('.geo_loding').css('display','none');
+						$('main').css('opacity','1');
+				  }
+				});
+			switch (error.code)
+			{
+				case error.PERMISSION_DENIED:
+					no_text = '위치정보 획득권한을 거부 당했습니다.<br />위치정보를 활용 할 수 있도록 허용 해주세요.';
+				break;
+				case error.POSITION_UNAVAILABLE:
+					no_text = '위치정보를 사용 할 수 없습니다.<br />페이지를 다시 로드 해주세요.';
+				break;
+				case error.TIMEOUT:
+					no_text = '위치정보 요청시간이 지났습니다.<br />페이지를 다시 로드 해주세요.';
+				break;
+				default:
+					no_text = '알 수없는 오류가 발생했습니다.<br />페이지를 다시 로드 해주세요.';
+				break;
+			};
+		} 
+
 		var container = document.getElementById('main_map');
-		var options = {
-			center: new daum.maps.LatLng(37.509657,127.032893),
-			level: 8
+		var options;
+		var map;
+		
+		function mapstart(lat,lng){
+			options = {
+				center: new daum.maps.LatLng(lat,lng),
+				level: 4
+			};
+			
+			map = new daum.maps.Map(container, options);
+
+			var imageSrc = 'resources/img/me.png', // 마커이미지의 주소입니다    
+			    imageSize = new daum.maps.Size(40, 40) // 마커이미지의 크기입니다
+			      
+			// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+			var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize),
+			    markerPosition = new daum.maps.LatLng(lat, lng); // 마커가 표시될 위치입니다
+	
+			// 마커를 생성합니다
+			var markerME = new daum.maps.Marker({
+			    position: markerPosition, 
+			    image: markerImage // 마커이미지 설정 
+			});
+	
+			// 마커가 지도 위에 표시되도록 설정합니다
+			markerME.setMap(map);  
+	
+			var clusterer = new daum.maps.MarkerClusterer({
+		        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+		        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+		        minLevel: 5 // 클러스터 할 최소 지도 레벨 
+		    });
+		    
+			var locationlist = ${locationlist};
+			var max = locationlist.length / 3;
+			var markers = new Array();
+			var num = 0;
+			var pnum=0;
+			for(var i =0; i<max; i++)
+				{
+					if(num <= locationlist.length)
+						{
+							  var marker = new daum.maps.Marker({
+								  position: new daum.maps.LatLng(locationlist[num+1],locationlist[num+2])
+							  });
+							  markers.push(marker);
+							  positions[pnum] = {'lat':locationlist[num+1],'lng':locationlist[num+2],'code':locationlist[num]};
+	
+							num += 3;
+							pnum ++;
+						}
+					else{
+							break;
+						}
+				}
+	
+			clusterer.addMarkers(markers);
+	
+	 		$('tr[class=mover]').on('mouseover',function(){
+				var id = $(this).attr('id');
+				
+				var locationlist2 = ${locationlist};
+				var max2 = locationlist2.length / 3;
+				var num2 = 0;
+				for(var i =0; i<max2; i++)
+				{
+					if(num2 <= locationlist2.length)
+						{
+							if(locationlist2[num2] == id)
+								{
+									var moveLatLon = new daum.maps.LatLng(locationlist2[num2+1], locationlist2[num2+2]);
+									map.panTo(moveLatLon);
+									break;
+								}
+							num2 += 3;
+						}
+					else{
+							break;
+						}
+				}
+			});
+	
+			$('tr[class=mover]').on('click',function(){
+				var id = $(this).attr('id');
+				
+				var locationlist2 = ${locationlist};
+				var max2 = locationlist2.length / 3;
+				var num2 = 0;
+				for(var i =0; i<max2; i++)
+				{
+					if(num2 <= locationlist2.length)
+						{
+							if(locationlist2[num2] == id)
+								{
+	
+									var points = [
+													new daum.maps.LatLng(locationlist2[num2+1], locationlist2[num2+2])
+									          ];
+	
+									          // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
+									          var bounds = new daum.maps.LatLngBounds();    
+	
+									          var i, marker;
+									          for (i = 0; i < points.length; i++) {
+									              // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
+									              marker =  new daum.maps.Marker({ position : points[i] });
+									              marker.setMap(map);
+									              
+									              // LatLngBounds 객체에 좌표를 추가합니다
+									              bounds.extend(points[i]);
+									          }
+	
+									          map.setBounds(bounds);
+									break;
+								}
+							num2 += 3;
+						}
+					else{
+							break;
+						}
+				}
+			}); 
 		};
-		var map = new daum.maps.Map(container, options);
 
-		var clusterer = new daum.maps.MarkerClusterer({
-	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
-	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
-	        minLevel: 5 // 클러스터 할 최소 지도 레벨 
-	    });
-	    
-		var locationlist = ${locationlist};
-		var max = locationlist.length / 3;
-		var markers = new Array();
-		var num = 0;
-		var pnum=0;
-		for(var i =0; i<max; i++)
-			{
-				if(num <= locationlist.length)
-					{
-						  var marker = new daum.maps.Marker({
-							  position: new daum.maps.LatLng(locationlist[num+1],locationlist[num+2])
-						  });
-						  markers.push(marker);
-						  positions[pnum] = {'lat':locationlist[num+1],'lng':locationlist[num+2],'code':locationlist[num]};
-
-						num += 3;
-						pnum ++;
-					}
-				else{
-						break;
-					}
-			}
-
-		clusterer.addMarkers(markers);
-
- 		$('tr[class=mover]').on('mouseover',function(){
-			var id = $(this).attr('id');
-			
-			var locationlist2 = ${locationlist};
-			var max2 = locationlist2.length / 3;
-			var num2 = 0;
-			for(var i =0; i<max2; i++)
-			{
-				if(num2 <= locationlist2.length)
-					{
-						if(locationlist2[num2] == id)
-							{
-								var moveLatLon = new daum.maps.LatLng(locationlist2[num2+1], locationlist2[num2+2]);
-								map.panTo(moveLatLon);
-								break;
-							}
-						num2 += 3;
-					}
-				else{
-						break;
-					}
-			}
+		$('#me').on('click',function(){
+			    // 이동할 위도 경도 위치를 생성합니다 
+			    var moveLatLon = new daum.maps.LatLng(lat, lng);
+			    // 지도 중심을 부드럽게 이동시킵니다
+			    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+			    map.panTo(moveLatLon);            
 		});
-
-		$('tr[class=mover]').on('click',function(){
-			var id = $(this).attr('id');
-			
-			var locationlist2 = ${locationlist};
-			var max2 = locationlist2.length / 3;
-			var num2 = 0;
-			for(var i =0; i<max2; i++)
-			{
-				if(num2 <= locationlist2.length)
-					{
-						if(locationlist2[num2] == id)
-							{
-
-								var points = [
-												new daum.maps.LatLng(locationlist2[num2+1], locationlist2[num2+2])
-								          ];
-
-								          // 지도를 재설정할 범위정보를 가지고 있을 LatLngBounds 객체를 생성합니다
-								          var bounds = new daum.maps.LatLngBounds();    
-
-								          var i, marker;
-								          for (i = 0; i < points.length; i++) {
-								              // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
-								              marker =     new daum.maps.Marker({ position : points[i] });
-								              marker.setMap(map);
-								              
-								              // LatLngBounds 객체에 좌표를 추가합니다
-								              bounds.extend(points[i]);
-								          }
-
-								          map.setBounds(bounds);
-								break;
-							}
-						num2 += 3;
-					}
-				else{
-						break;
-					}
-			}
-		}); 
-
-	    $("#down").click(function(event){            
+		/* ---------------- */
+	    $("a#down").click(function(event){            
 	        event.preventDefault();
 	        $('html,body').animate({scrollTop:$(this.hash).offset().top+1}, 1000);
 		});
 
-	    $('.carousel').carousel({
-	          dist:0,
-	          shift:0,
-	          padding:-5
-	    });
+		function startcarousel(){
+		    $('.carousel').carousel({
+		          dist:0,
+		          shift:0,
+		          padding:-5
+		    });
+		}
 
 		setInterval(function(){
 	    	$('.carousel').carousel('next');
@@ -381,6 +508,6 @@ div#onetop{
 		    }
 		  );
 
-	})
+	});
 </script>
 

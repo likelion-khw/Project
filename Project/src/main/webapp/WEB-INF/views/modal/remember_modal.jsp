@@ -7,13 +7,13 @@
 }
 
 .nick.modal{
-	height: 40%;
+	height: 300px;
 }
 .pass.modal{
-	height: 55%;
+	height: 400px;
 }
 .out{
-	height: 55%;
+	height: 400px;
 	background-color: #37474f;
 	color:white;
 }
